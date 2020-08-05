@@ -74,10 +74,10 @@ $active_group = 'default';
 $query_builder = true;
 
 $db['default'] = array(
-	'dsn'	=> 'mysql:dbname=diraleads_new',
+	'dsn'	=> 'mysql:dbname=diraleads',
 	'hostname' => '127.0.0.1',
 	'username' => 'root',
-	'password' => 'asd123',
+	'password' => '',
 	'database' => 'diraleads_new',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
