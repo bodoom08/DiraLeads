@@ -433,7 +433,7 @@ $this->load->view('common/top', [
 <script>
     var editImage = <?php echo json_encode($property_images); ?>;
     editImage.forEach(function(row, index) {
-        $('#image_preview').append("<div class='thumbnails_box mb_30 col-lg-2 col-md-4 col-6'><img src='" + '<?php echo "https://diraleads.com/uploads/"; ?>' + row.path + "' width='100%' alt='' title='" + row.path + "'><i class='fa fa-window-close remove' onclick='removethis(this);'></i></div>");
+        $('#image_preview').append("<div class='thumbnails_box mb_30 col-lg-2 col-md-4 col-6'><img src='" + '<?php echo site_url("../uploads/"); ?>' + row.path + "' width='100%' alt='' title='" + row.path + "'><i class='fa fa-window-close remove' onclick='removethis(this);'></i></div>");
     });
 </script>
 

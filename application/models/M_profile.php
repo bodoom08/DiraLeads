@@ -67,20 +67,27 @@ class M_profile extends CI_Model
             if($rslt->id != $_SESSION['id']) {
                 return ['type' => 'error', 'text' => 'Mobile no already taken!'];
             }
-            
+            $languages = implode(',',$language);
             $data = [
             'name' => $name,
+            'first_name' => $fname,
+            'last_name' => $sname,
             'country_code' => $country,
             'mobile' => $mobile,
-            //'email' => $email,
+            'address' => $address,
+            'language' => $languages,
             'updated_at' => date('Y-m-d H:i:s')
             ];
             if ($this->db->where('id', $_SESSION['id'])->update('users', $data)) {
                 
                 session_start();
                 $_SESSION['name'] = $name;
+                $_SESSION['fname'] = $fname;
+                $_SESSION['sname'] = $sname;
                 $_SESSION['mobile'] = $mobile;
                 $_SESSION['email'] = $email;
+                $_SESSION['address'] = $address;
+                $_SESSION['language'] = $languages;
                 
                 return ['type' => 'success', 'text' => 'Updated Successfully!'];
             }

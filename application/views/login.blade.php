@@ -70,7 +70,7 @@
             if (arg.type == 'success') {
                 // console.log(arg.href);
                 $('#login_submit').removeAttr('disabled');
-                window.location.href = arg.ref;
+                window.location.href = '/dashboard';
             }
         }
     });

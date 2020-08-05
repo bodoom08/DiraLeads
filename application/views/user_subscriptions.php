@@ -34,17 +34,11 @@ $this->load->view('common/front_end_layout/top', [
                     <div class="dashboard-content">
                         <div class="dashboard-list">
                             <div class="row">
-                             <div class="col-md-8">
+                             <div class="col-md-12 subs-sec">
                              <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
+								<a href="<?php echo site_url('/pricing/pricing_pref');?>">Subscribe</a>
                              </div>
-                             <div class="col-md-4">
-                             <div class="pull-right">
-                                    <!-- <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#addModal">+ Add Preference</button> -->
-                                </div>
-                                </div>
-                                <div class="clearfix"></div>
                             </div>
-                            <hr/>
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
                                     <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
@@ -53,7 +47,7 @@ $this->load->view('common/front_end_layout/top', [
                                                 <th>Name</th>
                                                 <th>Validity (days)</th>
                                                 <th>No Of Area</th>
-                                                <th>Price($)</th>
+                                                <!-- <th>Price($)</th> -->
                                                 <th>Start Date</th>
                                                 <th>End Date</th>
                                                 <th>Action</th>

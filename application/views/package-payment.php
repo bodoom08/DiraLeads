@@ -55,11 +55,11 @@ $this->load->view('common/layout/top', [
                                                     <h4><span title="Validity" class="value"><?php echo $selected_pkg['package_details']['no_of_days']; ?> Days</span></h4>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="price">
                                                     <h4>$ <?php echo $selected_pkg['package_details']['price']; ?></h4>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-md-12">
@@ -97,14 +97,14 @@ $this->load->view('common/layout/top', [
                                                     }
                                                 ?>
                                                 <?php if($subscribe_info->action == 'renew') { ?>
-                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $todate->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('pricing/custom_pricing'); ?>">(Change)</a></small>
+                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $todate->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('/pricing/pricing_pref'); ?>">(Change)</a></small>
                                                 <?php } else if($subscribe_info->action == 'modify') { ?>
-                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('pricing/custom_pricing'); ?>">(Change)</a></small>
+                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('/pricing/pricing_pref'); ?>">(Change)</a></small>
                                                 <?php } else if(!empty($subscribed_package->end_date)) { ?>
-                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('pricing/custom_pricing'); ?>">(Change)</a></small>
+                                                    <small class="text-muted">You are already subscribed for this package, This Package will valid <br /> from <span style="color:#ff214f;"><?php echo $fromdate->format('jS M Y'); ?></span> till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('/pricing/pricing_pref'); ?>">(Change)</a></small>
 
                                                 <?php } else { ?>
-                                                    <small class="text-muted">This Package will valid till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('pricing/custom_pricing'); ?>">(Change)</a></small>
+                                                    <small class="text-muted">This Package will valid till <span style="color:#ff214f;"><?php echo $date->format('jS M Y'); ?></span></small> <small><a href="<?php echo site_url('/pricing/pricing_pref'); ?>">(Change)</a></small>
                                                 <?php } ?>
                                             </div>
                                         </div>
@@ -122,7 +122,7 @@ $this->load->view('common/layout/top', [
                     <input type="hidden" name="subscribe_pref_info" value='<?php echo $subscribe_pref_info; ?>' >
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="mb-3 text-center mb-30">Payment Information</h4>
+                            <!-- <h4 class="mb-3 text-center mb-30">Payment Information</h4> -->
                             <!-- <div>
                                 <div class="custom-control custom-checkbox custom-control-inline">
                                     <input type="checkbox" class="custom-control-input" id="pref1" name="pref1" value="pref1">
@@ -148,7 +148,7 @@ $this->load->view('common/layout/top', [
 
                             <div class="card">
                                 <div class="card-body p-4">
-                                    <ul class="nav bg-light col-md-4 nav-pills rounded nav-fill mb-3" role="tablist">
+                                    <ul class="nav bg-light col-md-4 nav-pills rounded nav-fill mb-3" role="tablist" style="display:none">
                                         <li class="nav-item ">
                                             <a class="nav-link active" data-toggle="pill" href="#nav-tab-card">
                                                 <i class="fa fa-credit-card"></i> Credit Card</a>
@@ -156,55 +156,56 @@ $this->load->view('common/layout/top', [
                                     </ul>
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="nav-tab-card">
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label for="username">Full name (on the card)</label>
-                                                <input type="text" class="form-control" name="name" placeholder="" required="">
+                                                <input type="text" class="form-control" name="name" value="developer" placeholder="" required="">
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row" style="display:none">
                                                 <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <label for="username">Street</label>
-                                                        <input type="text" class="form-control" name="street" placeholder="" required="">
+                                                        <input type="text" class="form-control" name="street" placeholder="" required="" value="chandigarh">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label for="username">Zip</label>
-                                                        <input type="text" class="form-control" name="zip" placeholder="" required="">
+                                                        <input type="text" class="form-control" name="zip" placeholder="" required="" value="160103">
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group" style="display:none">
                                                 <label for="cardNumber">Card number</label>
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" name="cardNumber" placeholder="">
+                                                    <input type="text" class="form-control" name="cardNumber" placeholder="" value="5555555555554444">
                                                     <div class="input-group-append">
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row" style="display:none">
                                                 <div class="col-sm-8">
                                                     <div class="form-group">
                                                         <label><span class="hidden-xs">Expiration</span> </label>
                                                         <div class="input-group">
-                                                            <input type="number" class="form-control" placeholder="MM" name="mm">
-                                                            <input type="number" class="form-control" placeholder="YY" name="yy">
+                                                            <input type="number" class="form-control" placeholder="MM" name="mm" value="02">
+                                                            <input type="number" class="form-control" placeholder="YY" name="yy" value="22">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
                                                     <div class="form-group">
                                                         <label data-toggle="tooltip" title="" data-original-title="3 digits code on back side of the card">CVV <i class="fa fa-question-circle"></i></label>
-                                                        <input type="number" name="cvv2" class="form-control" required="">
+                                                        <input type="number" name="cvv2" class="form-control" required="" value="123">
                                                     </div>
 
                                                 </div>
                                             </div>
 
-                                            <button class="btn btn-primary btn-block" type="submit">Pay $ <?php echo $selected_pkg['package_details']['price']; ?></button>
+                                            <!-- <button class="btn btn-primary btn-block" type="submit">Pay $ <?php echo $selected_pkg['package_details']['price']; ?></button> -->
+                                            <button class="btn btn-primary btn-block" type="submit">Subscribe</button>
                                         </div>
                                     </div>
 

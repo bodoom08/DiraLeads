@@ -171,6 +171,15 @@ class M_property extends CI_Model
                 else
                     $end_time = '';
             }
+
+            if(($property == 'short term rent') && !empty($_POST['short_term_available_date'])) {
+                $short_term_available_date = $_POST['short_term_available_date'];
+                $arr = explode(',', $short_term_available_date);
+                $trimmed_array=array_map('trim',$arr);
+                $short_term_available_date = implode(',', $trimmed_array);
+            } else {
+                $short_term_available_date = '';
+            }
             
             $property_data = [
                 'user_id' => $_POST['user_id'],
@@ -190,7 +199,8 @@ class M_property extends CI_Model
                 'day_of_the_weak' => $day_arr,
                 'time_of_day' => $time,
                 'from_time' => $start_time,
-                'to_time' => $end_time            
+                'to_time' => $end_time,                
+                'short_term_available_date' => $short_term_available_date            
             ];
 
             // $user_pref= [
@@ -298,24 +308,26 @@ class M_property extends CI_Model
                             ->where_not_in('id', $vn_id_arr)
                             ->get('virtual_numbers')
                             ->row();
-                            
+
+                        $this->load->helper('telnyx_number');
+                        // $virtualNumber = false;
                         if($virtualNumber) {
                             $this->load->helper('did');
                             allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
                         } else {
-                            $this->load->library('telnyx');
+                            // $this->load->library('telnyx');
                             
-                            $numberResult = $this->telnyx->searchNumbers(["country_iso" => 'us', 'state' => 'NY'], 1);
+                            $numberResult = searchNumbersHelper('us','NY');                            
                             
                             if (count($numberResult['result']) > 0) {
                                 $number_e164 = $numberResult['result'][0]['number_e164'];
                                 
-                                $numberOrders = $this->telnyx->createNumberOrders($number_e164);
-                                
+                                $numberOrders = createNumberOrdersHelper($number_e164);
+
                                 if (is_array($numberOrders)) {
                                     $this->db->insert('virtual_numbers', [
                                                       'number' => $number_e164,
-                                                      'details' => json_encode($this->telnyx->myNumbers($number_e164))
+                                                      'details' => json_encode(myNumbersHelper($number_e164))
                                                       ]);
                                     
                                     $this->load->helper('did');
@@ -442,6 +454,15 @@ class M_property extends CI_Model
                 }
             }
 
+            if(($property == 'short term rent') && !empty($_POST['short_term_available_date'])) {
+                $short_term_available_date = $_POST['short_term_available_date'];
+                $arr = explode(',', $short_term_available_date);
+                $trimmed_array=array_map('trim',$arr);
+                $short_term_available_date = implode(',', $trimmed_array);
+            } else {
+                $short_term_available_date = '';
+            }
+
             $property_data = [
                 'for' => $property,
                 'house_number' => $house_no,
@@ -458,7 +479,8 @@ class M_property extends CI_Model
                 'day_of_the_weak' => $day_arr,
                 'time_of_day' => $time,
                 'from_time' => $start_time,
-                'to_time' => $end_time
+                'to_time' => $end_time,
+                'short_term_available_date' => $short_term_available_date
             ];
 
             // $this->db->where('id', $property_id);
@@ -545,6 +567,49 @@ class M_property extends CI_Model
     {
         return $this->db->where('area IS NOT NULL')->get('areas')->result_array();
     }
+
+    public function getreported()
+    {
+        extract($this->input->get());
+
+        $search = array_map('trim', $search);
+        $search['value'] = strtolower($search['value']);
+
+        $this->db->start_cache();
+
+        $query['select'] = ['a.property_id', 'a.user_id', 'a.reason', 'a.other_reason', 'b.id', 'b.email', 'b.name', 'b.country_code', 'b.mobile'];
+        $this->db->select('a.*,b.name as user_name,b.country_code, b.id as user_id, b.email as user_email, b.mobile');
+        $this->db->where('a.user_id = b.id');
+        if(isset($property_id) && !empty($property_id)) {
+            $this->db->where('a.id = '.$property_id);
+        }
+        $this->db->from('reported_property a, users b');
+
+        $query['recordsTotal'] = $this->db->count_all_results();
+
+        if (isset($search['value'])) {
+            $this->db->group_start();
+            foreach ($query['select'] as $s) {
+                $this->db->or_like('LOWER(' . $s . ')', $search['value']);
+            }
+            $this->db->group_end();
+        }
+
+        $this->db->stop_cache();
+
+        $this->db->order_by('a.id', 'desc');
+
+        if ($length > 0) {
+            $this->db->limit($length, $start);
+        }
+        $query['data'] = $this->db->get()->result_array();
+        $query['draw'] = $draw;
+        $query['recordsFiltered'] = $this->db->count_all_results();
+        $this->db->flush_cache();
+        unset($query['select']);
+        return $query;
+    }
+
 
 
 }

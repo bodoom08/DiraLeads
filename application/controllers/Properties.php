@@ -7,13 +7,19 @@ class Properties extends MOBO_Controller
     {
         parent::__construct();
         $this->load->model('M_properties');
+        $this->load->library('session');
     }
 
     public function index()
     {
         $this->load->view('properties');
     }
-
+  public function getAllImages()
+    {
+           $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($this->M_properties->getAllImages()));
+    }
     public function with_coords()
     {
         $this->output
@@ -21,6 +27,12 @@ class Properties extends MOBO_Controller
             ->set_output(json_encode($this->M_properties->getAll()));
     }
 
+ public function with_coordsDevlop()
+    {
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($this->M_properties->getAllDevlopment()));
+    }
     public function _index()
     {
         // return 'hi';
@@ -131,14 +143,21 @@ class Properties extends MOBO_Controller
         }
         
         $data['page'] = ($page == null) ? 1 : $page; 
-        $data['query_string'] = $query_string;        
+        $data['query_string'] = $query_string;
+        $data['token_name'] = $this->security->get_csrf_token_name(); 
+        $data['token_hash'] = $this->security->get_csrf_hash(); 
+
+        // echo '<pre>';
+        // print_r($data);
+        // die;
         $this->load->view('properties_list_view',$data);
     }
 
     function addToFavorites()
     {
-        $this->M_properties->addToFavorite($_POST['property_id']);
-        redirect($_SERVER['HTTP_REFERER']);
+        $response = $this->M_properties->addToFavorite($_POST['property_id']);
+        die(json_encode(['response' => $response]));
+        // redirect($_SERVER['HTTP_REFERER']);
     }
 
     function addToViews() {
@@ -161,5 +180,34 @@ class Properties extends MOBO_Controller
 
     function details(){
         echo json_encode($_POST);
+    }
+
+    function reportProperty() {
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('reason', 'Reason', 'required|trim');
+        if($this->form_validation->run()) {
+            if($this->input->post('reason') != null && ($_POST['reason'] == 'other')) {
+                if(empty($_POST['other_reason'])) {
+                    die(json_encode(['type' => 'error', 'text' => 'Other Reason is required, if you select choose reason is other']));
+                }
+            }
+            if(!isset($_SESSION['id'])) {
+                die(json_encode(['type' => 'error', 'text' => 'Oops! only registered user can report property.']));
+
+            }
+
+            $data = [
+                'property_id' => $this->input->post('property_id'),
+                'reason' => $this->input->post('reason'),
+                'other_reason' => $this->input->post('other_reason') ?? '',
+                'user_id' => $_SESSION['id'],
+                'created_at' => date('Y-m-d H:i:s')
+            ];
+            $this->db->insert('reported_property', $data);
+            die(json_encode(['type' => 'success', 'text' => 'Property reported.']));
+        } else {
+            die(json_encode(['type' => 'error', 'text' => $this->form_validation->error_string()]));
+        }
+
     }
 }

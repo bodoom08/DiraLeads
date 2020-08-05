@@ -1,10 +1,17 @@
 @extends('common.panel')
 
 @section('content')
-<div class="alert alert-success alert-2" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-    <strong>Your listing</strong> YOUR LISTING HAS BEEN APPROVED!
-</div>
+ <?php
+            $attrs = [
+                'name'=> 'modify_package_form',
+                'method' => 'POST'
+            ];
+            echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
+            ?>
+                <input type="hidden" id="csrfToken" name="package_table_id">
+                <input type="hidden" name="action">
+                
+            </form>
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="ui-item bg-success">
@@ -51,263 +58,79 @@
         </div>
     </div>
 </div>
-<div class="row d-none">
-    <div class="col-lg-6 col-md-6">
-        <div class="dashboard-list">
-            <div class="dashboard-message bdr clearfix ">
-                <div class="tab-box-2">
-                    <div class="clearfix mb-30 comments-tr">
-                        <span>Comments</span>
-                        <ul class="nav nav-pills float-right" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active show" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Pending</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="true">Approved</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content" id="pills-tabContent">
-                        <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-3.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>Maikel Alisa</h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#"><img src="assets/img/avatar/avatar-1.jpg" alt="comments-user"></a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment mb-0">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-2.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade active show" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-2.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-3.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment mb-0">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-1.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+<div class="row">
+   <div class="col-lg-12 col-md-12">
+        <div class="dash-title-new">
+            <h4>Favourites</h4>
         </div>
     </div>
-    <div class="col-lg-6 col-md-6">
-        <div class="dashboard-list">
-            <div class="dashboard-message bdr clearfix ">
-                <div class="tab-box-2">
-                    <div class="clearfix mb-30 comments-tr">
-                        <span>Comments</span>
-                        <ul class="nav nav-pills float-right" id="pills-tab2" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active show" id="pills-profile-tab2" data-toggle="pill" href="#pills-profile2" role="tab" aria-controls="pills-profile" aria-selected="false">Pending</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-contact-tab2" data-toggle="pill" href="#pills-contact2" role="tab" aria-controls="pills-contact" aria-selected="true">Approved</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content" id="pills-tabContent2">
-                        <div class="tab-pane fade" id="pills-contact2" role="tabpanel" aria-labelledby="pills-contact-tab2">
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-3.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>Maikel Alisa</h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#"><img src="assets/img/avatar/avatar-1.jpg" alt="comments-user"></a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment mb-0">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-2.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade active show" id="pills-profile2" role="tabpanel" aria-labelledby="pills-profile-tab2">
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-2.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-3.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                            <div class="comment mb-0">
-                                <div class="comment-author">
-                                    <a href="#">
-                                        <img src="assets/img/avatar/avatar-1.jpg" alt="comments-user">
-                                    </a>
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-meta">
-                                        <h5>
-                                            Maikel Alisa
-                                        </h5>
-                                        <div class="comment-meta">
-                                            8:42 PM 1/28/2017<a href="#">Reply</a>
-                                        </div>
-                                    </div>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec luctus tincidunt aliquam. Aliquam gravida massa at sem </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+</div>
+    <div class="dn-items row"></div>
+<div class="row">
+    <div class="col-lg-12 col-md-12">
+        <div class="dash-title-new">
+            <h4>My Property List</h4>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12">
+    <div class="item-table">
+                        <table class="table">
+                                    <?php if (empty($my_properties)) { ?>
+                                   <div class="col-lg-12 text-center mt-5 dashboard_fav">
+                      <p><i class="fa fa-search" aria-hidden="true"></i></p>
+                      <h5 class="text-head">No rentals listed</h5>
+                     <p>List your Rental <a href="/rental">Here</a></p>
+                  </div> 
+                                    <?php } else { ?>
+                                        <style>
+                                            .soldout {
+                                                opacity: 0.5;
+                                            }
+                                        </style>
+                                        <?php foreach ($my_properties as $key => $value) : ?>
+                                        <?php if($key < 4){?>
+                                            <tr class="<?php echo ($value['sold'] == 'true') ? 'soldout' : ''; ?> ">
+                                                <td style="width: 150px">
+                                                 <div class="img-sec-tb">
+                                                    <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>">
+                                                     <img class="img-whp" src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo">
+                                                </td>
+                                                <td>
+                                                <div class="rent-tb">
+                                                <ul>
+                                                <li><h5>For <?php echo ucfirst($value['for']); ?></h5></li>
+                                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $value['street'] ?></li>
+                                                <li>$<?php echo $value['price'] ?>/Monthly</li>
+                                                </ul>
+                                                </div>
+                                                </td>
+
+                                                <td><i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo $value['available_date'] ?></td>
+                                                <td>
+                                                <div class="service-tb">
+                                                <?php if($value['sold'] != 'true') { ?>
+                                                <ul>
+                                                <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+
+                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
+
+                                                <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                                                <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li>
+                                                </ul>
+                                                <?php } ?>
+                                                </div>
+                                                </td>
+                                            </tr>
+                                        <?php } endforeach; ?>
+                                    <?php } ?>
+                                </tbody>
+                            </table>
+             <?php if (!empty($my_properties)) { ?>
+            <div class="tabl-btn-sec">
+                <a href="/my_rentals">View All</a>
             </div>
+            <?php } ?>
         </div>
     </div>
 </div>
@@ -391,6 +214,118 @@ else
                     console.log('complete');
                 }
             })
+        }
+    }
+</script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script> -->
+<script>
+    $(function() {
+        var formData = new FormData();
+       
+       // alert($("input[name=csrf_token]").val());
+        formData.append('csrf_token', $("input[name=csrf_token]").val());
+        $.ajax({
+            url: '<?php echo site_url("favourites/json_dashboard_data"); ?>',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                console.log(data);
+                // alert(data);
+                $('.dn-items').append(data);
+            },
+            error: function(error) {
+                console.log(error);
+            },
+            complete: function(data) {
+                console.log(data);
+            }
+        })
+        // window.DT = $('#preferences-table').DataTable({
+        //     processing: true,
+        //     serverSide: true,
+        //     ajax: "<?php // echo site_url('favourites/json'); ?>"
+        // });
+    });
+</script>
+<script>
+    function edit(user_property_id) {
+        var form = document.createElement("form");
+        var element1 = document.createElement("input");
+        var element2 = document.createElement("input");
+        form.method = "POST";
+        form.action = "<?php echo site_url('my_properties/edit'); ?>";
+        element1.value = user_property_id;
+        element1.name = "user_property_id";
+        form.appendChild(element1);
+        element2.value = $("input[name=csrf_token]").val();
+        element2.name = "csrf_token";
+        form.appendChild(element2);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
+    function del(property_id) {
+        if (confirm("Are You sure to perform this action?")) {
+            $.ajax({
+                url: "<?php echo site_url('my_properties/del'); ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    property_id: property_id,
+                    'csrf_token': $("input[name=csrf_token]").val()
+                },
+                success: function(arg) {
+                    toastr[arg.type](arg.text);
+                    if (arg.type == 'success') {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    }
+
+    function change_status(property_id) {
+        if (confirm("Are You sure to perform this action?")) {
+            $.ajax({
+                url: "<?php echo site_url('my_properties/change_status'); ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    property_id: property_id,
+                    'csrf_token': $("input[name=csrf_token]").val()
+                },
+                success: function(arg) {
+                    toastr[arg.type](arg.text);
+                    if (arg.type == 'success') {
+                        window.location.reload();
+                    }
+                }
+            });
+        }
+    }
+
+    function soldout(property_id) {
+        if (confirm("Are You sure to perform this action? This action can not be undone.")) {
+            $.ajax({
+                url: "<?php echo site_url('my_properties/mark_sold'); ?>",
+                type: 'POST',
+                dataType: 'json',
+                data: {
+                    property_id: property_id,
+                    'csrf_token': $("input[name=csrf_token]").val()
+                },
+                success: function(arg) {
+                    toastr[arg.type](arg.text);
+                    if (arg.type == 'success') {
+                        window.location.reload();
+                    }
+                }
+            });
         }
     }
 </script>

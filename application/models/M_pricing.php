@@ -202,7 +202,7 @@ class M_pricing extends CI_Model
                         ->update('invoices', ['user_package_ref_id' => $user_package_ref_id]);
 
                 $this->session->set_flashdata('payment_ref', $invoice->id);
-                redirect('invoices/paymentsuccess');
+                redirect('subscription/user');
 
             }
             else if ($this->db->insert('user_packages', $users_packages_data)) {
@@ -319,7 +319,7 @@ class M_pricing extends CI_Model
                         ->update('invoices', ['user_package_ref_id' => $user_package_ref_id]);
 
                 $this->session->set_flashdata('payment_ref', $invoice->id);
-                redirect('invoices/paymentsuccess');
+                redirect('subscription/user');
             }
         }
         echo "<script>alert('Invalid Invoice');</script>";
@@ -433,11 +433,11 @@ class M_pricing extends CI_Model
         }
 
         // total is same as submitted total amount
-        $tot_price = $area_price + $days_price;
-        if(intval($total) != intval($tot_price) && ($action == 'new')) {            
-            return ['type'=> 'error', 'text' => 'Total Amount is not same'. $area_price.'/'.$days_price];
-            exit;
-        }
+        // $tot_price = $area_price + $days_price;
+        // if(intval($total) != intval($tot_price) && ($action == 'new')) {            
+        //     return ['type'=> 'error', 'text' => 'Total Amount is not same'. $area_price.'/'.$days_price];
+        //     exit;
+        // }
 
         $package_details = [];
 

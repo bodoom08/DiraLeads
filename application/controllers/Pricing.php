@@ -144,9 +144,10 @@ class Pricing extends CI_Controller
     public function pricing_pref() {
         ini_set('display_errors', 1);
         if(empty($_POST))
-            redirect(site_url('/pricing/custom_pricing'));
+            // redirect(site_url('/pricing/custom_pricing'));
         
-        extract($_POST);
+        extract($_POST); 
+        $subscribe_info = '{"package_selected_id":"14","days_select_noof":"1","area_select_noof":"1","total":62,"action":"new","pack_name":"short term rent","short_term_available_date":null}';
         $data['subscribe_info']  = $subscribe_info;
         $data['user_pref'] = $this->db->select(
             'notification_phone, notification_phone_no, notification_email, notification_email_id, notification_fax, notification_fax_no, notification_frequence')->where('id', $_SESSION['id'])->get('users')->row();
@@ -489,10 +490,12 @@ class Pricing extends CI_Controller
             $data['package_pref_attr'] = $user_package_pref_attr;
             $data['record_id'] = $package_table_id;
             if($action == 'renew') {
-                $this->load->view('pricing_plans_custom_readonly', $data);
+                redirect(site_url('/pricing/pricing_pref'));
+                // $this->load->view('pricing_plans_custom_readonly', $data);
             }
             else {
-                $this->load->view('pricing_plans_custom_edit', $data);
+                 redirect(site_url('/pricing/pricing_pref'));
+                // $this->load->view('pricing_plans_custom_edit', $data);
             }
 
         }

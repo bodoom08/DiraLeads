@@ -8,6 +8,10 @@
         <li><a href="<?php echo site_url('areas'); ?>"><i class="fa fa-map"></i>Areas</a></li>
         <li><a href="<?php echo site_url('agents'); ?>"><i class="fa fa-vcard"></i>Customer Service Representative</a></li>
     </ul>
+    <ul>
+        <li><a href="<?php echo site_url('property/reported'); ?>"><i class="fa fa-building-o"></i>Reported Properties</a></li>
+    </ul>
+
     <h4>Subscribed Packages</h4>
     <ul>
         <li><a href="<?php echo site_url('package'); ?>"><i class="fa fa-envelope-o"></i>User subscribed packages</a></li>

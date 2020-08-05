@@ -41,7 +41,24 @@ class M_page extends CI_Model
 
         return ['type' => 'warning', 'text' => 'Name and Email/Phone is required!'];
     }
-
+   function get_areas() {
+       return $this->db
+            ->get('areas')
+            ->result_array();
+   }
+    function propertiesCount() {
+$this->db->select('areas.id,title');
+$this->db->from('areas');
+$this->db->join('properties', 'properties.area_id = areas.id' );
+$this->db->where('vn_id is  NOT NULL'); 
+$this->db->where('for','short term rent'); 
+$query = $this->db->get(); 
+$data = $query->result_array();
+foreach($data as $key=>$d){
+    $data[$key] = $d['title'];
+}
+return $data;
+   }
     function home_page_livedata() {
         $no_of_sale = sizeof($this->db
                      ->where('for', 'sale')

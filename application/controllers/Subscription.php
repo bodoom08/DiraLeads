@@ -52,7 +52,7 @@ class Subscription extends MOBO_Controller
                     $row['package_name'],
                     $row['validity'],
                     $row['no_of_area'],
-                    $row['price'],
+                    // $row['price'],
                     $row['start_date'],
                     $row['end_date'],
                     $actions,

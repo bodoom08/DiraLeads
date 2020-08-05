@@ -342,7 +342,7 @@ $this->load->view('common/top', [
 
         tot_price = tot_price - disc_amnt;
 
-        if(tot_price > 0) {
+        if(tot_price >= 0) {
             $('#tot_price').text(tot_price+'$');
             $('#subscribe').prop('disabled', false);
             price_arr.tot_price = tot_price;

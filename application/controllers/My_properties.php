@@ -55,6 +55,12 @@ class My_properties extends CI_Controller
         if (!$_POST) {
             redirect('my_properties');
         }
+        if($_POST['forDate']){
+           $_SESSION['forDate'] = $_POST['forDate'];
+        }else{
+             $_SESSION['forDate'] = '';
+        }
+        // echo $_SESSION['forDate'];die();
         $data['attributes'] = $this->M_property->getAllAttributes();
         $data['areas'] = $this->M_property->getAllAreas();
         $data['property'] = $this->M_property->edit();

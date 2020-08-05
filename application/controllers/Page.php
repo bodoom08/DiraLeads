@@ -22,8 +22,20 @@ class Page extends MOBO_Controller
 		
 		if($this->slug == 'home') {
 			$data['livedata'] = $this->M_page->home_page_livedata();
+			$data['areas'] = $this->M_page->get_areas();
+			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
 		}
-		$this->load->view('page', $data);
+	
+		if($this->slug == 'home') {
+			$this->load->view('home_new', $data);
+		}elseif($this->slug == 'about'){
+			$this->load->view('about_us', $data);
+		}elseif($this->slug == 'neighborhood'){
+			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
+			$this->load->view('neighborhood', $data);
+		}else{
+			$this->load->view('page', $data);
+		}
 	}
 
 	function appendHTML(DOMNode &$parent, $source) {

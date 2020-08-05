@@ -26,70 +26,16 @@ class M_property extends CI_Model
     {
         array_walk_recursive($_POST, 'trim');
         extract($_POST);
-        // $lat_lng = "31.7927312|35.212823"; // hardcode for test
-        // print_r($_POST);
-        // die();
-        $available_date = date('Y-m-d');
-        if(empty($lat_lng)) {
-            return ['type' => 'error', 'text' => 'Please select area on Map or Search for Area'];
-        }
-        if ($property && $street && $area_id && $property_type && $price && $available_date && $lat_lng) {
+        $available_date = $date;
+      
+        if ($street && $area_id && $property_type && $price && $available_date && $property_desc) {
             if (empty($attribute_id) || empty($value)) {
                 return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
             }
-            // else if(empty($_FILES)) {
-            //     return ['type' => 'error', 'text' => 'Please Upload photo!'];
-            // }            
-            
-            if(empty($phone) || empty($email))
-                return ['type' => 'error', 'text' => 'Phone and Email both are required!'];
-            
-            $contact_type = implode(',', ['phone', 'email']);
-            if(!empty($sunday))
-                $day_arr[] = 'sunday';
-            if(!empty($monday))
-                $day_arr[] = 'monday';
-            if(!empty($tuesday))
-                $day_arr[] = 'tuesday';
-            if(!empty($wednesday))
-                $day_arr[] = 'wednesday';
-            if(!empty($thursday))
-                $day_arr[] = 'thursday';
-            if(!empty($friday))
-                $day_arr[] = 'friday';
-            if(!empty($saturday))
-                $day_arr[] = 'saturday';
-            
-            if(empty($day_arr))
-                return ['type' => 'error', 'text' => 'Please selct at least one day!'];
-            
-            $day_arr = implode(',', $day_arr);
-            
-            if(!empty($time) && ($time == 'custom')) {
-                if(empty($start_time) && empty($end_time))
-                    return ['type' => 'error', 'text' => 'Start Time and End Time both required for custom time.'];
-                else if(strtotime($start_time) >= strtotime($end_time))
-                    return ['type' => 'error', 'text' => 'Start Time should not greater than or equal to End Time.'];
-                
-                if(!empty($start_time))
-                    $start_time = date("H:i", strtotime($start_time));
-                else
-                    $start_time = '';
-                if(!empty($end_time))
-                    $end_time = date("H:i", strtotime($end_time));
-                else
-                    $end_time = '';
-            }
 
-            // check for available date if property type is short term rent
-            if(($property == 'short term rent') && empty($short_term_available_date)) {
-                return ['type' => 'error', 'text' => 'Please select at least one available date for short term rent!'];
+            if (strlen($property_desc) < 60) {
+                return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
             }
-            else if($property != 'short term rent'){
-                $short_term_available_date = '';
-            }
-
-            
 
             // Check the property Image before upload
             if(!empty($_FILES)) {
@@ -117,79 +63,97 @@ class M_property extends CI_Model
                     }
                 }    
             }            
-            
+            if($amenities){    
+            $amenitie = implode(',',$amenities);
+            }else{
+              $amenitie ="";  
+            }
             $property_data = [
                 'user_id' => $_SESSION['id'],
-                'for' => $property,
+                'for' => 'short term rent',
                 'house_number' => $house_no,
+                'amenities'=>$amenitie,
                 'street' => $street,
                 'area_id' => $area_id,
                 'type' => $property_type,
                 'price' => $price,
+                'date_price' => $date_price,
                 'available_date' => date('Y-m-d', strtotime($available_date)),
                 'description' => $property_desc,
                 'coords' => json_encode(explode('|', $lat_lng)),
                 'created_by' => $_SESSION['id'],
-                'created_at' => date('Y-m-d H:i:s'),
-                'contact_type' => $contact_type,
-                'day_of_the_weak' => $day_arr,
-                'time_of_day' => $time,
-                'from_time' => $start_time,
-                'to_time' => $end_time,
-                'short_term_available_date' => $short_term_available_date
+                'created_at' => date('Y-m-d H:i:s')
             ];            
 
             if ($this->db->insert('properties', $property_data)) {
-                $property_id = $this->db->insert_id();
-                foreach ($attribute_id as $key => $attribute) {
-                    $i = array_search($attribute, $attribute_id);
-                    $attribute_data[] = [
-                        'property_id' => $property_id,
-                        'attribute_id' => $attribute,
-                        'value' => $value[$i],
-                        'created_at' => date('Y-m-d H:i:s')
-                    ];
+                    $property_id = $this->db->insert_id();
+                    foreach ($attribute_id as $key => $attribute) {
+                        $i = array_search($attribute, $attribute_id);
+                        if (!$value[$i]) {
+                        return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
+                         }
+                        $attribute_data[] = [
+                            'property_id' => $property_id,
+                            'attribute_id' => $attribute,
+                            'value' => $value[$i],
+                            'created_at' => date('Y-m-d H:i:s')
+                        ];
+                    }
+                if(empty($date_price)){
+                    
+                    $sessional = explode('&',$rule_data);
+                    foreach($sessional as $key=>$valu){
+                        $signle = explode('|',$valu);
+                         $session_data[] = [
+                            'name' => $signle[0],
+                            'start_date' => $signle[1],
+                            'end_date' => $signle[2],
+                            'days' => $signle[3],
+                            'price' => $signle[4],
+                            'property_id' => $property_id
+                        ];
+                    }
+                     $this->db->insert_batch('properties_sessional', $session_data);
                 }
+                   
+                  
                 if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
                     
-                    if(!empty($_FILES)) {
-                        $this->load->library('upload');
-                        // $files = $_FILES;
-                        // print_r($files);
-                        // die;
-                        $cpt = count($files['userfile']['name']);
-                        $path = FCPATH . "/uploads";
-                        $config = array();
-                        $config['upload_path'] = $path;
-                        $config['allowed_types'] = 'jpg|jpeg|png';
-                        $config['max_size'] = '0';
-                        $config['overwrite'] = false;
-                        for ($i = 0; $i < $cpt; $i++) {
-                            $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-                            $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-                            $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-                            $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-                            $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-    
-                            $this->upload->initialize($config);
-    
-                            if (!$this->upload->do_upload()) {
-                                $errors = $this->upload->display_errors();
-                                return ['type' => 'error', 'text' => $errors];
-                            } else {
-                                $dataupload = array('upload_data' => $this->upload->data());
-                                $image_data[] = array(
-                                    'property_id' => $property_id,
-                                    'path' => $dataupload['upload_data']['file_name'],
-                                    'created_at' => date('Y-m-d H:i:s')
-                                );
+                        if(!empty($_FILES)) {
+                            $this->load->library('upload');
+                            $cpt = count($files['userfile']['name']);
+                            $path = FCPATH . "/uploads";
+                            $config = array();
+                            $config['upload_path'] = $path;
+                            $config['allowed_types'] = 'jpg|jpeg|png';
+                            $config['max_size'] = '0';
+                            $config['overwrite'] = false;
+                            for ($i = 0; $i < $cpt; $i++) {
+                                $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+                                $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+                                $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+                                $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+                                $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+        
+                                $this->upload->initialize($config);
+        
+                                if (!$this->upload->do_upload()) {
+                                    $errors = $this->upload->display_errors();
+                                    return ['type' => 'error', 'text' => $errors];
+                                } else {
+                                    $dataupload = array('upload_data' => $this->upload->data());
+                                    $image_data[] = array(
+                                        'property_id' => $property_id,
+                                        'path' => $dataupload['upload_data']['file_name'],
+                                        'created_at' => date('Y-m-d H:i:s')
+                                    );
+                                }
                             }
+                            if (!$this->db->insert_batch('property_images', $image_data)) {
+                                return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
+                            }
+                            
                         }
-                        if (!$this->db->insert_batch('property_images', $image_data)) {
-                            return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
-                        }
-                        
-                    }
                     $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
                     $vn_id_arr = array_column($result, 'vn_id');
 
@@ -198,24 +162,25 @@ class M_property extends CI_Model
                         ->get('virtual_numbers')
                         ->row();
                     
-                    // $virtualNumber = false;
+                    $virtualNumber = false;
+                    $this->load->helper('telnyx_number');
                     if($virtualNumber) {
                         $this->load->helper('did');
                         allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
                     } else {
-                        $this->load->library('telnyx');
+                        // $this->load->library('telnyx');
 
-                        $numberResult = $this->telnyx->searchNumbers(["country_iso" => 'us', 'state' => 'NY'], 1);
+                        $numberResult = searchNumbersHelper('us','NY');
 
                         if (count($numberResult['result']) > 0) {
                             $number_e164 = $numberResult['result'][0]['number_e164'];
 
-                            $numberOrders = $this->telnyx->createNumberOrders($number_e164);
+                            $numberOrders = createNumberOrdersHelper($number_e164);
 
                             if (is_array($numberOrders)) {
                                 $this->db->insert('virtual_numbers', [
                                     'number' => $number_e164,
-                                    'details' => json_encode($this->telnyx->myNumbers($number_e164))
+                                    'details' => json_encode(myNumbersHelper($number_e164))
                                 ]);
 
                                 $this->load->helper('did');
@@ -306,60 +271,27 @@ class M_property extends CI_Model
         extract($this->input->post());
 
 
-        $available_date = date('Y-m-d');
-        if ($property  && $street && $area_id && $property_type && $price && $available_date) {
+        $available_date = $date;
+        $property = 'short term rent';
+        if ($property  && $street && $area_id && $property_type && $price && $available_date && $property_desc) {
             if (empty($attribute_id) || empty($value)) {
                 return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
             }
-            
-            if(empty($phone) || empty($email))
-                return ['type' => 'error', 'text' => 'Phone and Email both are required!'];
-            
-            $contact_type = implode(',', ['phone', 'email']);
-            if(!empty($sunday))
-                $day_arr[] = 'sunday';
-            if(!empty($monday))
-                $day_arr[] = 'monday';
-            if(!empty($tuesday))
-                $day_arr[] = 'tuesday';
-            if(!empty($wednesday))
-                $day_arr[] = 'wednesday';
-            if(!empty($thursday))
-                $day_arr[] = 'thursday';
-            if(!empty($friday))
-                $day_arr[] = 'friday';
-            if(!empty($saturday))
-                $day_arr[] = 'saturday';
-            
-            if(empty($day_arr))
-                return ['type' => 'error', 'text' => 'Please selct at least one day!'];
-            
-            $day_arr = implode(',', $day_arr);
-            
-            if(!empty($time) && ($time == 'custom')) {
-                if(empty($start_time) && empty($end_time))
-                    return ['type' => 'error', 'text' => 'Start Time and End Time both required for custom time.'];
-                else if(strtotime($start_time) >= strtotime($end_time))
-                    return ['type' => 'error', 'text' => 'Start Time should not greater than or equal to End Time.'];
-                
-                if(!empty($start_time))
-                    $start_time = date("H:i", strtotime($start_time));
-                else
-                    $start_time = '';
-                if(!empty($end_time))
-                    $end_time = date("H:i", strtotime($end_time));
-                else
-                    $end_time = '';
+            if (strlen($property_desc) < 60) {
+                return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
             }
-            else if($time != 'custom')
-                $end_time = $start_time = '';
-
             // check for available date if property type is short term rent
             if(($property == 'short term rent') && empty($short_term_available_date)) {
                 return ['type' => 'error', 'text' => 'Please selct at least one available date for short term rent!'];
             }
             else if($property != 'short term rent'){
                 $short_term_available_date = '';
+            }
+
+            if(($property == 'short term rent') && !empty($short_term_available_date)) {
+                $arr = explode(',', $short_term_available_date);
+                $trimmed_array=array_map('trim',$arr);
+                $short_term_available_date = implode(',', $trimmed_array);
             }
 
             // remove the existing files
@@ -398,23 +330,27 @@ class M_property extends CI_Model
                     }
                 }
             }
-            
-            
+            if($amenities){    
+            $amenitie = implode(',',$amenities);
+            }else{
+              $amenitie ="";  
+            }
             $property_data = [
                 'for' => $property,
-                'house_number' => $house_no,
+                // 'house_number' => $house_no,
                 'street' => $street,
                 'area_id' => $area_id,
                 'type' => $property_type,
                 'price' => $price,
                 'available_date' => date('Y-m-d', strtotime($available_date)),
                 'description' => $property_desc,
+                'amenities' => $amenitie,
                 'updated_at' => date('Y-m-d H:i:s'),
-                'contact_type' => $contact_type,
-                'day_of_the_weak' => $day_arr,
-                'time_of_day' => $time,
-                'from_time' => $start_time,
-                'to_time' => $end_time,                
+                // 'contact_type' => $contact_type,
+                // 'day_of_the_weak' => $day_arr,
+                // 'time_of_day' => $time,
+                // 'from_time' => $start_time,
+                // 'to_time' => $end_time,                
                 'short_term_available_date' => $short_term_available_date
             ];
             if ($this->db->where('id', $property_id)->update('properties', $property_data)) {

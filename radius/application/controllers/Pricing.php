@@ -824,6 +824,87 @@ class Pricing extends MOBO_User
                 ->update('user_packages', ['area_ids' => implode(',', $area_id_arr)]);
 
 		die(json_encode(['type' => 'success', 'text' => 'Area preference successfully updated.']));
-	}
+    }
+    
+
+    public function subscribe_custom_no_pay() {
+        if(empty($_POST))
+            redirect(site_url('/pricing/custom_pricing'));
+        ini_set('display_errors', 1);
+
+        $this->load->library('BevelPay');
+        $subscribe_info = json_decode($_POST['subscribe_info']);
+        $user_id = $subscribe_info->user_info->id;
+
+        $package = $this->M_pricing->getConfiguredPackage();        
+        if($subscribe_info->action == 'renew') {
+            $renew_record = $this->db
+                        ->where('id', $subscribe_info->record_id)
+                        ->get('user_packages')
+                        ->row();
+            $arr = [
+                'name' => $renew_record->package_name,
+                'no_of_area' => $renew_record->no_of_area,
+                'no_of_days' => $renew_record->no_of_days,
+                'price' => $renew_record->price,
+                'area_price' => $renew_record->area_price,
+                'days_price' => $renew_record->days_price,
+            ];
+            // print_r($arr);
+            // die;
+
+            $package['package_info'] = json_decode($package['package_info'], true);
+            $package['package_info']['area_select_noof'] = $renew_record->no_of_area;
+            $package['package_info']['days_select_noof'] = $renew_record->no_of_days;
+            $package['package_info'] = json_encode($package['package_info']);  
+            
+            $package_details = [
+                'package_selected_id' => $renew_record->package_id,
+                'name' => $renew_record->package_name,
+                'area_select_noof' => $renew_record->no_of_area,
+                'no_of_area' => $renew_record->no_of_area,
+                'area_price' => $renew_record->area_price,
+                'days_select_noof' => $renew_record->no_of_days,
+                'no_of_days' => $renew_record->no_of_days,
+                'days_price' => $renew_record->days_price,
+                'price' => $subscribe_info->total,
+                'area_ids' => $renew_record->area_ids,
+            ];
+            $package['package_details'] = $package_details;
+        }        
+
+        $package_name = $package['package_details']['name'];
+        $package_price = $package['package_details']['price'];
+        $package_validity = $package['package_details']['no_of_days'];
+        
+        if(is_null($package)) {
+            show_404();
+            die;
+        }       
+
+        $description = $package_name . '($'.$package_price.') package subscription for '.$package_validity.' days';
+
+        $subscribe_info = json_decode($this->input->post('subscribe_info'));
+        if($subscribe_info->action == 'modify') {
+            $description = $package_name . '($'.$package_price.') package Modify for '.$package_validity.' days';
+        }
+        else if($subscribe_info->action == 'renew') {
+            $description = $package_name . '($'.$package_price.') package Renewed for '.$package_validity.' days';
+        }
+        else {
+            $description = $package_name . '($'.$package_price.') package subscription for '.$package_validity.' days';
+        }
+
+        $subscribed_info = json_decode($_POST['subscribe_info']);
+        
+        if($subscribe_info->action == 'renew') {
+            $package_id = $subscribe_info->package_selected_id;
+        }
+      
+        $invoiceId = $this->bevelpay->sale_package_nopay(
+            $package
+        );
+        $this->M_pricing->subscribe_package($invoiceId, $user_id);
+    }
     
 }

@@ -109,4 +109,26 @@ class Property extends MOBO_User
         echo '<pre>';
         print_r($virtualNumber);
     }
+
+    public function reported()
+    {
+        $this->load->view('reported_property');
+    }
+
+    public function reported_json()
+    {
+        $data = $this->M_property->getreported();
+
+        $data['data'] = array_map(
+            function ($row) {
+                $user_info = '<a style="color:blue; text-decoration:underline;" href="users?email=' . $row['user_email'] . '">'.$row['user_name'].'('.$row['user_email'].')'.'</a>';
+                
+                return [$row['id'], $user_info, ucwords($row['reason']), ucwords($row['other_reason'])];
+            },
+            $data['data'],
+            array_keys($data['data'])
+        );
+
+        exit(json_encode($data));
+    }
 }

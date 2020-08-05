@@ -6,6 +6,7 @@ $this->load->view('common/layout/top', [
 ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://www.jqueryscript.net/demo/Country-Calling-Code-Picker-jQuery-Ccpicker/css/jquery.ccpicker.css">
 <style>
     .select2-container--default .select2-selection--single{
         height:45px;
@@ -38,17 +39,19 @@ $this->load->view('common/layout/top', [
                             <input type="email" name="email" class="input-text" placeholder="Email Address">
                             <div class="infoarea"></div>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group country-code">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;">
-                                        <option value="">Select Country Code</option>
-                                        <?php foreach($countries as $country) { ?>
-                                            <option value="<?php echo '+'.$country->phonecode; ?>"><?php echo $country->nicename.'(+'.$country->phonecode.')'; ?></option>
-                                        <?php } ?>
-                                    </select>
+                                <div class="col-lg-4">
+                                    <label for="">Country Code<code>*</code></label><br/>
+                                    <input type="text" id="country" name="country" class="phone-field" style="border: 0;opacity: 0;visibility: hidden;">
+                                    <!-- <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;"> -->
+                                        <!-- <option value="">Select Country Code</option> -->
+                                        <?php //foreach($countries as $country) { ?>
+                                            <!-- <option value="<?php //echo '+'.$country->phonecode; ?>"><?php //echo $country->nicename.'(+'.$country->phonecode.')'; ?></option> -->
+                                        <?php //} ?>
+                                    <!-- </select> -->
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-8">
                                     <input type="number" name="mobile" class="input-text" placeholder="Mobile Number">
                                 </div>
                             </div>
@@ -93,8 +96,19 @@ $this->load->view('common/layout/top', [
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/js/select2.min.js"></script>
+<script src="https://www.jqueryscript.net/demo/Country-Calling-Code-Picker-jQuery-Ccpicker/js/jquery.ccpicker.js"></script>
 <script>
-    $('#country').select2();
+    $(function() {
+        $("#country").CcPicker({
+            "countryCode":"us",
+            dataUrl:"<?php echo site_url('register/country_json'); ?>"
+        });
+        $("#country").on("countrySelect", function(e, i){
+            // alert(i.countryName + " " + i.phoneCode);
+        });
+    });
+
+    // $('#country').select2();
     $('#registerForm').ajaxForm({
         dataType: 'json',
         beforeSubmit: function() {

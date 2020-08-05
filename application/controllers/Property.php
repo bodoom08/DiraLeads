@@ -22,4 +22,26 @@ class Property extends MOBO_Controller
 	{
         exit(json_encode($this->M_property->property_listing()));
 	}
+
+	public function short_term_date_range_search()
+	{
+		$from = new DateTime('2020-03-01');
+		$to = new DateTime('2020-03-14');
+		$count = 1;
+		$query = 'SELECT * FROM properties WHERE ';
+		for ($i=$from; $i <= $to; $i->modify('+1 days')) { 
+			if($count == 1) {
+				$query .= "FIND_IN_SET('".$i->format("Y-m-d")."', short_term_available_date)";
+			} else {
+				$query .= " OR FIND_IN_SET('".$i->format("Y-m-d")."', short_term_available_date)";
+			}
+			$count++;
+		}
+
+		echo '<pre>';
+
+		$result = $this->db->query($query)->result();
+		print_r($result);
+
+	}
 }

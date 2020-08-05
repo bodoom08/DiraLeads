@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://' . $_SERVER['HTTP_HOST'];
+$config['base_url'] = 'https://diraleads.tk/';
 
 /*
 |--------------------------------------------------------------------------

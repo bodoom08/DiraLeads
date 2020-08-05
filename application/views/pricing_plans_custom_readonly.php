@@ -51,7 +51,7 @@ $this->load->view('common/layout/top', [
             <?php if(!empty('package_name')): ?>
                 <div class="col-lg-5 col-lg-offset-3">
                     <div class="row">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12 d-none">
                             <div class="form-group">
                                 <label for="">Select Package Name <span class="text-danger">*</span></label>
                                 <select class="form-control" id="package_select" onChange="changePackage(this.selectedIndex)">
@@ -69,7 +69,7 @@ $this->load->view('common/layout/top', [
                             </div>
                         </div>
                         <div class="col-lg-4 d-none">
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="">Price($)</label>
                                 <input type="text" class="form-control" value="" name="package_price" readonly>
                             </div>
@@ -98,7 +98,7 @@ $this->load->view('common/layout/top', [
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="">Price($)</label>
                                 <input type="text" class="form-control" value="" name="days_price" readonly>
                             </div>
@@ -115,7 +115,7 @@ $this->load->view('common/layout/top', [
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-group">
+                            <div class="form-group d-none">
                                 <label for="">Price($)</label>
                                 <input type="text" class="form-control" value="" name="area_price" readonly>
                             </div>
@@ -136,28 +136,21 @@ $this->load->view('common/layout/top', [
                         </tr>
                         <tr>
                             <td>
-                                No Of Days = &nbsp;&nbsp;<em><span id="lbl_daysprice"></span></em>
+                                No Of Days = &nbsp;&nbsp;<em></em>
                             </td>
                             <td>
-                                <span id="tot_daysprice"></span>
+                                <span id="lbl_daysprice"></span>
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                No Of Areas = &nbsp;&nbsp;<em><span id="lbl_areaname"></span></em>
+                                No Of Areas = &nbsp;&nbsp;<em></em>
                             </td>
                             <td>
-                                <span id="tot_areaprice"></span>
+                               <span id="lbl_areaname"></span>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                Total=
-                            </td>
-                            <td>
-                                <em style="font-size:19px; font-weight:600;"><span id="tot_price"></span></em>
-                            </td>
-                        </tr>
+                       
                     </table>
                     <?php if(!isset($_SESSION['id'])) { ?>
                         <button class="btn btn-block btn-primary" id="subscribe" disabled onclick="location.href='/login?continue=<?php echo urlencode(site_url('/pricing/custom_pricing')); ?>'">Update Package</button>

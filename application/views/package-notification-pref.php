@@ -45,7 +45,7 @@ $this->load->view('common/layout/top', [
                                 <div class="card-header" id="headingOne">
                                     <h2 class="mb-0">
                                         <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne_<?php echo $i+1; ?>" aria-expanded="true" aria-controls="collapseOne_<?php echo $i+1; ?>">
-                                            Area <?php echo $i+1; ?>
+                                            Area
                                         </button>
                                     </h2>
                                 </div>
@@ -324,7 +324,7 @@ $this->load->view('common/layout/top', [
                 toastr[arg.type](arg.text);
 
             if (arg.type == 'success') {
-                toastr['success']('We are going to redirect you to the payment gateway, Please wait...');
+                toastr['success']('We are going to redirect you , Please wait...');
                 $subscribe_info = JSON.parse('<?php echo $subscribe_info; ?>');
                 $subscribe_info.short_term_available_date = arg.short_term_available_date;
                 $('input[name="subscribe_info"]').val(JSON.stringify($subscribe_info));

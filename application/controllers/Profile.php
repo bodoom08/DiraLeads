@@ -12,7 +12,7 @@ class Profile extends CI_Controller
 	}
 	public function index()
 	{
-		$countries = $this->db->get('country')->result();
+		$countries = $this->db->where('is_active', '1')->order_by('nicename','desc')->get('country')->result();
 		$userinfo  = $this->db->where('id', $_SESSION['id'])->get('users')->row();
 		$this->load->view('my-profile', compact('countries', 'userinfo'));
 	}

@@ -14,13 +14,13 @@ $this->load->view('common/layout/top', [
 
                     <div class="details">
 
-                        <h6 class="mb-20">Verify Registartion</h6>
+                        <h6 class="mb-20">Verify Registration</h6>
                         <?php echo form_open('register/verify_otp', 'id="regVerifyForm" class=""'); ?>
                         <div class="form-group">
                             <code>Please enter OTP sent to <b><span id="verifyEmailID"><?php echo urldecode($_GET['email']); ?></span></b></code>
                         </div>
                         <div class="form-group">
-                            <input type="number" maxlength="6" name="reg_verify_otp" class="input-text" placeholder="Verification OTP">
+                            <input type="number" maxlength="6" name="reg_verify_otp" value="<?php if($_GET['otp']){ echo $_GET['otp']; } ?>" class="input-text" placeholder="Verification OTP">
                         </div>
                         <div class="checkbox">
                             <a href="login" class="link-not-important pull-right"><i class="fa fa-sign-in"></i> Login</a>
@@ -58,7 +58,7 @@ $this->load->view('common/layout/top', [
             toastr[arg.type](arg.text);
             if(arg.type == 'success') {
                 setTimeout(() => {
-                    window.location.href= '<?php echo site_url('login') ?>';
+                    window.location.href= '<?php echo site_url('profile') ?>';
                 }, 2000);
             }
         }

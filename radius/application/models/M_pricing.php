@@ -93,7 +93,7 @@ class M_pricing extends CI_Model
 
         $package_details = [];
 
-        if($package_name != '' && $total > 0) {
+        if($package_name != '') {
             $package_details = [
                 'name' => $package_name,
                 'price' => $total,
@@ -116,7 +116,9 @@ class M_pricing extends CI_Model
         ini_set('display_errors', 1);
         $invoice = $this->db->where('id', $invoiceId)->get('invoices')->row();
         if ($invoice) {
+            // echo '<pre>'
             $package = json_decode($invoice->package);
+            // die(print_r($package));
             
             $subscribe_info = json_decode($this->input->post('subscribe_info'));
             if($subscribe_info->action == 'modify') {

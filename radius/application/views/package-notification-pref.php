@@ -25,7 +25,13 @@ $this->load->view('common/layout/top', [
                         'name' => 'subscribeForm',
                         'id' => 'subscribeForm'
                     ];
-                    echo form_open('pricing/subscribe_custom', $arr); ?>
+                    $info = json_decode($subscribe_info);
+                    if($info->total > 0) {
+                        $action = 'pricing/subscribe_custom';
+                    } else {
+                        $action = 'pricing/subscribe_custom_no_pay';
+                    }
+                    echo form_open($action, $arr); ?>
                     <input type="hidden" name="subscribe_info"  value='<?php echo $subscribe_info; ?>'/>
                     <input type="hidden" name="subscribe_pref_info">
                 <?php echo form_close(); ?>
@@ -323,7 +329,7 @@ $this->load->view('common/layout/top', [
             if(arg.type != "success")
                 toastr[arg.type](arg.text);
             if (arg.type == 'success') {
-                toastr['success']('We are going to redirect you to the payment gateway, Please wait...');
+                toastr['success']('We are going to redirect you, Please wait...');
                 $subscribe_info = JSON.parse('<?php echo $subscribe_info; ?>');
                 $subscribe_info.short_term_available_date = arg.short_term_available_date;
                 $('input[name="subscribe_info"]').val(JSON.stringify($subscribe_info));

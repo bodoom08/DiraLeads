@@ -449,6 +449,8 @@ class Service extends CI_Controller
         // die('ssasasas');
         $this->load->library('telnyx');
         $numberResult = $this->telnyx->searchNumbers(["country_iso" => 'us', 'state' => 'NY'], 1);
+        var_dump($numberResult);
+        die;
 
         if (count($numberResult['result']) > 0) {
             $number_e164 = $numberResult['result'][0]['number_e164'];
@@ -464,46 +466,53 @@ class Service extends CI_Controller
         }
     }
 
-    function telnyx_number_test() {
+    function telnyx_curl_get_numbers() {
         $curl = curl_init();
+        $country_iso = "us";
+        $state = "NY";
+
 
         curl_setopt_array($curl, array(
-        CURLOPT_URL => "https://api.telnyx.com/origination/number_searches",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "POST",
-        CURLOPT_POSTFIELDS => "{\n    \"search_type\": 2,\n    \"limit\": 10,\n    \"search_descriptor\": {\n    \t\"country_iso\": \"us\",\n\t    \"state\": \"NY\"\n    }\n}",
-        CURLOPT_HTTPHEADER => array(
-            "Accept: application/json",
-            "Accept-Encoding: gzip, deflate",
-            "Cache-Control: no-cache",
-            "Connection: keep-alive",
-            "Content-Length: 120",
-            "Content-Type: application/json",
-            "Host: api.telnyx.com",
-            "Postman-Token: 74a1a5e2-9e6b-40d4-b1ee-3d24f2bc6864,b4185687-b55c-47bf-bb87-c590237b864a",
-            "User-Agent: PostmanRuntime/7.19.0",
-            "cache-control: no-cache",
-            "x-api-token: {{pman_token}}",
-            "x-api-user: {{pman_email}}"
+          CURLOPT_URL => "https://api.telnyx.com/origination/number_searches",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "POST",
+          CURLOPT_POSTFIELDS =>"{\r\n  \"search_descriptor\": {\r\n    \"country_iso\": \"$country_iso\",\r\n    \"state\": \"$state\"\r\n  }\r\n}",
+          CURLOPT_HTTPHEADER => array(
+            "Content-Type: application/json"
         ),
-        ));
+      ));
 
-        $response = json_decode(curl_exec($curl));
-        $err = curl_error($curl);
+        $response = curl_exec($curl);
 
         curl_close($curl);
-
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
-            print_r($response);
-        }
+        echo $response;
     }
 
+    function telnyx_number_fn() {
+        $this->load->helper('telnyx_number');
+        $numberResult = searchNumbersHelper('us', 'NY');
+        if (count($numberResult['result']) > 0) {
+            $number_e164 = $numberResult['result'][0]['number_e164'];
+            $numberOrders = createNumberOrdersHelper($number_e164);
+            if (is_array($numberOrders)) {
+                $this->db->insert('virtual_numbers', [
+                    'number' => $number_e164,
+                    'details' => json_encode(myNumbersHelper($number_e164))
+                ]);
+            } else {
+                die(json_encode(['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin']));
+            }
+        }
+
+        // echo $response;
+    }
+
+    
     function telnyx_sms_test() {
         $this->load->helper('sms');
         send_sms('8116035597', 'Test SMS Using Telnyx');

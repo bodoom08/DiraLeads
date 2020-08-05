@@ -98,3 +98,7 @@ define('TELNYX_PROFILE_SECRET', 'u5slTZzvtPpKFbvjXCafmzkB');
 
 // Google Maps API Key
 define('API_KEY', 'AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A');
+
+//  Telnyx Credentials
+define('TEL_API_TOKEN', 'rgzYekljThirucLyvKhPoQ');
+define('TEL_API_USER', 'info@diraleads.com');

@@ -29,9 +29,9 @@ class Register extends CI_Controller
 		}
 		// Check if the email id is still now not verified
 		$rslts = $this->db
-									->where('email', $email)
-									->where('subscribe_verify', 'inactive')
-									->count_all_results('users');
+						->where('email', $email)
+						->where('subscribe_verify', 'inactive')
+						->count_all_results('users');
 		if($rslts == 0) {
 			redirect('login');
 		}
@@ -52,5 +52,27 @@ class Register extends CI_Controller
 			exit(json_encode($this->M_register->resend_verify_otp()));
 		}
 		exit(json_encode(['type' => 'error', 'text' => 'Oops! Server error occured.']));
+	}
+
+	function country_json() {
+		// $email = 'mobotics.aniruddha@gmail.com';
+		// $userinfo = $this->db->where('email', $email)->get('users')->row();
+		// die(json_encode($userinfo));
+		// Fecth the county code
+		$country =  $this->db
+					->select('nicename as  countryName, iso as code, phonecode as phoneCode')
+					->where('is_active', 1)
+					->order_by('countryName', 'DESC')
+					->get('country')
+					->result_array();
+		// $result = json_encode($country, true);
+		// $select = [
+		// 	'countryName' => 'Select',
+		// 	'code' => '--',
+		// 	'phoneCode' => '',
+		// ];
+		// $country = array_merge([$select], $country);
+		// print_r($country);
+		die(json_encode($country));
 	}
 }

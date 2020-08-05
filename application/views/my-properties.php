@@ -18,61 +18,80 @@ $this->load->view('common/front_end_layout/top', [
                 <div class="content-area5">
                     <div class="dashboard-content">
                         <div class="dashboard-list">
-                            <h3>My Properties List</h3>
-                            <div class="table-responsive">
-                            <table class="manage-table">
-                                <tbody>
+                           
+                             <div class="col-md-12 subs-sec">
+                             <h3 class="heading" style="border-bottom:0px;"> My Rentals</h3>
+                                <a href="<?php echo site_url('/rental');?>">Add New Rental</a>
+                             </div>
+    <div class="explore-content-box new">
+    <div class="container-fluid">
+        <div class="inner-content-box">
+            <div class="row">
+                                
+										
                                     <?php if (empty($my_properties)) { ?>
-                                        <tr class="responsive-table">
-                                            <h4 style="text-align: center;">Sorry, No Property Available!</h4>
-                                        </tr>
+                    
+                        <div class="col-lg-12 text-center mt-5 dashboard_fav">
+                      <p><i class="fa fa-search" aria-hidden="true"></i></p>
+                      <h5 class="text-head">No rentals listed</h5>
+                     <p>List your Rental <a href="/rental">Here</a></p>
+                  </div>
                                     <?php } else { ?>
                                         <style>
                                             .soldout {
                                                 opacity: 0.5;
                                             }
                                         </style>
+
                                         <?php foreach ($my_properties as $key => $value) : ?>
-                                            <tr class="responsive-table <?php echo ($value['sold'] == 'true') ? 'soldout' : ''; ?> ">
-                                                <td class="listing-photoo">
-                                                    <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>">
-                                                    <img src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo" class="img-fluid">
-                                                </td>
-                                                <td class="title-container">
-                                                    <h2><a href="#">For <?php echo ucfirst($value['for']); ?></a></h2>
-                                                    <h5 class="d-none d-xl-block d-lg-block d-md-block"><i class="flaticon-pin"></i> <?php echo  $value['house_number'] ?>, <?php echo $value['street'] ?> </h5>
-                                                    <h6 class="table-property-price">$<?php echo $value['price'] ?> / monthly</h6>
-                                                </td>
-                                                <?php if($value['sold'] == 'true'): ?>
-                                                    <td class="text-danger"><b>Sold</b></td>
-                                                <?php elseif ($value['number']) : ?>
-                                                    <td class="text-<?php echo ($value['status'] == 'active' ? 'success' : 'warning'); ?>"><?php echo ($value['status'] == 'active' ? '' : 'Paused'); ?></td>
-                                                <?php else : ?>
-                                                    <td class="text-danger" title="Number allocation failed at the time of your submission. Please contact admin to allocate a number for this property">Contact Admin !</td>
-                                                <?php endif; ?>
-                                                <td class="expire-date"><?php echo $value['available_date'] ?></td>
-                                                <td class="action">
-                                                    <?php if($value['sold'] != 'true') { ?>
-                                                    <a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil"></i> Edit</a>
-                                                    <a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa  <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a>
-                                                    <a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);" class="delete"><i class="fa fa-remove"></i> Delete</a>
-                                                    <a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban"></i> Sold Out</a>
-                                                    <?php } ?>
-                                                </td>
-                                            </tr>
+                                        <div class="col-md-4 col-lg-4">
+                                        <div class="item">
+                                        <div class="feat_property">
+                                        <div class="thumb <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">
+                                        <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>">
+                                        <img class="img-whp" src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo">
+                                        </div>
+
+                                        <div class="details">
+                                    <div class="tc_content">
+                                        <h4 class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">For <?php echo ucfirst($value['for']); ?></h4>
+                                        <p><span class="flaticon-placeholder <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><i class="fa fa-map-marker" aria-hidden="true"></i></span> <?php echo $value['street'] ?></p>
+                                        <ul class="prop_details <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">
+                                            <li class="list-inline-item"><a href="#"><span> <i class="fa fa-money" aria-hidden="true"></i> Price:</span> $<?php echo $value['price'] ?>/Monthly</a></li>
+                                             <li class="list-inline-item"><a href="#"> <span><i class="fa fa-calendar-o" aria-hidden="true"></i>Date:</span> <?php echo $value['available_date'] ?></a></li>
+                                        </ul>
+                                        <?php if($value['sold'] != 'true') { ?>
+                                        <ul class="action-sec">
+                                            <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+
+                                            <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] != 'active' ? 'Pause' : 'Resume'); ?></a></li>
+
+                                            <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                                            <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="editDate(<?php echo $value['id'] ?>);"> Availability & Pricing</a></li>
+                                           <!--  <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li> -->
+                                        </ul>
+                                        <?php } ?>
+                                        
+                                    </div>
+                                </div>
+                                    </div>
+                        </div>
+                    </div>
                                         <?php endforeach; ?>
                                     <?php } ?>
-                                </tbody>
-                            </table>
+                                
+                           
                             </div>
                             <div class="pagination-box hidden-mb-45 text-center">
                                 <nav aria-label="Page navigation example">
                                     <?php echo $this->pagination->create_links(); ?>
                                 </nav>
                             </div>
+                            </div>
+                            </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© 2019 Diraleads. Trademarks and brands are the property of their respective owners.</p>
+                    <p class="sub-banner-2 text-center">© <?php echo date('Y'); ?> Diraleads. Trademarks and brands are the property of their respective owners.</p>
                 </div>
             </div>
         </div>
@@ -94,7 +113,7 @@ $this->load->view('common/front_end_layout/top', [
         var element1 = document.createElement("input");
         var element2 = document.createElement("input");
         form.method = "POST";
-        form.action = "<?php echo site_url('my_properties/edit'); ?>";
+        form.action = "<?php echo site_url('my_rentals/edit'); ?>";
         element1.value = user_property_id;
         element1.name = "user_property_id";
         form.appendChild(element1);
@@ -105,8 +124,28 @@ $this->load->view('common/front_end_layout/top', [
         form.submit();
     }
 
+ function editDate(user_property_id) {
+        var form = document.createElement("form");
+        var element1 = document.createElement("input");
+        var element2 = document.createElement("input");
+        var element3 = document.createElement("input");
+        form.method = "POST";
+        form.action = "<?php echo site_url('my_rentals/edit'); ?>";
+        element1.value = user_property_id;
+        element1.name = "user_property_id";
+        form.appendChild(element1);
+        element2.value = '<?php echo $this->security->get_csrf_hash() ?>';
+        element2.name = "<?php echo $this->security->get_csrf_token_name() ?>";
+        form.appendChild(element2);
+        element3.value = 'dateCheck';
+        element3.name = "forDate";
+        form.appendChild(element3);
+        document.body.appendChild(form);
+        form.submit();
+    }
+
     function del(property_id) {
-        if (confirm("Are You sure to perform this action?")) {
+        if (confirm("Are you sure you want to delete your Rental?")) {
             $.ajax({
                 url: "<?php echo site_url('my_properties/del'); ?>",
                 type: 'POST',
@@ -126,7 +165,6 @@ $this->load->view('common/front_end_layout/top', [
     }
 
     function change_status(property_id) {
-        if (confirm("Are You sure to perform this action?")) {
             $.ajax({
                 url: "<?php echo site_url('my_properties/change_status'); ?>",
                 type: 'POST',
@@ -142,7 +180,7 @@ $this->load->view('common/front_end_layout/top', [
                     }
                 }
             });
-        }
+        
     }
 
     function soldout(property_id) {

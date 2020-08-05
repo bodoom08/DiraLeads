@@ -53,8 +53,8 @@
  *
  * NOTE: If you change these, also change the error_reporting() code below
  */
-// define('ENVIRONMENT', 'testing');
-define('ENVIRONMENT', 'testing');
+define('ENVIRONMENT', 'production');
+// define('ENVIRONMENT', 'development');
 setlocale(LC_MONETARY, 'en_US');
 
 /*

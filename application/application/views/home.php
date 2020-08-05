@@ -55,7 +55,7 @@ $this->load->view('common/layout/top', [
     </div>
 </div>
 
-<div class="services content-area ">
+<div class="services content-area  asdasd">
     <div class="container">
 
         <div class="main-title text-center">
