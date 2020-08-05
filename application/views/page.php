@@ -1,112 +1,60 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
-$this->load->view('common/layout/top', [
-    'title' => $title
-]);
-?>
+class Page extends MOBO_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->slug = $this->router->fetch_class();
+		$this->slug = $this->slug == 'page' ? 'home' : $this->slug;
+		$this->load->model('M_page');
+	}
 
-<?php if ($banner_type == 'main') : ?>
-    <div class="banner" id="banner">
-        <div id="bannerCarousole" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item banner-max-height active">
-                    <img class="d-block w-100" src="assets/img/slider.jpg" alt="banner">
-                    <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
-                        <div class="carousel-content container">
-                            <div class="text-center">
-                                <p>WANT TO BUY OR RENT HOME ?</p>
-                                <h3><span> DiraLeads</span> SOLVE YOUR<br />PROBLEMS</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item banner-max-height">
-                    <img class="d-block w-100" src="assets/img/slider.jpg" alt="banner">
-                    <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
-                        <div class="carousel-content container">
-                            <div class="text-center">
-                                <p>WANT TO BUY OR RENT HOME ?</p>
-                                <h3><span> DiraLeads</span> SOLVE YOUR<br />PROBLEMS</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="carousel-item banner-max-height">
-                    <img class="d-block w-100" src="assets/img/slider.jpg" alt="banner">
-                    <div class="carousel-caption banner-slider-inner d-flex h-100 text-center">
-                        <div class="carousel-content container">
-                            <div class="text-center">
-                                <p>WANT TO BUY OR RENT HOME ?</p>
-                                <h3><span> DiraLeads</span> SOLVE YOUR<br />PROBLEMS</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <a class="carousel-control-prev" href="#bannerCarousole" role="button" data-slide="prev">
-                <span class="slider-mover-left" aria-hidden="true">
-                    <i class="fa fa-angle-left"></i>
-                </span>
-            </a>
-            <a class="carousel-control-next" href="#bannerCarousole" role="button" data-slide="next">
-                <span class="slider-mover-right" aria-hidden="true">
-                    <i class="fa fa-angle-right"></i>
-                </span>
-            </a>
-        </div>
-    </div>
-<?php endif; ?>
+	public function index()
+	{
+		$data = $this->M_page->getPageData($this->slug);
 
-<?php if ($banner_type == 'sub') : ?>
-    <div class="sub-banner overview-bgi">
-    </div>
-<?php endif; ?>
+		if (is_null($data)) {
+			// show_404();			
+			redirect('notfound','refresh');
+			exit;
+		}
+		
+		if($this->slug == 'home') {
+			$data['livedata'] = $this->M_page->home_page_livedata();
+			$data['areas'] = $this->M_page->get_areas();
+			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
+		}
+		
+		if($this->slug == 'home') {
+			$this->load->view('home_new', $data);
+		}else{
+			$this->load->view('page', $data);
+		}
+	}
 
-<?php echo html_entity_decode($content); ?>
+	function appendHTML(DOMNode &$parent, $source) {
+		$tmpDoc = new DOMDocument();
+		$tmpDoc->loadHTML($source);
+		foreach ($tmpDoc->getElementsByTagName('body')->item(0)->childNodes as $node) {
+			$node = $parent->ownerDocument->importNode($node, true);
+			$parent->appendChild($node);
+		}
+	}
 
-<script type="text/javascript">
-    alert('ani');
-</script>
-<?php $this->load->view('common/layout/bottom'); ?>
-<script>    
-    var widgets = Array.from(document.getElementsByTagName('widget'));
-    var widgetNames = widgets.map(widget => widget.getAttribute('name'));
+	public function widgets()
+	{
+		// $names = json_decode($this->security->xss_clean($this->input->raw_input_stream));
+		$names = json_decode($this->security->xss_clean($this->input->post('widgetNames')));
+		exit(json_encode($this->M_page->getWidgetData($names)));
+	}
 
-    var request = new XMLHttpRequest();
-    request.open('POST', `/page/widgets`);
-    request.setRequestHeader('Content-Type', 'application/json')
+	public function contact()
+	{
+		if($this->input->method() != 'post' || !$this->input->is_ajax_request() ) {
+			redirect('/');
+		}
 
-    request.onload = function() {
-        if (request.status >= 200 && request.status < 400) {
-            var data = JSON.parse(request.responseText);
-            widgets.map(widget => {
-                var newElem = document.createElement("div");
-                newElem.innerHTML = data[widget.getAttribute('name')];
-                widget.parentNode.replaceChild(newElem, widget);
-            });
-            
-            $(document).ready(() => {
-                $('form').ajaxForm({
-                    dataType: 'json',
-                    success: function(arg) {
-                        toastr[arg.type](arg.text);
-                    },
-                    error: function(arg) {
-                        toastr[arg.type](arg.text);
-                    }
-                });
-            })
-        }
-    };
-
-    request.onerror = function() {
-        
-    };
-
-    request.send(JSON.stringify(widgetNames));
-
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-console.log('ani');
-</script>
+		exit(json_encode($this->M_page->contact()));
+	}
+}

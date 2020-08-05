@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://diraleads.tk/';
+$config['base_url'] = 'http://localhost/';
 
 /*
 |--------------------------------------------------------------------------
@@ -460,7 +460,7 @@ $config['csrf_cookie_name'] = 'csrf_cookie';
 $config['csrf_expire'] = 72000;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = [
-    'subscription/manage_subscribed_package_custom', 
+    'subscription/manage_subscribed_package_custom',
     'subscription/manage_package_area_info',
     'pricing/pay_package',
     'properties/viewDetails'

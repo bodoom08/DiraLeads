@@ -1661,7 +1661,7 @@ div#Properties-popup .carousel-item img{
 }
 .dashboard-message input {
     border-radius: 0px !important;
-    border: 0 !important;
+    border: 0;
     background: #f1f6f9 !important;
     padding: 25px 0px 25px 25px !important;
     margin: 5px 0 0;
