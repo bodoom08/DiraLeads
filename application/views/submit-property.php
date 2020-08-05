@@ -943,6 +943,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         var input = document.getElementById('geoLocation');
 
         var autocomplete = new google.maps.places.Autocomplete(input);
+        // Set initial restrict to the greater list of countries.
+        autocomplete.setComponentRestrictions({
+            'country': ['us', 'ca', 'uk', 'be', 'ch', 'fr', 'il', 'at', 'au', 'za', 'ar']
+        });
+
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
