@@ -944,6 +944,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            $('[name="street').removeClass('invaild-input');
+        });
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap&language=en" async defer></script>
