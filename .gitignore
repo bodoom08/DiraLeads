@@ -8,8 +8,7 @@ application/logs/*
 
 !application/*/.htaccess
 
-application/cache/*
-application/config/*
+/application/config/
 
 index.php
 
