@@ -943,9 +943,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         var input = document.getElementById('geoLocation');
 
         var autocomplete = new google.maps.places.Autocomplete(input);
-        autocomplete.setFields(
-            ['address_components', 'geometry', 'icon', 'name']);
-
+        autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap&language=en" async defer></script>
@@ -1129,13 +1127,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#description').addClass('invaild-input');
             }
         });
-        $('[name="value[]').on("change paste keyup", function() {
-            if ($('[name="value[]').val() != '') {
-                $('[name="value[]').removeClass('invaild-input');
-            } else {
-                $('[name="value[]').addClass('invaild-input');
-            }
-        });
+
         $('#bathrooms').on("change paste keyup", function() {
             console.log($('#bathrooms').val());
             if ($('#bathrooms').val() != '') {
@@ -1156,6 +1148,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (street == '') {
                 $('[name="street').addClass('invaild-input');
                 valid = false;
+            } else {
+                $('[name="street').removeClass('invaild-input');
             }
             if ($('#neighborhood').val() == '') {
                 $('#neighborhood').addClass('invaild-input');
