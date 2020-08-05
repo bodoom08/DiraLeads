@@ -11,6 +11,8 @@ application/logs/*
 application/cache/*
 application/config/*
 
+index.php
+
 composer.lock
 
 user_guide_src/build/*
