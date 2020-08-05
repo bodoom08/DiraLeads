@@ -29,7 +29,7 @@ vendor
 *.sublime-project
 /tests/tests/
 /tests/results/
-assets
+#assets
 
 .vscode
 system.lnk

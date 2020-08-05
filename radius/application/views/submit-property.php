@@ -8,6 +8,16 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
   <link rel="stylesheet" href="//unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
     <link rel="stylesheet" href="<?php echo site_url('../assets/css/jquery-ui.multidatespicker.css') ?>">
+     <link rel="stylesheet" href="<?php echo site_url('../assets/css/styles.css') ?>">
+ 
+<link href="<?php echo site_url('../assets/css/fullcalendar.css') ?>" rel="stylesheet" />
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://momentjs.com/downloads/moment.min.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.js'></script>
+        <link rel='stylesheet' href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css" />
+
   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
 
@@ -27,8 +37,377 @@
               <div class="dashboard-message contact-2 bdr clearfix">
                   <div class="row">
                       <div class="col-lg-12 col-md-12">
+                        <ul class="nav nav-tabs process-model more-icon-preocess perent_icon" role="tablist">
+                  <li role="presentation1" class="active"><a href="#discover" aria-controls="" role="tab" data-toggle="tab"><i class="fa fa-home" aria-hidden="true"></i>
+                    <p>Add a Property</p>
+                    </a></li>
+                  <li role="presentation2"><a href="#strategy" aria-controls="strategy" role="tab" data-toggle="tab"><i class="fa fa-bed" aria-hidden="true"></i>
+                    <p>Amenities</p>
+                    </a></li>
+                  <li role="presentation3"><a href="#optimization" aria-controls="optimization" role="tab" data-toggle="tab"><i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <p>Upload Picture</p>
+                    </a></li>
+                  <li role="presentation4" id="datePrice"><a href="#content" aria-controls="content" role="tab" data-toggle="tab"><i class="fa fa-calendar" aria-hidden="true"></i>
+                    <p>Dates & Price</p>
+                    </a></li>
+                </ul>
                         <?php echo form_open_multipart('property/property_listing', 'id="listingForm" class=""'); ?>
-                        <div class="basic_information">
+                           <div class="tab-content">
+               
+                  <div role="tabpanel" class="tab-pane active" id="discover">
+                    <div class="design-process-content">
+                        <div class="tabbbing-one">
+                            <ul class="row">
+                                <li class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Property Type</label>
+                                        <select class="form-control" name="property_type" id="exampleFormControlSelect1">
+                                          <option value="apartment">Apartment</option>
+                                          <option value="basement">Basement</option>
+                                          <option value="house">House</option>
+                                          <option value="duplex">Duplex</option>
+                                          <option value="villa">Villa</option>
+                                        </select>
+                                    </div>
+                                </li>
+                                <li class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Address</label>
+                                        <input type="text" name="street" rows="2" class="form-control md-textarea" id="autocomplete_area" placeholder="">
+                                    </div> 
+                                </li>
+
+                                <li class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">User</label>
+                                      <select name="user_id" class="form-control custom-select" required>
+                                            <option value="">Select User</option>
+                                            <?php foreach ($users as $key => $value) : ?>
+                                                <?php 
+                                                    $dataParams = [
+                                                        'contact_type' => $value['contact_type'],
+                                                        'day_of_the_weak'  => $value['day_of_the_weak'],
+                                                        'time_of_day'  => $value['time_of_day'],
+                                                        'from_time'  => $value['from_time'],
+                                                        'to_time'  => $value['to_time'], 
+                                                    ];
+                                                ?>
+
+                                                <?php
+                                                extract($_GET);
+                                                if(isset($userid_for)) { ?>
+                                                    <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>" <?php echo ($value['id'] == $userid_for) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option>
+                                                <?php } else { ?>                                                
+                                                    <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $value['name'] ?></option>
+                                                <?php } ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                </li>
+
+                                <li class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Neighborhood</label>
+                                      <select class="form-control" name="area_id" id="exampleFormControlSelect1">
+                                      <option value="">--select--</option>
+                                        <?php foreach ($areas as $key => $value): ?>
+                                                                            <option value="<?php echo $value['id'] ?>"><?php echo $value['title'] ?></option>
+                                                                        <?php endforeach;?>
+                                        </select>
+                                    </div>
+                                </li>
+                            </ul>
+                              
+                             <ul class="row">
+                                <li class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Bedrooms</label>
+                                        <input type="hidden" name="attribute_id[]" value="1">
+                                        <input type="number" placeholder="Bedrooms" class="form-control" name="value[]">
+                                    </div>
+                                </li>
+                                <li class="col-lg-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Bathrooms</label>
+                                        <input type="hidden" name="attribute_id[]" value="2">
+                                        <input type="number" placeholder="Bathrooms" class="form-control" name="value[]">
+                                    </div>
+                                </li>
+                                <li class="col-lg-4">
+                                    <div class="form-group">
+                                      <label for="exampleFormControlSelect1">Floor Number</label>
+                                      <select class="form-control" name="attribute_id[]" id="florbas">
+                                       <option value="">--Select--</option>
+                                      <option value="8">Basement</option>
+                                      <option value="6">1</option>
+                                      <option value="6">2</option>
+                                      <option value="6">3</option>
+                                      <option value="6">4</option>
+                                      <option value="6">5</option>
+                                      <option value="6">6</option>
+                                      <option value="6">7</option>
+                                      <option value="6">8</option>
+                                      <option value="6">9</option>
+                                      <option value="6">10+</option>
+                                      </select>
+                                       
+                                    </div>
+                                     <input type="hidden" placeholder="Floor Number" class="form-control floor" name="value[]">
+                                </li>
+                              <!--   <li class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Floor Number</label>
+                                        <input type="hidden" name="attribute_id[]" class="floor" value="6">
+                                        <input type="number" placeholder="Floor Number" class="form-control floor" id="floor" name="value[]" onkeyup="myFunction()">
+                                    </div>
+                                </li>
+                                  <li class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Basement</label>
+                                        <input type="hidden" name="attribute_id[]" class="basement" value="8">
+                                        <input type="number" placeholder="Basement" class="form-control basement" id="basement" name="value[]" onkeyup="myFunctionb()">
+                                    </div>
+                                </li> -->
+                            </ul>
+
+                            <ul class="row">
+                                <li class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Description</label>
+                                        <textarea type="text" id="message" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Description"></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="tabing-action">
+                                <ul>
+                                    <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                    <li class="next"><a href="javascript:void(0)">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="strategy">
+                    <div class="design-process-content">
+                        <div class="tabbbing-one two">
+                            <ul class="amnity">
+                                <li>
+                                    <h4>Indoor amenities</h4>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Elevator" id="customCheck2">
+                                      <label class="custom-control-label" for="customCheck2">Elevator</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wheelchair Accessible" id="customCheck3">
+                                      <label class="custom-control-label" for="customCheck3">Wheelchair Accessible</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Air Conditioning" id="customCheck4">
+                                      <label class="custom-control-label" for="customCheck4">Air Conditioning</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Heating" id="customCheck5">
+                                      <label class="custom-control-label" for="customCheck5">Heating</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Linen and Towels" id="customCheck6">
+                                      <label class="custom-control-label" for="customCheck6">Linen and Towels</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Washing Machine" id="customCheck7">
+                                      <label class="custom-control-label" for="customCheck7">Washing Machine</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Dryer" id="customCheck8">
+                                      <label class="custom-control-label" for="customCheck8">Dryer</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Kid-friendly" id="customCheck9">
+                                      <label class="custom-control-label" for="customCheck9">Kid-friendly</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Crib" id="customCheck10">
+                                      <label class="custom-control-label" for="customCheck10">Crib</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="High Chair" id="customCheck11">
+                                      <label class="custom-control-label" for="customCheck11">High Chair</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wi-Fi" id="customCheck12">
+                                      <label class="custom-control-label" for="customCheck12">Wi-Fi</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hair dryer" id="customCheck13">
+                                      <label class="custom-control-label" for="customCheck13">Hair dryer</label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <h4>Outdoor amenities</h4>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Garden/backyard" id="customCheck14">
+                                      <label class="custom-control-label" for="customCheck14">Garden/backyard</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Porch/Balcony" id="customCheck15">
+                                      <label class="custom-control-label" for="customCheck15">Porch/Balcony</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Parking" id="customCheck16">
+                                      <label class="custom-control-label" for="customCheck16">Parking</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pool" id="customCheck17">
+                                      <label class="custom-control-label" for="customCheck17">Pool</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
+                                      <label class="custom-control-label" for="customCheck18">Sukkah</label>
+                                    </div>
+                                    
+                                </li>
+                                <li>
+                                     <h4>Kitchen Amenities</h4>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pesach Kitchen" id="customCheck19">
+                                      <label class="custom-control-label" for="customCheck19">Pesach Kitchen</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Refrigerator" id="customCheck20">
+                                      <label class="custom-control-label" for="customCheck20">Refrigerator</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Freezer" id="customCheck21">
+                                      <label class="custom-control-label" for="customCheck21">Freezer</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Stove" id="customCheck22">
+                                      <label class="custom-control-label" for="customCheck22">Stove</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Oven" id="customCheck23">
+                                      <label class="custom-control-label" for="customCheck23">Oven</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Microwave" id="customCheck24">
+                                      <label class="custom-control-label" for="customCheck24">Microwave</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hot-Plate/Plata" id="customCheck25">
+                                      <label class="custom-control-label" for="customCheck25">Hot-Plate/Plata</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Shabbos Kettle/Urn" id="customCheck26">
+                                      <label class="custom-control-label" for="customCheck26">Shabbos Kettle/Urn</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Cooking Utensils" id="customCheck27">
+                                      <label class="custom-control-label" for="customCheck27">Cooking Utensils</label>
+                                    </div>
+                                    <div class="custom-control custom-checkbox">
+                                      <input type="checkbox" class="custom-control-input" name="amenities[]" value="Coffee Machine" id="customCheck28">
+                                      <label class="custom-control-label" for="customCheck28">Coffee Machine</label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="tabing-action">
+                                <ul>
+                                    <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                    <li class="amintNext"><a href="javascript:void(0)">Next</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div role="tabpanel" class="tab-pane" id="optimization">
+                    <div class="design-process-content">
+                        <div class="tabbbing-one two">
+                            <ul class="row">
+                                <li class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">upload pictures</label>
+                                        <input type="file" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                    </div>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                              <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="property_thumbnails mt-2">
+                                        <div class="row" id="image_preview">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tabing-action">
+                                <ul>
+                                    <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                    <li class="optNext"><a href="javascript:void(0)">Next</a></li>
+                                </ul>
+                            </div>
+                    </div>
+                  </div>
+                      <div role="tabpanel" class="tab-pane" id="content">
+                        <div class="design-process-content">
+                <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
+                  <li role="presentation9" class="customCalender active mr-3" style="width:40%"><a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab" >
+                    <p>My Rental is available all year round</p>
+                    </a></li>
+                  <li role="presentation8" style="width:40%" class="costomSession"><a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab" >
+                    <p>My Rental is seasonal</p>
+                    </a></li>
+                </ul>
+                 <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="sessional">
+                        <div class="tabbbing-one two">
+                            <ul class="row">
+                                <li class="col-lg-10 m-auto">
+                                <input type="number" class="datedays" placeholder="Days">
+                                <input type="number" class="weekenddays" placeholder="Weekend">
+                                <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span>
+                                    <div class="form-group">
+                                       <div id='calendar'></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        
+                      </div>
+                    </div>
+                 <div role="tabpanel" class="tab-pane" id="yearly">
+                        <div class="tabbbing-one two">
+                            <ul class="row">
+                                <li class="col-lg-12">
+                                    <div class="form-group">
+                                        <a href="javascript:void()" id="addRule">Add sessional price rule...</a>
+                                        <div class="rule">
+                                       </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>    
+                    
+                    </div>
+                     </div>
+                                    <div class="tabing-action">
+                                        <ul>
+                                            <li class="submitnext"><button id="submitBtn" type="submit">Finish</button>
+                                            <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
+                                        </ul>
+                                    </div>
+                            </div>
+                        </div>
+                      
+                      <input type="hidden" value="" id="selectedPrice" name="date_price">
+                     <input type="hidden" value="" id="date" name="date">
+                      <input type="hidden" id="price" value="500" name="price" >
+                      <input type="hidden" id="session" value="" name="rule_data" >
+                       <input type="hidden" id="allRrentals" value="true" name="allRrentals" >
+                       <input type="hidden" class="disableDate" value=''>
+
+              </div>
+                        <div class="basic_information" style="display:none">
                             <!-- <h4 class="inner-title mb-4">Basic Information</h4> -->
                             <div class="clearfix">
                                 <label class="radio-main"> Sell
@@ -388,6 +767,333 @@
 
 <!-- Update for Google Autocomplete Places API -->
 <script>
+   $(document).ready(function(){
+        $('.next').click(function(){
+            var attr = $('[name="value[]').val();
+             var street = $('[name="street').val();
+             if(street == ''){
+                 return false;
+             }
+            $('.more-icon-preocess li:first').removeClass('active');
+            $('.more-icon-preocess li:nth-child(2)').addClass('active');
+            $('#discover').removeClass('active');
+            $('#strategy').addClass('active');
+        })
+
+            $('.amintNext').click(function(){
+                // var amenities = $('[name="amenities[]"]:checked').val();
+               var amenities = $('input[name="amenities[]"]:checked').val();
+                if(amenities == null){
+                return false;   
+                }
+            $('.more-icon-preocess li:nth-child(2)').removeClass('active');
+            $('.more-icon-preocess li:nth-child(3)').addClass('active');
+            $('#strategy').removeClass('active');
+            $('#optimization').addClass('active');
+        })
+            $('.optNext').click(function(){
+              setTimeout(function(){   $('.fc-month-button').trigger('click'); }, 500);
+            $('.more-icon-preocess li:nth-child(3)').removeClass('active');
+            $('.more-icon-preocess li:nth-child(4)').addClass('active');
+            $('#optimization').removeClass('active');
+            $('#content').addClass('active');
+        })
+          $(".process-model li").click(function() { 
+              $('.perent_icon li').removeClass('active');
+              $(this).addClass('active');
+          });
+            $(".calender_icon li").click(function() { 
+              $('.calender_icon li').removeClass('active');
+              $(this).addClass('active');
+          });
+  
+    });
+$(document).ready(function() {
+ var d = moment().format('YYYY-MM-DD');
+
+    $('#calendar').fullCalendar({
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'month'
+        // right: 'month,agendaWeek'
+      }, 
+      defaultDate: d,
+      defaultView: 'month',
+      editable: true,
+      selectable: true,
+      fixedWeekCount: false,
+        timezone: false,
+        events: {
+            url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
+            cache: true
+        },
+      select: function (start, end, jsEvent, view) {
+         $('.date-actions').css('display','none');
+         var datedays = $('.datedays').val();
+         var weekenddays = $('.weekenddays').val();
+         if(datedays == ''){
+             toastr.warning('Price fields are required');
+            return false;
+         }
+         if(weekenddays == ''){
+             toastr.warning('Price fields are required');
+            return false;
+         }
+         if(moment(start._d).add(1, 'days').format('YYYY-MM-DD')==moment(end._d).format('YYYY-MM-DD')){
+        $(".fc-day-grid-event").attr("href",'javascript:void');
+                    var start = convert(moment(start).format());
+                    var end = convert(moment(end).format());
+                    var a = start.split("-");
+                    
+
+                     $('.fc-day-number[data-date="'+start+'"]').html(a[2].replace(/^0+/, '')+'<div class="date-actions"><div class="date">'+start+'</div><ul><li><a data-target="#addEvent" data-toggle="modal" class="MainNavText" id="MainNavHelp" href="#addEvent">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="'+start+'">Change Price</a></li></ul></div>');
+                 
+}
+    },
+     eventClick: function(event, element) {
+                // Display the modal and set the values to the event values.
+                if(event.title == 'Blocked'){
+                $('#blockModal').modal('show');
+                $('#blockModal').find('#titleblock').val(event.title);
+                $('#blockModal').find('#starts-atblock').val(event.start);
+                $('#blockModal').find('#ends-atblock').val(event.end);
+                $('#blockModal').find('.eventClose').text('Delete');
+                }else{
+                $('#addEvent').modal('show');
+                $('#addEvent').find('#title').val(event.title.split("$")[0]);
+                $('#addEvent').find('#price-at').val(event.description);
+                $('#addEvent').find('#starts-at').val(event.start);
+                $('#addEvent').find('#ends-at').val(event.end);
+                $('#addEvent').find('.eventClose').text('Delete');
+              }
+              $(".eventClose").click(function() {
+                var startDate = new Date(convert(event.start));
+                var endDate = new Date(convert(event.end));
+                var disableDate = $('.disableDate').val();
+                var y = disableDate.split('|');
+                var removeItem = converts(event.start)+','+converts(event.end);
+                y = $.grep(y, function(value) {
+                return value != removeItem;
+                });
+                var seval = y.join('|');
+                var price = event.description
+              $('.disableDate').val(seval);
+              var selectedPrice = $('#selectedPrice').val();
+              var x = selectedPrice.split(',&');
+
+                var between = [];
+                while (startDate <= endDate) {
+                between.push(new Date(startDate));
+                startDate.setDate(startDate.getDate() + 1);
+                }
+                var eachdate = $('.fc-widget-content[data-date="'+convert(between[0])+'"]').text()+'|'+convert(between[0])+',';
+                var i;
+                var str;
+                var itemId = 0;
+                for (i = 1; i < between.length; i++) {
+                eachdate += $('.fc-widget-content[data-date="'+convert(between[i])+'"]').text()+'|'+convert(between[i])+',';
+                }
+              var removeItems = eachdate;
+              x = $.grep(x, function(values) {
+                return values != removeItems;
+              });
+              var updatedValu = x.join('|');
+              $('#selectedPrice').val(updatedValu);
+
+              $('#addEvent').find('input').val('');
+              $('#blockModal').find('input').val('');
+                 $('#blockModal').find('.eventClose').text('Close');
+                $('#addEvent').find('.eventClose').text('Close');
+              $('#calendar').fullCalendar('removeEvents',event._id);
+              });
+            }
+              });
+        $('#save-event').on('click', function() {
+            var title = $('#title').val();
+            var startd = new Date($('#starts-at').val());
+            var endd = new Date($('#ends-at').val());
+
+            if(title == ''){
+            toastr.warning('Title field is required');
+            return false;
+            }
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: new Date($('#starts-at').val()),
+                    end: new Date($('#ends-at').val())
+                };
+
+           var between = [];
+            while (startd <= endd) {
+                between.push(new Date(startd));
+                startd.setDate(startd.getDate() + 1);
+            }
+            var eachdate = $('.fc-widget-content[data-date="'+convert(between[0])+'"]').text()+'|'+convert(between[0])+',';
+            var i;
+            var str;
+            var itemId = 0;
+            for (i = 1; i < between.length; i++) {
+               eachdate += $('.fc-widget-content[data-date="'+convert(between[i])+'"]').text()+'|'+convert(between[i])+',';
+            }
+
+                 var disableDate = $('.disableDate').val();
+                if(disableDate != ''){
+                  disableDate = disableDate+'|'
+                }
+                   var dateprice =  $('#selectedPrice').val();
+                   if(dateprice != ''){
+                     dateprice = dateprice+'&';
+                   }
+                   $('#selectedPrice').val(dateprice+eachdate);
+                   $('#date').val(convert(endd));
+                  
+                $('.disableDate').val(disableDate+converts($('#starts-at').val())+','+converts($('#ends-at').val()));
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+             $('#addEvent').find('.eventClose').text('Close');
+            $('#addEvent').find('input').val('');
+            $('#addEvent').modal('hide');
+            $('.date-actions').css('display','none');
+        });
+        $('#save-block-event').on('click', function() {
+            var title = $('#titleblock').val();
+            if (title) {
+                var eventData = {
+                    title: title,
+                    start: $('#starts-atblock').val(),
+                    end: $('#ends-atblock').val()
+                };
+                var disableDate = $('.disableDate').val();
+                if(disableDate != ''){
+                  disableDate = disableDate+'|'
+                }
+                $('.disableDate').val(disableDate+converts($('#starts-atblock').val())+','+converts($('#ends-atblock').val()));
+                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            }
+            $('#calendar').fullCalendar('unselect');
+             $('#blockModal').find('.eventClose').text('Close');
+            $('#blockModal').find('input').val('');
+            $('#blockModal').modal('hide');
+        });
+    $('#datePrice').click(function(){
+      
+  setTimeout(function(){   $('.fc-month-button').trigger('click'); $(".fc-event").removeAttr("href"); }, 500);
+    setTimeout(function(){ $(".fc-day-grid-event").attr("href",'javascript:void'); }, 1000); 
+ 
+    });
+$('.fc-next-button').click(function(){
+   setTimeout(function(){ $(".fc-day-grid-event").attr("href",'javascript:void'); }, 1000); 
+})
+$('.fc-prev-button').click(function(){
+   setTimeout(function(){$(".fc-day-grid-event").attr("href",'javascript:void'); }, 1000); 
+})
+    function convert(str) {
+  var date = new Date(str);
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+    day = ("0" + date.getDate()).slice(-2);
+  return [date.getFullYear(), mnth, day].join("-");
+}
+function updateDate(str) {
+  var date = new Date(str);
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+    day = ("0" + date.getDate()).slice(-2);
+  return [date.getFullYear(), mnth, day].join("-");
+}
+  function converts(str) {
+  var date = new Date(str);
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+    day = ("0" + date.getDate()).slice(-2);
+  return [day,mnth,date.getFullYear()].join("/");
+}
+
+function convertss(str) {
+  var date = new Date(str);
+    mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+    day = ("0" + date.getDate()).slice(-2);
+  return [mnth,day,date.getFullYear()].join("/");
+}
+$('#addRule').click(function(){
+  $('#myModal').show();
+});
+    $('.dayCheck').click(function(){
+       // alert('kails');
+      if ($('#anyCheck').is(':checked')) {
+            $("#anyCheck").prop('checked', false);
+      }
+    });
+     $('#anyCheck').click(function(){
+      // alert('fdgfdg');
+      if ($('.dayCheck').is(':checked')) {
+            $(".dayCheck").prop('checked', false);
+      }
+    });
+      var click = 0;
+    $('#saveRule').click(function(){
+     
+      var session = $('#fname').val();
+      var startDate = $('#startDate').val();
+      var endDate = $('#endDate').val();
+      var price = $('#sesprice').val();
+      if(session == ''){
+        toastr.warning('Session name is required');
+        return false;
+      }
+       if(startDate == ''){
+        toastr.warning('Start date is required');
+        return false;
+      }
+       if(endDate == ''){
+        toastr.warning('End date is required');
+        return false;
+      }
+       if(price == ''){
+        toastr.warning('Price is required');
+        return false;
+      }
+      var day ="";
+      if ($('#anyCheck').is(':checked')) {
+        var day = $('#anyCheck:checked').val();
+      }
+      var values = [];
+      $('.dayCheck:checked').each(function(){
+      values.push($(this).val());
+      }); 
+      if(day == ''){
+      var days = values;
+      }else{
+        var days = day;
+      }
+      if(days == ''){
+         toastr.warning('Check-in is required');
+         return false;
+      }
+      $('.rule').append('<div class="sessionalRule sessionHide'+click+'" style="background-color:#DCDCDC"><p>'+session+'</p><p>Price per night' +price+'</p><p>'+startDate+'-'+endDate+'</p><p>Check-In '+days+' <i class="fa fa-trash" data='+click+' aria-hidden="true"></i><span class="rulEdit" edit-id='+click+'>Edit</span></p></div><input type="hidden" class="rulname'+click+'" value="'+session+'"><input type="hidden" class="rulStartDate'+click+'" value="'+convert(startDate)+'"><input type="hidden" class="rulendDate'+click+'" value="'+convert(endDate)+'"><input type="hidden" class="rulPrice'+click+'" value="'+price+'"><input type="hidden" class="rulDays'+click+'" value="'+days+'">'); 
+
+      var sessionData =  $('#session').val();
+      if(sessionData != ''){
+      sessionData = sessionData+'&';
+      }
+      $('#session').val(sessionData+session+'|'+convert(startDate)+'|'+convert(endDate)+'|'+days+'|'+price);
+      $('#date').val(convert(endDate));
+      $('#price').val(price);
+ click++;
+    $( '#newsletterform' ).each(function(){
+    this.reset();
+});
+ $('#myModal').hide();
+    });
+    $('.close').click(function(){
+      $( '#newsletterform' ).each(function(){
+    this.reset();
+});
+        $('#myModal').hide();
+    });
+ 
+  });
+
     var input = document.getElementById('autocomplete_area');
     var autocomplete = new google.maps.places.Autocomplete(input,{types: ['geocode']});
     google.maps.event.addListener(autocomplete, 'place_changed', function(){
