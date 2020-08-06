@@ -390,6 +390,21 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     .invaild-input {
         border: 1px solid red !important;
     }
+
+    .upload-pictures {
+        color: #fff;
+    }
+
+    .upload-pictures a {
+        cursor: pointer;
+        font-size: 15px;
+        background: #a27107;
+        padding: 10px 50px;
+        margin: 0 10px 0;
+        border-radius: 30px;
+        border: 0;
+        text-align: center;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -608,6 +623,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
+                                                                    <input type="number" id="sukkahSize" class="datedays" placeholder="Size *" style="display:none;">
                                                                 </div>
 
                                                             </li>
@@ -670,8 +686,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                         <ul class="row">
                                                             <li class="col-lg-12">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">upload pictures</label>
-                                                                    <input type="file" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                    <label for="upload_file">
+                                                                        <ul>
+                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                        </ul>
+                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                    </label>
                                                                 </div>
                                                             </li>
 
@@ -1219,6 +1239,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $(this).addClass('active');
         });
 
+        $('#customCheck18').on('change', function() {
+            var self = $(this);
+            if (self.is(':checked')) {
+                $('#sukkahSize').css("display", "block");
+            } else {
+                $('#sukkahSize').css("display", "none");
+            }
+        });
     })
 
     function preview_image() {
