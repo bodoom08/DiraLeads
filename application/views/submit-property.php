@@ -405,6 +405,29 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         border: 0;
         text-align: center;
     }
+
+    .price-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .price-container label {
+        margin-top: .5em;
+    }
+
+    .price-container input {
+        width: 120px;
+    }
+
+    .weekend-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -731,9 +754,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             <div class="tabbbing-one two">
                                                                 <ul class="row">
                                                                     <li class="col-lg-10 m-auto">
-                                                                        <input type="number" id="days" class="datedays" placeholder="Days *">
-                                                                        <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
-                                                                        <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span>
+                                                                        <div class="price-container">
+                                                                            <label>$<input type="number" id="days" class="datedays" placeholder="Days *"></label>
+                                                                            <label>$<input type="number" id="weekend" class="weekenddays" placeholder="Weekend *"></label>
+                                                                            <label>$<input type="number" id="weekly" class="weekly" placeholder="Weekly *"></label>
+                                                                            <label>$<input type="number" id="monthly" class="monthly" placeholder="Monthly *"></label>
+                                                                            <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span>
+                                                                        </div>
+                                                                        <div class="price-container">
+                                                                            <div class="form-group weekend-container">
+                                                                                <label for="weekedType">WeekendType</label>
+                                                                                <select class="form-control" name="weekend_type" id="weekedType">
+                                                                                    <option value="thursday">Thursday to Sunday</option>
+                                                                                    <option value="friday">Friday to Sunday</option>
+                                                                                    <option value="saturday">Saturday to Sunday</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
+                                                                            </div>
+                                                                        </div>
+
                                                                         <div class="form-group">
                                                                             <div id='calendar'></div>
                                                                         </div>
@@ -1014,22 +1056,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (arg.type == 'success') {
                 window.location.href = '<?php echo site_url('my_rentals'); ?>';
             }
-        }
-    });
-
-    $('#days').on("change paste keyup", function() {
-        if ($('#days').val() != '') {
-            $('#days').removeClass('invaild-input');
-        } else {
-            $('#days').addClass('invaild-input');
-        }
-    });
-
-    $('#weekend').on("change paste keyup", function() {
-        if ($('#weekend').val() != '') {
-            $('#weekend').removeClass('invaild-input');
-        } else {
-            $('#weekend').addClass('invaild-input');
         }
     });
 </script>
@@ -1666,8 +1692,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $('.date-actions').css('display', 'none');
     })
     $(document).on('click', '.submitPrice', function() {
+
         var day = $('.datedays').val();
         var weekend = $('.weekenddays').val();
+        var weekly = $('#weekly').val();
+        var monthly = $('#monthly').val();
+        console.log(day, weekend, weekly, monthly);
+        if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+            $('.datedays').addClass('invaild-input');
+            $('.weekenddays').addClass('invaild-input');
+            $('#weekly').addClass('invaild-input');
+            $('#monthly').addClass('invaild-input');
+            return false;
+        }
         if (weekend != '') {
             var week = '$' + weekend;
         } else {
@@ -1680,14 +1717,82 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var days = '';
         }
 
-        $('.fc-day.fc-widget-content.fc-mon').text(days);
-        $('.fc-day.fc-widget-content.fc-tue').text(days);
-        $('.fc-day.fc-widget-content.fc-wed').text(days);
-        $('.fc-day.fc-widget-content.fc-thu').text(week);
-        $('.fc-day.fc-widget-content.fc-fri').text(week);
-        $('.fc-day.fc-widget-content.fc-sat').text(week);
-        $('.fc-day.fc-widget-content.fc-sun').text(week);
-    })
+        var weekendType = $('#weekedType').val();
+
+        if ($('#customCheck29').is(':checked')) { // only available in weeked checked
+            if (weekendType == 'thursday') {
+                $('.fc-day.fc-widget-content.fc-thu').text(week);
+                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            }
+            if (weekendType == 'friday') {
+                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            }
+            $('.fc-day.fc-widget-content.fc-sat').text(week);
+            $('.fc-day.fc-widget-content.fc-sun').text(week);
+        } else {
+            if (weekendType == 'thursday') {
+                $('.fc-day.fc-widget-content.fc-mon').text(days);
+                $('.fc-day.fc-widget-content.fc-tue').text(days);
+                $('.fc-day.fc-widget-content.fc-wed').text(days);
+                $('.fc-day.fc-widget-content.fc-thu').text(week);
+                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            }
+            if (weekendType == 'friday') {
+                $('.fc-day.fc-widget-content.fc-mon').text(days);
+                $('.fc-day.fc-widget-content.fc-tue').text(days);
+                $('.fc-day.fc-widget-content.fc-wed').text(days);
+                $('.fc-day.fc-widget-content.fc-thu').text(days);
+                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            }
+            if (weekendType == 'saturday') {
+                $('.fc-day.fc-widget-content.fc-mon').text(days);
+                $('.fc-day.fc-widget-content.fc-tue').text(days);
+                $('.fc-day.fc-widget-content.fc-wed').text(days);
+                $('.fc-day.fc-widget-content.fc-thu').text(days);
+                $('.fc-day.fc-widget-content.fc-fri').text(days);
+            }
+            $('.fc-day.fc-widget-content.fc-sat').text(week);
+            $('.fc-day.fc-widget-content.fc-sun').text(week);
+        }
+        // $('.fc-day.fc-widget-content.fc-mon').text(days);
+        // $('.fc-day.fc-widget-content.fc-tue').text(days);
+        // $('.fc-day.fc-widget-content.fc-wed').text(days);
+        // $('.fc-day.fc-widget-content.fc-thu').text(week);
+        // $('.fc-day.fc-widget-content.fc-fri').text(week);
+        // $('.fc-day.fc-widget-content.fc-sat').text(week);
+        // $('.fc-day.fc-widget-content.fc-sun').text(week);
+    });
+    $('#days').on("change paste keyup", function() {
+        if ($('#days').val() != '') {
+            setValidDatePrice();
+        }
+    });
+
+    $('#weekend').on("change paste keyup", function() {
+        if ($('#weekend').val() != '') {
+            setValidDatePrice();
+        }
+    });
+
+    $('#weekly').on("change paste keyup", function() {
+        if ($('#weekly').val() != '') {
+            setValidDatePrice();
+        }
+    });
+
+    $('#monthly').on("change paste keyup", function() {
+        if ($('#monthly').val() != '') {
+            setValidDatePrice();
+        }
+    });
+
+    function setValidDatePrice() {
+        $('#days').removeClass('invaild-input');
+        $('#weekend').removeClass('invaild-input');
+        $('#weekly').removeClass('invaild-input');
+        $('#monthly').removeClass('invaild-input');
+    }
+
     $(document).on('click', '.changepricefin', function() {
         var date = $(this).attr('currentdata');
         $('#hiddenDate').val(date);
