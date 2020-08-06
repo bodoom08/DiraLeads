@@ -183,7 +183,7 @@ ul.amnity .custom-control.custom-checkbox {
     margin: 0 10px 0 0;
 }
 .property_thumbnails .thumbnails_box i {
-    top: -15px;
+    top: -18px;
     color: #a27107;
     right: 10px;
 }
@@ -2137,8 +2137,8 @@ padding-right: 0px !important;
 }
 .thumbnails_box {
     position: relative;
-	    max-width: 250px;
-    margin: 0 auto;
+	max-width: 250px;
+    margin: 0 auto 20px auto;;
 }
 .tabbbing-one textarea {
     background: #f1f6f9;
