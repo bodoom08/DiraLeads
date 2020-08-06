@@ -1720,6 +1720,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         var weekendType = $('#weekedType').val();
 
         if ($('#customCheck29').is(':checked')) { // only available in weeked checked
+
+            $('.fc-day.fc-widget-content.fc-mon').text('');
+            $('.fc-day.fc-widget-content.fc-tue').text('');
+            $('.fc-day.fc-widget-content.fc-wed').text('');
+            $('.fc-day.fc-widget-content.fc-thu').text('');
+            $('.fc-day.fc-widget-content.fc-fri').text('');
+            $('.fc-day.fc-widget-content.fc-sat').text('');
+            $('.fc-day.fc-widget-content.fc-sun').text('');
+
             if (weekendType == 'thursday') {
                 $('.fc-day.fc-widget-content.fc-thu').text(week);
                 $('.fc-day.fc-widget-content.fc-fri').text(week);
