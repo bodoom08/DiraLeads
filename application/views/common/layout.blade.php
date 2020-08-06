@@ -229,7 +229,7 @@
                         </ul>
                     </div>
                 </div>
-                <input type="hidden" class="loggedId" value="{{isset($_SESSION['id']) && $_SESSION['id']}}">
+                <input type="hidden" class="loggedId" value="{{isset($_SESSION && $_SESSION['id']}}">
                 <div class="col-lg-4 col-12">
                     <div class="foot footer-email">
                         <h3>News & Update </h3>

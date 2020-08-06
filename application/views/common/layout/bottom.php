@@ -20,7 +20,6 @@
                     <ul>
                         <?php foreach ($footer_useful as $menu) : ?>
                             <li>
-
                                 <a href="<?php echo site_url($menu['url']); ?>"><?php echo $menu['title']; ?></a>
                             </li>
                         <?php endforeach; ?>
