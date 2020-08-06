@@ -171,6 +171,12 @@ ul.amnity .custom-control.custom-checkbox {
 	    width: 33.33%;
     float: left;
 }
+#image_preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 #image_preview .thumbnails_box img {
      position: relative;
     /* width: 110px; */
@@ -2138,7 +2144,7 @@ padding-right: 0px !important;
 .thumbnails_box {
     position: relative;
 	max-width: 250px;
-    margin: 0 auto 20px auto;;
+    margin: 0 10px 20px 10px;;
 }
 .tabbbing-one textarea {
     background: #f1f6f9;
