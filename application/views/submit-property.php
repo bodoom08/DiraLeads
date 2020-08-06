@@ -426,6 +426,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         justify-content: space-around;
         align-items: center;
         margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    .weekend-container label {
+        margin-right: 20px;
     }
 
     .daily-container {
@@ -781,19 +786,26 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         </div>
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
-                                                                                <label for="weekedType">WeekendType</label>
-                                                                                <select class="form-control" name="weekend_type" id="weekedType">
-                                                                                    <option value="thursday">Thursday to Sunday</option>
-                                                                                    <option value="friday">Friday to Sunday</option>
-                                                                                    <option value="saturday">Saturday to Sunday</option>
+                                                                                <label for="weekendFrom">Weekend </label>
+                                                                                <label for="weekendFrom"> From</label>
+                                                                                <select class="form-control" name="weekend_type" id="weekendFrom">
+                                                                                    <option value="3">Thursday</option>
+                                                                                    <option value="4">Friday</option>
                                                                                 </select>
                                                                             </div>
-                                                                            <div class="custom-control custom-checkbox">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
-                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
+                                                                            <div class="form-group weekend-container">
+                                                                                <label for="weekendTo">Till</label>
+                                                                                <select class="form-control" name="weekend_type" id="weekendTo">
+                                                                                    <option value="5">Motzei Shabbos</option>
+                                                                                    <option value="6">Sunday</option>
+                                                                                    <option value="7">Monday</option>
+                                                                                </select>
                                                                             </div>
                                                                         </div>
-
+                                                                        <div class="custom-control custom-checkbox form-group">
+                                                                            <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                            <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
+                                                                        </div>
                                                                         <div class="form-group">
                                                                             <div id='calendar'></div>
                                                                         </div>
@@ -1711,6 +1723,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     })
 
     function submitPrice() {
+        var weekday = [];
+        weekday.push($('.fc-day.fc-widget-content.fc-mon'));
+        weekday.push($('.fc-day.fc-widget-content.fc-tue'));
+        weekday.push($('.fc-day.fc-widget-content.fc-wed'));
+        weekday.push($('.fc-day.fc-widget-content.fc-thu'));
+        weekday.push($('.fc-day.fc-widget-content.fc-fri'));
+        weekday.push($('.fc-day.fc-widget-content.fc-sat'));
+        weekday.push($('.fc-day.fc-widget-content.fc-sun'));
 
         var day = $('.datedays').val();
         var weekend = $('.weekenddays').val();
@@ -1735,59 +1755,24 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var days = '';
         }
 
-        var weekendType = $('#weekedType').val();
+        var weekendFrom = $('#weekendFrom').val();
+        var weekendTo = $('#weekendTo').val();
+
+
 
         if ($('#customCheck29').is(':checked')) { // only available in weeked checked
-
-            $('.fc-day.fc-widget-content.fc-mon').text('');
-            $('.fc-day.fc-widget-content.fc-tue').text('');
-            $('.fc-day.fc-widget-content.fc-wed').text('');
-            $('.fc-day.fc-widget-content.fc-thu').text('');
-            $('.fc-day.fc-widget-content.fc-fri').text('');
-            $('.fc-day.fc-widget-content.fc-sat').text('');
-            $('.fc-day.fc-widget-content.fc-sun').text('');
-
-            if (weekendType == 'thursday') {
-                $('.fc-day.fc-widget-content.fc-thu').text(week);
-                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            for (var i = weekendFrom; i <= weekendTo; i++) {
+                weekday[i % 7].text(week);
             }
-            if (weekendType == 'friday') {
-                $('.fc-day.fc-widget-content.fc-fri').text(week);
-            }
-            $('.fc-day.fc-widget-content.fc-sat').text(week);
-            $('.fc-day.fc-widget-content.fc-sun').text(week);
         } else {
-            if (weekendType == 'thursday') {
-                $('.fc-day.fc-widget-content.fc-mon').text(days);
-                $('.fc-day.fc-widget-content.fc-tue').text(days);
-                $('.fc-day.fc-widget-content.fc-wed').text(days);
-                $('.fc-day.fc-widget-content.fc-thu').text(week);
-                $('.fc-day.fc-widget-content.fc-fri').text(week);
+            weekday.forEach(day => {
+                day.text(days);
+            });
+
+            for (var i = weekendFrom; i <= weekendTo; i++) {
+                weekday[i % 7].text(week);
             }
-            if (weekendType == 'friday') {
-                $('.fc-day.fc-widget-content.fc-mon').text(days);
-                $('.fc-day.fc-widget-content.fc-tue').text(days);
-                $('.fc-day.fc-widget-content.fc-wed').text(days);
-                $('.fc-day.fc-widget-content.fc-thu').text(days);
-                $('.fc-day.fc-widget-content.fc-fri').text(week);
-            }
-            if (weekendType == 'saturday') {
-                $('.fc-day.fc-widget-content.fc-mon').text(days);
-                $('.fc-day.fc-widget-content.fc-tue').text(days);
-                $('.fc-day.fc-widget-content.fc-wed').text(days);
-                $('.fc-day.fc-widget-content.fc-thu').text(days);
-                $('.fc-day.fc-widget-content.fc-fri').text(days);
-            }
-            $('.fc-day.fc-widget-content.fc-sat').text(week);
-            $('.fc-day.fc-widget-content.fc-sun').text(week);
         }
-        // $('.fc-day.fc-widget-content.fc-mon').text(days);
-        // $('.fc-day.fc-widget-content.fc-tue').text(days);
-        // $('.fc-day.fc-widget-content.fc-wed').text(days);
-        // $('.fc-day.fc-widget-content.fc-thu').text(week);
-        // $('.fc-day.fc-widget-content.fc-fri').text(week);
-        // $('.fc-day.fc-widget-content.fc-sat').text(week);
-        // $('.fc-day.fc-widget-content.fc-sun').text(week);
     }
 
     $('#days').on("change paste keyup", function() {
@@ -1818,10 +1803,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         submitPrice();
     });
 
-    $('#weekedType').on("change paste keyup", function() {
+    $('#weekendFrom').on("change paste keyup", function() {
         submitPrice();
     });
-
+    $('#weekendTo').on("change paste keyup", function() {
+        submitPrice();
+    });
     $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
         submitPrice();
     });
