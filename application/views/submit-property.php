@@ -1761,6 +1761,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
 
         if ($('#customCheck29').is(':checked')) { // only available in weeked checked
+
+            weekday.forEach(day => {
+                day.text('');
+            });
+
             for (var i = weekendFrom; i <= weekendTo; i++) {
                 weekday[i % 7].text(week);
             }
