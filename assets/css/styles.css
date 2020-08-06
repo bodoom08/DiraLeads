@@ -168,8 +168,11 @@ ul.amnity img {
 
 ul.amnity .custom-control.custom-checkbox {
     margin: 0 0 10px;
-	    width: 33.33%;
+    width: 33.33%;
     float: left;
+
+    display: flex;
+    align-items: center;
 }
 #image_preview {
     display: flex;

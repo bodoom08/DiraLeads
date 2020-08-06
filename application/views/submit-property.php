@@ -623,8 +623,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSize" class="datedays" placeholder="Size *" style="display:none;">
+                                                                    <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;margin-left: 20px;">
                                                                 </div>
+
+                                                                <!-- <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;"> -->
 
                                                             </li>
                                                             <li>
@@ -1210,12 +1212,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#strategy').addClass('active');
         })
 
-        $('.amintNext').click(function() {
+        $('.amintNext').click(function() { //no mondatories in amenities
             // var amenities = $('[name="amenities[]"]:checked').val();
-            var amenities = $('input[name="amenities[]"]:checked').val();
-            if (amenities == null) {
+            // var amenities = $('input[name="amenities[]"]:checked').val();
+            // if (amenities == null) {
+            //     return false;
+            // }
+            if ($('#customCheck18').is(':checked') && $('#sukkahSleep').val() == '') {
+                $('#sukkahSleep').addClass('invaild-input');
                 return false;
+            } else {
+                $('#sukkahSleep').removeClass('invaild-input');
             }
+
             $('.more-icon-preocess li:nth-child(2)').removeClass('active');
             $('.more-icon-preocess li:nth-child(3)').addClass('active');
             $('#strategy').removeClass('active');
@@ -1239,12 +1248,21 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $(this).addClass('active');
         });
 
-        $('#customCheck18').on('change', function() {
+        $('#customCheck18').on('change', function() { //Sukkah Sleep reveal
             var self = $(this);
             if (self.is(':checked')) {
-                $('#sukkahSize').css("display", "block");
+                $('#sukkahSleep').css("display", "inline");
             } else {
-                $('#sukkahSize').css("display", "none");
+                $('#sukkahSleep').css("display", "none");
+            }
+        });
+
+        $('#sukkahSleep').on("change paste keyup", function() { // Sukkah Sleep validation
+            console.log($('#sukkahSleep').val());
+            if ($('#sukkahSleep').val() != '') {
+                $('#sukkahSleep').removeClass('invaild-input');
+            } else {
+                $('#sukkahSleep').addClass('invaild-input');
             }
         });
     })
