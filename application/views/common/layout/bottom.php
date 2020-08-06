@@ -27,9 +27,7 @@
                     </ul>
                 </div>
             </div>
-            <input type="hidden" class="loggedId" value="<?php if (isset($_SESSION['id'])) {
-                                                                e($_SESSION['id']);
-                                                            } ?>">
+            <input type="hidden" class="loggedId" value="<?php echo e($_SESSION['id']); ?>">
 
             <div class="col-lg-4 col-12">
                 <div class="foot footer-email">
