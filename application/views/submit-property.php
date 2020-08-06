@@ -411,7 +411,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         flex-wrap: wrap;
         justify-content: space-around;
         align-items: center;
-        margin-bottom: 20px;
     }
 
     .price-container label {
@@ -427,6 +426,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         justify-content: space-around;
         align-items: center;
         margin-bottom: 20px;
+    }
+
+    .daily-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
     }
 </style>
 <div class="dashboard">
@@ -646,7 +652,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;margin-left: 20px;">
+                                                                    <input type="number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
                                                                 </div>
 
                                                                 <!-- <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;"> -->
@@ -755,11 +761,23 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 <ul class="row">
                                                                     <li class="col-lg-10 m-auto">
                                                                         <div class="price-container">
-                                                                            <label>$<input type="number" id="days" class="datedays" placeholder="Days *"></label>
-                                                                            <label>$<input type="number" id="weekend" class="weekenddays" placeholder="Weekend *"></label>
-                                                                            <label>$<input type="number" id="weekly" class="weekly" placeholder="Weekly *"></label>
-                                                                            <label>$<input type="number" id="monthly" class="monthly" placeholder="Monthly *"></label>
-                                                                            <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span>
+                                                                            <div class="form-group daily-container">
+                                                                                <label for="days">Days ($)</label>
+                                                                                <input type="number" id="days" class="datedays" placeholder="Days *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container">
+                                                                                <label for="weekend">Weekend ($)</label>
+                                                                                <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container">
+                                                                                <label for="weekly">Weekly ($)</label>
+                                                                                <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container">
+                                                                                <label for="monthly">Monthly ($)</label>
+                                                                                <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                            </div>
+                                                                            <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
                                                                         </div>
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
@@ -1008,9 +1026,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         var autocomplete = new google.maps.places.Autocomplete(input);
         // Set initial restrict to the greater list of countries.
-        autocomplete.setComponentRestrictions({
-            'country': ['us', 'ca', 'il', 'fr', 'uk', 'be', 'ch', 'at', 'au', 'za', 'ar']
-        });
+        // autocomplete.setComponentRestrictions({
+        //     'country': ['us', 'ca', 'il', 'fr', 'uk', 'be', 'ch', 'at', 'au', 'za', 'ar']
+        // });
 
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
@@ -1691,7 +1709,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     $(document).on('click', '.eventClose', function() {
         $('.date-actions').css('display', 'none');
     })
-    $(document).on('click', '.submitPrice', function() {
+
+    function submitPrice() {
 
         var day = $('.datedays').val();
         var weekend = $('.weekenddays').val();
@@ -1703,7 +1722,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.weekenddays').addClass('invaild-input');
             $('#weekly').addClass('invaild-input');
             $('#monthly').addClass('invaild-input');
-            return false;
         }
         if (weekend != '') {
             var week = '$' + weekend;
@@ -1770,29 +1788,42 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         // $('.fc-day.fc-widget-content.fc-fri').text(week);
         // $('.fc-day.fc-widget-content.fc-sat').text(week);
         // $('.fc-day.fc-widget-content.fc-sun').text(week);
-    });
+    }
+
     $('#days').on("change paste keyup", function() {
         if ($('#days').val() != '') {
             setValidDatePrice();
         }
+        submitPrice();
     });
 
     $('#weekend').on("change paste keyup", function() {
         if ($('#weekend').val() != '') {
             setValidDatePrice();
         }
+        submitPrice();
     });
 
     $('#weekly').on("change paste keyup", function() {
         if ($('#weekly').val() != '') {
             setValidDatePrice();
         }
+        submitPrice();
     });
 
     $('#monthly').on("change paste keyup", function() {
         if ($('#monthly').val() != '') {
             setValidDatePrice();
         }
+        submitPrice();
+    });
+
+    $('#weekedType').on("change paste keyup", function() {
+        submitPrice();
+    });
+
+    $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
+        submitPrice();
     });
 
     function setValidDatePrice() {
