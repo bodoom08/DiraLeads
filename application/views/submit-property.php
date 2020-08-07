@@ -1564,7 +1564,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var title = $('#seasonTitle').val();
             var startd = new Date($('#seasonStart').val());
             var endd = new Date($('#seasonEnd').val());
-            var price = '$' + $('#seasonPrice').val();
+            var price = $('#seasonPrice').val();
 
             if (price == '') {
                 toastr.warning('Price field is required');
@@ -1587,7 +1587,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonMark);
                 });
 
-                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html('<p class="season-background">' + price + '</p>');
+                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html('<p class="season-background">$' + price + '</p>');
                 $('#seasonBook').modal('hide');
                 $('.date-actions').css('display', 'none');
             }
