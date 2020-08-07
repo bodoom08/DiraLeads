@@ -440,18 +440,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         align-items: flex-start;
     }
 
-    .weekend-background {
-        background-color: #ea7676;
+    .day-background {
         width: 100%;
         height: 25%;
         margin-bottom: 0px !important;
+        font-size: 16px;
+    }
+
+    .weekend-background {
+        background-color: #ea7676;
     }
 
     .season-background {
         background-color: #76eaaf;
-        width: 100%;
-        height: 25%;
-        margin-bottom: 0px !important;
         font-weight: bold;
     }
 </style>
@@ -1559,8 +1560,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#addEvent').modal('hide');
             $('.date-actions').css('display', 'none');
         });
+
+        function seasonalPrice(price = '') {
+            return '<p class="day-background season-background">' + price + '</p>';
+        }
         $('#save-season').on('click', function() {
-            var seasonMark = '<p class="season-background"></p>';
             var title = $('#seasonTitle').val();
             var startd = new Date($('#seasonStart').val());
             var endd = new Date($('#seasonEnd').val());
@@ -1584,10 +1588,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                 var period = [];
                 between.forEach(day => {
-                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonMark);
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
                 });
-
-                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html('<p class="season-background">$' + price + '</p>');
+                price = '$' + price;
+                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
                 $('#seasonBook').modal('hide');
                 $('.date-actions').css('display', 'none');
             }
@@ -1812,6 +1816,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $('.date-actions').css('display', 'none');
     })
 
+    function weekendPrice(price = '') {
+        var result = '<p class="day-background weekend-background">' + price + '</p>';
+        return result;
+    }
+
     function submitPrice() {
         var weekday = [];
         weekday.push($('.fc-day.fc-widget-content.fc-mon'));
@@ -1821,8 +1830,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         weekday.push($('.fc-day.fc-widget-content.fc-fri'));
         weekday.push($('.fc-day.fc-widget-content.fc-sat'));
         weekday.push($('.fc-day.fc-widget-content.fc-sun'));
-
-        var weekendMark = '<p class="weekend-background"></p>';
 
         var day = $('.datedays').val();
         var weekend = $('.weekenddays').val();
@@ -1835,17 +1842,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#weekly').addClass('invaild-input');
             $('#monthly').addClass('invaild-input');
         }
-        if (weekend != '') {
-            var week = '$' + weekend;
-        } else {
-            var week = '';
-        }
 
-        if (day != '') {
-            var days = '$' + day;
-        } else {
-            var days = '';
-        }
+        // if (weekend != '') {
+        //     var week = '$' + weekend;
+        // } else {
+        //     var week = '';
+        // }
+
+        var week = weekend != '' ? '$' + weekend : '';
+
+        // if (day != '') {
+        //     var days = '$' + day;
+        // } else {
+        //     var days = '';
+        // }
+
+        var days = day != '' ? '$' + day : '';
 
         var weekendFrom = $('#weekendFrom').val();
         var weekendTo = $('#weekendTo').val();
@@ -1858,19 +1870,31 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 day.html('');
             });
 
-            for (var i = weekendFrom; i <= weekendTo; i++) {
-                weekday[i % 7].html(weekendMark);
+            if (week != '') {
+                for (var i = weekendFrom; i <= weekendTo; i++) {
+                    weekday[i % 7].html(weekendPrice());
+                }
+                weekday[midWeekend].html(weekendPrice(week));
+            } else {
+                for (var i = weekendFrom; i <= weekendTo; i++) {
+                    weekday[i % 7].html(weekendPrice(days));
+                }
             }
-            weekday[midWeekend].html('<p class="weekend-background">' + week + '</p>');
         } else {
             weekday.forEach(day => {
                 day.html(days);
             });
 
-            for (var i = weekendFrom; i <= weekendTo; i++) {
-                weekday[i % 7].html(weekendMark);
+            if (week != '') {
+                for (var i = weekendFrom; i <= weekendTo; i++) {
+                    weekday[i % 7].html(weekendPrice());
+                }
+                weekday[midWeekend].html(weekendPrice(week));
+            } else {
+                for (var i = weekendFrom; i <= weekendTo; i++) {
+                    weekday[i % 7].html(weekendPrice(days));
+                }
             }
-            weekday[midWeekend].html('<p class="weekend-background">' + week + '</p>');
         }
     }
 
