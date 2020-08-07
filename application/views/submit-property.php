@@ -439,6 +439,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         justify-content: flex-start;
         align-items: flex-start;
     }
+
+    .weekend-background {
+        background-color: #ea7676;
+        width: 100%;
+        height: 25%;
+        margin-bottom: 0px !important;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -1732,11 +1739,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         weekday.push($('.fc-day.fc-widget-content.fc-sat'));
         weekday.push($('.fc-day.fc-widget-content.fc-sun'));
 
+        var weekendMark = '<p class="weekend-background"></p>';
+
         var day = $('.datedays').val();
         var weekend = $('.weekenddays').val();
         var weekly = $('#weekly').val();
         var monthly = $('#monthly').val();
-        console.log(day, weekend, weekly, monthly);
+
         if (day == '' && weekend == '' && weekly == '' && monthly == '') {
             $('.datedays').addClass('invaild-input');
             $('.weekenddays').addClass('invaild-input');
@@ -1758,25 +1767,27 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         var weekendFrom = $('#weekendFrom').val();
         var weekendTo = $('#weekendTo').val();
 
-
+        var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
 
         if ($('#customCheck29').is(':checked')) { // only available in weeked checked
 
             weekday.forEach(day => {
-                day.text('');
+                day.html('');
             });
 
             for (var i = weekendFrom; i <= weekendTo; i++) {
-                weekday[i % 7].text(week);
+                weekday[i % 7].html(weekendMark);
             }
+            weekday[midWeekend].html('<p class="weekend-background">' + week + '</p>');
         } else {
             weekday.forEach(day => {
-                day.text(days);
+                day.html(days);
             });
 
             for (var i = weekendFrom; i <= weekendTo; i++) {
-                weekday[i % 7].text(week);
+                weekday[i % 7].html(weekendMark);
             }
+            weekday[midWeekend].html('<p class="weekend-background">' + week + '</p>');
         }
     }
 
