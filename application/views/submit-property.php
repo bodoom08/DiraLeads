@@ -934,6 +934,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                 <input type="number" name="price" id="seasonPrice" />
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3" for="customCheck30">Fixed Price</label>
+                                                <input type="checkbox" name="onlyWeekend" value="Fixed Price" id="customCheck30">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
@@ -1471,12 +1477,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#blockModal').find('#ends-atblock').val(event.end);
                     $('#blockModal').find('.eventClose').text('Delete');
                 } else {
-                    $('#addEvent').modal('show');
-                    $('#addEvent').find('#title').val(event.title.split("$")[0]);
-                    $('#addEvent').find('#price-at').val(event.description);
-                    $('#addEvent').find('#starts-at').val(event.start);
-                    $('#addEvent').find('#ends-at').val(event.end);
-                    $('#addEvent').find('.eventClose').text('Delete');
+                    $('#seasonBook').modal('show');
+                    $('#seasonBook').find('#seasonTitle').val(event.title.split("$")[0]);
+                    $('#seasonBook').find('#seaonPrice').val(event.description);
+                    $('#seasonBook').find('#seasonStart').val(event.start);
+                    $('#seasonBook').find('#seasonEnd').val(event.end);
+                    $('#seasonBook').find('.eventClose').text('Delete');
                 }
                 $(".eventClose").click(function() {
                     var startDate = new Date(convert(event.start));
@@ -1512,10 +1518,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var updatedValu = x.join('|');
                     $('#selectedPrice').val(updatedValu);
 
-                    $('#addEvent').find('input').val('');
+                    $('#seasonBook').find('input').val('');
                     $('#blockModal').find('input').val('');
                     $('#blockModal').find('.eventClose').text('Close');
-                    $('#addEvent').find('.eventClose').text('Close');
+                    $('#seasonBook').find('.eventClose').text('Close');
                     $('#calendar').fullCalendar('removeEvents', event._id);
                 });
             }
@@ -1578,29 +1584,74 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var startd = new Date($('#seasonStart').val());
             var endd = new Date($('#seasonEnd').val());
             var price = $('#seasonPrice').val();
+            var isFixedPrice = $('#customCheck30').is(':checked');
 
-            if (price == '') {
-                toastr.warning('Price field is required');
+            if (title == '') {
+                toastr.warning('Title field is required');
                 return false;
             }
-            if (price) {
-                console.log(startd, endd);
-                var middate = new Date((startd.getTime() + endd.getTime()) / 2);
-
-                console.log("mid date->", middate);
-
-                var between = [];
-                while (startd <= endd) {
-                    between.push(new Date(startd));
-                    startd.setDate(startd.getDate() + 1);
+            if (title) {
+                if (price == '') {
+                    toastr.warning('Price field is required');
+                    return false;
                 }
+                if (price) {
+                    console.log(startd, endd);
+                    var middate = new Date((startd.getTime() + endd.getTime()) / 2);
 
-                var period = [];
-                between.forEach(day => {
-                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
-                });
-                price = '$' + price;
-                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+                    console.log("mid date->", middate);
+
+                    var between = [];
+                    while (startd <= endd) {
+                        between.push(new Date(startd));
+                        startd.setDate(startd.getDate() + 1);
+                    }
+
+                    var period = [];
+                    price = '$' + price;
+
+                    if (isFixedPrice) {
+                        between.forEach(day => {
+                            $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                        });
+                        $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+                    } else {
+                        between.forEach(day => {
+                            $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
+                        });
+                    }
+
+                    // var eventData = {
+                    //     title: title,
+                    //     start: new Date($('#seasonStart').val()),
+                    //     end: new Date($('#seasonEnd').val())
+                    // };
+
+                    // var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
+                    // var i;
+                    // var str;
+                    // var itemId = 0;
+                    // for (i = 1; i < between.length; i++) {
+                    //     eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+                    // }
+
+                    // var disableDate = $('.disableDate').val();
+                    // if (disableDate != '') {
+                    //     disableDate = disableDate + '|'
+                    // }
+                    // var dateprice = $('#selectedPrice').val();
+                    // if (dateprice != '') {
+                    //     dateprice = dateprice + '&';
+                    // }
+                    // $('#selectedPrice').val(dateprice + eachdate);
+                    // $('#date').val(convert(endd));
+
+                    // $('.disableDate').val(disableDate + converts($('#starts-at').val()) + ',' + converts($('#ends-at').val()));
+                    // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                }
+                $('#calendar').fullCalendar('unselect');
+                $('#seasonBook').find('.eventClose').text('Close');
+                $('#seasonBook').find('input').val('');
                 $('#seasonBook').modal('hide');
                 $('.date-actions').css('display', 'none');
             }
