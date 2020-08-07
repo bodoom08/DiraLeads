@@ -1001,55 +1001,48 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                 </div>
                                 <form id="newsletterform">
                                     <div class="form-group">
-                                        <label for="fname">Session Name:</label>
-                                        <input type="text" id="fname" name="session">
+                                        <label for="fname">Session Name:<input type="text" id="fname" name="session"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="fname">Price per night:</label>
-                                        <input type="number" id="sesprice">
+                                        <label for="lname">Start Date:<input type="text" id="startDate" class="startDate" name="startDate"></label>
                                     </div>
                                     <div class="form-group">
-                                        <label for="lname">Start Date:</label>
-                                        <input type="text" id="startDate" class="startDate" name="startDate">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lname">End Date:</label>
-                                        <input type="text" id="endDate" class="startDate" name="endDate">
+                                        <label for="lname">End Date:<input type="text" id="endDate" class="startDate" name="endDate"></label>
                                     </div>
                                     <div class="form-group">
                                         <label for="lname">Check in days:</label><br>
                                         <div class="custom-control custom-checkbox" style="padding-left:0px;">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="any day" id="customany">
-                                            <label class="custom-control-label" for="customany">any day</label>
+                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="any day" id="anyCheck">
+                                            <label class="custom-control-label" for="anyCheck">any day</label>
                                         </div>
                                     </div>
                                     <div class="form-group custom-group">
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sun" id="customSun">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sun" id="customSun">
                                             <label class="custom-control-label" for="customSun">Sun</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Mon" id="customMon">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Mon" id="customMon">
                                             <label class="custom-control-label" for="customMon">Mon</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Tue" id="customTue">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Tue" id="customTue">
                                             <label class="custom-control-label" for="customTue">Tue</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wed" id="customWed">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Wed" id="customWed">
                                             <label class="custom-control-label" for="customWed">Wed</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Thur" id="customThu">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Thur" id="customThu">
                                             <label class="custom-control-label" for="customThu">Thur</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Fri" id="customFri">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Fri" id="customFri">
                                             <label class="custom-control-label" for="customFri">Fri</label>
                                         </div>
                                         <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sat" id="customSat">
+                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sat" id="customSat">
                                             <label class="custom-control-label" for="customSat">Sat</label>
                                         </div>
 
@@ -1060,6 +1053,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
   <input type="checkbox" class="dayCheck" name="days[]" value="Thur">Thur
   <input type="checkbox" class="dayCheck" name="days[]" value="Fri">Fri
   <input type="checkbox" class="dayCheck" name="days[]" value="Fri">Sat -->
+                                    </div>
+
+                                    <div class="form-group weekend-container">
+                                        <label for="weekendFrom">Price </label>
+                                        <label for="weekendFrom"> Type</label>
+                                        <select class="form-control" name="weekend_type" id="weekendFrom">
+                                            <option value="3">Fixed Price</option>
+                                            <option value="4">Daily/Weekend</option>
+                                            <option value="4">Weekly</option>
+                                            <option value="4">Monthly</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="fname">Price : </label>
+                                        <input type="number" id="sesprice">
                                     </div>
                                     <div class="form-group button"><input type="button" value="Save rule" id="saveRule"></div>
                                 </form>
@@ -1877,7 +1886,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 weekday[midWeekend].html(weekendPrice(week));
             } else {
                 for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(weekendPrice(days));
+                    weekday[i % 7].html(days);
                 }
             }
         } else {
@@ -1892,7 +1901,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 weekday[midWeekend].html(weekendPrice(week));
             } else {
                 for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(weekendPrice(days));
+                    weekday[i % 7].html(days);
                 }
             }
         }
