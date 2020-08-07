@@ -446,6 +446,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         height: 25%;
         margin-bottom: 0px !important;
     }
+
+    .season-background {
+        background-color: #76eaaf;
+        width: 100%;
+        height: 25%;
+        margin-bottom: 0px !important;
+        font-weight: bold;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -888,6 +896,47 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" id="save-event">Save changes</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <div class="modal fade modal-event" tabindex="-1" id="seasonBook" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content event-model">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Add new season</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3" for="title">Title</label>
+                                                <input type="text" name="title" id="seasonTitle" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3" for="seasonStart">Starts at</label>
+                                                <input type="text" name="starts_at" class="startDate" id="seasonStart" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3" for="seasonEnd">Ends at</label>
+                                                <input type="text" name="ends_at" class="startDate" id="seasonEnd" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-3" for="seasonPrice">Price</label>
+                                                <input type="number" name="price" id="seasonPrice" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="save-season">Save changes</button>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -1399,7 +1448,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var a = start.split("-");
 
 
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#addEvent" data-toggle="modal" class="MainNavText" id="MainNavHelp" href="#addEvent">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
 
                 }
             },
@@ -1510,6 +1559,39 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#addEvent').modal('hide');
             $('.date-actions').css('display', 'none');
         });
+        $('#save-season').on('click', function() {
+            var seasonMark = '<p class="season-background"></p>';
+            var title = $('#seasonTitle').val();
+            var startd = new Date($('#seasonStart').val());
+            var endd = new Date($('#seasonEnd').val());
+            var price = '$' + $('#seasonPrice').val();
+
+            if (price == '') {
+                toastr.warning('Price field is required');
+                return false;
+            }
+            if (price) {
+                console.log(startd, endd);
+                var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+
+                console.log("mid date->", middate);
+
+                var between = [];
+                while (startd <= endd) {
+                    between.push(new Date(startd));
+                    startd.setDate(startd.getDate() + 1);
+                }
+
+                var period = [];
+                between.forEach(day => {
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonMark);
+                });
+
+                $('.fc-widget-content[data-date="' + convert(middate) + '"]').html('<p class="season-background">' + price + '</p>');
+                $('#seasonBook').modal('hide');
+                $('.date-actions').css('display', 'none');
+            }
+        });
         $('#save-block-event').on('click', function() {
             var title = $('#titleblock').val();
             if (title) {
@@ -1545,7 +1627,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             setTimeout(function() {
                 $(".fc-day-grid-event").attr("href", 'javascript:void');
             }, 1000);
-        })
+        });
+
         $('.fc-prev-button').click(function() {
             setTimeout(function() {
                 $(".fc-day-grid-event").attr("href", 'javascript:void');
@@ -1843,6 +1926,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         var itemId = price.substring(1, price.length);
         $('#pricechange').val(itemId);
     });
+
+    $(document).on('click', '.seasonalBooking', function() {
+        var date = $(this).attr('currentdata');
+        $('#seasonStart').val(date);
+        console.log('.fc-widget-content[data-date="' + date + '"]');
+    });
+
     $(document).on('click', '#save-price-event', function() {
         var price = $('#pricechange').val();
         var date = $('#hiddenDate').val();
