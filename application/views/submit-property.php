@@ -1599,7 +1599,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#blockModal').find('input').val('');
                     $('#blockModal').find('.eventClose').text('Close');
                     $('#seasonBook').find('.eventClose').text('Close');
-                    $('#calendar').fullCalendar('removeEvents', event._id);
+                    // $('#calendar').fullCalendar('removeEvents', event._id);
                 });
             }
         });
