@@ -455,6 +455,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         background-color: #76eaaf;
         font-weight: bold;
     }
+
+    .modal-row input {
+        border: #e5e5e5 1px solid;
+        padding: 5px 10px 5px 10px;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -1006,76 +1011,134 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     <span class="close">&times;</span>
                                 </div>
                                 <form id="newsletterform">
-                                    <div class="form-group">
-                                        <label for="fname">Session Name:<input type="text" id="fname" name="session"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lname">Start Date:<input type="text" id="startDate" class="startDate" name="startDate"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lname">End Date:<input type="text" id="endDate" class="startDate" name="endDate"></label>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lname">Check in days:</label><br>
-                                        <div class="custom-control custom-checkbox" style="padding-left:0px;">
-                                            <input type="checkbox" class="custom-control-input" name="amenities[]" value="any day" id="anyCheck">
-                                            <label class="custom-control-label" for="anyCheck">any day</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group custom-group">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sun" id="customSun">
-                                            <label class="custom-control-label" for="customSun">Sun</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Mon" id="customMon">
-                                            <label class="custom-control-label" for="customMon">Mon</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Tue" id="customTue">
-                                            <label class="custom-control-label" for="customTue">Tue</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Wed" id="customWed">
-                                            <label class="custom-control-label" for="customWed">Wed</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Thur" id="customThu">
-                                            <label class="custom-control-label" for="customThu">Thur</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Fri" id="customFri">
-                                            <label class="custom-control-label" for="customFri">Fri</label>
-                                        </div>
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sat" id="customSat">
-                                            <label class="custom-control-label" for="customSat">Sat</label>
-                                        </div>
+                                    <ul>
+                                        <li class="row modal-row">
+                                            <div>
+                                                <label for="fname">Session Name <input type="text" id="fname" name="session"></label>
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="form-group">
+                                                <label for="lname">Start Date:<input type="text" id="startDate" class="startDate" name="startDate"></label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="lname">End Date:<input type="text" id="endDate" class="startDate" name="endDate"></label>
+                                            </div>
+                                        </li>
+                                        <!-- <li class="row modal-row">
+                                            <div class="weekend-container">
+                                                <label for="priceForm">Price </label>
+                                                <label for="priceForm"> Type</label>
+                                                <select class="form-control" name="price_type" id="priceForm">
+                                                    <option value="1">Fixed Price</option>
+                                                    <option value="2">Daily/Weekend</option>
+                                                    <option value="3">Weekly</option>
+                                                    <option value="4">Monthly</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div>
+                                                <label for="fname">Price </label>
+                                                <input type="number" id="sesprice">
+                                            </div>
+                                        </li> -->
+                                        <li class="row modal-row">
+                                            <div class="form-group daily-container">
+                                                <label for="sDayPrice">Days ($)</label>
+                                                <input type="number" id="sDayPrice" class="datedays" placeholder="Days *">
+                                            </div>
+                                            <div class="form-group daily-container">
+                                                <label for="sWeekendPrice">Weekend ($)</label>
+                                                <input type="number" id="sWeekendPrice" class="weekenddays" placeholder="Weekend *">
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="form-group daily-container">
+                                                <label for="sWeeklyPrice">Weekly ($)</label>
+                                                <input type="number" id="sWeeklyPrice" class="weekly" placeholder="Weekly *">
+                                            </div>
+                                            <div class="form-group daily-container">
+                                                <label for="sMonthlyPrice">Monthly ($)</label>
+                                                <input type="number" id="sMonthlyPrice" class="monthly" placeholder="Monthly *">
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="form-group">
+                                                <label for="sWeekendFrom">Weekend </label>
+                                                <label for="sWeekendFrom"> From</label>
+                                                <select class="form-control" name="weekend_type" id="sWeekendFrom">
+                                                    <option value="3">Thursday</option>
+                                                    <option value="4">Friday</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="sWeekendTo">Till</label>
+                                                <select class="form-control" name="weekend_type" id="sWeekendTo">
+                                                    <option value="5">Motzei Shabbos</option>
+                                                    <option value="6">Sunday</option>
+                                                    <option value="7">Monday</option>
+                                                </select>
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="custom-control custom-checkbox form-group">
+                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck31">
+                                                <label class="custom-control-label" for="customCheck31">Only available in Weekend</label>
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="form-group">
+                                                <label for="lname">Check in days:</label><br>
+                                                <div class="custom-control custom-checkbox" style="padding-left:0px;">
+                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="any day" id="anyCheck">
+                                                    <label class="custom-control-label" for="anyCheck">any day</label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="row modal-row">
+                                            <div class="form-group custom-group">
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sun" id="customSun">
+                                                    <label class="custom-control-label" for="customSun">Sun</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Mon" id="customMon">
+                                                    <label class="custom-control-label" for="customMon">Mon</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Tue" id="customTue">
+                                                    <label class="custom-control-label" for="customTue">Tue</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Wed" id="customWed">
+                                                    <label class="custom-control-label" for="customWed">Wed</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Thur" id="customThu">
+                                                    <label class="custom-control-label" for="customThu">Thur</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Fri" id="customFri">
+                                                    <label class="custom-control-label" for="customFri">Fri</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sat" id="customSat">
+                                                    <label class="custom-control-label" for="customSat">Sat</label>
+                                                </div>
 
-                                        <!--input type="checkbox" class="dayCheck" name="days[]" value="Sun">Sun
+                                                <!--input type="checkbox" class="dayCheck" name="days[]" value="Sun">Sun
   <input type="checkbox" class="dayCheck" name="days[]" value="Mon">Mon
   <input type="checkbox" class="dayCheck" name="days[]" value="Tue">Tue
   <input type="checkbox" class="dayCheck" name="days[]" value="Wed">Wed
   <input type="checkbox" class="dayCheck" name="days[]" value="Thur">Thur
   <input type="checkbox" class="dayCheck" name="days[]" value="Fri">Fri
   <input type="checkbox" class="dayCheck" name="days[]" value="Fri">Sat -->
-                                    </div>
+                                            </div>
+                                        </li>
+                                    </ul>
 
-                                    <div class="form-group weekend-container">
-                                        <label for="weekendFrom">Price </label>
-                                        <label for="weekendFrom"> Type</label>
-                                        <select class="form-control" name="weekend_type" id="weekendFrom">
-                                            <option value="3">Fixed Price</option>
-                                            <option value="4">Daily/Weekend</option>
-                                            <option value="4">Weekly</option>
-                                            <option value="4">Monthly</option>
-                                        </select>
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="fname">Price : </label>
-                                        <input type="number" id="sesprice">
-                                    </div>
                                     <div class="form-group button"><input type="button" value="Save rule" id="saveRule"></div>
                                 </form>
                             </div>
@@ -1760,7 +1823,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var session = $('#fname').val();
             var startDate = $('#startDate').val();
             var endDate = $('#endDate').val();
-            var price = $('#sesprice').val();
+            // var price = $('#sesprice').val();
+            var sDayPrice = $('#sDayPrice').val();
+            var sWeekendPrice = $('#sWeekendPrice').val();
+            var sWeeklyPrice = $('#sWeeklyPrice').val();
+            var sMonthlyPrice = $('#sMonthlyPrice').val();
+
+            var isOnlyWeekend = $('#customCheck31').is(':checked');
             if (session == '') {
                 toastr.warning('Session name is required');
                 return false;
@@ -1773,7 +1842,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('End date is required');
                 return false;
             }
-            if (price == '') {
+            if (!sDayPrice && !sWeekendPrice && !sWeeklyPrice && !sMonthlyPrice) {
                 toastr.warning('Price is required');
                 return false;
             }
@@ -1794,7 +1863,35 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('Check-in is required');
                 return false;
             }
-            $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + session + '</p><p>Price per night' + price + '</p><p>' + startDate + '-' + endDate + '</p><p>Check-In ' + days + ' <i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" edit-id=' + click + '>Edit</span></p></div><input type="hidden" class="rulname' + click + '" value="' + session + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulPrice' + click + '" value="' + price + '"><input type="hidden" class="rulDays' + click + '" value="' + days + '">');
+
+            var price = '';
+
+            if (!sMonthlyPrice) {
+                if (!sWeeklyPrice) {
+                    if (sDayPrice) {
+                        price = "Day: $" + sDayPrice;
+                        if (sWeekendPrice) {
+                            if (isOnlyWeekend) {
+                                price = "Only Weekend: $" + sWeekendPrice;
+                            } else {
+                                price += "  Weekend: $" + sWeekendPrice;
+                            }
+                        }
+                    } else {
+                        if (sWeekendPrice) {
+                            price = "Weekend: $" + sWeekendPrice;
+                        } else {
+
+                        }
+                    }
+
+                } else {
+                    price = "Weekly: $" + sWeeklyPrice;
+                }
+            } else {
+                price = "Monthly: $" + sMonthlyPrice;
+            }
+            $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + session + '</p><p>' + price + '</p><p>' + startDate + '-' + endDate + '</p><p>Check-In ' + days + ' <i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" edit-id=' + click + '>Edit</span></p></div><input type="hidden" class="rulname' + click + '" value="' + session + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulPrice' + click + '" value="' + price + '"><input type="hidden" class="rulDays' + click + '" value="' + days + '">');
 
             var sessionData = $('#session').val();
             if (sessionData != '') {
