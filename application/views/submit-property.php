@@ -460,6 +460,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         border: #e5e5e5 1px solid;
         padding: 5px 10px 5px 10px;
     }
+
+    .date-actions a:hover {
+        color: grey;
+    }
 </style>
 <div class="dashboard">
     <div class="container-fluid">
@@ -1510,28 +1514,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             },
             select: function(start, end, jsEvent, view) {
                 $('.date-actions').css('display', 'none');
-                var datedays = $('.datedays').val();
-                var weekenddays = $('.weekenddays').val();
-                if (datedays == '') {
-                    toastr.warning('Price fields are required');
-                    return false;
-                }
-                if (weekenddays == '') {
-                    toastr.warning('Price fields are required');
-                    return false;
-                }
+                // var datedays = $('.datedays').val();
+                // var weekenddays = $('.weekenddays').val();
+                // if (datedays == '') {
+                //     toastr.warning('Price fields are required');
+                //     return false;
+                // }
+                // if (weekenddays == '') {
+                //     toastr.warning('Price fields are required');
+                //     return false;
+                // }
                 if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
                     $(".fc-day-grid-event").attr("href", 'javascript:void');
                     var start = convert(moment(start).format());
                     var end = convert(moment(end).format());
                     var a = start.split("-");
 
-
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
                 }
             },
             eventClick: function(event, element) {
+                console.log(event, element);
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
                     $('#blockModal').modal('show');
@@ -1540,12 +1544,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#blockModal').find('#ends-atblock').val(event.end);
                     $('#blockModal').find('.eventClose').text('Delete');
                 } else {
-                    $('#seasonBook').modal('show');
-                    $('#seasonBook').find('#seasonTitle').val(event.title.split("$")[0]);
-                    $('#seasonBook').find('#seaonPrice').val(event.description);
-                    $('#seasonBook').find('#seasonStart').val(event.start);
-                    $('#seasonBook').find('#seasonEnd').val(event.end);
-                    $('#seasonBook').find('.eventClose').text('Delete');
+                    $('.date-actions').css('display', 'none');
+                    // $('#seasonBook').modal('show');
+                    // $('#seasonBook').find('#seasonTitle').val(event.title.split("$")[0]);
+                    // $('#seasonBook').find('#seaonPrice').val(event.description);
+                    // $('#seasonBook').find('#seasonStart').val(event.start);
+                    // $('#seasonBook').find('#seasonEnd').val(event.end);
+                    // $('#seasonBook').find('.eventClose').text('Delete');
+
+                    $(".fc-day-grid-event").attr("href", 'javascript:void');
+                    var start = convert(moment(event.start._i).format());
+                    var end = convert(moment(end).format());
+                    var a = start.split("-");
+
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#seasonBook" data-toggle="modal" class="MainNavText seasonalBooking" id="MainNavHelp" currentdata="' + start + '" href="#seasonBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+
                 }
                 $(".eventClose").click(function() {
                     var startDate = new Date(convert(event.start));
