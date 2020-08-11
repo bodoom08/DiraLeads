@@ -2419,7 +2419,7 @@ ul.amnity .custom-control.custom-checkbox {margin: 0 0 10px; width: 100%;float: 
 .process-model:after {
     background: none;
 }
-	.dashboard-list h3 {
+.dashboard-list h3 {
     margin-top: 50px;
 }
 
@@ -2473,9 +2473,47 @@ button#submitBtn {
 }
 .design-process-content ul.nav-tabs.process-model li a p{margin:0;   padding-left: 10px;}
 .form-group .fc-view-container tbody.fc-body .fc-bg tr td {
-    vertical-align: bottom;
+    vertical-align: middle;
    
 }
+
+.fc-row .fc-content-skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+
+.fc-content-skeleton .fc-event-container {
+    vertical-align: bottom;
+}
+
+a.fc-more {
+    position: relative;
+    display: block;
+    font-size: 0.85em;
+    line-height: 1.3;
+    border-radius: 3px;
+    border: 1px solid #3a87ad;
+    background-color: #3a87ad;
+    font-weight: normal;
+    color: #fff;
+    border-radius: 0;
+}
+
+.fc-content-skeleton,
+.fc-content-skeleton table {height:100%;}
+
+td.fc-more-cell {
+    vertical-align: bottom;
+}
+
+/* .fc-content-skeleton table {
+    height: 100% !important;
+} */
+
 .date-actions {
     position: absolute !important;
     background: none;
