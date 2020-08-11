@@ -873,6 +873,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                             <div class="rule">
                                                                             </div>
                                                                         </div>
+                                                                        <div class="form-group">
+                                                                            <div id='seasonCalendar'></div>
+                                                                        </div>
                                                                     </li>
                                                                 </ul>
                                                             </div>
@@ -1718,6 +1721,49 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     // $('#calendar').fullCalendar('removeEvents', event._id);
                 });
             }
+        });
+        // $('.costomSession').on('click', function() {
+        // $('#seasonCalendar').fullCalendar({
+        //     header: {
+        //         left: 'prev,next today',
+        //         center: 'title',
+        //         right: 'month'
+        //         // right: 'month,agendaWeek'
+        //     },
+        //     defaultDate: d,
+        //     defaultView: 'month',
+        //     editable: true,
+        //     selectable: true,
+        //     fixedWeekCount: false,
+        //     timezone: false,
+        //     eventOrder: "-id",
+        //     events: {
+        //         url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
+        //         cache: true
+        //     },
+        // });
+        //     console.log("yearly");
+        // });
+        $(document).on('click', '.costomSession', function() {
+            $('#seasonCalendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                    // right: 'month,agendaWeek'
+                },
+                defaultDate: d,
+                defaultView: 'month',
+                editable: true,
+                selectable: true,
+                fixedWeekCount: false,
+                timezone: false,
+                eventOrder: "-id",
+                events: {
+                    url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
+                    cache: true
+                },
+            });
         });
         $('#add-season').on('click', function() {
             var title = $('#seasonTitle').val();
