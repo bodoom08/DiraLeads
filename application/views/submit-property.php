@@ -243,6 +243,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         float: left;
     }
 
+    .seasonRule {
+        width: 100%;
+        float: left;
+    }
+
     .sessionalRule p:first-child {
         font-weight: 700;
         font-size: 16px;
@@ -862,7 +867,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         </div> -->
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
-                                                                            <div class="rule">
+                                                                            <div class="seasonRule">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -913,7 +918,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                 </div>
                             </div>
                         </div>
-                        <div class="modal fade modal-event" tabindex="-1" id="seasonModal" role="dialog">
+                        <!-- <div class="modal fade modal-event" tabindex="-1" id="seasonModal" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
                                     <div class="modal-header">
@@ -956,9 +961,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" id="add-season">Add season</button>
                                     </div>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                </div>
+                            </div>
+                        </div> -->
 
                         <div class="modal fade modal-event" tabindex="-1" id="manualBook" role="dialog">
                             <div class="modal-dialog" role="document">
@@ -1194,6 +1199,69 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="form-group button"><input type="button" class="seasonButton" value="Save rule" id="saveRule"></div>
                                     </div>
                                     <!-- </form> -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="seasonModal" class="session_modal modal modal-event">
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add a season</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body ">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="seasonTitle">Season title</label>
+                                            <input type="text" style="width: 100%;" id="seasonTitle" name="session" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="seasonStart">Seasn start at*</label>
+                                            <input type="text" style="width: 100%;" id="seasonStart" class="startDate" name="startDate" />
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="seasonEnd">Season end at*</label>
+                                            <input type="text" style="width: 100%;" id="seasonEnd" class="startDate" name="endDate" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="fseasonRate">Seasnal rates</label>
+                                            <select class="form-control" name="weekend_type" id="fseasonRate">
+                                                <option value="daily">Daily</option>
+                                                <option value="fixed">Fixed</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-6" id="fseasonFixedPrice" style="display:none;">
+                                            <label for="ffixedSeasonalPrice">Season price ($)*</label>
+                                            <input type="number" style="width: 100%;" id="ffixedSeasonalPrice" class="weekenddays" />
+                                        </div>
+                                    </div>
+                                    <div id="fseasonDailyPrice">
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="fsDayPrice">Days ($)</label>
+                                                <input type="number" style="width: 100%;" id="fsDayPrice" class="datedays" placeholder="Days *">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="fsWeekendPrice">Weekend ($)</label>
+                                                <input type="number" style="width: 100%;" id="fsWeekendPrice" class="weekenddays" placeholder="Weekend *">
+                                            </div>
+                                        </div>
+                                        <div class="row" style="text-align: center;">
+                                            <div class="col-sm-12">
+                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck32">
+                                                <label class="custom-control-label" for="customCheck32">Only available in Weekend</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <div class="form-group button"><input type="button" class="seasonButton" value="Add season" id="add-season"></div>
+                                        <input type="hidden" id="season" value="" name="season_data">
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1626,6 +1694,23 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
 <script>
     $(document).ready(function() {
+
+        var compare = function(filter) {
+            return function(a, b) { //closure
+                var a = a[filter],
+                    b = b[filter];
+
+                if (a < b) {
+                    return -1;
+                } else if (a > b) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            };
+        };
+
+
         var d = moment().format('YYYY-MM-DD');
 
         $('#calendar').fullCalendar({
@@ -1641,14 +1726,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             selectable: true,
             fixedWeekCount: false,
             timezone: false,
-            eventOrder: function(a, b) {
-                var com = a.title.localeCompare(b.title);
-                return com;
-            },
             events: {
                 url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-                cache: true
+                cache: true,
+                success: function(events) { // a function that returns an object
+                    for (var i = 0; i < events.length; i++) {
+                        if (events[i].className == "hebdate") {
+                            events[i].order = 1
+                        } else {
+                            events[i].order = 0;
+                        }
+                    }
+                    var filter = compare("order");
+                    events.sort(filter);
+                    console.log(events)
+                    return events;
+                }
             },
+            eventRender: function(eventObj, $el) {
+                // $el.addClass("custom-event");
+                // console.log(eventObj);
+            },
+
             select: function(start, end, jsEvent, view) {
 
                 $('.date-actions').css('display', 'none');
@@ -1784,73 +1883,179 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 },
             });
         });
-        $('#add-season').on('click', function() {
-            var title = $('#seasonTitle').val();
-            var startd = new Date($('#seasonStart').val());
-            var endd = new Date($('#seasonEnd').val());
-            var price = $('#seasonPrice').val();
-            var isFixedPrice = $('#customCheck30').is(':checked');
 
-            if (price == '') {
-                toastr.warning('Price field is required');
-                return false;
-            } else if (price) {
-                var eventData = {
-                    title: title,
-                    start: new Date($('#starts-at').val()),
-                    end: new Date($('#ends-at').val())
-                };
-
-                //  console.log(startd, endd);
-                var middate = new Date((startd.getTime() + endd.getTime()) / 2);
-
-                // console.log("mid date->", middate);
-
+        function renderSeason() {
+            var seasonData = $('#season').val();
+            var seasons = seasonData.split('&');
+            seasons.forEach(season => {
+                var values = season.split('|');
+                var id = values[0];
+                var title = values[1];
+                var startDate = new Date(values[2]);
+                var endDate = new Date(values[3]);
+                var seasonRate = values[4];
+                if (seasonRate == 'daily') {
+                    var dayPrice = values[5];
+                    var weekendPrice = values[6];
+                    var isOnlyWeekend = values[7];
+                    var price = '$' + dayPrice;
+                } else {
+                    var fixedPrice = values[5];
+                    var price = '$' + fixedPrice;
+                }
+                console.log(values);
+                var middate = new Date((startDate.getTime() + endDate.getTime()) / 2);
                 var between = [];
-                while (startd <= endd) {
-                    between.push(new Date(startd));
-                    startd.setDate(startd.getDate() + 1);
+                var tempDate = startDate;
+                while (tempDate <= endDate) {
+                    between.push(new Date(tempDate));
+                    tempDate.setDate(tempDate.getDate() + 1);
                 }
 
-                var period = [];
-                price = '$' + price;
-
-                if (isFixedPrice) {
+                if (seasonRate == 'daily') {
+                    between.forEach(day => {
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
+                    });
+                } else {
                     between.forEach(day => {
                         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
                     });
                     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
-                } else {
-                    between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
-                    });
                 }
+            });
+        }
+        var seasonID = 0;
+        $('#add-season').on('click', function() {
+            var title = $('#seasonTitle').val();
+            var startDate = $('#seasonStart').val();
+            var endDate = $('#seasonEnd').val();
+            // var price = $('#seasonPrice').val();
 
-                // var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
-                // var i;
-                // var str;
-                // var itemId = 0;
-                // for (i = 1; i < between.length; i++) {
-                //     eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
-                // }
+            var seasonRate = $('#fseasonRate').val();
 
-                // var disableDate = $('.disableDate').val();
-                // if (disableDate != '') {
-                //     disableDate = disableDate + '|'
-                // }
-                // var dateprice = $('#selectedPrice').val();
-                // if (dateprice != '') {
-                //     dateprice = dateprice + '&';
-                // }
-                // $('#selectedPrice').val(dateprice + eachdate);
-                // $('#date').val(convert(endd));
+            var seasonFixedPrice = $("#ffixedSeasonalPrice").val();
 
-                // $('.disableDate').val(disableDate + converts($('#starts-at').val()) + ',' + converts($('#ends-at').val()));
-                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            var sDayPrice = $('#fsDayPrice').val();
+            var sWeekendPrice = $('#fsWeekendPrice').val();
+
+            var isOnlyWeekend = $('#customCheck32').is(':checked');
+
+            // var isFixedPrice = $('#customCheck30').is(':checked');
+            if (title == '') {
+                toastr.warning('Title is required');
+                return false;
             }
+            if (startDate == '') {
+                toastr.warning('Start date is required');
+                return false;
+            }
+            if (endDate == '') {
+                toastr.warning('End date is required');
+                return false;
+            }
+
+
+            var seasonData = $('#season').val();
+            if (seasonData != '') {
+                seasonData = seasonData + '&';
+            }
+
+
+            // var eventData = {
+            //     title: title,
+            //     start: new Date($('#starts-at').val()),
+            //     end: new Date($('#ends-at').val())
+            // };
+
+            //  console.log(startd, endd);
+            // var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+
+            // console.log("mid date->", middate);
+
+            // var between = [];
+            // while (startd <= endd) {
+            //     between.push(new Date(startd));
+            //     startd.setDate(startd.getDate() + 1);
+            // }
+
+            price = '$' + price;
+
+            if (seasonRate == "daily") {
+
+                if (!sDayPrice && !sWeekendPrice) {
+                    toastr.warning('Price is required');
+                    return false;
+                }
+                $('#season').val(seasonData + seasonID + '|' + title + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + sDayPrice + '|' + sWeekendPrice + '|' + isOnlyWeekend);
+
+                var price = '';
+
+                if (sDayPrice) {
+                    price = "Day: $" + sDayPrice;
+                    if (sWeekendPrice) {
+                        if (isOnlyWeekend) {
+                            price = "Only Weekend: $" + sWeekendPrice;
+                        } else {
+                            price += "  Weekend: $" + sWeekendPrice;
+                        }
+                    }
+                } else {
+                    if (sWeekendPrice) {
+                        price = "Weekend: $" + sWeekendPrice;
+                    }
+                }
+                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' aria-hidden="true"></i><span class="rulEdit" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + seasonID + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + seasonID + '" value="' + sWeekendTo + '"></div>');
+            } else {
+                if (!seasonFixedPrice) {
+                    toastr.warning('Price is required');
+                    return false;
+                }
+                $('#season').val(seasonData + seasonID + '|' + title + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + seasonFixedPrice);
+                price = 'Fixed: $' + seasonFixedPrice;
+                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' aria-hidden="true"></i><span class="rulEdit" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + seasonFixedPrice + '"></div>');
+            }
+            seasonID++;
+            renderSeason();
+            //show price on calendar
+
+            // if (isFixedPrice) {
+            //     between.forEach(day => {
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //     });
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            // } else {
+            //     between.forEach(day => {
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
+            //     });
+            // }
+
+            //add event on calendar
+
+            // var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
+            // var i;
+            // var str;
+            // var itemId = 0;
+            // for (i = 1; i < between.length; i++) {
+            //     eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+            // }
+
+            // var disableDate = $('.disableDate').val();
+            // if (disableDate != '') {
+            //     disableDate = disableDate + '|'
+            // }
+            // var dateprice = $('#selectedPrice').val();
+            // if (dateprice != '') {
+            //     dateprice = dateprice + '&';
+            // }
+            // $('#selectedPrice').val(dateprice + eachdate);
+            // $('#date').val(convert(endd));
+
+            // $('.disableDate').val(disableDate + converts($('#starts-at').val()) + ',' + converts($('#ends-at').val()));
+            // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+
             $('#calendar').fullCalendar('unselect');
             $('#seasonModal').find('.eventClose').text('Close');
-            $('#seasonModal').find('input').val('');
+
             $('#seasonModal').modal('hide');
             $('.date-actions').css('display', 'none');
         });
@@ -2223,6 +2428,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         } else {
             $("#editSeasonDailyPrice").css("display", "block");
             $("#editSeasonFixedPrice").css("display", "none");
+        }
+    });
+    $('#fseasonRate').on("change paste keyup", function() {
+        var seasonalRate = $(this).val();
+        if (seasonalRate == "fixed") {
+            $("#fseasonDailyPrice").css("display", "none");
+            $("#fseasonFixedPrice").css("display", "block");
+        } else {
+            $("#fseasonDailyPrice").css("display", "block");
+            $("#fseasonFixedPrice").css("display", "none");
         }
     });
     $(document).on('click', '.fa-trash', function() {

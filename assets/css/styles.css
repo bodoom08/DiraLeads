@@ -2474,7 +2474,9 @@ button#submitBtn {
 .design-process-content ul.nav-tabs.process-model li a p{margin:0;   padding-left: 10px;}
 .form-group .fc-view-container tbody.fc-body .fc-bg tr td {
     vertical-align: middle;
-   
+    font-size: 20px;
+    FONT-WEIGHT: 500;
+    text-align: center;  
 }
 
 .fc-row .fc-content-skeleton {
