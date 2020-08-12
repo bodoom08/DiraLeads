@@ -1739,7 +1739,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     }
                     var filter = compare("order");
                     events.sort(filter);
-                    console.log(events)
                     return events;
                 }
             },
@@ -1885,6 +1884,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         });
 
         function renderSeason() {
+            //clear calendar
+            $('.fc-bg td').html('');
+
+            // set price in dates
             var seasonData = $('#season').val();
             var seasons = seasonData.split('&');
             seasons.forEach(season => {
@@ -1924,6 +1927,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
             });
         }
+
         var seasonID = 0;
         $('#add-season').on('click', function() {
             var title = $('#seasonTitle').val();
@@ -2004,7 +2008,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         price = "Weekend: $" + sWeekendPrice;
                     }
                 }
-                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' aria-hidden="true"></i><span class="rulEdit" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + seasonID + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + seasonID + '" value="' + sWeekendTo + '"></div>');
+                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + seasonID + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + seasonID + '" value="' + sWeekendTo + '"></div>');
             } else {
                 if (!seasonFixedPrice) {
                     toastr.warning('Price is required');
@@ -2012,7 +2016,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
                 $('#season').val(seasonData + seasonID + '|' + title + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + seasonFixedPrice);
                 price = 'Fixed: $' + seasonFixedPrice;
-                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' aria-hidden="true"></i><span class="rulEdit" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + seasonFixedPrice + '"></div>');
+                $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + seasonFixedPrice + '"></div>');
             }
             seasonID++;
             renderSeason();
@@ -2409,299 +2413,322 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#editSeasonModal').hide();
         });
 
-    });
-    $('#seasonRate').on("change paste keyup", function() {
-        var seasonalRate = $(this).val();
-        if (seasonalRate == "fixed") {
-            $("#seasonDailyPrice").css("display", "none");
-            $("#seasonFixedPrice").css("display", "block");
-        } else {
-            $("#seasonDailyPrice").css("display", "block");
-            $("#seasonFixedPrice").css("display", "none");
-        }
-    });
-    $('#editSeasonRate').on("change paste keyup", function() {
-        var seasonalRate = $(this).val();
-        if (seasonalRate == "fixed") {
-            $("#editSeasonDailyPrice").css("display", "none");
-            $("#editSeasonFixedPrice").css("display", "block");
-        } else {
-            $("#editSeasonDailyPrice").css("display", "block");
-            $("#editSeasonFixedPrice").css("display", "none");
-        }
-    });
-    $('#fseasonRate').on("change paste keyup", function() {
-        var seasonalRate = $(this).val();
-        if (seasonalRate == "fixed") {
-            $("#fseasonDailyPrice").css("display", "none");
-            $("#fseasonFixedPrice").css("display", "block");
-        } else {
-            $("#fseasonDailyPrice").css("display", "block");
-            $("#fseasonFixedPrice").css("display", "none");
-        }
-    });
-    $(document).on('click', '.fa-trash', function() {
-        var id = $(this).attr('data');
-        var name = $('.rulname' + id).val();
-        var startDate = $('.rulStartDate' + id).val();
-        var endDate = $('.rulendDate' + id).val();
-        var price = $('.rulPrice' + id).val();
-        var seasonRate = $('.rulSeasonRate' + id).val();
-        var days = $('.rulDays' + id).val();
-        var session = $('#session').val();
-        var y = session.split('&');
-        console.log(y);
-        var removeItem = '' + id + '|' + name + '|' + startDate + '|' + endDate + '|' + seasonRate;
-        y = $.grep(y, function(value) {
-            return value != removeItem;
+
+        $('#seasonRate').on("change paste keyup", function() {
+            var seasonalRate = $(this).val();
+            if (seasonalRate == "fixed") {
+                $("#seasonDailyPrice").css("display", "none");
+                $("#seasonFixedPrice").css("display", "block");
+            } else {
+                $("#seasonDailyPrice").css("display", "block");
+                $("#seasonFixedPrice").css("display", "none");
+            }
         });
-        var seval = y.join('&');
-        $('#session').val(seval);
-        $('.sessionHide' + id).hide();
-
-    });
-
-    $(document).on('click', '.rulEdit', function() {
-        var id = $(this).attr('data');
-        var name = $('.rulname' + id).val();
-        var startDate = $('.rulStartDate' + id).val();
-        var endDate = $('.rulendDate' + id).val();
-        var seasonRate = $('.rulSeasonRate' + id).val();
-
-        var price = $('.rulPrice' + id).val();
-
-        var dayPrice = $('.rulDayPrice' + id).val();
-        var weekendPrice = $('.rulWeekendPrice' + id).val();
-        var weekendAval = $('.rulWeekendAval' + id).val();
-        var weekendStart = $('.rulWeekendStart' + id).val();
-        var weekendEnd = $('.rulWeekendEnd' + id).val();
-
-
-        $('#editID').val(id);
-
-        $('#editSeasonName').val(name);
-        $('#editStartDate').val(startDate);
-        $('#editEndDate').val(endDate);
-        $('#editSeasonRate').val(seasonRate);
-
-        if (seasonRate == 'fixed') {
-            $('#editFixedSeasonalPrice').val(price);
-            $('#editSeasonFixedPrice').css('display', 'block');
-            $('#editSeasonDailyPrice').css('display', 'none');
-        } else {
-            $('#sEditDayPrice').val(dayPrice);
-            $('#sEditWeekendPrice').val(weekendPrice);
-
-            $('#customCheck32').prop('checked', weekendAval);
-
-            $('#sEditWeekendFrom').val(weekendStart);
-            $('#sEditWeekendTo').val(weekendEnd);
-
-            $('#editSeasonFixedPrice').css('display', 'none');
-            $('#editSeasonDailyPrice').css('display', 'block');
-        }
-
-        var editItem = '' + name + '|' + startDate + '|' + endDate + '|' + days + '|' + seasonRate;
-        console.log(id, editItem);
-
-        $('#editSeasonModal').show();
-    });
-
-    $(document).on('click', '.R', function() {
-        var date = $(this).attr('currentdata');
-        $('#manualStart').val(date);
-        console.log('.fc-widget-content[data-date="' + date + '"]');
-    });
-
-
-
-    $(".startDate").datepicker({
-        dateFormat: "mm-dd-yy",
-
-        beforeShowDay: function(date) {
-            var disabledArrs = "12/06/2010,18/06/2010";
-            var disableDate = $('.disableDate').val();
-            if (disableDate != '') {
-                disabledArrs = disableDate
-            }
-            var disabledArr = disabledArrs.split('|');
-            for (i = 0; i < disabledArr.length; i++) {
-                var data = disabledArr[i].split(",");
-                var From = data[0].split('/');
-
-                var To = data[1].split('/');
-                var FromDate = new Date(From[2], From[1] - 1, From[0]);
-                var ToDate = new Date(To[2], To[1] - 1, To[0]);
-
-                // Set a flag to be used when found
-                var found = false;
-                // Compare date
-                if (date >= FromDate && date <= ToDate) {
-                    found = true;
-                    return [false, "red"]; // Return false (disabled) and the "red" class.
-                }
-            }
-
-            //At the end of the for loop, if the date wasn't found, return true.
-            if (!found) {
-                return [true, ""]; // Return true (Not disabled) and no class.
-            }
-        }
-    });
-    $(document).on('click', '.eventClose', function() {
-        $('.date-actions').css('display', 'none');
-    })
-
-    function weekendPrice(price = '') {
-        var result = '<p class="day-background weekend-background">' + price + '</p>';
-        return result;
-    }
-
-    function submitPrice() {
-        var weekday = [];
-        weekday.push($('.fc-day.fc-widget-content.fc-mon'));
-        weekday.push($('.fc-day.fc-widget-content.fc-tue'));
-        weekday.push($('.fc-day.fc-widget-content.fc-wed'));
-        weekday.push($('.fc-day.fc-widget-content.fc-thu'));
-        weekday.push($('.fc-day.fc-widget-content.fc-fri'));
-        weekday.push($('.fc-day.fc-widget-content.fc-sat'));
-        weekday.push($('.fc-day.fc-widget-content.fc-sun'));
-
-        var day = $('.datedays').val();
-        var weekend = $('.weekenddays').val();
-        var weekly = $('#weekly').val();
-        var monthly = $('#monthly').val();
-
-        if (day == '' && weekend == '' && weekly == '' && monthly == '') {
-            $('.datedays').addClass('invaild-input');
-            $('.weekenddays').addClass('invaild-input');
-            $('#weekly').addClass('invaild-input');
-            $('#monthly').addClass('invaild-input');
-        }
-
-        // if (weekend != '') {
-        //     var week = '$' + weekend;
-        // } else {
-        //     var week = '';
-        // }
-
-        var week = weekend != '' ? '$' + weekend : '';
-
-        // if (day != '') {
-        //     var days = '$' + day;
-        // } else {
-        //     var days = '';
-        // }
-
-        var days = day != '' ? '$' + day : '';
-
-        var weekendFrom = $('#weekendFrom').val();
-        var weekendTo = $('#weekendTo').val();
-
-        var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
-
-        if ($('#customCheck29').is(':checked')) { // only available in weeked checked
-
-            weekday.forEach(day => {
-                day.html('');
-            });
-
-            if (week != '') {
-                for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(weekendPrice());
-                }
-                weekday[midWeekend].html(weekendPrice(week));
+        $('#editSeasonRate').on("change paste keyup", function() {
+            var seasonalRate = $(this).val();
+            if (seasonalRate == "fixed") {
+                $("#editSeasonDailyPrice").css("display", "none");
+                $("#editSeasonFixedPrice").css("display", "block");
             } else {
-                for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(days);
-                }
+                $("#editSeasonDailyPrice").css("display", "block");
+                $("#editSeasonFixedPrice").css("display", "none");
             }
-        } else {
-            weekday.forEach(day => {
-                day.html(days);
-            });
-
-            if (week != '') {
-                for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(weekendPrice());
-                }
-                weekday[midWeekend].html(weekendPrice(week));
+        });
+        $('#fseasonRate').on("change paste keyup", function() {
+            var seasonalRate = $(this).val();
+            if (seasonalRate == "fixed") {
+                $("#fseasonDailyPrice").css("display", "none");
+                $("#fseasonFixedPrice").css("display", "block");
             } else {
-                for (var i = weekendFrom; i <= weekendTo; i++) {
-                    weekday[i % 7].html(days);
+                $("#fseasonDailyPrice").css("display", "block");
+                $("#fseasonFixedPrice").css("display", "none");
+            }
+        });
+        $(document).on('click', '.fa-trash', function() {
+            var id = $(this).attr('data');
+            var tab = $(this).attr('tab');
+
+            console.log(tab, id);
+
+            var name = $('.rulname' + id).val();
+            var startDate = $('.rulStartDate' + id).val();
+            var endDate = $('.rulendDate' + id).val();
+            var price = $('.rulPrice' + id).val();
+            var seasonRate = $('.rulSeasonRate' + id).val();
+            if (tab == 1) { // first tab
+                var seasonData = $('#season').val();
+                var seasons = seasonData.split('&');
+                var newSeason = seasons.filter(season => {
+                    var values = season.split('|');
+                    if (values[0] == id) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                var newSeasonData = newSeason.join('&');
+                $('#season').val(newSeasonData);
+                renderSeason();
+            } else { //second tab
+                var days = $('.rulDays' + id).val();
+                var session = $('#session').val();
+                var y = session.split('&');
+                console.log(y);
+                var removeItem = '' + id + '|' + name + '|' + startDate + '|' + endDate + '|' + seasonRate;
+                y = $.grep(y, function(value) {
+                    return value != removeItem;
+                });
+                var seval = y.join('&');
+                $('#session').val(seval);
+
+            }
+            $('.sessionHide' + id).hide();
+
+        });
+
+        $(document).on('click', '.rulEdit', function() {
+            var id = $(this).attr('data');
+            var name = $('.rulname' + id).val();
+            var startDate = $('.rulStartDate' + id).val();
+            var endDate = $('.rulendDate' + id).val();
+            var seasonRate = $('.rulSeasonRate' + id).val();
+
+            var price = $('.rulPrice' + id).val();
+
+            var dayPrice = $('.rulDayPrice' + id).val();
+            var weekendPrice = $('.rulWeekendPrice' + id).val();
+            var weekendAval = $('.rulWeekendAval' + id).val();
+            var weekendStart = $('.rulWeekendStart' + id).val();
+            var weekendEnd = $('.rulWeekendEnd' + id).val();
+
+
+            $('#editID').val(id);
+
+            $('#editSeasonName').val(name);
+            $('#editStartDate').val(startDate);
+            $('#editEndDate').val(endDate);
+            $('#editSeasonRate').val(seasonRate);
+
+            if (seasonRate == 'fixed') {
+                $('#editFixedSeasonalPrice').val(price);
+                $('#editSeasonFixedPrice').css('display', 'block');
+                $('#editSeasonDailyPrice').css('display', 'none');
+            } else {
+                $('#sEditDayPrice').val(dayPrice);
+                $('#sEditWeekendPrice').val(weekendPrice);
+
+                $('#customCheck32').prop('checked', weekendAval);
+
+                $('#sEditWeekendFrom').val(weekendStart);
+                $('#sEditWeekendTo').val(weekendEnd);
+
+                $('#editSeasonFixedPrice').css('display', 'none');
+                $('#editSeasonDailyPrice').css('display', 'block');
+            }
+
+            var editItem = '' + name + '|' + startDate + '|' + endDate + '|' + days + '|' + seasonRate;
+            console.log(id, editItem);
+
+            $('#editSeasonModal').show();
+        });
+
+        $(document).on('click', '.R', function() {
+            var date = $(this).attr('currentdata');
+            $('#manualStart').val(date);
+            console.log('.fc-widget-content[data-date="' + date + '"]');
+        });
+
+
+
+        $(".startDate").datepicker({
+            dateFormat: "mm-dd-yy",
+
+            beforeShowDay: function(date) {
+                var disabledArrs = "12/06/2010,18/06/2010";
+                var disableDate = $('.disableDate').val();
+                if (disableDate != '') {
+                    disabledArrs = disableDate
+                }
+                var disabledArr = disabledArrs.split('|');
+                for (i = 0; i < disabledArr.length; i++) {
+                    var data = disabledArr[i].split(",");
+                    var From = data[0].split('/');
+
+                    var To = data[1].split('/');
+                    var FromDate = new Date(From[2], From[1] - 1, From[0]);
+                    var ToDate = new Date(To[2], To[1] - 1, To[0]);
+
+                    // Set a flag to be used when found
+                    var found = false;
+                    // Compare date
+                    if (date >= FromDate && date <= ToDate) {
+                        found = true;
+                        return [false, "red"]; // Return false (disabled) and the "red" class.
+                    }
+                }
+
+                //At the end of the for loop, if the date wasn't found, return true.
+                if (!found) {
+                    return [true, ""]; // Return true (Not disabled) and no class.
+                }
+            }
+        });
+        $(document).on('click', '.eventClose', function() {
+            $('.date-actions').css('display', 'none');
+        })
+
+        function weekendPrice(price = '') {
+            var result = '<p class="day-background weekend-background">' + price + '</p>';
+            return result;
+        }
+
+        function submitPrice() {
+            var weekday = [];
+            weekday.push($('.fc-day.fc-widget-content.fc-mon'));
+            weekday.push($('.fc-day.fc-widget-content.fc-tue'));
+            weekday.push($('.fc-day.fc-widget-content.fc-wed'));
+            weekday.push($('.fc-day.fc-widget-content.fc-thu'));
+            weekday.push($('.fc-day.fc-widget-content.fc-fri'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sat'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sun'));
+
+            var day = $('.datedays').val();
+            var weekend = $('.weekenddays').val();
+            var weekly = $('#weekly').val();
+            var monthly = $('#monthly').val();
+
+            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+                $('.datedays').addClass('invaild-input');
+                $('.weekenddays').addClass('invaild-input');
+                $('#weekly').addClass('invaild-input');
+                $('#monthly').addClass('invaild-input');
+            }
+
+            // if (weekend != '') {
+            //     var week = '$' + weekend;
+            // } else {
+            //     var week = '';
+            // }
+
+            var week = weekend != '' ? '$' + weekend : '';
+
+            // if (day != '') {
+            //     var days = '$' + day;
+            // } else {
+            //     var days = '';
+            // }
+
+            var days = day != '' ? '$' + day : '';
+
+            var weekendFrom = $('#weekendFrom').val();
+            var weekendTo = $('#weekendTo').val();
+
+            var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
+
+            if ($('#customCheck29').is(':checked')) { // only available in weeked checked
+
+                weekday.forEach(day => {
+                    day.html('');
+                });
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
+                }
+            } else {
+                weekday.forEach(day => {
+                    day.html(days);
+                });
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
                 }
             }
         }
-    }
 
-    $('#days').on("change paste keyup", function() {
-        if ($('#days').val() != '') {
-            setValidDatePrice();
+        $('#days').on("change paste keyup", function() {
+            if ($('#days').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekend').on("change paste keyup", function() {
+            if ($('#weekend').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekly').on("change paste keyup", function() {
+            if ($('#weekly').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#monthly').on("change paste keyup", function() {
+            if ($('#monthly').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekendFrom').on("change paste keyup", function() {
+            submitPrice();
+        });
+        $('#weekendTo').on("change paste keyup", function() {
+            submitPrice();
+        });
+        $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
+            submitPrice();
+        });
+
+        function setValidDatePrice() {
+            $('#days').removeClass('invaild-input');
+            $('#weekend').removeClass('invaild-input');
+            $('#weekly').removeClass('invaild-input');
+            $('#monthly').removeClass('invaild-input');
         }
-        submitPrice();
-    });
 
-    $('#weekend').on("change paste keyup", function() {
-        if ($('#weekend').val() != '') {
-            setValidDatePrice();
-        }
-        submitPrice();
-    });
+        $(document).on('click', '.changepricefin', function() {
+            var date = $(this).attr('currentdata');
+            $('#hiddenDate').val(date);
+            var price = $('.fc-widget-content[data-date="' + date + '"]').text();
+            var itemId = price.substring(1, price.length);
+            $('#pricechange').val(itemId);
+        });
 
-    $('#weekly').on("change paste keyup", function() {
-        if ($('#weekly').val() != '') {
-            setValidDatePrice();
-        }
-        submitPrice();
-    });
+        $(document).on('click', '.manualBooking', function() {
+            var date = $(this).attr('currentdata');
+            $('#manualStart').val(date);
+            console.log('.fc-widget-content[data-date="' + date + '"]');
+        });
 
-    $('#monthly').on("change paste keyup", function() {
-        if ($('#monthly').val() != '') {
-            setValidDatePrice();
-        }
-        submitPrice();
-    });
+        $(document).on('click', '#save-price-event', function() {
+            var price = $('#pricechange').val();
+            var date = $('#hiddenDate').val();
+            var changep = '$' + price;
+            $('.fc-widget-content[data-date="' + date + '"]').text(changep);
+            $('#priceModal').hide();
+            $('.date-actions').css('display', 'none');
+        });
+        $(document).on('click', '.closePrice', function() {
+            $('.date-actions').css('display', 'none');
+        });
 
-    $('#weekendFrom').on("change paste keyup", function() {
-        submitPrice();
-    });
-    $('#weekendTo').on("change paste keyup", function() {
-        submitPrice();
-    });
-    $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
-        submitPrice();
-    });
-
-    function setValidDatePrice() {
-        $('#days').removeClass('invaild-input');
-        $('#weekend').removeClass('invaild-input');
-        $('#weekly').removeClass('invaild-input');
-        $('#monthly').removeClass('invaild-input');
-    }
-
-    $(document).on('click', '.changepricefin', function() {
-        var date = $(this).attr('currentdata');
-        $('#hiddenDate').val(date);
-        var price = $('.fc-widget-content[data-date="' + date + '"]').text();
-        var itemId = price.substring(1, price.length);
-        $('#pricechange').val(itemId);
-    });
-
-    $(document).on('click', '.manualBooking', function() {
-        var date = $(this).attr('currentdata');
-        $('#manualStart').val(date);
-        console.log('.fc-widget-content[data-date="' + date + '"]');
-    });
-
-    $(document).on('click', '#save-price-event', function() {
-        var price = $('#pricechange').val();
-        var date = $('#hiddenDate').val();
-        var changep = '$' + price;
-        $('.fc-widget-content[data-date="' + date + '"]').text(changep);
-        $('#priceModal').hide();
-        $('.date-actions').css('display', 'none');
-    });
-    $(document).on('click', '.closePrice', function() {
-        $('.date-actions').css('display', 'none');
     });
 </script>
