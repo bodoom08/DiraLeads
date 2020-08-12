@@ -248,7 +248,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         font-size: 16px;
     }
 
-    a#addRule {
+    a.addRule {
         border: #a27107 1px solid;
         padding: 15px 50px;
         display: inline-block;
@@ -851,10 +851,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                                     <option value="7">Monday</option>
                                                                                 </select>
                                                                             </div>
+                                                                            <div class="form-group">
+                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <label class="custom-control-label" for="customCheck29">Weekend Only</label>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="custom-control custom-checkbox form-group">
+                                                                        <!-- <div class="custom-control custom-checkbox form-group">
                                                                             <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
                                                                             <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
+                                                                        </div> -->
+                                                                        <div class="form-group">
+                                                                            <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
+                                                                            <div class="rule">
+                                                                            </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div id='calendar'></div>
@@ -869,7 +878,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 <ul class="row">
                                                                     <li class="col-lg-12">
                                                                         <div class="form-group">
-                                                                            <a href="javascript:void()" id="addRule">Add sessional price rule...</a>
+                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
                                                                             <div class="rule">
                                                                             </div>
                                                                         </div>
@@ -914,32 +923,38 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <label class="col-sm-3" for="seasonTitle">Season title</label>
+                                                <label class="col-sm-4" for="seasonTitle">Season title</label>
                                                 <input type="text" name="title" id="seasonTitle" />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <label class="col-sm-3" for="seasonStart">Starts at</label>
+                                                <label class="col-sm-4" for="seasonStart">Starts at</label>
                                                 <input type="text" name="starts_at" class="startDate" id="seasonStart" />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <label class="col-sm-3" for="seasonEnd">Ends at</label>
+                                                <label class="col-sm-4" for="seasonEnd">Ends at</label>
                                                 <input type="text" name="ends_at" class="startDate" id="seasonEnd" />
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="custom-control custom-checkbox form-group">
-                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck30">
-                                                <label class="custom-control-label" for="customCheck30">Fixed Price</label>
+                                            <div class="col-sm-12">
+                                                <label class="col-sm-4" for="seasonPrice">Price</label>
+                                                <input type="number" name="ends_at" class="" id="seasonPrice" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6" style="text-align: center;">
+                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck30">
+                                                <label class="custom-control-label" style="font-size: 16px;" for="customCheck30">Fixed Price</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="add-season">Add season<button>
+                                        <button type="button" class="btn btn-primary" id="add-season">Add season</button>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -1109,7 +1124,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                         </div>
                                         <div class="row" id="dailySeasonalPrice">
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label for="sWeekendFrom">Weekend </label>
                                                 <label for="sWeekendFrom"> From</label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendFrom">
@@ -1117,7 +1132,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <label for="sWeekendTo">Till</label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
@@ -1128,7 +1143,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="row" style="text-align: center;">
                                             <div class="col-sm-12">
-                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck31">
+                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck31">
                                                 <label class="custom-control-label" for="customCheck31">Only available in Weekend</label>
                                             </div>
                                         </div>
@@ -1622,16 +1637,20 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             },
             defaultDate: d,
             defaultView: 'month',
-            editable: true,
+            editable: false,
             selectable: true,
             fixedWeekCount: false,
             timezone: false,
-            eventOrder: "-id",
+            eventOrder: function(a, b) {
+                var com = a.title.localeCompare(b.title);
+                return com;
+            },
             events: {
                 url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                 cache: true
             },
             select: function(start, end, jsEvent, view) {
+
                 $('.date-actions').css('display', 'none');
                 // var datedays = $('.datedays').val();
                 // var weekenddays = $('.weekenddays').val();
@@ -1654,7 +1673,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
             },
             eventClick: function(event, element) {
-                console.log(event, element);
+                console.log(event.titlte);
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
                     $('#blockModal').modal('show');
@@ -1754,7 +1773,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 },
                 defaultDate: d,
                 defaultView: 'month',
-                editable: true,
+                editable: false,
                 selectable: true,
                 fixedWeekCount: false,
                 timezone: false,
@@ -1769,44 +1788,65 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var title = $('#seasonTitle').val();
             var startd = new Date($('#seasonStart').val());
             var endd = new Date($('#seasonEnd').val());
+            var price = $('#seasonPrice').val();
+            var isFixedPrice = $('#customCheck30').is(':checked');
 
-            if (title == '') {
-                toastr.warning('Title field is required');
+            if (price == '') {
+                toastr.warning('Price field is required');
                 return false;
-            }
-            if (title) {
+            } else if (price) {
                 var eventData = {
                     title: title,
                     start: new Date($('#starts-at').val()),
                     end: new Date($('#ends-at').val())
                 };
 
+                //  console.log(startd, endd);
+                var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+
+                // console.log("mid date->", middate);
+
                 var between = [];
                 while (startd <= endd) {
                     between.push(new Date(startd));
                     startd.setDate(startd.getDate() + 1);
                 }
-                var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
-                var i;
-                var str;
-                var itemId = 0;
-                for (i = 1; i < between.length; i++) {
-                    eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+
+                var period = [];
+                price = '$' + price;
+
+                if (isFixedPrice) {
+                    between.forEach(day => {
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                    });
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+                } else {
+                    between.forEach(day => {
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
+                    });
                 }
 
-                var disableDate = $('.disableDate').val();
-                if (disableDate != '') {
-                    disableDate = disableDate + '|'
-                }
-                var dateprice = $('#selectedPrice').val();
-                if (dateprice != '') {
-                    dateprice = dateprice + '&';
-                }
-                $('#selectedPrice').val(dateprice + eachdate);
-                $('#date').val(convert(endd));
+                // var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
+                // var i;
+                // var str;
+                // var itemId = 0;
+                // for (i = 1; i < between.length; i++) {
+                //     eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+                // }
 
-                $('.disableDate').val(disableDate + converts($('#starts-at').val()) + ',' + converts($('#ends-at').val()));
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+                // var disableDate = $('.disableDate').val();
+                // if (disableDate != '') {
+                //     disableDate = disableDate + '|'
+                // }
+                // var dateprice = $('#selectedPrice').val();
+                // if (dateprice != '') {
+                //     dateprice = dateprice + '&';
+                // }
+                // $('#selectedPrice').val(dateprice + eachdate);
+                // $('#date').val(convert(endd));
+
+                // $('.disableDate').val(disableDate + converts($('#starts-at').val()) + ',' + converts($('#ends-at').val()));
+                // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
             }
             $('#calendar').fullCalendar('unselect');
             $('#seasonModal').find('.eventClose').text('Close');
@@ -1818,6 +1858,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         function seasonalPrice(price = '') {
             return '<p class="day-background season-background">' + price + '</p>';
         }
+        $('#addSeasonPrice').click(function() {
+            $('#seasonModal').modal('show');
+        });
         $('#add-manual-booking').on('click', function() {
             var title = $('#manualTitle').val();
             var startd = new Date($('#manualStart').val());
@@ -1826,7 +1869,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var lastName = $('#manualLastName').val();
             var phoneNumber = $('#manualPhoneNumber').val();
             var eamil = $('#manualEmail').val();
-            var isFixedPrice = $('#customCheck30').is(':checked');
+
 
             if (title == '') {
                 toastr.warning('Title field is required');
