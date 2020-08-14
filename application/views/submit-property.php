@@ -392,6 +392,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     /**Ben */
+
+    .a-disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+
     .invaild-input {
         border: 1px solid red !important;
     }
@@ -1671,9 +1677,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
             $('.more-icon-preocess li:first').removeClass('active');
             $('.more-icon-preocess li:nth-child(2)').addClass('active');
+            $('a[href="#discover"]').addClass('a-disabled');
             $('#discover').removeClass('active');
             $('#strategy').addClass('active');
         })
+        $(document).on('click', '.a-disabled', function(e) {
+            e.preventDefault();
+        });
 
         $('.amintNext').click(function() { //no mondatories in amenities
             // var amenities = $('[name="amenities[]"]:checked').val();
@@ -1690,6 +1700,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('.more-icon-preocess li:nth-child(2)').removeClass('active');
             $('.more-icon-preocess li:nth-child(3)').addClass('active');
+            $('a[href="#strategy"]').addClass('a-disabled');
             $('#strategy').removeClass('active');
             $('#optimization').addClass('active');
         })
@@ -1699,16 +1710,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }, 500);
             $('.more-icon-preocess li:nth-child(3)').removeClass('active');
             $('.more-icon-preocess li:nth-child(4)').addClass('active');
+            $('a[href="#optimization"]').addClass('a-disabled');
             $('#optimization').removeClass('active');
             $('#content').addClass('active');
         })
         $(".process-model li").click(function() {
-            $('.perent_icon li').removeClass('active');
-            $(this).addClass('active');
+            if (!$(this).find("a").hasClass('a-disabled')) {
+                $('.perent_icon li').removeClass('active');
+                $(this).addClass('active');
+            }
+
         });
         $(".calender_icon li").click(function() {
-            $('.calender_icon li').removeClass('active');
-            $(this).addClass('active');
+            if (!$(this).find("a").hasClass('a-disabled')) {
+                $('.calender_icon li').removeClass('active');
+                $(this).addClass('active');
+            }
         });
 
         $('#customCheck18').on('change', function() { //Sukkah Sleep reveal
