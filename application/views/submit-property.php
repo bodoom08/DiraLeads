@@ -908,7 +908,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                     </div>
                                                     <div class="tabing-action">
                                                         <ul>
-                                                            <li class="submitnext"><button id="submitBtn" type="submit">Finish</button>
+                                                            <li class="submitnext"><a id="submitBtn">Finish</a>
                                                                 <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
                                                         </ul>
                                                     </div>
@@ -1229,7 +1229,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="seasonStart">Seasn start at*</label>
+                                            <label for="seasonStart">Season start at*</label>
                                             <input type="text" style="width: 100%;" id="seasonStart" class="startDate" name="startDate" />
                                         </div>
                                         <div class="col-sm-6">
@@ -1479,28 +1479,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
 <script>
     window.removeFileName = [];
-    $('#listingForm').ajaxForm({
-        data: {
-            'short_term_available_date': function() {
-                return $('#multi-date-select').multiDatesPicker('value');
-            }
-        },
-        dataType: 'json',
-        beforeSubmit: function() {
-            event.preventDefault();
-            // console.log($('#multi-date-select').multiDatesPicker('value')); 
-            $('.fa-spinner').prop('display', 'inline');
-            $('#submitBtn').prop('disabled', 'disabled');
-        },
-        success: function(arg) {
-            toastr[arg.type](arg.text);
-            $('.fa-spinner').prop('display', 'block');
-            $('#submitBtn').removeAttr('disabled');
-            if (arg.type == 'success') {
-                window.location.href = '<?php echo site_url('my_rentals'); ?>';
-            }
-        }
-    });
 </script>
 <script>
     $(".datepicker").datepicker({
@@ -1636,10 +1614,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#bathrooms').addClass('invaild-input');
             }
         });
-        $('.next').click(function() {
-            var valid = true;
-            var attr = $('[name="value[]').val();
 
+        function validateFirstTab() {
+            var valid = true;
             if ($('#propertyType').val() == '') {
                 $('#propertyType').addClass('invaild-input');
                 valid = false;
@@ -1671,10 +1648,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#description').addClass('invaild-input');
                 valid = false;
             }
-
-            if (!valid) {
+            return valid;
+        }
+        $('.next').click(function() {
+            // var valid = validateFirstTab();
+            if (!validateFirstTab()) {
+                toastr.warning('Please fill the required fields');
                 return false;
             }
+            var attr = $('[name="value[]').val();
+
+
             $('.more-icon-preocess li:first').removeClass('active');
             $('.more-icon-preocess li:nth-child(2)').addClass('active');
             $('a[href="#discover"]').addClass('a-disabled');
@@ -1685,18 +1669,25 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             e.preventDefault();
         });
 
+        function validateSecondTab() {
+            if ($('#customCheck18').is(':checked') && $('#sukkahSleep').val() == '') {
+                $('#sukkahSleep').addClass('invaild-input');
+                return false;
+            } else {
+                $('#sukkahSleep').removeClass('invaild-input');
+                return true;
+            }
+        }
         $('.amintNext').click(function() { //no mondatories in amenities
             // var amenities = $('[name="amenities[]"]:checked').val();
             // var amenities = $('input[name="amenities[]"]:checked').val();
             // if (amenities == null) {
             //     return false;
             // }
-            if ($('#customCheck18').is(':checked') && $('#sukkahSleep').val() == '') {
-                $('#sukkahSleep').addClass('invaild-input');
+            if (!validateSecondTab()) {
                 return false;
-            } else {
-                $('#sukkahSleep').removeClass('invaild-input');
             }
+
 
             $('.more-icon-preocess li:nth-child(2)').removeClass('active');
             $('.more-icon-preocess li:nth-child(3)').addClass('active');
@@ -1744,6 +1735,43 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             } else {
                 $('#sukkahSleep').addClass('invaild-input');
             }
+        });
+
+        function checkValidate() {
+            if (validateFirstTab() && validateSecondTab() && validateForthTab()) {
+                return true;
+            }
+            return false;
+        }
+
+        $('#submitBtn').click(function() {
+            if (!checkValidate()) {
+                toastr.warning('Please fill required fields');
+                return false;
+            }
+
+            // $('#listingForm').ajaxForm({
+            //     data: {
+            //         'short_term_available_date': function() {
+            //             return $('#multi-date-select').multiDatesPicker('value');
+            //         }
+            //     },
+            //     dataType: 'json',
+            //     beforeSubmit: function() {
+            //         event.preventDefault();
+            //         // console.log($('#multi-date-select').multiDatesPicker('value')); 
+            //         $('.fa-spinner').prop('display', 'inline');
+            //         $('#submitBtn').prop('disabled', 'disabled');
+            //     },
+            //     success: function(arg) {
+            //         toastr[arg.type](arg.text);
+            //         $('.fa-spinner').prop('display', 'block');
+            //         $('#submitBtn').removeAttr('disabled');
+            //         if (arg.type == 'success') {
+            //             window.location.href = '<?php echo site_url('my_rentals'); ?>';
+            //         }
+            //     }
+            // });
         });
     })
 
@@ -2780,7 +2808,26 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             return result;
         }
 
+        function validateForthTab() {
+            var day = $('.datedays').val();
+            var weekend = $('.weekenddays').val();
+            var weekly = $('#weekly').val();
+            var monthly = $('#monthly').val();
+
+            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+                $('.datedays').addClass('invaild-input');
+                $('.weekenddays').addClass('invaild-input');
+                $('#weekly').addClass('invaild-input');
+                $('#monthly').addClass('invaild-input');
+                return false;
+            }
+            return true;
+        }
+
         function submitPrice() {
+            if (!validateForthTab()) {
+                return false;
+            }
             var weekday = [];
             weekday.push($('.fc-day.fc-widget-content.fc-mon'));
             weekday.push($('.fc-day.fc-widget-content.fc-tue'));
@@ -2795,12 +2842,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var weekly = $('#weekly').val();
             var monthly = $('#monthly').val();
 
-            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
-                $('.datedays').addClass('invaild-input');
-                $('.weekenddays').addClass('invaild-input');
-                $('#weekly').addClass('invaild-input');
-                $('#monthly').addClass('invaild-input');
-            }
 
             // if (weekend != '') {
             //     var week = '$' + weekend;
@@ -2904,6 +2945,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#weekly').removeClass('invaild-input');
             $('#monthly').removeClass('invaild-input');
         }
+
+
 
         $(document).on('click', '.changepricefin', function() {
             var date = $(this).attr('currentdata');

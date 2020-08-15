@@ -1823,7 +1823,7 @@ ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon li {
     width: 100%;
     max-width: 100%;
 }
-.tabbbing-one.two .submitnext button {
+.tabbbing-one.two .submitnext a {
     font-size: 15px;
     background: #a27107;
     padding: 10px 50px;
@@ -2441,7 +2441,7 @@ div#Properties-popup .carousel-item img{height: 250px !important;}
 .middle {padding: 50px 0 10px;}
 }
 
-button#submitBtn {
+a#submitBtn {
     font-size: 15px;
     background: #a27107;
     padding: 10px 50px;
