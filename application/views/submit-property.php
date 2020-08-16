@@ -1151,7 +1151,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                         </div>
                                         <div class="row" id="dailySeasonalPrice">
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-6">
                                                 <label for="sWeekendFrom">Weekend </label>
                                                 <label for="sWeekendFrom"> From</label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendFrom">
@@ -1159,7 +1159,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-6">
                                                 <label for="sWeekendTo">Till</label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
@@ -1271,6 +1271,24 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-6">
                                                 <label for="fsWeekendPrice">Weekend ($)</label>
                                                 <input type="number" style="width: 100%;" id="fsWeekendPrice" class="weekenddays" placeholder="Weekend *">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="sWeekendFrom">Weekend </label>
+                                                <label for="sWeekendFrom"> From</label>
+                                                <select class="form-control" name="weekend_type" id="fsWeekendFrom">
+                                                    <option value="3">Thursday</option>
+                                                    <option value="4">Friday</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="sWeekendTo">Till</label>
+                                                <select class="form-control" name="weekend_type" id="fsWeekendTo">
+                                                    <option value="5">Motzei Shabbos</option>
+                                                    <option value="6">Sunday</option>
+                                                    <option value="7">Monday</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row" style="text-align: center;">
@@ -2222,7 +2240,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                             price = "Weekend: $" + weekendPrice;
                         }
                     }
-                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"></div>');
+                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '"></div>');
                 } else {
                     var fixedPrice = values[5];
                     var fixedPriceD = '$' + fixedPrice;
@@ -2268,6 +2286,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var sDayPrice = $('#fsDayPrice').val();
             var sWeekendPrice = $('#fsWeekendPrice').val();
 
+            var sWeekendFrom = $("#fsWeekendFrom").val();
+            var sWeekendTo = $("#fsWeekendTo").val();
             var isOnlyWeekend = $('#customCheck32').is(':checked');
 
             // var isFixedPrice = $('#customCheck30').is(':checked');
@@ -2314,7 +2334,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     toastr.warning('Price is required');
                     return false;
                 }
-                $('#season').val(seasonData + seasonID + '|' + title + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + sDayPrice + '|' + sWeekendPrice + '|' + isOnlyWeekend);
+                $('#season').val(seasonData + seasonID + '|' + title + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + sDayPrice + '|' + sWeekendPrice + '|' + isOnlyWeekend + '|' + sWeekendFrom + '|' + sWeekendTo);
 
 
             } else {
