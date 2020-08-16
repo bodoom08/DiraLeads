@@ -54,3 +54,4 @@ $route['404_override'] = 'page';
 $route['contact']['post'] = 'page/contact';
 $route['translate_uri_dashes'] = false;
 $route['invoice/(:any)'] = 'invoices/byId/$1';
+$route['webhook/incoming_call']['post'] = 'webhook/incoming_call';

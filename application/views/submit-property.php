@@ -467,6 +467,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         font-weight: bold;
     }
 
+    .manual-background {
+        background-color: #76a7ea;
+        font-weight: bold;
+    }
+
     .unavailable-background {
         background-color: #d4d0d0;
     }
@@ -572,7 +577,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <?php foreach ($areas as $key => $value) : ?>
                                                                             <option value="<?php echo $value['id'] ?>"><?php echo $value['title'] ?></option>
                                                                         <?php endforeach; ?>
+                                                                        <option value="other">Other</option>
                                                                     </select>
+                                                                </div>
+                                                            </li>
+                                                            <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Neighborhood other*</label>
+                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[]">
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -1587,8 +1599,20 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $('#neighborhood').on("change paste keyup", function() {
             if ($('#neighborhood').val() != '') {
                 $('#neighborhood').removeClass('invaild-input');
+                if ($('#neighborhood').val() == 'other') {
+                    console.log("other neighbourood");
+                    $('#neighborhood_other_container').css('display', 'block');
+                }
             } else {
                 $('#neighborhood').addClass('invaild-input');
+
+            }
+        });
+        $('#neighborhood_other').on("change paste keyup", function() {
+            if ($('#neighborhood_other').val() != '') {
+                $('#neighborhood_other').removeClass('invaild-input');
+            } else {
+                $('#neighborhood_other').addClass('invaild-input');
             }
         });
         $('#floorNumber').on("change paste keyup", function() {
@@ -1628,10 +1652,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             } else {
                 $('[name="street').removeClass('invaild-input');
             }
+
             if ($('#neighborhood').val() == '') {
                 $('#neighborhood').addClass('invaild-input');
                 valid = false;
+            } else {
+                if ($('#neighborhood').val() == 'other') {
+                    if ($('#neighborhood_other').val == '') {
+                        $('#neighborhood_other').addClass('invaild-input');
+                        valid = false;
+                    }
+                }
             }
+
             if ($('#bedrooms').val() == '') {
                 $('#bedrooms').addClass('invaild-input');
                 valid = false;
@@ -1661,7 +1694,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('.more-icon-preocess li:first').removeClass('active');
             $('.more-icon-preocess li:nth-child(2)').addClass('active');
-            $('a[href="#discover"]').addClass('a-disabled');
+            // $('a[href="#discover"]').addClass('a-disabled');
             $('#discover').removeClass('active');
             $('#strategy').addClass('active');
         })
@@ -1691,7 +1724,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('.more-icon-preocess li:nth-child(2)').removeClass('active');
             $('.more-icon-preocess li:nth-child(3)').addClass('active');
-            $('a[href="#strategy"]').addClass('a-disabled');
+            // $('a[href="#strategy"]').addClass('a-disabled');
             $('#strategy').removeClass('active');
             $('#optimization').addClass('active');
         })
@@ -1701,7 +1734,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }, 500);
             $('.more-icon-preocess li:nth-child(3)').removeClass('active');
             $('.more-icon-preocess li:nth-child(4)').addClass('active');
-            $('a[href="#optimization"]').addClass('a-disabled');
+            // $('a[href="#optimization"]').addClass('a-disabled');
             $('#optimization').removeClass('active');
             $('#content').addClass('active');
         })
@@ -1737,6 +1770,154 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
         });
 
+        function weekendPrice(price = '') {
+            var result = '<p class="day-background weekend-background">' + price + '</p>';
+            return result;
+        }
+
+        function unavailablePrice(price = '') {
+            var result = '<p class="day-background unavailable-background">' + price + '</p>';
+            return result;
+        }
+
+        function validateForthTab() {
+            var day = $('.datedays').val();
+            var weekend = $('.weekenddays').val();
+            var weekly = $('#weekly').val();
+            var monthly = $('#monthly').val();
+
+            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+                $('.datedays').addClass('invaild-input');
+                $('.weekenddays').addClass('invaild-input');
+                $('#weekly').addClass('invaild-input');
+                $('#monthly').addClass('invaild-input');
+                return false;
+            }
+            return true;
+        }
+
+        function submitPrice() {
+            if (!validateForthTab()) {
+                return false;
+            }
+            var weekday = [];
+            weekday.push($('.fc-day.fc-widget-content.fc-mon'));
+            weekday.push($('.fc-day.fc-widget-content.fc-tue'));
+            weekday.push($('.fc-day.fc-widget-content.fc-wed'));
+            weekday.push($('.fc-day.fc-widget-content.fc-thu'));
+            weekday.push($('.fc-day.fc-widget-content.fc-fri'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sat'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sun'));
+
+            var day = $('.datedays').val();
+            var weekend = $('.weekenddays').val();
+            var weekly = $('#weekly').val();
+            var monthly = $('#monthly').val();
+
+
+            // if (weekend != '') {
+            //     var week = '$' + weekend;
+            // } else {
+            //     var week = '';
+            // }
+
+            var week = weekend != '' ? '$' + weekend : '';
+
+            // if (day != '') {
+            //     var days = '$' + day;
+            // } else {
+            //     var days = '';
+            // }
+
+            var days = day != '' ? '$' + day : '';
+
+            var weekendFrom = $('#weekendFrom').val();
+            var weekendTo = $('#weekendTo').val();
+
+            var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
+
+            if ($('#customCheck29').is(':checked')) { // only available in weekend checked
+
+                weekday.forEach(day => {
+                    day.html(unavailablePrice());
+                });
+                weekday[1].html(unavailablePrice('unavailable'));
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
+                }
+            } else {
+                weekday.forEach(day => {
+                    day.html(days);
+                });
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
+                }
+            }
+
+            // renderSeason();
+        }
+
+        $('#days').on("change paste keyup", function() {
+            if ($('#days').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekend').on("change paste keyup", function() {
+            if ($('#weekend').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekly').on("change paste keyup", function() {
+            if ($('#weekly').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#monthly').on("change paste keyup", function() {
+            if ($('#monthly').val() != '') {
+                setValidDatePrice();
+            }
+            submitPrice();
+        });
+
+        $('#weekendFrom').on("change paste keyup", function() {
+            submitPrice();
+        });
+        $('#weekendTo').on("change paste keyup", function() {
+            submitPrice();
+        });
+        $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
+            submitPrice();
+        });
+
+        function setValidDatePrice() {
+            $('#days').removeClass('invaild-input');
+            $('#weekend').removeClass('invaild-input');
+            $('#weekly').removeClass('invaild-input');
+            $('#monthly').removeClass('invaild-input');
+        }
+
         function checkValidate() {
             if (validateFirstTab() && validateSecondTab() && validateForthTab()) {
                 return true;
@@ -1750,28 +1931,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 return false;
             }
 
-            // $('#listingForm').ajaxForm({
-            //     data: {
-            //         'short_term_available_date': function() {
-            //             return $('#multi-date-select').multiDatesPicker('value');
-            //         }
-            //     },
-            //     dataType: 'json',
-            //     beforeSubmit: function() {
-            //         event.preventDefault();
-            //         // console.log($('#multi-date-select').multiDatesPicker('value')); 
-            //         $('.fa-spinner').prop('display', 'inline');
-            //         $('#submitBtn').prop('disabled', 'disabled');
-            //     },
-            //     success: function(arg) {
-            //         toastr[arg.type](arg.text);
-            //         $('.fa-spinner').prop('display', 'block');
-            //         $('#submitBtn').removeAttr('disabled');
-            //         if (arg.type == 'success') {
-            //             window.location.href = '<?php echo site_url('my_rentals'); ?>';
-            //         }
-            //     }
-            // });
+            $('#listingForm').ajaxSubmit({
+                data: {
+                    'short_term_available_date': function() {
+                        return $('#multi-date-select').multiDatesPicker('value');
+                    }
+                },
+                dataType: 'json',
+                beforeSubmit: function() {
+                    event.preventDefault();
+                    // console.log($('#multi-date-select').multiDatesPicker('value')); 
+                    $('.fa-spinner').prop('display', 'inline');
+                    $('#submitBtn').prop('disabled', 'disabled');
+                },
+                success: function(arg) {
+                    toastr[arg.type](arg.text);
+                    $('.fa-spinner').prop('display', 'block');
+                    $('#submitBtn').removeAttr('disabled');
+                    if (arg.type == 'success') {
+                        window.location.href = '<?php echo site_url('my_rentals'); ?>';
+                    }
+                }
+            });
         });
     })
 
@@ -2182,6 +2363,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         function seasonalPrice(price = '') {
             return '<p class="day-background season-background">' + price + '</p>';
         }
+
+        function manualPrice(price = '') {
+            return '<p class="day-background manual-background">' + price + '</p>';
+        }
         $('#addSeasonPrice').click(function() {
             $('#seasonModal').modal('show');
         });
@@ -2199,68 +2384,76 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('Title field is required');
                 return false;
             }
-            if (title) {
-
-                var eventData = {
-                    title: title,
-                    start: $('#starts-atblock').val(),
-                    end: $('#ends-atblock').val()
-                };
-
-                // console.log(startd, endd);
-                // var middate = new Date((startd.getTime() + endd.getTime()) / 2);
-
-                // console.log("mid date->", middate);
-
-                var between = [];
-                while (startd <= endd) {
-                    between.push(new Date(startd));
-                    startd.setDate(startd.getDate() + 1);
-                }
-
-                // var period = [];
-                // price = '$' + price;
-
-                // if (isFixedPrice) {
-                //     between.forEach(day => {
-                //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
-                //     });
-                //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
-                // } else {
-                //     between.forEach(day => {
-                //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
-                //     });
-                // }
-
-                var eventData = {
-                    title: title,
-                    start: new Date($('#manualStart').val()),
-                    end: new Date($('#manualEnd').val())
-                };
-
-                var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
-                var i;
-                var str;
-                var itemId = 0;
-                for (i = 1; i < between.length; i++) {
-                    eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
-                }
-
-                var disableDate = $('.disableDate').val();
-                if (disableDate != '') {
-                    disableDate = disableDate + '|'
-                }
-                var dateprice = $('#selectedPrice').val();
-                if (dateprice != '') {
-                    dateprice = dateprice + '&';
-                }
-                $('#selectedPrice').val(dateprice + eachdate);
-                $('#date').val(convert(endd));
-
-                $('.disableDate').val(disableDate + converts($('#manualStart').val()) + ',' + converts($('#manualEnd').val()));
-
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            if (startd == '') {
+                toastr.warning('Start date is required');
+                return false;
             }
+
+            if (endd == '') {
+                toastr.warning('End date is required');
+                return false;
+            }
+
+            // console.log(startd, endd);
+            var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+
+            // console.log("mid date->", middate);
+
+            var between = [];
+            while (startd <= endd) {
+                between.push(new Date(startd));
+                startd.setDate(startd.getDate() + 1);
+            }
+
+            between.forEach(day => {
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+            });
+
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+
+            // var period = [];
+            // price = '$' + price;
+
+            // if (isFixedPrice) {
+            //     between.forEach(day => {
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //     });
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            // } else {
+            //     between.forEach(day => {
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
+            //     });
+            // }
+
+            // var eventData = {
+            //     title: title,
+            //     start: new Date($('#manualStart').val()),
+            //     end: new Date($('#manualEnd').val())
+            // };
+
+            // var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
+            // var i;
+            // var str;
+            // var itemId = 0;
+            // for (i = 1; i < between.length; i++) {
+            //     eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+            // }
+
+            var disableDate = $('.disableDate').val();
+            if (disableDate != '') {
+                disableDate = disableDate + '|'
+            }
+            // var dateprice = $('#selectedPrice').val();
+            // if (dateprice != '') {
+            //     dateprice = dateprice + '&';
+            // }
+            // $('#selectedPrice').val(dateprice + eachdate);
+            // $('#date').val(convert(endd));
+
+            $('.disableDate').val(disableDate + converts($('#manualStart').val()) + ',' + converts($('#manualEnd').val()));
+
+            // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+
             $('#calendar').fullCalendar('unselect');
             $('#manualBook').find('.eventClose').text('Close');
             $('#manualBook').find('input').val('');
@@ -2269,20 +2462,52 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         });
         $('#save-block-event').on('click', function() {
-            var title = $('#titleblock').val();
-            if (title) {
-                var eventData = {
-                    title: title,
-                    start: $('#starts-atblock').val(),
-                    end: $('#ends-atblock').val()
-                };
-                var disableDate = $('.disableDate').val();
-                if (disableDate != '') {
-                    disableDate = disableDate + '|'
-                }
-                $('.disableDate').val(disableDate + converts($('#starts-atblock').val()) + ',' + converts($('#ends-atblock').val()));
-                $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+            // var title = $('#titleblock').val();
+            // var startd = new Date($('#starts-atblock').val());
+            // var endd = new Date($('#ends-atblock').val());
+
+
+            var startd = new Date($('#starts-atblock').val());
+            var endd = new Date($('#ends-atblock').val());
+
+            if (startd == '') {
+                toastr.warning('Start date is required');
+                return false;
             }
+
+            if (endd == '') {
+                toastr.warning('End date is required');
+                return false;
+            }
+
+            var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+
+            // console.log("mid date->", middate);
+
+            var between = [];
+            while (startd <= endd) {
+                between.push(new Date(startd));
+                startd.setDate(startd.getDate() + 1);
+            }
+
+            between.forEach(day => {
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+            });
+
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePrice('unavailable'));
+
+            // var eventData = {
+            //     title: title,
+            //     start: $('#starts-atblock').val(),
+            //     end: $('#ends-atblock').val()
+            // };
+            var disableDate = $('.disableDate').val();
+            if (disableDate != '') {
+                disableDate = disableDate + '|'
+            }
+            $('.disableDate').val(disableDate + converts($('#starts-atblock').val()) + ',' + converts($('#ends-atblock').val()));
+            // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+
             $('#calendar').fullCalendar('unselect');
             $('#blockModal').find('.eventClose').text('Close');
             $('#blockModal').find('input').val('');
@@ -2797,156 +3022,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $(document).on('click', '.eventClose', function() {
             $('.date-actions').css('display', 'none');
         })
-
-        function weekendPrice(price = '') {
-            var result = '<p class="day-background weekend-background">' + price + '</p>';
-            return result;
-        }
-
-        function unavailablePrice(price = '') {
-            var result = '<p class="day-background unavailable-background">' + price + '</p>';
-            return result;
-        }
-
-        function validateForthTab() {
-            var day = $('.datedays').val();
-            var weekend = $('.weekenddays').val();
-            var weekly = $('#weekly').val();
-            var monthly = $('#monthly').val();
-
-            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
-                $('.datedays').addClass('invaild-input');
-                $('.weekenddays').addClass('invaild-input');
-                $('#weekly').addClass('invaild-input');
-                $('#monthly').addClass('invaild-input');
-                return false;
-            }
-            return true;
-        }
-
-        function submitPrice() {
-            if (!validateForthTab()) {
-                return false;
-            }
-            var weekday = [];
-            weekday.push($('.fc-day.fc-widget-content.fc-mon'));
-            weekday.push($('.fc-day.fc-widget-content.fc-tue'));
-            weekday.push($('.fc-day.fc-widget-content.fc-wed'));
-            weekday.push($('.fc-day.fc-widget-content.fc-thu'));
-            weekday.push($('.fc-day.fc-widget-content.fc-fri'));
-            weekday.push($('.fc-day.fc-widget-content.fc-sat'));
-            weekday.push($('.fc-day.fc-widget-content.fc-sun'));
-
-            var day = $('.datedays').val();
-            var weekend = $('.weekenddays').val();
-            var weekly = $('#weekly').val();
-            var monthly = $('#monthly').val();
-
-
-            // if (weekend != '') {
-            //     var week = '$' + weekend;
-            // } else {
-            //     var week = '';
-            // }
-
-            var week = weekend != '' ? '$' + weekend : '';
-
-            // if (day != '') {
-            //     var days = '$' + day;
-            // } else {
-            //     var days = '';
-            // }
-
-            var days = day != '' ? '$' + day : '';
-
-            var weekendFrom = $('#weekendFrom').val();
-            var weekendTo = $('#weekendTo').val();
-
-            var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
-
-            if ($('#customCheck29').is(':checked')) { // only available in weekend checked
-
-                weekday.forEach(day => {
-                    day.html(unavailablePrice());
-                });
-                weekday[1].html(unavailablePrice('unavailable'));
-
-                if (week != '') {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(weekendPrice());
-                    }
-                    weekday[midWeekend].html(weekendPrice(week));
-                } else {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(days);
-                    }
-                }
-            } else {
-                weekday.forEach(day => {
-                    day.html(days);
-                });
-
-                if (week != '') {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(weekendPrice());
-                    }
-                    weekday[midWeekend].html(weekendPrice(week));
-                } else {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(days);
-                    }
-                }
-            }
-
-            // renderSeason();
-        }
-
-        $('#days').on("change paste keyup", function() {
-            if ($('#days').val() != '') {
-                setValidDatePrice();
-            }
-            submitPrice();
-        });
-
-        $('#weekend').on("change paste keyup", function() {
-            if ($('#weekend').val() != '') {
-                setValidDatePrice();
-            }
-            submitPrice();
-        });
-
-        $('#weekly').on("change paste keyup", function() {
-            if ($('#weekly').val() != '') {
-                setValidDatePrice();
-            }
-            submitPrice();
-        });
-
-        $('#monthly').on("change paste keyup", function() {
-            if ($('#monthly').val() != '') {
-                setValidDatePrice();
-            }
-            submitPrice();
-        });
-
-        $('#weekendFrom').on("change paste keyup", function() {
-            submitPrice();
-        });
-        $('#weekendTo').on("change paste keyup", function() {
-            submitPrice();
-        });
-        $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
-            submitPrice();
-        });
-
-        function setValidDatePrice() {
-            $('#days').removeClass('invaild-input');
-            $('#weekend').removeClass('invaild-input');
-            $('#weekly').removeClass('invaild-input');
-            $('#monthly').removeClass('invaild-input');
-        }
-
-
 
         $(document).on('click', '.changepricefin', function() {
             var date = $(this).attr('currentdata');
