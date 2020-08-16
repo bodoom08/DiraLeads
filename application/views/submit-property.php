@@ -645,7 +645,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             <li class="col-lg-12">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Description *</label>
-                                                                    <textarea type="text" id="description" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Description"></textarea>
+                                                                    <textarea type="text" id="description" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Write a short description of your rental - Minimum 60 letters"></textarea>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -1624,7 +1624,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         });
         $('#description').on("change paste keyup", function() {
             if ($('#description').val() != '') {
-                $('#description').removeClass('invaild-input');
+                if ($('#description').val().length >= 60) {
+                    $('#description').removeClass('invaild-input');
+                } else {
+                    $('#description').addClass('invaild-input');
+                }
             } else {
                 $('#description').addClass('invaild-input');
             }
@@ -1677,9 +1681,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#floorNumber').addClass('invaild-input');
                 valid = false;
             }
+
             if ($('#description').val() == '') {
                 $('#description').addClass('invaild-input');
                 valid = false;
+            } else {
+                if ($('#description').val().length < 60) {
+                    toastr.warning('Description should have a minimum of 60 letters');
+                    $('#description').addClass('invaild-input');
+                    valid = false;
+                }
             }
             return valid;
         }
