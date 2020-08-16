@@ -1118,11 +1118,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="lname">Check-In Date*</label>
+                                            <label for="startDate">Check-In Date*</label>
                                             <input type="text" style="width: 100%;" id="startDate" class="startDate" name="startDate" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="lname">Check-Out Date*</label>
+                                            <label for="endDate">Check-Out Date*</label>
                                             <input type="text" style="width: 100%;" id="endDate" class="startDate" name="endDate" />
                                         </div>
                                     </div>
@@ -1275,15 +1275,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="sWeekendFrom">Weekend </label>
-                                                <label for="sWeekendFrom"> From</label>
+                                                <label for="fsWeekendFrom">Weekend </label>
+                                                <label for="fsWeekendFrom"> From</label>
                                                 <select class="form-control" name="weekend_type" id="fsWeekendFrom">
                                                     <option value="3">Thursday</option>
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="sWeekendTo">Till</label>
+                                                <label for="fsWeekendTo">Till</label>
                                                 <select class="form-control" name="weekend_type" id="fsWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
                                                     <option value="6">Sunday</option>
@@ -2266,6 +2266,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
 
                     }
+
+
                 }
             });
         });
@@ -2464,6 +2466,20 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             return '<p class="day-background manual-background">' + price + '</p>';
         }
         $('#addSeasonPrice').click(function() {
+            $('#seasonTitle').val('');
+            $('#seasonStart').val('');
+            $('#seasonEnd').val('');
+            $('#fseasonRate').val('daily');
+            $('#ffixedSeasonalPrice').val('');
+            $('#fsDayPrice').val('');
+            $('#fsWeekendPrice').val('');
+            $('#fsWeekendFrom').val('3');
+            $('#fsWeekendTo').val('5');
+            $('#customCheck32').prop('checked', false);
+
+            $('#fseasonFixedPrice').css('display', 'none');
+            $('#fseasonDailyPrice').css('display', 'block');
+
             $('#seasonModal').modal('show');
         });
         $('#add-manual-booking').on('click', function() {
@@ -2673,6 +2689,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             return [mnth, day, date.getFullYear()].join("/");
         }
         $('#addRule').click(function() {
+            $('#fname').val('');
+            $('#startDate').val('');
+            $('#endDate').val('');
+            $('#seasonRate').val('daily');
+            $('#fixedSeasonalPrice').val('');
+            $('#sDayPrice').val('');
+            $('#sWeekendPrice').val('');
+            $('#sWeekendFrom').val('3');
+            $('#sWeekendTo').val('5');
+            $('#customCheck31').prop('checked', false);
+
+            $('#seasonFixedPrice').css('display', 'none');
+            $('#seasonDailyPrice').css('display', 'block');
             $('#myModal').show();
         });
         $('.dayCheck').click(function() {
