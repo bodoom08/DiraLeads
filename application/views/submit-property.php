@@ -2327,7 +2327,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var isOnlyWeekend = values[7];
                     var weekendFrom = values[8];
                     var weekendTo = values[9];
-                    var dailyPriceD = '$' + dayPrice;
+                    var dailyPriceD = dayPrice != '' ? '$' + dayPrice : '';
                     if (dayPrice) {
                         price = "Day: $" + dayPrice;
                         if (weekendPriceValue) {
