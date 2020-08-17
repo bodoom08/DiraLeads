@@ -89,14 +89,14 @@ class Webhook extends CI_Controller
         $roomName = "diraLeads2020";
 
         $dial = $voiceRes->dial('');
-        $dial->number(
-            '+17606165259',
-            [
-                'statusCallbackEvent' => 'initiated ringing answered completed',
-                'statusCallback' => base_url() . 'webhook/call_receive',
-                'statusCallbackMethod' => 'POST'
-            ]
-        );
+        // $dial->number(
+        //     '+17606165259',
+        //     [
+        //         'statusCallbackEvent' => 'initiated ringing answered completed',
+        //         'statusCallback' => base_url() . 'webhook/call_receive',
+        //         'statusCallbackMethod' => 'POST'
+        //     ]
+        // );
 
         $dial->conference(
             $roomName,
@@ -118,6 +118,19 @@ class Webhook extends CI_Controller
         $voiceRes = new VoiceResponse();
 
         $voiceRes->say("this is a caller from DiraLeads");
+
+        $dial = $voiceRes->dial('');
+
+        $roomName = "diraLeads2020";
+        $dial->conference(
+            $roomName,
+            [
+                // 'waitUrl' => 'http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient',
+                'maxParticipants' => 2,
+                // 'record' => 'record-from-start'
+                // 'statusCallback' => "https://api.safeup.co/v1/getStatusConference",
+            ]
+        );
 
         return $this->output
             ->set_content_type('text/xml')

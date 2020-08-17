@@ -883,6 +883,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                                 <label class="custom-control-label" for="customCheck29">Weekend Only</label>
                                                                             </div>
                                                                         </div>
+
                                                                         <!-- <div class="custom-control custom-checkbox form-group">
                                                                             <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
                                                                             <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
@@ -1175,6 +1176,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="manualPrivateNote">Private notes</label>
+                                            <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                        </div>
+                                    </div>
                                     <!-- <li class="row modal-row">
                                             <div class="form-group">
                                                 <label for="lname">Check in days:</label><br>
@@ -1295,6 +1302,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-12">
                                                 <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck32">
                                                 <label class="custom-control-label" for="customCheck32">Only available in Weekend</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="manualPrivateNote">Private notes</label>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -2308,24 +2321,26 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 var seasonRate = values[4];
                 if (seasonRate == 'daily') {
                     var dayPrice = values[5];
-                    var weekendPrice = values[6];
+                    var weekendPriceValue = values[6];
                     var isOnlyWeekend = values[7];
+                    var weekendFrom = values[8];
+                    var weekendTo = values[9];
                     var dailyPriceD = '$' + dayPrice;
                     if (dayPrice) {
                         price = "Day: $" + dayPrice;
-                        if (weekendPrice) {
+                        if (weekendPriceValue) {
                             if (isOnlyWeekend) {
-                                price = "Only Weekend: $" + weekendPrice;
+                                price = "Only Weekend: $" + weekendPriceValue;
                             } else {
-                                price += "  Weekend: $" + weekendPrice;
+                                price += "  Weekend: $" + weekendPriceValue;
                             }
                         }
                     } else {
-                        if (weekendPrice) {
-                            price = "Weekend: $" + weekendPrice;
+                        if (weekendPriceValue) {
+                            price = "Weekend: $" + weekendPriceValue;
                         }
                     }
-                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPrice + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '"></div>');
+                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPriceValue + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '"></div>');
                 } else {
                     var fixedPrice = values[5];
                     var fixedPriceD = '$' + fixedPrice;
@@ -2342,10 +2357,47 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
 
                 if (seasonRate == 'daily') {
-
+                    var weekday = [
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ];
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(dailyPriceD);
+                        var dayObj = $('.fc-widget-content[data-date="' + convert(day) + '"]');
+                        dayObj.html(dailyPriceD);
+                        if (dayObj.hasClass('fc-mon')) {
+                            weekday[0].push(dayObj);
+                        } else if (dayObj.hasClass('fc-tue')) {
+                            weekday[1].push(dayObj);
+                        } else if (dayObj.hasClass('fc-wed')) {
+                            weekday[2].push(dayObj);
+                        } else if (dayObj.hasClass('fc-thu')) {
+                            weekday[3].push(dayObj);
+                        } else if (dayObj.hasClass('fc-fri')) {
+                            weekday[4].push(dayObj);
+                        } else if (dayObj.hasClass('fc-sat')) {
+                            weekday[5].push(dayObj);
+                        } else if (dayObj.hasClass('fc-sun')) {
+                            weekday[6].push(dayObj);
+                        }
                     });
+
+                    var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        console.log(weekday[i % 7]);
+                        weekday[i % 7].forEach(weekendDay => {
+                            weekendDay.html(weekendPrice());
+                        })
+
+                    }
+                    weekday[midWeekend].forEach(weekendDay => {
+                        weekendDay.html(weekendPrice(weekendPriceValue));
+                    });
+
                 } else {
 
                     between.forEach(day => {
