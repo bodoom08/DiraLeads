@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://57e388fe06a5.ngrok.io/';
+$config['base_url'] = 'http://806cf86e8eca.ngrok.io';
 
 /*
 |--------------------------------------------------------------------------

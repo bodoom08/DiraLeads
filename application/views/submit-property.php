@@ -593,33 +593,33 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             <li class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Bedrooms *</label>
-                                                                    <input type="hidden" name="attribute_id[]" value="1">
+                                                                    <input type="hidden" name="attribute_id[bedrooms]" value="1">
                                                                     <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[]">
                                                                 </div>
                                                             </li>
                                                             <li class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Bathrooms *</label>
-                                                                    <input type="hidden" name="attribute_id[]" value="2">
+                                                                    <input type="hidden" name="attribute_id[bathrooms]" value="2">
                                                                     <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[]">
                                                                 </div>
                                                             </li>
                                                             <li class="col-lg-4">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Floor Number *</label>
-                                                                    <select class="form-control" id="floorNumber" name="attribute_id[]" id="florbas">
+                                                                    <select class="form-control" id="floorNumber" name="attribute_id[florbas]" id="florbas">
                                                                         <option value="">--Select--</option>
-                                                                        <option value="8">Basement</option>
-                                                                        <option value="6">1</option>
-                                                                        <option value="6">2</option>
-                                                                        <option value="6">3</option>
-                                                                        <option value="6">4</option>
-                                                                        <option value="6">5</option>
+                                                                        <option value="0">Basement</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
                                                                         <option value="6">6</option>
-                                                                        <option value="6">7</option>
-                                                                        <option value="6">8</option>
-                                                                        <option value="6">9</option>
-                                                                        <option value="6">10+</option>
+                                                                        <option value="7">7</option>
+                                                                        <option value="8">8</option>
+                                                                        <option value="9">9</option>
+                                                                        <option value="10">10+</option>
                                                                     </select>
 
                                                                 </div>
@@ -1605,6 +1605,21 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#custom_div').hide();
         }
     }
+
+    function preview_image() {
+        var total_file = document.getElementById("upload_file").files.length;
+        for (var i = 0; i < total_file; i++) {
+            $('#image_preview').append("<div class='thumbnails_box'><img src='" + URL.createObjectURL(event.target.files[i]) + "' width='100%' alt='' title='" + event.target.files[i].name + "'><i class='fa fa-window-close remove' onclick='removethis(this);'></i></div>");
+        }
+    }
+
+    function removethis(ele, name) {
+        $title = $(ele).closest('.thumbnails_box').find('img').attr('title');
+        removeFileName.push($title);
+        console.log(removeFileName);
+        $(ele).closest('.thumbnails_box').remove();
+    }
+
     $(document).ready(function() {
         $('#bedrooms').on("change paste keyup", function() {
             if ($('#bedrooms').val() != '') {
@@ -1955,6 +1970,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
 
         $('#submitBtn').click(function() {
+            var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+
+            console.log(data);
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
                 return false;
@@ -1985,19 +2006,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         });
 
 
-        function preview_image() {
-            var total_file = document.getElementById("upload_file").files.length;
-            for (var i = 0; i < total_file; i++) {
-                $('#image_preview').append("<div class='thumbnails_box'><img src='" + URL.createObjectURL(event.target.files[i]) + "' width='100%' alt='' title='" + event.target.files[i].name + "'><i class='fa fa-window-close remove' onclick='removethis(this);'></i></div>");
-            }
-        }
 
-        function removethis(ele, name) {
-            $title = $(ele).closest('.thumbnails_box').find('img').attr('title');
-            removeFileName.push($title);
-            console.log(removeFileName);
-            $(ele).closest('.thumbnails_box').remove();
-        }
         $(document).on('change', '#florbas', function() {
             var val = $(this).val();
             // var text = $(this).text();
@@ -2086,7 +2095,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
                 }
             },
             eventClick: function(event, element) {
@@ -2113,7 +2122,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
 
                 }
                 $(".eventClose").click(function() {
@@ -2180,6 +2189,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         // });
         //     console.log("yearly");
         // });
+
+        // $(document).click(function(event) {
+        //     console.log(event);
+        //     if (!$(event.target).is('.date-actions')) {
+        //         $('.date-actions').css('display', 'none');
+        //     }
+        // });
+
         $(document).on('click', '.costomSession', function() {
             $('#seasonCalendar').fullCalendar({
                 header: {
@@ -3159,6 +3176,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $(document).on('click', '.manualBooking', function() {
             var date = $(this).attr('currentdata');
             $('#manualStart').val(date);
+            console.log('.fc-widget-content[data-date="' + date + '"]');
+        });
+
+
+        $(document).on('click', '.blockDates', function() {
+            var date = $(this).attr('currentdata');
+            $('#starts-atblock').val(date);
             console.log('.fc-widget-content[data-date="' + date + '"]');
         });
 
