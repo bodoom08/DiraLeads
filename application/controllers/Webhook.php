@@ -9,6 +9,7 @@ class Webhook extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->helper('url');
         session_destroy();
     }
 
@@ -88,15 +89,24 @@ class Webhook extends CI_Controller
         $roomName = "diraLeads2020";
 
         $dial = $voiceRes->dial('');
-        $dial->number('254-765-2971');
-        // $dial->conference(
-        //     $roomName,
-        //     [
-        //         'maxParticipants' => 2,
-        //     ]
-        // );
+        $dial->number(
+            '+17606165259',
+            [
+                'statusCallbackEvent' => 'initiated ringing answered completed',
+                'statusCallback' => base_url() . 'webhook/call_receive',
+                'statusCallbackMethod' => 'POST'
+            ]
+        );
 
-
+        $dial->conference(
+            $roomName,
+            [
+                // 'waitUrl' => 'http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient',
+                'maxParticipants' => 2,
+                // 'record' => 'record-from-start'
+                // 'statusCallback' => "https://api.safeup.co/v1/getStatusConference",
+            ]
+        );
 
         return $this->output
             ->set_content_type('text/xml')
@@ -105,5 +115,12 @@ class Webhook extends CI_Controller
 
     public function call_receive() // manage actions when the customer receives outbounding calls
     {
+        $voiceRes = new VoiceResponse();
+
+        $voiceRes->say("this is a caller from DiraLeads");
+
+        return $this->output
+            ->set_content_type('text/xml')
+            ->set_output($voiceRes);
     }
 }
