@@ -2392,13 +2392,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     for (var i = weekendFrom; i <= weekendTo; i++) {
                         console.log(weekday[i % 7]);
                         weekday[i % 7].forEach(weekendDay => {
-                            weekendDay.html(weekendPrice());
+                            weekendDay.html('$' + weekendPriceValue);
                         })
 
                     }
-                    weekday[midWeekend].forEach(weekendDay => {
-                        weekendDay.html(weekendPrice(weekendPriceValue));
-                    });
+                    // weekday[midWeekend].forEach(weekendDay => {
+                    //     weekendDay.html(weekendPrice(weekendPriceValue));
+                    // });
 
                 } else {
 
