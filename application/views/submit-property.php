@@ -420,7 +420,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     .price-container {
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
     }
 
@@ -429,7 +429,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     .price-container input {
-        width: 120px;
+        /* width: 120px; */
     }
 
     .weekend-container {
@@ -442,6 +442,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
     .weekend-container label {
         margin-right: 20px;
+    }
+
+    .weekend-container select {
+        width: 200px;
     }
 
     .daily-container {
@@ -884,6 +888,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                             </div>
                                                                         </div>
 
+
+                                                                        <div class="price-container">
+                                                                            <div class="form-group daily-container" style="width: 100%;">
+                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                            </div>
+                                                                        </div>
+
                                                                         <!-- <div class="custom-control custom-checkbox form-group">
                                                                             <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
                                                                             <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
@@ -893,6 +905,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                             <div class="seasonRule">
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="form-group">
                                                                             <div id='calendar'></div>
                                                                         </div>
@@ -905,6 +918,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             <div class="tabbbing-one two">
                                                                 <ul class="row">
                                                                     <li class="col-lg-10 m-auto">
+                                                                        <div class="price-container">
+                                                                            <div class="form-group daily-container" style="width: 100%;">
+                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                            </div>
+                                                                        </div>
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
                                                                             <div class="rule">
@@ -1030,12 +1049,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-6">
                                                 <label for="manualEmail">Email</label>
                                                 <input type="text" name="email" class="" id="manualEmail" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label for="manualPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1176,12 +1189,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <label for="manualPrivateNote">Private notes</label>
-                                            <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
-                                        </div>
-                                    </div>
+
                                     <!-- <li class="row modal-row">
                                             <div class="form-group">
                                                 <label for="lname">Check in days:</label><br>
@@ -1302,12 +1310,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-12">
                                                 <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck32">
                                                 <label class="custom-control-label" for="customCheck32">Only available in Weekend</label>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label for="manualPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
                                             </div>
                                         </div>
                                     </div>
