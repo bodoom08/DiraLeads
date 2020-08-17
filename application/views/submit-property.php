@@ -2297,7 +2297,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             // set price in dates and render cards
             var seasonData = $('#season').val();
-            var seasons = seasonData.split('&');
+            var seasons = seasonData != '' ? seasonData.split('&') : [];
+            console.log("renderSeason", seasons);
             seasons.forEach(season => {
                 var values = season.split('|');
                 var seasonID = values[0];
@@ -3014,6 +3015,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (tab == 1) { // first tab
                 var seasonData = $('#season').val();
                 var seasons = seasonData.split('&');
+                console.log(seasons);
                 var newSeason = seasons.filter(season => {
                     var values = season.split('|');
                     if (values[0] == id) {
@@ -3022,7 +3024,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         return true;
                     }
                 });
-                var newSeasonData = newSeason.join('&');
+                var newSeasonData = newSeason.length > 0 ? newSeason.join('&') : [];
+                console.log(newSeasonData);
                 $('#season').val(newSeasonData);
                 renderSeason();
             } else { //second tab
