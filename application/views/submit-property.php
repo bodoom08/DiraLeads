@@ -1856,78 +1856,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
 
         function submitPrice() {
-            if (!validateForthTab()) {
-                return false;
-            }
-            var weekday = [];
-            weekday.push($('.fc-day.fc-widget-content.fc-mon'));
-            weekday.push($('.fc-day.fc-widget-content.fc-tue'));
-            weekday.push($('.fc-day.fc-widget-content.fc-wed'));
-            weekday.push($('.fc-day.fc-widget-content.fc-thu'));
-            weekday.push($('.fc-day.fc-widget-content.fc-fri'));
-            weekday.push($('.fc-day.fc-widget-content.fc-sat'));
-            weekday.push($('.fc-day.fc-widget-content.fc-sun'));
 
-            var day = $('.datedays').val();
-            var weekend = $('.weekenddays').val();
-            var weekly = $('#weekly').val();
-            var monthly = $('#monthly').val();
-
-
-            // if (weekend != '') {
-            //     var week = '$' + weekend;
-            // } else {
-            //     var week = '';
-            // }
-
-            var week = weekend != '' ? '$' + weekend : '';
-
-            // if (day != '') {
-            //     var days = '$' + day;
-            // } else {
-            //     var days = '';
-            // }
-
-            var days = day != '' ? '$' + day : '';
-
-            var weekendFrom = $('#weekendFrom').val();
-            var weekendTo = $('#weekendTo').val();
-
-            var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
-
-            if ($('#customCheck29').is(':checked')) { // only available in weekend checked
-
-                weekday.forEach(day => {
-                    day.html(unavailablePrice());
-                });
-                weekday[1].html(unavailablePrice('unavailable'));
-
-                if (week != '') {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(weekendPrice());
-                    }
-                    weekday[midWeekend].html(weekendPrice(week));
-                } else {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(days);
-                    }
-                }
-            } else {
-                weekday.forEach(day => {
-                    day.html(days);
-                });
-
-                if (week != '') {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(weekendPrice());
-                    }
-                    weekday[midWeekend].html(weekendPrice(week));
-                } else {
-                    for (var i = weekendFrom; i <= weekendTo; i++) {
-                        weekday[i % 7].html(days);
-                    }
-                }
-            }
 
             // renderSeason();
         }
@@ -1936,38 +1865,38 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if ($('#days').val() != '') {
                 setValidDatePrice();
             }
-            submitPrice();
+            renderSeason();
         });
 
         $('#weekend').on("change paste keyup", function() {
             if ($('#weekend').val() != '') {
                 setValidDatePrice();
             }
-            submitPrice();
+            renderSeason();
         });
 
         $('#weekly').on("change paste keyup", function() {
             if ($('#weekly').val() != '') {
                 setValidDatePrice();
             }
-            submitPrice();
+            renderSeason();
         });
 
         $('#monthly').on("change paste keyup", function() {
             if ($('#monthly').val() != '') {
                 setValidDatePrice();
             }
-            submitPrice();
+            renderSeason();
         });
 
         $('#weekendFrom').on("change paste keyup", function() {
-            submitPrice();
+            renderSeason();
         });
         $('#weekendTo').on("change paste keyup", function() {
-            submitPrice();
+            renderSeason();
         });
         $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
-            submitPrice();
+            renderSeason();
         });
 
         function setValidDatePrice() {
@@ -2306,9 +2235,83 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         function renderSeason() {
             //clear calendar and cards
-            // $('.fc-bg td').html('');
-            submitPrice();
+            $('.fc-bg td').html('');
+            // render normal price
+            if (!validateForthTab()) {
+                return false;
+            }
+            var weekday = [];
+            weekday.push($('.fc-day.fc-widget-content.fc-mon'));
+            weekday.push($('.fc-day.fc-widget-content.fc-tue'));
+            weekday.push($('.fc-day.fc-widget-content.fc-wed'));
+            weekday.push($('.fc-day.fc-widget-content.fc-thu'));
+            weekday.push($('.fc-day.fc-widget-content.fc-fri'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sat'));
+            weekday.push($('.fc-day.fc-widget-content.fc-sun'));
+
+            var day = $('.datedays').val();
+            var weekend = $('.weekenddays').val();
+            var weekly = $('#weekly').val();
+            var monthly = $('#monthly').val();
+
+
+            // if (weekend != '') {
+            //     var week = '$' + weekend;
+            // } else {
+            //     var week = '';
+            // }
+
+            var week = weekend != '' ? '$' + weekend : '';
+
+            // if (day != '') {
+            //     var days = '$' + day;
+            // } else {
+            //     var days = '';
+            // }
+
+            var days = day != '' ? '$' + day : '';
+
+            var weekendFrom = $('#weekendFrom').val();
+            var weekendTo = $('#weekendTo').val();
+
+            var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
+
+            if ($('#customCheck29').is(':checked')) { // only available in weekend checked
+
+                weekday.forEach(day => {
+                    day.html(unavailablePrice());
+                });
+                weekday[1].html(unavailablePrice('unavailable'));
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
+                }
+            } else {
+                weekday.forEach(day => {
+                    day.html(days);
+                });
+
+                if (week != '') {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(weekendPrice());
+                    }
+                    weekday[midWeekend].html(weekendPrice(week));
+                } else {
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        weekday[i % 7].html(days);
+                    }
+                }
+            }
+            //
             $('.seasonRule').html('');
+
 
             // set price in dates and render cards
             var seasonData = $('#season').val();
