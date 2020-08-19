@@ -8,8 +8,6 @@ application/logs/*
 
 !application/*/.htaccess
 
-index.php
-
 tmp_uploads/*
 uploads/*
 
