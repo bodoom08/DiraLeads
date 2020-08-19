@@ -1,31 +1,33 @@
 <?php
 
-function api_otp_verify($params) {
-	$ch = curl_init();
+function api_otp_verify($params)
+{
+   $ch = curl_init();
 
-     curl_setopt($ch, CURLOPT_URL, "https://sms.telnyx.com/messages");
-     curl_setopt($ch, CURLOPT_HTTPHEADER, [
-        "Accept: application/json",
-        "Cache-Control: no-cache",
-        "Connection: keep-alive",
-        "Content-Type: application/json",
-        "cache-control: no-cache",
-        "x-profile-secret: u5slTZzvtPpKFbvjXCafmzkB"
-     ]);
-	 curl_setopt($ch, CURLOPT_POST, true);
-	 curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-	 curl_setopt($ch, CURLOPT_RETURNTRANSFER , true);
+   curl_setopt($ch, CURLOPT_URL, "https://sms.telnyx.com/messages");
+   curl_setopt($ch, CURLOPT_HTTPHEADER, [
+      "Accept: application/json",
+      "Cache-Control: no-cache",
+      "Connection: keep-alive",
+      "Content-Type: application/json",
+      "cache-control: no-cache",
+      "x-profile-secret: u5slTZzvtPpKFbvjXCafmzkB"
+   ]);
+   curl_setopt($ch, CURLOPT_POST, true);
+   curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-	 $json = curl_exec($ch);
+   $json = curl_exec($ch);
 
-	 curl_close($ch);
-	 
-	 return _output($json);
+   curl_close($ch);
+
+   return _output($json);
 }
 
-function send_otp($mobile) {
+function send_otp($mobile)
+{
    ini_set('display_errors', 1);
-   $CI = & get_instance();
+   $CI = &get_instance();
 
    // OTP Insert in OTP table
    $otp_no = rand('100000', '999999');
@@ -46,7 +48,7 @@ function send_otp($mobile) {
    $params = [
       'from' => TELNYX_SENDER_ID,
       // 'to' => '+91'.$mobile,
-      'to' => '+1'.$mobile,
+      'to' => '+1' . $mobile,
       'body' => $message
    ];
 
@@ -59,20 +61,19 @@ function send_otp($mobile) {
       "Connection: keep-alive",
       "Content-Type: application/json",
       "cache-control: no-cache",
-      "x-profile-secret: ".TELNYX_PROFILE_SECRET
+      "x-profile-secret: " . TELNYX_PROFILE_SECRET
    ]);
    curl_setopt($ch, CURLOPT_POST, true);
    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER , true);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
    $json = curl_exec($ch);
    curl_close($ch);
 
    $response = _output($json);
-   if(isset($response->success) && ($response->success == false)) {
+   if (isset($response->success) && ($response->success == false)) {
       return $response;
-   }     
-   else {
+   } else {
       // SMS Logs
       $arr = [
          'mobile_no' => $mobile,
@@ -86,13 +87,14 @@ function send_otp($mobile) {
    }
 }
 
-function send_sms($mobile, $message) {
+function send_sms($mobile, $message)
+{
    ini_set('display_errors', 1);
-   $CI = & get_instance();
+   $CI = &get_instance();
 
    $params = [
       'from' => TELNYX_SENDER_ID,
-      'to' => '+91'.$mobile,
+      'to' => '+91' . $mobile,
       // 'to' => '+1'.$mobile,
       'body' => $message
    ];
@@ -106,20 +108,19 @@ function send_sms($mobile, $message) {
       "Connection: keep-alive",
       "Content-Type: application/json",
       "cache-control: no-cache",
-      "x-profile-secret: ".TELNYX_PROFILE_SECRET
+      "x-profile-secret: " . TELNYX_PROFILE_SECRET
    ]);
    curl_setopt($ch, CURLOPT_POST, true);
    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER , true);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
    $json = curl_exec($ch);
    curl_close($ch);
 
    $response = _output($json);
-   if(isset($response->success) && ($response->success == false)) {
+   if (isset($response->success) && ($response->success == false)) {
       return $response;
-   }     
-   else {
+   } else {
       // SMS Logs
       $arr = [
          'mobile_no' => $mobile,
@@ -136,8 +137,9 @@ function send_sms($mobile, $message) {
 /**
  * Sending SMS Notification
  */
-function send_notify_sms($mobile, $message) {
-   $CI = & get_instance();
+function send_notify_sms($mobile, $message)
+{
+   $CI = &get_instance();
 
    $params = [
       'from' => TELNYX_SENDER_ID,
@@ -156,25 +158,25 @@ function send_notify_sms($mobile, $message) {
       "Connection: keep-alive",
       "Content-Type: application/json",
       "cache-control: no-cache",
-      "x-profile-secret: ".TELNYX_PROFILE_SECRET
+      "x-profile-secret: " . TELNYX_PROFILE_SECRET
    ]);
    curl_setopt($ch, CURLOPT_POST, true);
    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER , true);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
    $json = curl_exec($ch);
    curl_close($ch);
 
    $response = _output($json);
-   if(isset($response->success) && ($response->success == false)) {
+   if (isset($response->success) && ($response->success == false)) {
       return $response;
-   }
-   else {
+   } else {
       return $json;
    }
 }
 
-function get_vn() {
+function get_vn()
+{
 
    $params = [
       'search_type' => 2,
@@ -198,21 +200,20 @@ function get_vn() {
    ]);
    curl_setopt($ch, CURLOPT_POST, true);
    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER , true);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
    $json = curl_exec($ch);
    curl_close($ch);
 
    $response = _output($json);
-   if(isset($response->success) && ($response->success == false)) {
+   if (isset($response->success) && ($response->success == false)) {
       return $response;
-   }
-   else {
+   } else {
       return $json;
    }
 }
 
 function _output($json)
 {
-	return json_decode($json);
+   return json_decode($json);
 }

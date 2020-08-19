@@ -196,16 +196,17 @@ ul.amnity .custom-control.custom-checkbox {
     color: #a27107;
     right: 10px;
 }
-.banner-main .search-main .tabbing-sec .search-box ul li {
+.search-main .tabbing-sec .search-box ul li {
     width: 22%;
     margin: 10px 10px 0 0;
 }
-.banner-main .search-main .tabbing-sec {
+.search-main .tabbing-sec {
     max-width: 615px;
     padding: 15px;
     border-radius: 20px;
     position: relative;
     left: -6%;
+    float:left;
 }
 .action-sec a:hover {
     background: #281b3f;
@@ -216,15 +217,15 @@ ul.amnity .custom-control.custom-checkbox {
 div#content5 {
     display: none;
 }
-.banner-main .search-main .tabbing-sec ul {
+.search-main .tabbing-sec ul {
     width: 100%;
     /* margin: 0 !important; */
     padding: 0;
 }
-.banner-main .search-main .tabbing-sec .search-box ul li:last-child {
+.search-main .tabbing-sec .search-box ul li:last-child {
     width: 80%;
 }
-.banner-main .search-main .tabbing-sec .search-box ul li .form-group label, .checkbox label {
+.search-main .tabbing-sec .search-box ul li .form-group label, .checkbox label {
     font-weight: 600;
     font-size: 16px;
 }
@@ -2564,3 +2565,30 @@ td.fc-more-cell {
   .popover-body button.btn.propery_any.active{   
    border: 1px solid #a27107;
    } 
+
+/*Ben*/
+.banner-main .banner-text{
+    position: absolute;
+    top: 0;
+    padding: 40px;
+    
+    /* display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 50%; */
+}
+
+.banner-main .banner-text p {
+    color: white;
+}
+
+.banner-main .banner-text .primary-text{
+    font-size: 48px;
+    margin-bottom:7rem;
+}
+
+.banner-main .banner-text .secondary-text{
+    font-size: 36px;
+    line-height:1.2;
+}

@@ -44,7 +44,7 @@
                             @endif
                             @endforeach -->
 
-                    <li class="nav-item dropdown">
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
@@ -52,6 +52,9 @@
                             <a class="dropdown-item" href="/about">Renters</a>
                             <a class="dropdown-item" href="/about">Owners</a>
                         </div>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/about">Why DiraLeads</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">Rentals</a>
@@ -110,9 +113,8 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             </ol>
-            <div class="carousel-inner">
+            <div class="carousel-inner" style="height:25rem;">
                 <div class="carousel-item active">
-
                     <img src="assets/images/slide1.png" class="" alt="...">
                 </div>
                 <div class="carousel-item">
@@ -128,72 +130,69 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="search-main">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-12">
-                        <div class="tabbing-sec">
-                            <div class="tab-content" id="pills-tabContent">
-                                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                                    <div class="search-box">
-                                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <div class="banner-text">
+            <p class="primary-text">The Jewish short-term rental marketplace</p>
+            <p class="secondary-text">Connecting renters with property owners for short-term stays in heimishe neighborhoods worldwide</p>
+        </div>
+    </div>
+    <div class="search-main">
+        <div class="tabbing-sec">
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                    <div class="search-box">
+                        <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item">
                                                 Find your perfect rental
                                             </li>
-                                        </ul>
-                                        <ul>
-                                            <li>
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Area</label>
-                                                    <select class="form-control areaSelect" id="exampleFormControlSelect1">
-                                                        @if ( isset($areas))
-                                                        <option value="any">Any</option>
-                                                        @foreach ($areas as $area)
+                                        </ul> -->
+                        <ul>
+                            <li>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Area</label>
+                                    <select class="form-control areaSelect" id="exampleFormControlSelect1">
+                                        @if ( isset($areas))
+                                        <option value="any">Any</option>
+                                        @foreach ($areas as $area)
 
-                                                        <option value="{{$area['title']}}">{{ $area['title'] }}</option>
+                                        <option value="{{$area['title']}}">{{ $area['title'] }}</option>
 
-                                                        @endforeach
-                                                        @endif
-                                                    </select>
-                                                </div>
-                                            </li>
-                                            <li style="width:36%">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Dates</label>
-                                                    <input type="text" class="form-control dateRangePicker" name="daterange" readonly>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                </div>
+                            </li>
+                            <li style="width:36%">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Dates</label>
+                                    <input type="text" class="form-control dateRangePicker" name="daterange" readonly>
 
-                                                </div>
-                                            </li>
-                                            <li style="width:15%">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Bedrooms</label>
-                                                    <div class="max-min">
-                                                        <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li style="width:15%">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlSelect1">Price</label>
-                                                    <div class="max-min">
-                                                        <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <a class="areaFilter">Search</a>
-                                            </li>
-                                        </ul>
+                                </div>
+                            </li>
+                            <li style="width:15%">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Bedrooms</label>
+                                    <div class="max-min">
+                                        <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </li>
+                            <li style="width:15%">
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Price</label>
+                                    <div class="max-min">
+                                        <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a class="areaFilter">LOCATE MY DREAM RENTAL</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
 
     @endif
 
