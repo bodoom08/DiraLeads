@@ -25,10 +25,14 @@ class M_property extends CI_Model
     function property_listing()
     {
         array_walk_recursive($_POST, 'trim');
+
+        // echo json_encode($_POST);
+        // exit;
+
         extract($_POST);
         $available_date = $date;
 
-        if ($street && $area_id && $property_type && $price && $available_date && $property_desc) {
+        // if ($street && $area_id && $property_type && $price && $available_date && $property_desc) {
             if (empty($attribute_id) || empty($value)) {
                 return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
             }
@@ -71,7 +75,7 @@ class M_property extends CI_Model
             $property_data = [
                 'user_id' => $_SESSION['id'],
                 'for' => 'short term rent',
-                'house_number' => $house_no,
+                // 'house_number' => $house_no,
                 'amenities' => $amenitie,
                 'street' => $street,
                 'area_id' => $area_id,
@@ -195,7 +199,7 @@ class M_property extends CI_Model
                 }
             }
             return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
-        }
+        // }
         return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
     }
 
