@@ -3435,13 +3435,13 @@ input.mhButton {
                     // console.log($('#multi-date-select').multiDatesPicker('value')); 
                     $('.fa-spinner').prop('display', 'inline');
                     $('#submitBtn').prop('disabled', 'disabled');
+                    $('#propertyConfirmationModal').hide();
+                    $('#amenitySpec').empty();
                 },
                 success: function(arg) {
                     toastr[arg.type](arg.text);
                     $('.fa-spinner').prop('display', 'block');
                     $('#submitBtn').removeAttr('disabled');
-                    $('#propertyConfirmationModal').hide();
-                    $('#amenitySpec').empty();
                     if (arg.type == 'success') {
                         window.location.href = '<?php echo site_url('my_rentals'); ?>';
                     }
