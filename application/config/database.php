@@ -77,7 +77,7 @@ $db['default'] = array(
 	'dsn'	=> 'mysql:dbname=diraleads_new',
 	'hostname' => '127.0.0.1',
 	'username' => 'root',
-	'password' => 'asd123',
+	'password' => '',
 	'database' => 'diraleads_new',
 	'dbdriver' => 'pdo',
 	'dbprefix' => '',
