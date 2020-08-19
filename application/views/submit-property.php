@@ -626,7 +626,7 @@ input.mhButton {
                                                                 
                                                                     <div class="form-group">
                                                                         <label for="neighborhood">Neighborhood *</label>
-                                                                        <select class="form-control" name="neighborhood">
+                                                                        <select class="form-control"  name="area_id" id="neighborhood">
                                                                             <option value="">--select--</option>
                                                                             <?php foreach ($areas as $key => $value ) : ?>
                                                                                 <option value="<?php echo $value['id']; ?>"><?php echo $value['title']; ?></option>
@@ -2046,13 +2046,11 @@ input.mhButton {
             }, {});
 
             console.log(data);
-            // #### Remove validation for testing
-            /*
+            
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
                 return false;
             }
-*/
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
@@ -3436,6 +3434,7 @@ input.mhButton {
                     $('.fa-spinner').prop('display', 'inline');
                     $('#submitBtn').prop('disabled', 'disabled');
                     $('#propertyConfirmationModal').hide();
+                    $('#thumbnailPreview').empty();
                     $('#amenitySpec').empty();
                 },
                 success: function(arg) {
@@ -3459,7 +3458,7 @@ input.mhButton {
         $(document).on('click', '#closeConfirmDialog', function() {
             // Cancel form submit
             $('#propertyConfirmationModal').hide();
-            $('#amenitySpec').empty();
+            $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
 

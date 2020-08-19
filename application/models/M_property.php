@@ -21,7 +21,6 @@ class M_property extends CI_Model
             ->result();
     }
 
-
     function property_listing()
     {
         array_walk_recursive($_POST, 'trim');
@@ -84,7 +83,8 @@ class M_property extends CI_Model
                 'date_price' => $date_price,
                 'available_date' => date('Y-m-d', strtotime($available_date)),
                 'description' => $property_desc,
-                'coords' => json_encode(explode('|', $lat_lng)),
+                // 'coords' => json_encode(explode('|', $lat_lng)),
+                'coords'    => '[""]',
                 'created_by' => $_SESSION['id'],
                 'created_at' => date('Y-m-d H:i:s')
             ];
