@@ -95,6 +95,8 @@ define('ACCOUNT_TO_EMAIL', 'info@diraleads.com');
 // Telnyx SMS credentials
 define('TELNYX_SENDER_ID', 'Diraleads');
 define('TELNYX_PROFILE_SECRET', 'u5slTZzvtPpKFbvjXCafmzkB');
+define('TELNYX_API_KEY', 'KEY0172C7DEBB7656A6FBC502006CFBF578_SVQ6BWutub2w69NfMZQoMh');
+define('TEXML_APP_ID', '1439158368349456180');
 
 // Google Maps API Key
 define('API_KEY', 'AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A');

@@ -1605,10 +1605,12 @@ input.mhButton {
 <script src="<?php echo site_url('assets/js/jquery-ui.multidatespicker.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script src="<?php echo site_url('assets/js/moment.min.js') ?>"></script>
+<!-- <script src="<?php echo site_url('assets/js/moment.min.js') ?>"></script> -->
 <script src="<?php echo site_url('assets/js/jquery-ui.custom.min.js') ?>"></script>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js'></script>
+<!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js'></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
 <!-- Update for Google Autocomplete Places API -->
 <script>
     function initMap() {
@@ -1976,48 +1978,42 @@ input.mhButton {
             return true;
         }
 
-        function submitPrice() {
-
-
-            // renderSeason();
-        }
-
         $('#days').on("change paste keyup", function() {
             if ($('#days').val() != '') {
                 setValidDatePrice();
             }
-            renderSeason();
+            renderCalendarPrice();
         });
 
         $('#weekend').on("change paste keyup", function() {
             if ($('#weekend').val() != '') {
                 setValidDatePrice();
             }
-            renderSeason();
+            renderCalendarPrice();
         });
 
         $('#weekly').on("change paste keyup", function() {
             if ($('#weekly').val() != '') {
                 setValidDatePrice();
             }
-            renderSeason();
+            renderCalendarPrice();
         });
 
         $('#monthly').on("change paste keyup", function() {
             if ($('#monthly').val() != '') {
                 setValidDatePrice();
             }
-            renderSeason();
+            renderCalendarPrice();
         });
 
         $('#weekendFrom').on("change paste keyup", function() {
-            renderSeason();
+            renderCalendarPrice();
         });
         $('#weekendTo').on("change paste keyup", function() {
-            renderSeason();
+            renderCalendarPrice();
         });
         $('#customCheck29').on('change', function() { //Sukkah Sleep reveal
-            renderSeason();
+            renderCalendarPrice();
         });
 
         function setValidDatePrice() {
@@ -2160,21 +2156,10 @@ input.mhButton {
             selectable: true,
             fixedWeekCount: false,
             timezone: false,
+            eventOrder: "-title",
             events: {
                 url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                 cache: true,
-                success: function(events) { // a function that returns an object
-                    for (var i = 0; i < events.length; i++) {
-                        if (events[i].className == "hebdate") {
-                            events[i].order = 1
-                        } else {
-                            events[i].order = 0;
-                        }
-                    }
-                    var filter = compare("order");
-                    events.sort(filter);
-                    return events;
-                }
             },
             eventRender: function(eventObj, $el) {
                 // $el.addClass("custom-event");
@@ -2182,6 +2167,8 @@ input.mhButton {
             },
 
             select: function(start, end, jsEvent, view) {
+
+                console.log("select");
 
                 $('.date-actions').css('display', 'none');
                 // var datedays = $('.datedays').val();
@@ -2205,7 +2192,7 @@ input.mhButton {
                 }
             },
             eventClick: function(event, element) {
-                console.log(event.titlte);
+                console.log("eventClick");
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
                     $('#blockModal').modal('show');
@@ -2317,14 +2304,14 @@ input.mhButton {
                 selectable: true,
                 fixedWeekCount: false,
                 timezone: false,
-                eventOrder: "-id",
+                eventOrder: "-title",
                 events: {
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                     cache: true,
                     success: function(events) { // a function that returns an object
                         for (var i = 0; i < events.length; i++) {
                             if (events[i].className == "hebdate") {
-                                events[i].order = 1
+                                events[i].order = 1;
                             } else {
                                 events[i].order = 0;
                             }
@@ -2395,7 +2382,7 @@ input.mhButton {
             });
         });
 
-        function renderSeason() {
+        function renderCalendarPrice() {
             //clear calendar and cards
             $('.fc-bg td').html('');
             // render normal price
@@ -2478,7 +2465,7 @@ input.mhButton {
             // set price in dates and render cards
             var seasonData = $('#season').val();
             var seasons = seasonData != '' ? seasonData.split('&') : [];
-            console.log("renderSeason", seasons);
+            console.log("renderCalendarPrice", seasons);
             seasons.forEach(season => {
                 var values = season.split('|');
                 var seasonID = values[0];
@@ -2650,7 +2637,7 @@ input.mhButton {
 
             }
             seasonID++;
-            renderSeason();
+            renderCalendarPrice();
             //show price on calendar
 
             // if (isFixedPrice) {
@@ -3176,7 +3163,7 @@ input.mhButton {
 
             $('#fEditSeasonModal').hide();
 
-            renderSeason();
+            renderCalendarPrice();
         });
 
 
@@ -3246,7 +3233,7 @@ input.mhButton {
                 var newSeasonData = newSeason.length > 0 ? newSeason.join('&') : [];
                 console.log(newSeasonData);
                 $('#season').val(newSeasonData);
-                renderSeason();
+                renderCalendarPrice();
             } else { //second tab
                 var days = $('.rulDays' + id).val();
                 var session = $('#session').val();
@@ -3393,10 +3380,11 @@ input.mhButton {
             $('#pricechange').val(itemId);
         });
 
-        $(document).on('click', '.manualBooking', function() {
+        $(document).on('click', '.manualBooking', function(event) {
             var date = $(this).attr('currentdata');
             $('#manualStart').val(date);
-            console.log('.fc-widget-content[data-date="' + date + '"]');
+            console.log(event);
+            event.stopPropagation();
         });
 
 
