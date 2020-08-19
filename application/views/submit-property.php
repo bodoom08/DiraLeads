@@ -639,17 +639,17 @@ input.mhButton {
                                                                 <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlSelect1">Neighborhood other*</label>
-                                                                        <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[]">
+                                                                        <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[neighborhood_other]">
                                                                     </div>
                                                                 </li>
                                                             </ul>
 
                                                             <ul class="row">
-                                                                <li class="col-lg-4">
+                                                                <li class="col-lg-4 ">
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlSelect1">Bedrooms *</label>
                                                                         <input type="hidden" name="attribute_id[bedrooms]" value="1">
-                                                                        <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[]">
+                                                                        <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[bedrooms]">
                                                                     </div>
                                                                 </li>
 
@@ -657,14 +657,14 @@ input.mhButton {
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlSelect1">Bathrooms *</label>
                                                                         <input type="hidden" name="attribute_id[bathrooms]" value="2">
-                                                                        <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[]">
+                                                                        <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[bathrooms]">
                                                                     </div>
                                                                 </li>
 
                                                                 <li class="col-lg-4">
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlSelect1">Floor Number *</label>
-                                                                        <select class="form-control" id="floorNumber" name="attribute_id[florbas]" id="florbas">
+                                                                        <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
                                                                             <option value="">--Select--</option>
                                                                             <option value="0">Basement</option>
                                                                             <option value="1">1</option>
@@ -679,7 +679,7 @@ input.mhButton {
                                                                             <option value="10">10+</option>
                                                                         </select>
                                                                     </div>
-                                                                    <input type="hidden" placeholder="Floor Number" class="form-control floor" name="value[]">
+                                                                    <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]">
                                                                 </li>
                                                                 <!--   
                                                                 <li class="col-lg-3">
@@ -907,7 +907,7 @@ input.mhButton {
                                                             <div role="tabpanel" class="tab-pane active" id="sessional">
                                                                 <div class="tabbbing-one two">
                                                                     <ul class="row">
-                                                                        <li class="col-lg-10 m-auto">
+                                                                        <li class="col-lg-10 col-md-10 m-auto">
                                                                             <div class="price-container">
                                                                                 <div class="form-group daily-container">
                                                                                     <label for="days">Days ($)</label>
@@ -1732,6 +1732,7 @@ input.mhButton {
     });
 
     function attribute_desc(el) {
+        console.log("DEC: ", el);
         var ph = $(el).find(':selected').data('desc') || 'Value';
         $(el).parents('div[id^=row_]').find('[name="value[]"]').attr('placeholder', ph);
     }
@@ -2031,18 +2032,19 @@ input.mhButton {
         }
 
         $('#submitBtn').click(function() {
-            let amenities = [], prices = [], private_notes = [], rule_data=[];
+            let amenities = [];
+            // let prices = [], private_notes = [], rule_data=[];
             var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 if (item.name == "amenities[]") amenities.push(item.value);
-                if (item.name == 'price') prices.push(item.value);
-                if (item.name == 'private_note') private_notes.push(item.value);
-                if (item.name == 'rule_data') rule_data.push(item.value);
+                // if (item.name == 'price') prices.push(item.value);
+                // if (item.name == 'private_note') private_notes.push(item.value);
+                // if (item.name == 'rule_data') rule_data.push(item.value);
                 return obj;
             }, {});
 
             console.log(data);
-            
+
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
                 return false;
@@ -2050,15 +2052,19 @@ input.mhButton {
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
-            $('#propertySpec li label')[2].innerHTML = data['neighborhood'];
+            $('#propertySpec li label')[2].innerHTML = data['area_id'];
             $('#propertySpec li label')[4].innerHTML = data['attribute_id[bedrooms]'];
             $('#propertySpec li label')[5].innerHTML = data['attribute_id[bathrooms]'];
             $('#propertySpec li label')[6].innerHTML = data['attribute_id[florbas]'];
-            if (data['neighborhood'] == 'other') 
+            if (data['area_id'] == 'other')
                 $('#propertySpec li label')[3].innerHTML = data['value[]'];
             else $('#propertySpec li')[3].style.display = "none";
 
             // Add thumbnail as preview
+            if ($('#image_preview div img').length === 0) {
+                toastr.warning('Please upload thumbnail image.');
+                return false;
+            }
             $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[0].src}' />`);
 
             amenities.forEach(amenity => {
