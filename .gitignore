@@ -12,6 +12,9 @@ application/logs/*
 
 index.php
 
+tmp_uploads/*
+uploads/*
+
 composer.lock
 
 user_guide_src/build/*
