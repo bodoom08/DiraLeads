@@ -18,6 +18,17 @@
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/responsive.css') }}">
+    <style>
+        /** Muhammad */
+        .btn-create-account {
+            border: none;
+            background-color: #a27107;
+            color: white;
+            border-radius: 60px;
+            height: 50px;
+            padding: 0 40px;
+        }
+    </style>
 </head>
 
 <body class="@if ( isset($slug)){{$slug}}@endif">
