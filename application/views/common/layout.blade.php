@@ -215,7 +215,7 @@
                 <div class="col-lg-5 col-12">
                     <div class="footer-link">
                         <img src="{{ site_url() }}uploads/{{ CFG_LOGO }}" alt="logo">
-                        <p>{{ CFG_FOOTER_DESC }}</p>
+                        <p>Connecting Jewish property owners and renters worldwide - the hassle-free way</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12">

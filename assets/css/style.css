@@ -1410,7 +1410,7 @@ header.sticky-header .offcanvas-navbar a {
   justify-content: flex-end;
   z-index: 99;
   position: absolute;
-  top: 19rem;
+  top: 23rem;
   /* position: relative; */
   /* min-height: 520px; */
 }
