@@ -1569,12 +1569,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="col-md-6">
                                             <label class="font-weight-bold">Date & Price</label>
                                             <ul id="datePriceSpec">
-                                                <li>Price: &nbsp;<label></label>
-                                                <li>
-                                                <li>Rules: &nbsp;<label></label>
-                                                <li>
-                                                <li>Weekend Type: &nbsp;<label></label>
-                                                <li>
+                                                <li>Price: &nbsp;<label></label></li>
+                                                <li>Weekend Type: &nbsp;<label></label></li>
                                             </ul>
 
                                             <label class="font-weight-bold">Virtual Number</label>
@@ -2095,17 +2091,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             });
 
             $('#datePriceSpec li label')[0].innerHTML = data['price'];
-            $('#datePriceSpec li label')[1].innerHTML = data['rule_data'];
 
             switch (data['weekend_type']) {
                 case "5":
-                    $('#datePriceSpec li label')[2].innerHTML = "Motzei Shabbos";
+                    $('#datePriceSpec li label')[1].innerHTML = "Motzei Shabbos";
                     break;
                 case "6":
-                    $('#datePriceSpec li label')[2].innerHTML = "Sunday";
+                    $('#datePriceSpec li label')[1].innerHTML = "Sunday";
                     break;
                 case "7":
-                    $('#datePriceSpec li label')[2].innerHTML = "Monday";
+                    $('#datePriceSpec li label')[1].innerHTML = "Monday";
                     break;
             }
 
