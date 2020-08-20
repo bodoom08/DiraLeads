@@ -63,8 +63,8 @@
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/renters">THE RENTER's VIEW</a>
-                            <a class="dropdown-item" href="/owners">THE OWNER's VIEW</a>
+                            <a class="dropdown-item" href="/renters" style="font-family:'Raleway', sans-serif;">THE RENTER's VIEW</a>
+                            <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">THE OWNER's VIEW</a>
                         </div>
                     </li>
                     <!-- <li class="nav-item">
