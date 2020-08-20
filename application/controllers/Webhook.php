@@ -23,7 +23,7 @@ class Webhook extends CI_Controller
         $requests = $this->input->post();
         $this->load->helper('file');
 
-        
+
 
         $data = json_encode($requests);
         if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
