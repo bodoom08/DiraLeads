@@ -8,9 +8,6 @@ application/logs/*
 
 !application/*/.htaccess
 
-tmp_uploads/*
-uploads/*
-
 composer.lock
 
 user_guide_src/build/*
@@ -21,7 +18,8 @@ vendor
 
 # IDE Files
 #-------------------------
-/nbproject/
+/nbproje
+]ct/
 .idea/*
 
 ## Sublime Text cache files
