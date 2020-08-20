@@ -69,6 +69,11 @@ if (isset($livedata)) {
                                         </a>
                                     </li>
                                 </ul>
+                            </div>
+                            <!-- <a href="javascript:void(0);">See More</a> -->
+                        </div>
+                        <div class="tab-pane fade show" id="ser-profile" role="tabpanel" aria-labelledby="ser-profile-tab">
+                            <div class="service-box">
                                 <ul>
                                     <li>
                                         <a href="javascript:void(0);">
@@ -94,40 +99,6 @@ if (isset($livedata)) {
                                                 <img src="assets/images/icon3.png">
                                                 <h3>HEIMISHE RENTERS</h3>
                                                 <p>The patronage of like-minded community members who appreciate and respect your values</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                            </div>
-                            </ul>
-                            <!-- <a href="javascript:void(0);">See More</a> -->
-                        </div>
-                        <div class="tab-pane fade show" id="ser-profile" role="tabpanel" aria-labelledby="ser-profile-tab">
-                            <div class="service-box">
-                                <ul>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="content-sec">
-                                                <img src="assets/images/icon1.png">
-                                                <h3>Personalized Service</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="content-sec">
-                                                <img src="assets/images/icon2.png">
-                                                <h3>Personalized Service</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);">
-                                            <div class="content-sec">
-                                                <img src="assets/images/icon3.png">
-                                                <h3>Personalized Service</h3>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
                                             </div>
                                         </a>
                                     </li>
@@ -317,8 +288,8 @@ if (isset($livedata)) {
                     <div class="info-sec">
                         <p>Have a question? Need help finding the perfect rental? We’re eager to help!</p>
                         <div class="details">
-                            <p><span>Phone</span>111-111-1111</p>
-                            <p><span>Email</span>info@DiraLeads.com</p>
+                            <p><span>Phone</span>718-313-4643</p>
+                            <p><span>Email</span>rentals@Diraleads.com</p>
                         </div>
                     </div>
                 </div>

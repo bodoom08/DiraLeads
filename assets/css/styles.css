@@ -780,7 +780,7 @@ div#norecord {
   line-height: 24px;
   /* float: right; */
   /* padding-right: 0px !important; */
-  
+
   margin-top: 10px;
 }
 .copy-right p {
@@ -3295,7 +3295,7 @@ td.fc-more-cell {
 
 .split-section {
   text-align: center;
-  background-color: #ccc;
+  /* background-color: #ccc; */
   padding: 10px;
 }
 

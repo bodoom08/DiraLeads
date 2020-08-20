@@ -1447,6 +1447,29 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                             </div>
                         </div>
 
+                        <div id="actionModal" class="session_modal modal modal-event">
+
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Add a action</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                </div>
+                                <div class="modal-body ">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group button"><input type="button" class="seasonButton" value="Add a manual booking" id="fEdit-season"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group button"><input type="button" class="seasonButton" value="Block dates" id="fEdit-season"></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div id="editSeasonModal" class="session_modal modal-event modal">
                             <!-- <div id="newsletterform" class="modal-dialog" role="document"> -->
                             <div class="modal-content">
