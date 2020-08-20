@@ -909,19 +909,19 @@ input.mhButton {
                                                                     <ul class="row">
                                                                         <li class="col-lg-10 col-md-10 m-auto">
                                                                             <div class="price-container">
-                                                                                <div class="form-group daily-container">
+                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                     <label for="days">Days ($)</label>
                                                                                     <input type="number" id="days" class="datedays" placeholder="Days *">
                                                                                 </div>
-                                                                                <div class="form-group daily-container">
+                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                     <label for="weekend">Weekend ($)</label>
                                                                                     <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
                                                                                 </div>
-                                                                                <div class="form-group daily-container">
+                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                     <label for="weekly">Weekly ($)</label>
                                                                                     <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
                                                                                 </div>
-                                                                                <div class="form-group daily-container">
+                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                     <label for="monthly">Monthly ($)</label>
                                                                                     <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
                                                                                 </div>
