@@ -1929,6 +1929,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (!$(this).find("a").hasClass('a-disabled')) {
                 $('.perent_icon li').removeClass('active');
                 $(this).addClass('active');
+
+                $('#discover').removeClass('active');
+                $('#strategy').removeClass('active');
+                $('#optimization').removeClass('active');
+                $('#content').removeClass('active');
+
+                var role = $(this).attr('role');
+                if (role == "presentation1") {
+                    $('#discover').addClass('active');
+                } else if (role == 'presentation2') {
+                    $('#strategy').addClass('active');
+                } else if (role == 'presentation3') {
+                    $('#optimization').addClass('active');
+                } else if (role == 'presentation4') {
+                    $('#content').addClass('active');
+                }
             }
 
         });
