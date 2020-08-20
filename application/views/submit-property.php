@@ -874,11 +874,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                         <div class="col-lg-12">
                                                             <div class="property_thumbnails mt-2">
                                                                 <div class="row" id="image_preview">
-
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div class="tabing-action">
                                                         <ul>
                                                             <!-- <li class="closed"><a href="#">Close</a></li> -->
@@ -1578,7 +1578,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="col-md-6" class="font-weight-bold">
                                             <label class="font-weight-bold">Thumbnail</label>
-                                            <div class="row" id="thumbnailPreview"></div>
+                                            <div class="d-flex justify-content-center" id="thumbnailPreview"></div>
                                         </div>
                                     </div>
 
@@ -2106,10 +2106,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
-                toastr.warning('Please upload thumbnail image.');
-                return false;
+                $('#thumbnailPreview').append(`<p class="text-center">No Image</p>`);
+            } else {
+                const length = $('#image_preview div img').length;
+                $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[0].src}' />`);
             }
-            $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[0].src}' />`);
 
             amenities.forEach(amenity => {
                 $('#amenitySpec').append(`<li>${amenity}</li>`);
@@ -2151,8 +2152,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     }
                 }
             });
-
-            $('#propertyConfirmationModal').show();
             /*
                         $('#listingForm').ajaxSubmit({
                             data: {
