@@ -185,9 +185,9 @@ ul li {
   align-items: center;
   justify-content: center;
   background: #f1f1f1;
-  width: 26%;
+  width: 38%;
   margin: 0 auto;
-  border-radius: 50px;
+  border-radius: 15px;
   padding: 10px 0;
 }
 .tabbing-sec ul .nav-item a {
@@ -222,7 +222,7 @@ ul li {
 }
 .service-sec {
   text-align: center;
-  padding: 70px 0;
+  padding: 30px 0;
 }
 .tabbing-sec .service-box {
   box-shadow: none;
@@ -276,7 +276,7 @@ ul li {
   border: 2px solid #281b3f;
   margin: 0 15px;
   padding: 40px 20px;
-  border-radius: 30px;
+  border-radius: 50px 0px;
   position: relative;
   transition: 0.5s ease-in-out;
 }
@@ -302,7 +302,7 @@ ul li {
   height: 93%;
   background: transparent;
   border: 2px solid #fff;
-  border-radius: 20px;
+  border-radius: 50px 0px;
   left: 0;
   top: 10px;
   right: 0;
@@ -623,9 +623,9 @@ div#norecord {
   align-items: center;
   justify-content: center;
   background: #f1f1f1;
-  width: 26%;
+  width: 38%;
   margin: 0 auto;
-  border-radius: 50px;
+  border-radius: 15px;
   padding: 10px 0;
 }
 .gallery-sec:hover:before {
@@ -776,10 +776,12 @@ div#norecord {
 }
 .footer-link p {
   font-size: 16px;
-  width: 70%;
+  width: 90%;
   line-height: 24px;
-  float: right;
-  padding-right: 0px !important;
+  /* float: right; */
+  /* padding-right: 0px !important; */
+  
+  margin-top: 10px;
 }
 .copy-right p {
   color: #000;
@@ -813,7 +815,7 @@ div#norecord {
 .sec p {
   color: #fff;
   font-size: 21px;
-  width: 60%;
+  /* width: 60%; */
   margin: 0 auto;
 }
 .contact-sec {
@@ -1499,7 +1501,7 @@ ul.amnity li h4 {
   position: absolute;
   transition: all 0.4s ease-in-out;
   z-index: 0;
-  border-radius: 50px;
+  border-radius: 15px;
 }
 
 .feat_property:hover {
@@ -2824,9 +2826,9 @@ label.custom-control-label {
   text-decoration: underline;
   font-weight: 600;
 }
-.footer-link img {
+/* .footer-link img {
   float: left;
-}
+} */
 
 @media only screen and (max-width: 1450px) {
   .gallery-sec:before {
@@ -3289,4 +3291,18 @@ td.fc-more-cell {
 .banner-main .banner-text .secondary-text {
   font-size: 36px;
   line-height: 1.2;
+}
+
+.split-section {
+  text-align: center;
+  background-color: #ccc;
+  padding: 10px;
+}
+
+.split-section p {
+  font-size: 24px;
+}
+
+.simplifying-text{
+  margin-top: 10rem;
 }

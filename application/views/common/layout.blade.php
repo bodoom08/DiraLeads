@@ -216,11 +216,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-5 col-12">
-                    <div class="d-flex flex-column h-100 justify-content-between">
-                        <div class="footer-image">
-                            <img src="{{ site_url() }}uploads/{{ CFG_LOGO }}" alt="logo" />
-                        </div>
-                        <p>Connecting Jewish property owners and <br /> renters worldwide - the hassle-free way</p>
+                    <div class="footer-link">
+                        <img src="{{ site_url() }}uploads/{{ CFG_LOGO }}" alt="logo">
+                        <p>Connecting Jewish property owners and renters worldwide - the hassle-free way</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12">

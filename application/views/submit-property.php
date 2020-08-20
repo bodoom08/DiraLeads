@@ -14,7 +14,7 @@ $this->load->view('common/front_end_layout/top', [
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
 <style>
-/*
+    /*
 .fc-time {
     display: none;
 }
@@ -22,529 +22,530 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     background-color: unset;
 }
 */
-.date-actions {
-    position: relative;
-    background: none;
-    width: 100%;
-    min-width: 200px;
-    width: auto;
-    height: auto;
-    top: 25px;
-    left: 10px;
-    cursor: pointer;
-    z-index: 30;
-    background-color: white;
-    border: 1px #dfdfdf solid;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
-}
+    .date-actions {
+        position: relative;
+        background: none;
+        width: 100%;
+        min-width: 200px;
+        width: auto;
+        height: auto;
+        top: 25px;
+        left: 10px;
+        cursor: pointer;
+        z-index: 30;
+        background-color: white;
+        border: 1px #dfdfdf solid;
+        border-radius: 5px;
+        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
+    }
 
-.date {
-    background-color: #f4f4f4;
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-    min-height: 32px;
-    line-height: 32px;
-    text-indent: 12px;
-    border-radius: 5px 5px 0 0;
-}
+    .date {
+        background-color: #f4f4f4;
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        text-align: left;
+        min-height: 32px;
+        line-height: 32px;
+        text-indent: 12px;
+        border-radius: 5px 5px 0 0;
+    }
 
-.date-actions ul li a {
-    font-size: 14px;
-    color: #76d0be;
-    white-space: normal;
-    white-space: nowrap;
-}
+    .date-actions ul li a {
+        font-size: 14px;
+        color: #76d0be;
+        white-space: normal;
+        white-space: nowrap;
+    }
 
-.date-actions ul li {
-    padding-bottom: 10px;
-}
+    .date-actions ul li {
+        padding-bottom: 10px;
+    }
 
-.date-actions ul {
-    padding: 11px 12px;
-    margin: 0;
-}
+    .date-actions ul {
+        padding: 11px 12px;
+        margin: 0;
+    }
 
-.fc-event.parashat {
-    background-color: #257e4a;
-    border-color: #257e4a;
-    color: #FFF !important;
-}
+    .fc-event.parashat {
+        background-color: #257e4a;
+        border-color: #257e4a;
+        color: #FFF !important;
+    }
 
-.fc-event.holiday.yomtov,
-.fc-event.holiday.yomtov a {
-    background-color: #ffd446;
-    border-color: #ffd446;
-    color:  !important;
-}
+    .fc-event.holiday.yomtov,
+    .fc-event.holiday.yomtov a {
+        background-color: #ffd446;
+        border-color: #ffd446;
+        color:  !important;
+    }
 
-.fc-event.holiday.yomtov,
-.fc-event.holiday.yomtov a {
-    background-color: #ffd446;
-    border-color: #ffd446;
-    color: #333;
-}
+    .fc-event.holiday.yomtov,
+    .fc-event.holiday.yomtov a {
+        background-color: #ffd446;
+        border-color: #ffd446;
+        color: #333;
+    }
 
-.fc-event.hebdate,
-.fc-event.omer {
-    background-color: #FFF;
-    border-color: #FFF;
-    color: #999;
-}
+    .fc-event.hebdate,
+    .fc-event.omer {
+        background-color: #FFF;
+        border-color: #FFF;
+        color: #999;
+    }
 
-.modal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-}
+    .modal {
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
+    }
 
-/* Modal Content */
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 40% !important;
-    position: relative;
-}
-
-.event-model {
-    width: 100% !important;
-}
-
-.modal-backdrop.fade {
-    opacity: 0 !important;
-}
-
-.modal-backdrop {
-    position: relative !important;
-}
-
-/* The Close Button */
-.close {
-    color: #aaaaaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-form#newsletterform .form-group label {
-    font-size: 15px;
-    font-weight: normal;
-    color: #000;
-}
-
-form#newsletterform .form-group input {
-    border: #e5e5e5 1px solid;
-}
-
-form#newsletterform .form-group {
-    width: 50%;
-    float: left;
-    padding-right: 20px;
-}
-
-.form-group.custom-group {
-    width: 100% !important;
-    float: left;
-    display: inline-block;
-}
-
-.modal-content span.close {
-    position: absolute;
-    right: 10px;
-    top: 5px;
-    opacity: inherit;
-    color: #333;
-}
-
-.form-group.custom-group input {
-    margin-right: 10px;
-    margin-left: 10px;
-}
-
-.form-group.custom-group input:first-child {
-    margin-right: 10px;
-    margin-left: 0px;
-}
-
-.form-group input[type=checkbox] {
-    margin-right: 10px;
-}
-
-input.seasonButton {
-    font-size: 15px;
-    background: #a27107;
-    padding: 10px 30px;
-    margin: 0 10px 0;
-    border-radius: 30px;
-    color: #fff;
-    border: 0;
-    text-align: center;
-}
-
-.form-group.button {
-    width: 100% !important;
-    text-align: center;
-}
-
-.tabbbing-one.two {
-    text-align: left;
-    display: inline-block;
-}
-
-.sessionalRule p {
-    margin-bottom: 0px;
-}
-
-.sessionalRule {
-    padding: 10px;
-}
-
-.sessionalRule p i {
-    float: right;
-    vertical-align: bottom;
-    margin-top: 5px;
-}
-
-.sessionalRule:last-child {
-    margin-right: 0px;
-}
-
-.tabbbing-one.two {
-    text-align: left;
-    display: inline-block;
-    width: 100%;
-}
-
-.rule {
-    width: 100%;
-    float: left;
-}
-
-.seasonRule {
-    width: 100%;
-    float: left;
-}
-
-.sessionalRule p:first-child {
-    font-weight: 700;
-    font-size: 16px;
-}
-
-a.addRule {
-    border: #a27107 1px solid;
-    padding: 15px 50px;
-    display: inline-block;
-    margin-bottom: 30px;
-    font-weight: 700;
-    color: #a27107;
-}
-
-.form-group input[type=checkbox] {
-    position: relative;
-}
-
-.form-group input[type=checkbox]::before {
-    color: #fff;
-    border-color: #a27107;
-    background-color: #a27107;
-}
-
-.form-group input[type=checkbox]::after {
-    position: absolute;
-    top: .25rem;
-    left: -1.5rem;
-    display: block;
-    width: 1rem;
-    height: 1rem;
-    content: "";
-    background: no-repeat 50%/50% 50%;
-}
-
-.tabbbing-one.two .form-group {
-    text-align: center;
-}
-
-.sessionalRule {
-    padding: 10px;
-    width: 31.33%;
-    float: left;
-    margin: 0 5px 10px 5px;
-}
-
-button.fc-month-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right.fc-state-active {
-    display: none;
-}
-
-button.fc-today-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right {
-    display: none;
-}
-
-.fc-toolbar .fc-center {
-    float: right !important;
-}
-
-.modal-event .modal-content.event-model {
-    padding: 0px;
-}
-
-button.close span {
-    color: #fff;
-}
-
-.modal-event .modal-header {
-    background-color: #a27107;
-    color: #fff;
-    padding: 10px;
-}
-
-.modal-event .modal-header h4 {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.custom-event .modal-content.event-model {
-    padding: 0px;
-}
-
-button.close span {
-    color: #fff;
-}
-
-.custom-event .modal-header {
-    background-color: #a27107;
-    color: #fff;
-    padding: 10px;
-}
-
-.session_modal .modal-header {
-    background-color: #a27107;
-    color: #fff;
-    padding: 20px;
-}
-
-.session_modal .modal-content {
-    padding: 0 0px 20px 0px;
-}
-
-.session_modal .modal-content span {
-    color: #fff !important;
-}
-
-form#newsletterform {
-    padding: 15px;
-}
-
-.custom-event .modal-header h4 {
-    color: #fff;
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.form-group.custom-group .custom-control.custom-checkbox {
-    width: 14%;
-    float: left;
-    padding-left: 5px;
-}
-
-.form-group.custom-group .custom-control.custom-checkbox:first-child {
-    padding-left: 0px;
-}
-
-@media (max-width:767px) {
+    /* Modal Content */
     .modal-content {
-        width: 90%;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 40% !important;
+        position: relative;
+    }
+
+    .event-model {
+        width: 100% !important;
+    }
+
+    .modal-backdrop.fade {
+        opacity: 0 !important;
+    }
+
+    .modal-backdrop {
+        position: relative !important;
+    }
+
+    /* The Close Button */
+    .close {
+        color: #aaaaaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    form#newsletterform .form-group label {
+        font-size: 15px;
+        font-weight: normal;
+        color: #000;
+    }
+
+    form#newsletterform .form-group input {
+        border: #e5e5e5 1px solid;
     }
 
     form#newsletterform .form-group {
-        width: 100%;
+        width: 50%;
+        float: left;
+        padding-right: 20px;
+    }
+
+    .form-group.custom-group {
+        width: 100% !important;
+        float: left;
+        display: inline-block;
+    }
+
+    .modal-content span.close {
+        position: absolute;
+        right: 10px;
+        top: 5px;
+        opacity: inherit;
+        color: #333;
+    }
+
+    .form-group.custom-group input {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+
+    .form-group.custom-group input:first-child {
+        margin-right: 10px;
+        margin-left: 0px;
+    }
+
+    .form-group input[type=checkbox] {
+        margin-right: 10px;
+    }
+
+    input.seasonButton {
+        font-size: 15px;
+        background: #a27107;
+        padding: 10px 30px;
+        margin: 0 10px 0;
+        border-radius: 30px;
+        color: #fff;
+        border: 0;
+        text-align: center;
+    }
+
+    .form-group.button {
+        width: 100% !important;
+        text-align: center;
+    }
+
+    .tabbbing-one.two {
+        text-align: left;
+        display: inline-block;
+    }
+
+    .sessionalRule p {
+        margin-bottom: 0px;
     }
 
     .sessionalRule {
         padding: 10px;
+    }
+
+    .sessionalRule p i {
+        float: right;
+        vertical-align: bottom;
+        margin-top: 5px;
+    }
+
+    .sessionalRule:last-child {
+        margin-right: 0px;
+    }
+
+    .tabbbing-one.two {
+        text-align: left;
+        display: inline-block;
         width: 100%;
+    }
+
+    .rule {
+        width: 100%;
+        float: left;
+    }
+
+    .seasonRule {
+        width: 100%;
+        float: left;
+    }
+
+    .sessionalRule p:first-child {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    a.addRule {
+        border: #a27107 1px solid;
+        padding: 15px 50px;
+        display: inline-block;
+        margin-bottom: 30px;
+        font-weight: 700;
+        color: #a27107;
+    }
+
+    .form-group input[type=checkbox] {
+        position: relative;
+    }
+
+    .form-group input[type=checkbox]::before {
+        color: #fff;
+        border-color: #a27107;
+        background-color: #a27107;
+    }
+
+    .form-group input[type=checkbox]::after {
+        position: absolute;
+        top: .25rem;
+        left: -1.5rem;
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        content: "";
+        background: no-repeat 50%/50% 50%;
+    }
+
+    .tabbbing-one.two .form-group {
+        text-align: center;
+    }
+
+    .sessionalRule {
+        padding: 10px;
+        width: 31.33%;
         float: left;
         margin: 0 5px 10px 5px;
     }
-}
 
-/**Ben */
+    button.fc-month-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right.fc-state-active {
+        display: none;
+    }
 
-.a-disabled {
-    pointer-events: none;
-    cursor: default;
-}
+    button.fc-today-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right {
+        display: none;
+    }
 
-.invaild-input {
-    border: 1px solid red !important;
-}
+    .fc-toolbar .fc-center {
+        float: right !important;
+    }
 
-.upload-pictures {
-    color: #fff;
-}
+    .modal-event .modal-content.event-model {
+        padding: 0px;
+    }
 
-.upload-pictures a {
-    cursor: pointer;
-    font-size: 15px;
-    background: #a27107;
-    padding: 10px 50px;
-    margin: 0 10px 0;
-    border-radius: 30px;
-    border: 0;
-    text-align: center;
-}
+    button.close span {
+        color: #fff;
+    }
 
-.price-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-}
+    .modal-event .modal-header {
+        background-color: #a27107;
+        color: #fff;
+        padding: 10px;
+    }
 
-.price-container label {
-    margin-top: .5em;
-}
+    .modal-event .modal-header h4 {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-.price-container input {
-    /* width: 120px; */
-}
+    .custom-event .modal-content.event-model {
+        padding: 0px;
+    }
 
-.weekend-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin-bottom: 20px;
-    margin-right: 20px;
-}
+    button.close span {
+        color: #fff;
+    }
 
-.weekend-container label {
-    margin-right: 20px;
-}
+    .custom-event .modal-header {
+        background-color: #a27107;
+        color: #fff;
+        padding: 10px;
+    }
 
-.weekend-container select {
-    width: 200px;
-}
+    .session_modal .modal-header {
+        background-color: #a27107;
+        color: #fff;
+        padding: 20px;
+    }
 
-.daily-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
+    .session_modal .modal-content {
+        padding: 0 0px 20px 0px;
+    }
 
-.day-background {
-    width: 100%;
-    height: 25%;
-    margin-bottom: 0px !important;
-    font-size: 16px;
-}
+    .session_modal .modal-content span {
+        color: #fff !important;
+    }
 
-.weekend-background {
-    background-color: #ea7676;
-}
+    form#newsletterform {
+        padding: 15px;
+    }
 
-.season-background {
-    background-color: #76eaaf;
-    font-weight: bold;
-}
+    .custom-event .modal-header h4 {
+        color: #fff;
+        font-size: 16px;
+        font-weight: 600;
+    }
 
-.manual-background {
-    background-color: #76a7ea;
-    font-weight: bold;
-}
+    .form-group.custom-group .custom-control.custom-checkbox {
+        width: 14%;
+        float: left;
+        padding-left: 5px;
+    }
 
-.unavailable-background {
-    background-color: #d4d0d0;
-}
+    .form-group.custom-group .custom-control.custom-checkbox:first-child {
+        padding-left: 0px;
+    }
 
-.modal-row input {
-    border: #e5e5e5 1px solid;
-    padding: 5px 10px 5px 10px;
-}
+    @media (max-width:767px) {
+        .modal-content {
+            width: 90%;
+        }
 
-.date-actions a:hover {
-    color: grey;
-}
+        form#newsletterform .form-group {
+            width: 100%;
+        }
 
-.modal-content .row {
-    margin-bottom: 10px;
-}
+        .sessionalRule {
+            padding: 10px;
+            width: 100%;
+            float: left;
+            margin: 0 5px 10px 5px;
+        }
+    }
 
-.season-action {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-}
+    /**Ben */
 
-.season-action .fa-trash {
-    font-size: 20px;
-    color: red;
-    cursor: pointer;
-}
+    .a-disabled {
+        pointer-events: none;
+        cursor: default;
+    }
 
-.season-action .rulEdit {
-    border: 1px solid;
-    border-radius: 3px;
-    padding: 2px 6px;
-    font-size: 14px;
-    cursor: pointer;
-}
+    .invaild-input {
+        border: 1px solid red !important;
+    }
 
-/**
+    .upload-pictures {
+        color: #fff;
+    }
+
+    .upload-pictures a {
+        cursor: pointer;
+        font-size: 15px;
+        background: #a27107;
+        padding: 10px 50px;
+        margin: 0 10px 0;
+        border-radius: 30px;
+        border: 0;
+        text-align: center;
+    }
+
+    .price-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .price-container label {
+        margin-top: .5em;
+    }
+
+    .price-container input {
+        /* width: 120px; */
+    }
+
+    .weekend-container {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin-bottom: 20px;
+        margin-right: 20px;
+    }
+
+    .weekend-container label {
+        margin-right: 20px;
+    }
+
+    .weekend-container select {
+        width: 200px;
+    }
+
+    .daily-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .day-background {
+        width: 100%;
+        height: 25%;
+        margin-bottom: 0px !important;
+        font-size: 16px;
+    }
+
+    .weekend-background {
+        background-color: #ea7676;
+    }
+
+    .season-background {
+        background-color: #76eaaf;
+        font-weight: bold;
+    }
+
+    .manual-background {
+        background-color: #76a7ea;
+        font-weight: bold;
+    }
+
+    .unavailable-background {
+        background-color: #d4d0d0;
+    }
+
+    .modal-row input {
+        border: #e5e5e5 1px solid;
+        padding: 5px 10px 5px 10px;
+    }
+
+    .date-actions a:hover {
+        color: grey;
+    }
+
+    .modal-content .row {
+        margin-bottom: 10px;
+    }
+
+    .season-action {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    .season-action .fa-trash {
+        font-size: 20px;
+        color: red;
+        cursor: pointer;
+    }
+
+    .season-action .rulEdit {
+        border: 1px solid;
+        border-radius: 3px;
+        padding: 2px 6px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    /**
     Muhammad Theme
 */
-input.mhButton {
-    text-align: center;
-    font-size: 15px;
-    border-radius: 30px;
-    padding: 10px 30px;
-    margin: 0 10px 0;
-    border: 0;
-}
+    input.mhButton {
+        text-align: center;
+        font-size: 15px;
+        border-radius: 30px;
+        padding: 10px 30px;
+        margin: 0 10px 0;
+        border: 0;
+    }
 
-.mhButton.confirmButton {
-    background: #a27107;
-    color: #fff;
-}
+    .mhButton.confirmButton {
+        background: #a27107;
+        color: #fff;
+    }
 
-.mhButton.cancelButton {
-    background: #eee;
-    color:  #a27107;
-}
+    .mhButton.cancelButton {
+        background: #eee;
+        color: #a27107;
+    }
 
-#thumbnailPreview,  #thumbnailPreview img{
-    max-width: 250px;
-    max-height: 250px;
-}
+    #thumbnailPreview,
+    #thumbnailPreview img {
+        max-width: 250px;
+        max-height: 250px;
+    }
 </style>
 
 <div class="dashboard">
@@ -597,91 +598,91 @@ input.mhButton {
                                         <!-- end design process steps-->
                                         <!-- Tab panes -->
                                         <?php echo form_open_multipart('property/property_listing', 'id="listingForm" class=""'); ?>
-                                            <div class="tab-content">
-                                                <div role="tabpanel" class="tab-pane active" id="discover">
-                                                    <div class="design-process-content">
-                                                        <div class="tabbbing-one">
-                                                            <ul class="row">
-                                                                <li class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="propertyType">Property Type *</label>
-                                                                        <select class="form-control" name="property_type" id="propertyType">
-                                                                            <option value="apartment">Apartment</option>
-                                                                            <option value="basement">Basement</option>
-                                                                            <option value="house">House</option>
-                                                                            <option value="duplex">Duplex</option>
-                                                                            <option value="villa">Villa</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </li>
+                                        <div class="tab-content">
+                                            <div role="tabpanel" class="tab-pane active" id="discover">
+                                                <div class="design-process-content">
+                                                    <div class="tabbbing-one">
+                                                        <ul class="row">
+                                                            <li class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label for="propertyType">Property Type *</label>
+                                                                    <select class="form-control" name="property_type" id="propertyType">
+                                                                        <option value="apartment">Apartment</option>
+                                                                        <option value="basement">Basement</option>
+                                                                        <option value="house">House</option>
+                                                                        <option value="duplex">Duplex</option>
+                                                                        <option value="villa">Villa</option>
+                                                                    </select>
+                                                                </div>
+                                                            </li>
 
-                                                                <li class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Address *</label>
-                                                                        <input type="text" id="geoLocation" name="street" rows="2" class="form-control md-textarea" placeholder="" />
-                                                                    </div>
-                                                                </li>
+                                                            <li class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Address *</label>
+                                                                    <input type="text" id="geoLocation" name="street" rows="2" class="form-control md-textarea" placeholder="" />
+                                                                </div>
+                                                            </li>
 
-                                                                <li class="col-lg-6">
-                                                                
-                                                                    <div class="form-group">
-                                                                        <label for="neighborhood">Neighborhood *</label>
-                                                                        <select class="form-control"  name="area_id" id="neighborhood">
-                                                                            <option value="">--select--</option>
-                                                                            <?php foreach ($areas as $key => $value ) : ?>
-                                                                                <option value="<?php echo $value['id']; ?>"><?php echo $value['title']; ?></option>
-                                                                            <?php endforeach; ?>
-                                                                            <option value="other">Other</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </li>
+                                                            <li class="col-lg-6">
 
-                                                                <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Neighborhood other*</label>
-                                                                        <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[neighborhood_other]">
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
+                                                                <div class="form-group">
+                                                                    <label for="neighborhood">Neighborhood *</label>
+                                                                    <select class="form-control" name="area_id" id="neighborhood">
+                                                                        <option value="">--select--</option>
+                                                                        <?php foreach ($areas as $key => $value) : ?>
+                                                                            <option value="<?php echo $value['id']; ?>"><?php echo $value['title']; ?></option>
+                                                                        <?php endforeach; ?>
+                                                                        <option value="other">Other</option>
+                                                                    </select>
+                                                                </div>
+                                                            </li>
 
-                                                            <ul class="row">
-                                                                <li class="col-lg-4 ">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Bedrooms *</label>
-                                                                        <input type="hidden" name="attribute_id[bedrooms]" value="1">
-                                                                        <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[bedrooms]">
-                                                                    </div>
-                                                                </li>
+                                                            <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Neighborhood other*</label>
+                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[neighborhood_other]">
+                                                                </div>
+                                                            </li>
+                                                        </ul>
 
-                                                                <li class="col-lg-4">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Bathrooms *</label>
-                                                                        <input type="hidden" name="attribute_id[bathrooms]" value="2">
-                                                                        <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[bathrooms]">
-                                                                    </div>
-                                                                </li>
+                                                        <ul class="row">
+                                                            <li class="col-lg-4 ">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Bedrooms *</label>
+                                                                    <input type="hidden" name="attribute_id[bedrooms]" value="1">
+                                                                    <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[bedrooms]">
+                                                                </div>
+                                                            </li>
 
-                                                                <li class="col-lg-4">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Floor Number *</label>
-                                                                        <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
-                                                                            <option value="">--Select--</option>
-                                                                            <option value="0">Basement</option>
-                                                                            <option value="1">1</option>
-                                                                            <option value="2">2</option>
-                                                                            <option value="3">3</option>
-                                                                            <option value="4">4</option>
-                                                                            <option value="5">5</option>
-                                                                            <option value="6">6</option>
-                                                                            <option value="7">7</option>
-                                                                            <option value="8">8</option>
-                                                                            <option value="9">9</option>
-                                                                            <option value="10">10+</option>
-                                                                        </select>
-                                                                    </div>
-                                                                    <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]">
-                                                                </li>
-                                                                <!--   
+                                                            <li class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Bathrooms *</label>
+                                                                    <input type="hidden" name="attribute_id[bathrooms]" value="2">
+                                                                    <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[bathrooms]">
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="col-lg-4">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Floor Number *</label>
+                                                                    <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
+                                                                        <option value="">--Select--</option>
+                                                                        <option value="0">Basement</option>
+                                                                        <option value="1">1</option>
+                                                                        <option value="2">2</option>
+                                                                        <option value="3">3</option>
+                                                                        <option value="4">4</option>
+                                                                        <option value="5">5</option>
+                                                                        <option value="6">6</option>
+                                                                        <option value="7">7</option>
+                                                                        <option value="8">8</option>
+                                                                        <option value="9">9</option>
+                                                                        <option value="10">10+</option>
+                                                                    </select>
+                                                                </div>
+                                                                <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]">
+                                                            </li>
+                                                            <!--   
                                                                 <li class="col-lg-3">
                                                                     <div class="form-group">
                                                                         <label for="exampleFormControlSelect1">Floor Number</label>
@@ -696,325 +697,325 @@ input.mhButton {
                                                                         <input type="number" placeholder="Basement" class="form-control basement" id="basement" name="value[]" onkeyup="myFunctionb()">
                                                                     </div>
                                                                 </li> -->
-                                                            </ul>
+                                                        </ul>
 
-                                                            <ul class="row">
-                                                                <li class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Description *</label>
-                                                                        <textarea type="text" id="description" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Write a short description of your rental - Minimum 60 letters"></textarea>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-
-                                                            <div class="tabing-action">
-                                                                <ul>
-                                                                    <!-- <li class="closed"><a href="#">Close</a></li> -->
-                                                                    <li class="next"><a href="javascript:void(0)">Next</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div role="tabpanel" class="tab-pane" id="strategy">
-                                                    <div class="design-process-content">
-                                                        <div class="tabbbing-one two">
-                                                            <ul class="amnity">
-                                                                <li>
-                                                                    <h4>Indoor amenities</h4>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Elevator" id="customCheck2">
-                                                                        <label class="custom-control-label" for="customCheck2">Elevator</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wheelchair Accessible" id="customCheck3">
-                                                                        <label class="custom-control-label" for="customCheck3">Wheelchair Accessible</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Air Conditioning" id="customCheck4">
-                                                                        <label class="custom-control-label" for="customCheck4">Air Conditioning</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Heating" id="customCheck5">
-                                                                        <label class="custom-control-label" for="customCheck5">Heating</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Linen and Towels" id="customCheck6">
-                                                                        <label class="custom-control-label" for="customCheck6">Linen and Towels</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Washing Machine" id="customCheck7">
-                                                                        <label class="custom-control-label" for="customCheck7">Washing Machine</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Dryer" id="customCheck8">
-                                                                        <label class="custom-control-label" for="customCheck8">Dryer</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Kid-friendly" id="customCheck9">
-                                                                        <label class="custom-control-label" for="customCheck9">Kid-friendly</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Crib" id="customCheck10">
-                                                                        <label class="custom-control-label" for="customCheck10">Crib</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="High Chair" id="customCheck11">
-                                                                        <label class="custom-control-label" for="customCheck11">High Chair</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wi-Fi" id="customCheck12">
-                                                                        <label class="custom-control-label" for="customCheck12">Wi-Fi</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hair dryer" id="customCheck13">
-                                                                        <label class="custom-control-label" for="customCheck13">Hair dryer</label>
-                                                                    </div>
-                                                                </li>
-                                                                <li>
-                                                                    <h4>Outdoor amenities</h4>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Garden/backyard" id="customCheck14">
-                                                                        <label class="custom-control-label" for="customCheck14">Garden/backyard</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Porch/Balcony" id="customCheck15">
-                                                                        <label class="custom-control-label" for="customCheck15">Porch/Balcony</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Parking" id="customCheck16">
-                                                                        <label class="custom-control-label" for="customCheck16">Parking</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pool" id="customCheck17">
-                                                                        <label class="custom-control-label" for="customCheck17">Pool</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
-                                                                        <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                        <input type="number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
-                                                                    </div>
-
-                                                                    <!-- <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;"> -->
-
-                                                                </li>
-                                                                <li>
-                                                                    <h4>Kitchen Amenities</h4>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pesach Kitchen" id="customCheck19">
-                                                                        <label class="custom-control-label" for="customCheck19">Pesach Kitchen</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Refrigerator" id="customCheck20">
-                                                                        <label class="custom-control-label" for="customCheck20">Refrigerator</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Freezer" id="customCheck21">
-                                                                        <label class="custom-control-label" for="customCheck21">Freezer</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Stove" id="customCheck22">
-                                                                        <label class="custom-control-label" for="customCheck22">Stove</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Oven" id="customCheck23">
-                                                                        <label class="custom-control-label" for="customCheck23">Oven</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Microwave" id="customCheck24">
-                                                                        <label class="custom-control-label" for="customCheck24">Microwave</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hot-Plate/Plata" id="customCheck25">
-                                                                        <label class="custom-control-label" for="customCheck25">Hot-Plate/Plata</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Shabbos Kettle/Urn" id="customCheck26">
-                                                                        <label class="custom-control-label" for="customCheck26">Shabbos Kettle/Urn</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Cooking Utensils" id="customCheck27">
-                                                                        <label class="custom-control-label" for="customCheck27">Cooking Utensils</label>
-                                                                    </div>
-                                                                    <div class="custom-control custom-checkbox">
-                                                                        <input type="checkbox" class="custom-control-input" name="amenities[]" value="Coffee Machine" id="customCheck28">
-                                                                        <label class="custom-control-label" for="customCheck28">Coffee Machine</label>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                            <div class="tabing-action">
-                                                                <ul>
-                                                                    <!-- <li class="closed"><a href="#">Close</a></li> -->
-                                                                    <li class="amintNext"><a href="javascript:void(0)">Next</a></li>
-                                                                </ul>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div role="tabpanel" class="tab-pane" id="optimization">
-                                                    <div class="design-process-content">
-                                                        <div class="tabbbing-one two">
-                                                            <ul class="row">
-                                                                <li class="col-lg-12">
-                                                                    <div class="form-group">
-                                                                        <label for="upload_file">
-                                                                            <ul>
-                                                                                <li class="upload-pictures"><a>Upload Pictures</a></li>
-                                                                            </ul>
-                                                                            <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
-                                                                        </label>
-                                                                    </div>
-                                                                </li>
-
-                                                            </ul>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-lg-12">
-                                                                <div class="property_thumbnails mt-2">
-                                                                    <div class="row" id="image_preview">
-
-                                                                    </div>
+                                                        <ul class="row">
+                                                            <li class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">Description *</label>
+                                                                    <textarea type="text" id="description" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Write a short description of your rental - Minimum 60 letters"></textarea>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tabing-action">
-                                                            <ul>
-                                                                <!-- <li class="closed"><a href="#">Close</a></li> -->
-                                                                <li class="optNext"><a href="javascript:void(0)">Next</a></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div role="tabpanel" class="tab-pane" id="content">
-                                                    <div class="design-process-content">
-                                                        <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
-                                                            <li role="presentation9" class="customCalender active mr-3" style="width:40%">
-                                                                <a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab">
-                                                                    <p>My Rental is available all year round</p>
-                                                                </a>
-                                                            </li>
-
-                                                            <li role="presentation8" style="width:40%" class="costomSession">
-                                                                <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
-                                                                    <p>My Rental is seasonal</p>
-                                                                </a>
                                                             </li>
                                                         </ul>
 
-                                                        <div class="tab-content">
-                                                            <div role="tabpanel" class="tab-pane active" id="sessional">
-                                                                <div class="tabbbing-one two">
-                                                                    <ul class="row">
-                                                                        <li class="col-lg-10 col-md-10 m-auto">
-                                                                            <div class="price-container">
-                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                    <label for="days">Days ($)</label>
-                                                                                    <input type="number" id="days" class="datedays" placeholder="Days *">
-                                                                                </div>
-                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                    <label for="weekend">Weekend ($)</label>
-                                                                                    <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
-                                                                                </div>
-                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                    <label for="weekly">Weekly ($)</label>
-                                                                                    <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
-                                                                                </div>
-                                                                                <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                    <label for="monthly">Monthly ($)</label>
-                                                                                    <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
-                                                                                </div>
-                                                                                <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
-                                                                            </div>
-                                                                            <div class="price-container">
-                                                                                <div class="form-group weekend-container">
-                                                                                    <label for="weekendFrom">Weekend </label>
-                                                                                    <label for="weekendFrom"> From</label>
-                                                                                    <select class="form-control" name="weekend_type" id="weekendFrom">
-                                                                                        <option value="3">Thursday</option>
-                                                                                        <option value="4">Friday</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group weekend-container">
-                                                                                    <label for="weekendTo">Till</label>
-                                                                                    <select class="form-control" name="weekend_type" id="weekendTo">
-                                                                                        <option value="5">Motzei Shabbos</option>
-                                                                                        <option value="6">Sunday</option>
-                                                                                        <option value="7">Monday</option>
-                                                                                    </select>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
-                                                                                    <label class="custom-control-label" for="customCheck29">Weekend Only</label>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="price-container">
-                                                                                <div class="form-group daily-container" style="width: 100%;">
-                                                                                    <label for=" manualPrivateNote">Private notes</label>
-                                                                                    <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <!-- <div class="custom-control custom-checkbox form-group">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
-                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
-                                                                            </div> -->
-                                                                            <div class="form-group">
-                                                                                <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
-                                                                                <div class="seasonRule">
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="form-group">
-                                                                                <div id='calendar'></div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-
-                                                            <div role="tabpanel" class="tab-pane" id="yearly">
-                                                                <div class="tabbbing-one two">
-                                                                    <ul class="row">
-                                                                        <li class="col-lg-10 m-auto">
-                                                                            <div class="price-container">
-                                                                                <div class="form-group daily-container" style="width: 100%;">
-                                                                                    <label for=" manualPrivateNote">Private notes</label>
-                                                                                    <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
-                                                                                <div class="rule">
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div id='seasonCalendar'></div>
-                                                                            </div>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <div class="tabing-action">
                                                             <ul>
-                                                                <li class="submitnext"><a id="submitBtn">Finish</a>
-                                                                    <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
+                                                                <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                                                <li class="next"><a href="javascript:void(0)">Next</a></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                 </div>
-
-                                                <input type="hidden" value="" id="selectedPrice" name="date_price">
-                                                <input type="hidden" value="" id="date" name="date">
-                                                <input type="hidden" id="price" value="500" name="price">
-                                                <input type="hidden" id="session" value="" name="rule_data">
-                                                <input type="hidden" id="allRrentals" value="true" name="allRrentals">
-                                                <input type="hidden" class="disableDate" value=''>
-
                                             </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="strategy">
+                                                <div class="design-process-content">
+                                                    <div class="tabbbing-one two">
+                                                        <ul class="amnity">
+                                                            <li>
+                                                                <h4>Indoor amenities</h4>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Elevator" id="customCheck2">
+                                                                    <label class="custom-control-label" for="customCheck2">Elevator</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wheelchair Accessible" id="customCheck3">
+                                                                    <label class="custom-control-label" for="customCheck3">Wheelchair Accessible</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Air Conditioning" id="customCheck4">
+                                                                    <label class="custom-control-label" for="customCheck4">Air Conditioning</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Heating" id="customCheck5">
+                                                                    <label class="custom-control-label" for="customCheck5">Heating</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Linen and Towels" id="customCheck6">
+                                                                    <label class="custom-control-label" for="customCheck6">Linen and Towels</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Washing Machine" id="customCheck7">
+                                                                    <label class="custom-control-label" for="customCheck7">Washing Machine</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Dryer" id="customCheck8">
+                                                                    <label class="custom-control-label" for="customCheck8">Dryer</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Kid-friendly" id="customCheck9">
+                                                                    <label class="custom-control-label" for="customCheck9">Kid-friendly</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Crib" id="customCheck10">
+                                                                    <label class="custom-control-label" for="customCheck10">Crib</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="High Chair" id="customCheck11">
+                                                                    <label class="custom-control-label" for="customCheck11">High Chair</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Wi-Fi" id="customCheck12">
+                                                                    <label class="custom-control-label" for="customCheck12">Wi-Fi</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hair dryer" id="customCheck13">
+                                                                    <label class="custom-control-label" for="customCheck13">Hair dryer</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <h4>Outdoor amenities</h4>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Garden/backyard" id="customCheck14">
+                                                                    <label class="custom-control-label" for="customCheck14">Garden/backyard</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Porch/Balcony" id="customCheck15">
+                                                                    <label class="custom-control-label" for="customCheck15">Porch/Balcony</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Parking" id="customCheck16">
+                                                                    <label class="custom-control-label" for="customCheck16">Parking</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pool" id="customCheck17">
+                                                                    <label class="custom-control-label" for="customCheck17">Pool</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
+                                                                    <label class="custom-control-label" for="customCheck18">Sukkah</label>
+                                                                    <input type="number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
+                                                                </div>
+
+                                                                <!-- <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;"> -->
+
+                                                            </li>
+                                                            <li>
+                                                                <h4>Kitchen Amenities</h4>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Pesach Kitchen" id="customCheck19">
+                                                                    <label class="custom-control-label" for="customCheck19">Pesach Kitchen</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Refrigerator" id="customCheck20">
+                                                                    <label class="custom-control-label" for="customCheck20">Refrigerator</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Freezer" id="customCheck21">
+                                                                    <label class="custom-control-label" for="customCheck21">Freezer</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Stove" id="customCheck22">
+                                                                    <label class="custom-control-label" for="customCheck22">Stove</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Oven" id="customCheck23">
+                                                                    <label class="custom-control-label" for="customCheck23">Oven</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Microwave" id="customCheck24">
+                                                                    <label class="custom-control-label" for="customCheck24">Microwave</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Hot-Plate/Plata" id="customCheck25">
+                                                                    <label class="custom-control-label" for="customCheck25">Hot-Plate/Plata</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Shabbos Kettle/Urn" id="customCheck26">
+                                                                    <label class="custom-control-label" for="customCheck26">Shabbos Kettle/Urn</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Cooking Utensils" id="customCheck27">
+                                                                    <label class="custom-control-label" for="customCheck27">Cooking Utensils</label>
+                                                                </div>
+                                                                <div class="custom-control custom-checkbox">
+                                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="Coffee Machine" id="customCheck28">
+                                                                    <label class="custom-control-label" for="customCheck28">Coffee Machine</label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                        <div class="tabing-action">
+                                                            <ul>
+                                                                <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                                                <li class="amintNext"><a href="javascript:void(0)">Next</a></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="tabpanel" class="tab-pane" id="optimization">
+                                                <div class="design-process-content">
+                                                    <div class="tabbbing-one two">
+                                                        <ul class="row">
+                                                            <li class="col-lg-12">
+                                                                <div class="form-group">
+                                                                    <label for="upload_file">
+                                                                        <ul>
+                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                        </ul>
+                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                    </label>
+                                                                </div>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="property_thumbnails mt-2">
+                                                                <div class="row" id="image_preview">
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tabing-action">
+                                                        <ul>
+                                                            <!-- <li class="closed"><a href="#">Close</a></li> -->
+                                                            <li class="optNext"><a href="javascript:void(0)">Next</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div role="tabpanel" class="tab-pane" id="content">
+                                                <div class="design-process-content">
+                                                    <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
+                                                        <li role="presentation9" class="customCalender active mr-3" style="width:40%">
+                                                            <a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab">
+                                                                <p>My Rental is available all year round</p>
+                                                            </a>
+                                                        </li>
+
+                                                        <li role="presentation8" style="width:40%" class="costomSession">
+                                                            <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
+                                                                <p>My Rental is seasonal</p>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+
+                                                    <div class="tab-content">
+                                                        <div role="tabpanel" class="tab-pane active" id="sessional">
+                                                            <div class="tabbbing-one two">
+                                                                <ul class="row">
+                                                                    <li class="col-lg-10 col-md-10 m-auto">
+                                                                        <div class="price-container">
+                                                                            <div class="form-group daily-container col-lg-3 col-md-6 p-1">
+                                                                                <label for="days">Days ($)</label>
+                                                                                <input type="number" id="days" class="datedays" placeholder="Days *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container col-lg-3 col-md-6 p-1">
+                                                                                <label for="weekend">Weekend ($)</label>
+                                                                                <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container col-lg-3 col-md-6 p-1">
+                                                                                <label for="weekly">Weekly ($)</label>
+                                                                                <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                            </div>
+                                                                            <div class="form-group daily-container col-lg-3 col-md-6 p-1">
+                                                                                <label for="monthly">Monthly ($)</label>
+                                                                                <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                            </div>
+                                                                            <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
+                                                                        </div>
+                                                                        <div class="price-container">
+                                                                            <div class="form-group weekend-container">
+                                                                                <label for="weekendFrom">Weekend </label>
+                                                                                <label for="weekendFrom"> From</label>
+                                                                                <select class="form-control" name="weekend_type" id="weekendFrom">
+                                                                                    <option value="3">Thursday</option>
+                                                                                    <option value="4">Friday</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group weekend-container">
+                                                                                <label for="weekendTo">Till</label>
+                                                                                <select class="form-control" name="weekend_type" id="weekendTo">
+                                                                                    <option value="5">Motzei Shabbos</option>
+                                                                                    <option value="6">Sunday</option>
+                                                                                    <option value="7">Monday</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <label class="custom-control-label" for="customCheck29">Weekend Only</label>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="price-container">
+                                                                            <div class="form-group daily-container" style="width: 100%;">
+                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <!-- <div class="custom-control custom-checkbox form-group">
+                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
+                                                                            </div> -->
+                                                                        <div class="form-group">
+                                                                            <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
+                                                                            <div class="seasonRule">
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="form-group">
+                                                                            <div id='calendar'></div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+
+                                                        <div role="tabpanel" class="tab-pane" id="yearly">
+                                                            <div class="tabbbing-one two">
+                                                                <ul class="row">
+                                                                    <li class="col-lg-10 m-auto">
+                                                                        <div class="price-container">
+                                                                            <div class="form-group daily-container" style="width: 100%;">
+                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
+                                                                            <div class="rule">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <div id='seasonCalendar'></div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tabing-action">
+                                                        <ul>
+                                                            <li class="submitnext"><a id="submitBtn">Finish</a>
+                                                                <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <input type="hidden" value="" id="selectedPrice" name="date_price">
+                                            <input type="hidden" value="" id="date" name="date">
+                                            <input type="hidden" id="price" value="500" name="price">
+                                            <input type="hidden" id="session" value="" name="rule_data">
+                                            <input type="hidden" id="allRrentals" value="true" name="allRrentals">
+                                            <input type="hidden" class="disableDate" value=''>
+
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
@@ -1210,7 +1211,7 @@ input.mhButton {
                                             </select>
                                         </div>
                                         <div class="col-sm-6" id="seasonFixedPrice" style="display:none;">
-                                        
+
                                             <label for="fixedSeasonalPrice">Season price ($)*</label>
                                             <input type="number" style="width: 100%;" id="fixedSeasonalPrice" class="weekenddays" />
                                         </div>
@@ -1568,13 +1569,16 @@ input.mhButton {
                                         <div class="col-md-6">
                                             <label class="font-weight-bold">Date & Price</label>
                                             <ul id="datePriceSpec">
-                                                <li>Price: &nbsp;<label></label><li>
-                                                <li>Rules: &nbsp;<label></label><li>
-                                                <li>Weekend Type: &nbsp;<label></label><li>
+                                                <li>Price: &nbsp;<label></label>
+                                                <li>
+                                                <li>Rules: &nbsp;<label></label>
+                                                <li>
+                                                <li>Weekend Type: &nbsp;<label></label>
+                                                <li>
                                             </ul>
                                         </div>
                                     </div>
-                                
+
                                 </div>
 
                                 <div class="modal-footer">
@@ -1925,6 +1929,22 @@ input.mhButton {
             if (!$(this).find("a").hasClass('a-disabled')) {
                 $('.perent_icon li').removeClass('active');
                 $(this).addClass('active');
+
+                $('#discover').removeClass('active');
+                $('#strategy').removeClass('active');
+                $('#optimization').removeClass('active');
+                $('#content').removeClass('active');
+
+                var role = $(this).attr('role');
+                if (role == "presentation1") {
+                    $('#discover').addClass('active');
+                } else if (role == 'presentation2') {
+                    $('#strategy').addClass('active');
+                } else if (role == 'presentation3') {
+                    $('#optimization').addClass('active');
+                } else if (role == 'presentation4') {
+                    $('#content').addClass('active');
+                }
             }
 
         });
@@ -2087,30 +2107,30 @@ input.mhButton {
             }
 
             $('#propertyConfirmationModal').show();
-/*
-            $('#listingForm').ajaxSubmit({
-                data: {
-                    'short_term_available_date': function() {
-                        return $('#multi-date-select').multiDatesPicker('value');
-                    }
-                },
-                dataType: 'json',
-                beforeSubmit: function() {
-                    event.preventDefault();
-                    // console.log($('#multi-date-select').multiDatesPicker('value')); 
-                    $('.fa-spinner').prop('display', 'inline');
-                    $('#submitBtn').prop('disabled', 'disabled');
-                },
-                success: function(arg) {
-                    toastr[arg.type](arg.text);
-                    $('.fa-spinner').prop('display', 'block');
-                    $('#submitBtn').removeAttr('disabled');
-                    if (arg.type == 'success') {
-                        window.location.href = '<?php echo site_url('my_rentals'); ?>';
-                    }
-                }
-            });
-            */
+            /*
+                        $('#listingForm').ajaxSubmit({
+                            data: {
+                                'short_term_available_date': function() {
+                                    return $('#multi-date-select').multiDatesPicker('value');
+                                }
+                            },
+                            dataType: 'json',
+                            beforeSubmit: function() {
+                                event.preventDefault();
+                                // console.log($('#multi-date-select').multiDatesPicker('value')); 
+                                $('.fa-spinner').prop('display', 'inline');
+                                $('#submitBtn').prop('disabled', 'disabled');
+                            },
+                            success: function(arg) {
+                                toastr[arg.type](arg.text);
+                                $('.fa-spinner').prop('display', 'block');
+                                $('#submitBtn').removeAttr('disabled');
+                                if (arg.type == 'success') {
+                                    window.location.href = '<?php echo site_url('my_rentals'); ?>';
+                                }
+                            }
+                        });
+                        */
         });
 
 
