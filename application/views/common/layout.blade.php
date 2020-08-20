@@ -28,9 +28,6 @@
             height: 50px;
             padding: 0 40px;
         }
-        .footer-image img {
-            height: 4rem;
-        }
     </style>
 </head>
 
@@ -218,30 +215,39 @@
                 <div class="col-lg-5 col-12">
                     <div class="footer-link">
                         <img src="{{ site_url() }}uploads/{{ CFG_LOGO }}" alt="logo">
-                        <p>Connecting Jewish property owners and renters worldwide - the hassle-free way</p>
+                        <p>Connecting Jewish property owners and
+                            renters worldwide - the hassle-free way</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-12">
-                    <div>
-                        <h4>Useful Links</h4><br />
+                    @php
+                    $footer_useful = get_menu('useful');
+                    @endphp
+                    <div class="foot footer-menu">
+                        <h3>
+                            Useful Links
+                        </h3>
                         <ul>
-                            <li><a href="/home">🏠Home</a></li>
-                            <li><a href="/home">🏠Why DiraLeads</a></li>
-                            <li><a href="/home">🏠Rentals</a></li>
-                            <li><a href="/home">🏠Contact Us</a></li>
+                            @foreach ($footer_useful as $menu)
+                            <li>
+                                @if($menu['url'] == 'home')
+                                @php $menu['url'] = '/'; @endphp
+                                @endif
+
+                                <a href="{{ $menu['url'] }}">{{ ucfirst(strtolower($menu['title']))}}</a>
+                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
                 <input type="hidden" class="loggedId" value="{{isset($_SESSION['id']) && $_SESSION['id']}}">
-                <div class="col-lg-4 col-12 d-flex flex-column justify-content-end">
+                <div class="col-lg-4 col-12">
                     <div class="foot footer-email">
-                        <h4>News & Updates:</h4>
-                        <div>
-                            <form id="subscribe-email-form" class="form-inline" action="#" method="GET">
-                                <input type="text" class="form-control mb-sm-0" id="email-subscribe" placeholder="Email Address" />
-                                <button type="submit" name="email-subscribe-button" class="btn"><img src="{{ site_url() }}assets/images/email.png"></button>
-                            </form>
-                        </div>
+                        <h3>News & Update </h3>
+                        <form id="subscribe-email-form" class="form-inline" action="#" method="GET">
+                            <input type="text" class="form-control mb-sm-0" id="email-subscribe" placeholder="Email Address">
+                            <button type="submit" name="email-subscribe-button" class="btn"><img src="{{ site_url() }}assets/images/email.png"></button>
+                        </form>
                     </div>
                 </div>
                 <div class="col-lg-12 col-12">

@@ -1457,15 +1457,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                 <div class="modal-body ">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group button"><input type="button" class="seasonButton" value="Add a manual booking" id="fEdit-season"></div>
+                                            <div class="form-group button"><input type="button" class="seasonButton" value="Add a manual booking" id="addManualBooking"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <div class="form-group button"><input type="button" class="seasonButton" value="Block dates" id="fEdit-season"></div>
+                                            <div class="form-group button"><input type="button" class="seasonButton" value="Block dates" id="addBlockDates"></div>
                                         </div>
                                     </div>
-
+                                    <input type="hidden" id="actionStart" />
                                 </div>
                             </div>
                         </div>
@@ -2260,7 +2260,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    $('#actionStart').val(start);
+                    $('#actionModal').modal('show');
                 }
             },
             eventClick: function(event, element) {
@@ -2287,7 +2289,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    $('#actionStart').val(start);
+                    $('#actionModal').modal('show');
 
                 }
                 $(".eventClose").click(function() {
@@ -2418,7 +2422,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         var a = start.split("-");
 
                         // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                        $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                        $('#actionStart').val(start);
+                        $('#actionModal').modal('show');
                     }
                 },
                 eventClick: function(event, element) {
@@ -2445,7 +2451,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         var a = start.split("-");
 
                         // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                        $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                        $('#actionStart').val(start);
+                        $('#actionModal').modal('show');
 
                     }
 
@@ -3452,17 +3460,36 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#pricechange').val(itemId);
         });
 
-        $(document).on('click', '.manualBooking', function(event) {
-            var date = $(this).attr('currentdata');
+        // $(document).on('click', '.manualBooking', function(event) {
+        //     var date = $(this).attr('currentdata');
+        //     $('#manualStart').val(date);
+        //     console.log(event);
+        //     event.stopPropagation();
+        // });
+
+        $('#addManualBooking').click(function(event) {
+            var date = $('#actionStart').val();
+            // var date = $(this).attr('currentdata');
             $('#manualStart').val(date);
+            $('#actionModal').modal('hide');
+            $('#manualBook').modal('show');
             console.log(event);
             event.stopPropagation();
         });
 
 
-        $(document).on('click', '.blockDates', function() {
-            var date = $(this).attr('currentdata');
+        // $(document).on('click', '.blockDates', function() {
+        //     var date = $(this).attr('currentdata');
+        //     $('#starts-atblock').val(date);
+        //     console.log('.fc-widget-content[data-date="' + date + '"]');
+        // });
+
+        $('#addBlockDates').click(function() {
+            var date = $('#actionStart').val();
+            // var date = $(this).attr('currentdata');
             $('#starts-atblock').val(date);
+            $('#actionModal').modal('hide');
+            $('#blockModal').modal('show');
             console.log('.fc-widget-content[data-date="' + date + '"]');
         });
 

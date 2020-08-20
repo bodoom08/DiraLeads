@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once(APPPATH . 'third_party/vendor/telnyx/telnyx-php/init.php');
+
 class M_property extends CI_Model
 {
     function getAllAreas()
@@ -164,7 +166,7 @@ class M_property extends CI_Model
                 $vn_id_arr = array_column($result, 'vn_id');
 
                 // Just for Testing
-                
+
                 // return [
                 //     'type' => 'success',
                 //     'text' => 'Property listing done successfully!',
@@ -202,6 +204,9 @@ class M_property extends CI_Model
 
                             allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
                             $response['virtual_number'] = $number_e164;
+
+                            \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
+                            \Telnyx\PhoneNumber::Update($number_e164, ["connection_id" => TEXML_APP_ID]);
                         } else {
                             return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
                         }
