@@ -55,7 +55,7 @@
                             @endif
                             @endforeach -->
 
-                    <!-- <li class="nav-item dropdown">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
@@ -63,10 +63,10 @@
                             <a class="dropdown-item" href="/about">Renters</a>
                             <a class="dropdown-item" href="/about">Owners</a>
                         </div>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">Why DiraLeads</a>
                     </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/about">Why DiraLeads</a>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">Rentals</a>
                     </li>

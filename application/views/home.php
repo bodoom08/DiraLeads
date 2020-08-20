@@ -596,13 +596,14 @@ $this->load->view('common/layout/top', [
             </div>
             <div class="col-md-8">
                 <style>
-                .alert-danger p, .alert-success p {
-                    font-size: 12px;
-                    line-height: 10px;
-                    margin-bottom: 10px;
-                    text-transform: initial;
-                    font-weight: 600;
-                }
+                    .alert-danger p,
+                    .alert-success p {
+                        font-size: 12px;
+                        line-height: 10px;
+                        margin-bottom: 10px;
+                        text-transform: initial;
+                        font-weight: 600;
+                    }
                 </style>
                 <div class="col-md-12 alert alert-danger" id="frmerror" style="display:none;">
                 </div>
@@ -611,23 +612,23 @@ $this->load->view('common/layout/top', [
                 </div>
 
                 <!-- <form action="#"> -->
-                    <div class="row">
-                        <div class="form-group col-md-4">
-                            <input type="text" required name="name" class="form-control" placeholder="Name *">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="email" required name="email" class="form-control" placeholder="Email *">
-                        </div>
-                        <div class="form-group col-md-4">
-                            <input type="tel" required name="phone" class="form-control" placeholder="Phone Number *">
-                        </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <input type="text" required name="name" class="form-control" placeholder="Name *">
                     </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <textarea required name="message" class="form-control" placeholder="Message *"></textarea>
-                        </div>
+                    <div class="form-group col-md-4">
+                        <input type="email" required name="email" class="form-control" placeholder="Email *">
                     </div>
-                    <button type="submit" name="send-message" class="view-all">Send Message</button>
+                    <div class="form-group col-md-4">
+                        <input type="tel" required name="phone" class="form-control" placeholder="Phone Number *">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <textarea required name="message" class="form-control" placeholder="Message *"></textarea>
+                    </div>
+                </div>
+                <button type="submit" name="send-message" class="view-all">Send Message</button>
                 <!-- </form> -->
             </div>
         </div>
