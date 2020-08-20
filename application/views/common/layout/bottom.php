@@ -4,6 +4,7 @@
             <div class="col-lg-5 col-12">
                 <div class="footer-link">
                     <img src="/uploads/<?php echo CFG_LOGO; ?>" alt="logo">
+                    <br />
 
                     <p><?php echo html_escape(CFG_FOOTER_DESC); ?></p>
 
