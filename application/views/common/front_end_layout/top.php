@@ -54,9 +54,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/rental">list your rental</a>
                     </li>
-
-
-
                 </ul>
 
                 <style>

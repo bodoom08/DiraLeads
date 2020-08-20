@@ -680,7 +680,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <option value="10">10+</option>
                                                                     </select>
                                                                 </div>
-                                                                <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]">
+                                                                <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]" value="1">
                                                             </li>
                                                             <!--   
                                                                 <li class="col-lg-3">
@@ -1569,13 +1569,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="col-md-6">
                                             <label class="font-weight-bold">Date & Price</label>
                                             <ul id="datePriceSpec">
-                                                <li>Price: &nbsp;<label></label>
-                                                <li>
-                                                <li>Rules: &nbsp;<label></label>
-                                                <li>
-                                                <li>Weekend Type: &nbsp;<label></label>
-                                                <li>
+                                                <li>Price: &nbsp;<label></label></li>
+                                                <li>Weekend Type: &nbsp;<label></label></li>
                                             </ul>
+
+                                            <label class="font-weight-bold">Virtual Number</label>
+                                            <p id="virtualNumber"></p>
                                         </div>
                                     </div>
 
@@ -2075,9 +2074,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
             $('#propertySpec li label')[2].innerHTML = data['area_id'];
-            $('#propertySpec li label')[4].innerHTML = data['attribute_id[bedrooms]'];
-            $('#propertySpec li label')[5].innerHTML = data['attribute_id[bathrooms]'];
-            $('#propertySpec li label')[6].innerHTML = data['attribute_id[florbas]'];
+            $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
+            $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
+            $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
             if (data['area_id'] == 'other')
                 $('#propertySpec li label')[3].innerHTML = data['value[]'];
             else $('#propertySpec li')[3].style.display = "none";
@@ -2094,19 +2093,41 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             });
 
             $('#datePriceSpec li label')[0].innerHTML = data['price'];
-            $('#datePriceSpec li label')[1].innerHTML = data['rule_data'];
 
             switch (data['weekend_type']) {
                 case "5":
-                    $('#datePriceSpec li label')[2].innerHTML = "Motzei Shabbos";
+                    $('#datePriceSpec li label')[1].innerHTML = "Motzei Shabbos";
                     break;
                 case "6":
-                    $('#datePriceSpec li label')[2].innerHTML = "Sunday";
+                    $('#datePriceSpec li label')[1].innerHTML = "Sunday";
                     break;
                 case "7":
-                    $('#datePriceSpec li label')[2].innerHTML = "Monday";
+                    $('#datePriceSpec li label')[1].innerHTML = "Monday";
                     break;
             }
+
+            $('#listingForm').ajaxSubmit({
+                data: {
+                    'short_term_available_date': function() {
+                        return $('#multi-date-select').multiDatesPicker('value');
+                    }
+                },
+                dataType: 'json',
+                beforeSubmit: function() {
+                    event.preventDefault();
+                    $('.fa-spinner').prop('display', 'inline');
+                    $('#submitBtn').prop('disabled', 'disabled');
+                },
+                success: function(response) {
+                    if (response.type == 'success') {
+                        document.getElementById('virtualNumber').innerHTML = response.virtual_number;
+                        $('#propertyConfirmationModal').show();
+                    } else {
+                        toastr.warning(response.text);
+                        return false;
+                    }
+                }
+            });
 
             $('#propertyConfirmationModal').show();
             /*
@@ -3436,33 +3457,37 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
-            // Submit Form
-            $('#listingForm').ajaxSubmit({
-                data: {
-                    'short_term_available_date': function() {
-                        return $('#multi-date-select').multiDatesPicker('value');
-                    }
-                },
-                dataType: 'json',
-                beforeSubmit: function() {
-                    event.preventDefault();
-                    // console.log($('#multi-date-select').multiDatesPicker('value')); 
-                    $('.fa-spinner').prop('display', 'inline');
-                    $('#submitBtn').prop('disabled', 'disabled');
-                    $('#propertyConfirmationModal').hide();
-                    $('#thumbnailPreview').empty();
-                    $('#amenitySpec').empty();
-                },
-                success: function(arg) {
+            $('#propertyConfirmationModal').hide();
+            $('#thumbnailPreview').empty();
+            $('#amenitySpec').empty();
 
-                    // toastr[arg.type](arg.text);
-                    // $('.fa-spinner').prop('display', 'block');
-                    // $('#submitBtn').removeAttr('disabled');
-                    // if (arg.type == 'success') {
-                    //     window.location.href = '<?php echo site_url('my_rentals'); ?>';
-                    // }
-                }
-            });
+            // Submit Form
+            // $('#listingForm').ajaxSubmit({
+            //     data: {
+            //         'short_term_available_date': function() {
+            //             return $('#multi-date-select').multiDatesPicker('value');
+            //         }
+            //     },
+            //     dataType: 'json',
+            //     beforeSubmit: function() {
+            //         event.preventDefault();
+            //         // console.log($('#multi-date-select').multiDatesPicker('value')); 
+            //         $('.fa-spinner').prop('display', 'inline');
+            //         $('#submitBtn').prop('disabled', 'disabled');
+            //         $('#propertyConfirmationModal').hide();
+            //         $('#thumbnailPreview').empty();
+            //         $('#amenitySpec').empty();
+            //     },
+            //     success: function(response) {
+            //         console.log("Response: ", response);
+            //         // toastr[arg.type](arg.text);
+            //         // $('.fa-spinner').prop('display', 'block');
+            //         // $('#submitBtn').removeAttr('disabled');
+            //         // if (arg.type == 'success') {
+            //         //     window.location.href = '<?php echo site_url('my_rentals'); ?>';
+            //         // }
+            //     }
+            // });
         });
 
         $(document).on('click', '#cancelSubmit', function() {
