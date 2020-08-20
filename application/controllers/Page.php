@@ -28,8 +28,10 @@ class Page extends MOBO_Controller
 	
 		if($this->slug == 'home') {
 			$this->load->view('home_new', $data);
-		}elseif($this->slug == 'about'){
-			$this->load->view('about_us', $data);
+		}elseif($this->slug == 'renters'){
+			$this->load->view('renters', $data);
+		}elseif($this->slug == 'owners') {
+			$this->load->view('owners', $data);
 		}elseif($this->slug == 'neighborhood'){
 			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
 			$this->load->view('neighborhood', $data);
