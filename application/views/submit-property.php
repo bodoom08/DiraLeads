@@ -3452,12 +3452,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#amenitySpec').empty();
                 },
                 success: function(arg) {
-                    toastr[arg.type](arg.text);
-                    $('.fa-spinner').prop('display', 'block');
-                    $('#submitBtn').removeAttr('disabled');
-                    if (arg.type == 'success') {
-                        window.location.href = '<?php echo site_url('my_rentals'); ?>';
-                    }
+
+                    // toastr[arg.type](arg.text);
+                    // $('.fa-spinner').prop('display', 'block');
+                    // $('#submitBtn').removeAttr('disabled');
+                    // if (arg.type == 'success') {
+                    //     window.location.href = '<?php echo site_url('my_rentals'); ?>';
+                    // }
                 }
             });
         });

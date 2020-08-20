@@ -103,22 +103,25 @@ class M_property extends CI_Model
                     'created_at' => date('Y-m-d H:i:s')
                 ];
             }
-            if (empty($date_price)) {
 
-                $sessional = explode('&', $rule_data);
-                foreach ($sessional as $key => $valu) {
-                    $signle = explode('|', $valu);
-                    $session_data[] = [
-                        'name' => $signle[0],
-                        'start_date' => $signle[1],
-                        'end_date' => $signle[2],
-                        'days' => $signle[3],
-                        'price' => $signle[4],
-                        'property_id' => $property_id
-                    ];
-                }
-                $this->db->insert_batch('properties_sessional', $session_data);
-            }
+            /*store seasonal price*/
+
+            // if (empty($date_price)) { 
+
+            //     $sessional = explode('&', $rule_data);
+            //     foreach ($sessional as $key => $valu) {
+            //         $signle = explode('|', $valu);
+            //         $session_data[] = [
+            //             'name' => $signle[0],
+            //             'start_date' => $signle[1],
+            //             'end_date' => $signle[2],
+            //             'days' => $signle[3],
+            //             'price' => $signle[4],
+            //             'property_id' => $property_id
+            //         ];
+            //     }
+            //     $this->db->insert_batch('properties_sessional', $session_data);
+            // }
 
 
             if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
@@ -167,10 +170,11 @@ class M_property extends CI_Model
 
                 $virtualNumber = false;
                 $this->load->helper('telnyx_number');
-                if ($virtualNumber) {
+                if ($virtualNumber) { // Check if there is non-allocated Telnyx number in the table
                     $this->load->helper('did');
                     allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
-                } else {
+                    $response['virutal_number'] = $virtualNumber;
+                } else { // Buy a new Telnyx number
                     // $this->load->library('telnyx');
 
                     $numberResult = searchNumbersHelper('us', 'NY');
@@ -189,13 +193,18 @@ class M_property extends CI_Model
                             $this->load->helper('did');
 
                             allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
+                            $response['virtual_number'] = $number_e164;
                         } else {
                             return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
                         }
                     }
                 }
 
-                return ['type' => 'success', 'text' => 'Property listing done successfully!'];
+                return [
+                    'type' => 'success',
+                    'text' => 'Property listing done successfully!',
+                    'virtual_number' => $response['virtual_number']
+                ];
             }
         }
         return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
