@@ -163,6 +163,14 @@ class M_property extends CI_Model
                 $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
                 $vn_id_arr = array_column($result, 'vn_id');
 
+                // Just for Testing
+                
+                // return [
+                //     'type' => 'success',
+                //     'text' => 'Property listing done successfully!',
+                //     'virtual_number' => "+1 123123123"
+                // ];
+
                 $virtualNumber = $this->db->select('id')
                     ->where_not_in('id', $vn_id_arr)
                     ->get('virtual_numbers')
