@@ -1944,6 +1944,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#optimization').addClass('active');
                 } else if (role == 'presentation4') {
                     $('#content').addClass('active');
+                } else if (role == 'presentation8' || role == 'presentation9') {
+                    $('#content').addClass('active');
                 }
             }
 
