@@ -318,22 +318,22 @@ if (isset($livedata)) {
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="md-form">
-                                    <input name="name" type="text" class="form-control" placeholder="Name *" required="">
+                                    <input name="name" id="contact_name" type="text" class="form-control" placeholder="Name *" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="md-form">
-                                    <input name="email" type="email" class="form-control" placeholder="Email *" required="">
+                                    <input name="email" id="contact_email" type="email" class="form-control" placeholder="Email *" required="">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="md-form">
-                                    <input name="phone" type="number" class="form-control" placeholder="Phone Number *" maxlength="10" minlength="10" required="">
+                                    <input name="phone" id="contact_phone" type="number" class="form-control" placeholder="Phone Number *" maxlength="10" minlength="10" required="">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="md-form">
-                                    <textarea name="message" class="form-control" placeholder="Message *" required=""></textarea>
+                                    <textarea name="message" id="contact_message" class="form-control" placeholder="Message *" required=""></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -356,7 +356,9 @@ if (isset($livedata)) {
 <script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 
 <script type="text/javascript">
     var a = 0;
@@ -424,66 +426,123 @@ if (isset($livedata)) {
         working = "Working..."
         normal = "send message";
         $('body').on('click', 'button[name="send-message"]', function() {
-            $(button).text(working).attr('disabled', true);
-            $.ajax({
-                url: "<?php echo site_url('email_enquiry/send_contact_email') ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    name: $('input[name="name"]').val(),
-                    email: $('input[name="email"]').val(),
-                    phone: $('input[name="phone"]').val(),
-                    subject: ($('input[name="subject"]').length > 0) ? $('input[name="subject"]').val() : 'Message',
-                    send_message: $('textarea[name="message"]').val(),
-                    <?php $CI = &get_instance();
-                    echo $CI->security->get_csrf_token_name(); ?>: '<?php echo $CI->security->get_csrf_hash(); ?>'
-                },
-                success: function(arg) {
-                    if (arg.success == false) {
-                        $('#frmsuccess').html('').hide();
-                        $('#frmerror').html("Please fill required fields").show();
-                        setTimeout(function() {
-                            $('#frmerror').html('').hide();
-                        }, 3000);
-                        // $('html, body').animate({scrollTop: $('#frmerror').scrollTop()});
-                    } else {
-                        $('#frmerror').html('').hide();
-                        $('#frmsuccess').html('Email Sent Successfully').show();
-                        $('input, textarea').val('');
-                        // $('html, body').animate({scrollTop: 0});
-                    }
 
-                    $(button).text(normal).attr('disabled', false);
+            var valid = true;
 
-                    // if (arg.property.coords) {
-                    //     initMap(JSON.parse(arg.property.coords));
-                    // } else {
-                    //     initMap();
-                    // }
-                    // $('#email').html(arg.property.email);
-                    // $('#mobile').html(arg.property.mobile);
-                    // $('#description').html(arg.property.description);
-                    // $('#address').html(arg.property.house_number + ', ' + arg.property.street);
-                    // $('#contact span').text(arg.property.contact_number);
-                    // $('#contact').attr('href', `tel:${arg.property.contact_number}`);
+            var name = $('#contact_name').val();
+            var email = $('#contact_email').val();
+            var phone = $('#contact_phone').val();
+            var subject = ($('input[name="subject"]').length > 0) ? $('input[name="subject"]').val() : 'Message';
+            var send_message = $('#contact_message').val();
 
-                    // var attributes = '';
-                    // $.each(arg.property_attributes, function(i, row) {
-                    //     attributes += '<li><img src="' + row.icon + '"> ' + row.value + ' ' + row.text + '</li>';
-                    // });
-                    // $('#conditions').html(attributes);
-                    // var images = '';
-                    // $.each(arg.property_images, function(i, row) {
-                    //     images += '<li data-thumb="<?php //echo site_url('uploads/') 
-                                                        ?>' +
-                    //         row.path + '"><img src="<?php //echo site_url('uploads/') 
-                                                        ?>' + row.path + '" /></li>';
-                    // });
-                    // $('#image-gallery').html(images);
-                    // $("#myModal").modal();
+            console.log(name, email, phone, send_message);
+
+            if (name == '') {
+                $('#contact_name').addClass('invalid-input');
+                // toastr.warning('Please fill name field');
+                valid = false;
+            } else {
+                $('#contact_name').removeClass('invalid-input');
+            }
+
+            if (!validateEmail(email)) {
+                $('#contact_email').addClass('invalid-input');
+                // toastr.warning('Please fill email field');
+                valid = false;
+            } else {
+                $('#contact_email').removeClass('invalid-input');
+            }
+
+            if (phone == '') {
+                $('#contact_phone').addClass('invalid-input');
+                // toastr.warning('Please fill phone field');
+                valid = false;
+            } else {
+                if ($('#contact_phone').val().length != 10) {
+                    toastr.warning('Please input valid phone number');
+                    $('#description').addClass('invaild-input');
+                    valid = false;
+                } else {
+                    $('#contact_phone').removeClass('invalid-input');
                 }
-            });
+            }
+
+            if (send_message == '') {
+                $('#contact_message').addClass('invalid-input');
+                // toastr.warning('Please fill message field');
+                valid = false;
+            } else {
+                $('#contact_message').removeClass('invalid-input');
+            }
+
+            if (!valid) {
+                toastr.warning('Please fill required field');
+
+            } else {
+                $(button).text(working).attr('disabled', true);
+                $.ajax({
+                    url: "<?php echo site_url('email_enquiry/send_contact_email') ?>",
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        name: $('#contact_name').val(),
+                        email: $('#contact_email').val(),
+                        phone: $('#contact_phone').val(),
+                        subject: ($('input[name="subject"]').length > 0) ? $('input[name="subject"]').val() : 'Message',
+                        send_message: $('#contact_message').val(),
+                        <?php $CI = &get_instance();
+                        echo $CI->security->get_csrf_token_name(); ?>: '<?php echo $CI->security->get_csrf_hash(); ?>'
+                    },
+                    success: function(arg) {
+                        if (arg.success == false) {
+                            $('#frmsuccess').html('').hide();
+                            $('#frmerror').html("Please fill required fields").show();
+                            setTimeout(function() {
+                                $('#frmerror').html('').hide();
+                            }, 3000);
+                            // $('html, body').animate({scrollTop: $('#frmerror').scrollTop()});
+                        } else {
+                            $('#frmerror').html('').hide();
+                            // $('#frmsuccess').html(arg.error).show();
+                            $('input, textarea').val('');
+                            // $('html, body').animate({scrollTop: 0});
+                        }
+
+                        $(button).text(normal).attr('disabled', false);
+
+                        // if (arg.property.coords) {
+                        //     initMap(JSON.parse(arg.property.coords));
+                        // } else {
+                        //     initMap();
+                        // }
+                        // $('#email').html(arg.property.email);
+                        // $('#mobile').html(arg.property.mobile);
+                        // $('#description').html(arg.property.description);
+                        // $('#address').html(arg.property.house_number + ', ' + arg.property.street);
+                        // $('#contact span').text(arg.property.contact_number);
+                        // $('#contact').attr('href', `tel:${arg.property.contact_number}`);
+
+                        // var attributes = '';
+                        // $.each(arg.property_attributes, function(i, row) {
+                        //     attributes += '<li><img src="' + row.icon + '"> ' + row.value + ' ' + row.text + '</li>';
+                        // });
+                        // $('#conditions').html(attributes);
+                        // var images = '';
+                        // $.each(arg.property_images, function(i, row) {
+                        //     images += '<li data-thumb="<?php //echo site_url('uploads/') 
+                                                            ?>' +
+                        //         row.path + '"><img src="<?php //echo site_url('uploads/') 
+                                                            ?>' + row.path + '" /></li>';
+                        // });
+                        // $('#image-gallery').html(images);
+                        // $("#myModal").modal();
+                    }
+                });
+
+            }
         });
+
+
     }
     $(function() {
         $('input[name="daterange"]').daterangepicker({
@@ -492,5 +551,59 @@ if (isset($livedata)) {
             console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }
+
+    $('#contact_name').on("change paste keyup", function() {
+        console.log($('#contact_name').val());
+        if ($('#contact_name').val() != '') {
+            $('#contact_name').removeClass('invalid-input');
+        } else {
+            $('#contact_name').addClass('invalid-input');
+        }
+    });
+
+
+    $('#contact_email').on("change paste keyup", function() {
+        var email = $('#contact_email').val();
+        if (!validateEmail(email)) {
+            $('#contact_email').removeClass('invalid-input');
+        } else {
+            $('#contact_email').addClass('invalid-input');
+        }
+    });
+
+    $('#contact_phone').on("change paste keyup", function() {
+
+        if ($('#contact_phone').val() != '') {
+            if ($('#contact_phone').val().length < 10) {
+                $('#description').addClass('invaild-input');
+
+            } else {
+                $('#contact_phone').removeClass('invalid-input');
+            }
+
+        } else {
+            $('#contact_phone').addClass('invalid-input');
+        }
+    });
+
+    $('#contact_message').on("change paste keyup", function() {
+
+        if ($('#contact_message').val() != '') {
+            $('#contact_message').removeClass('invalid-input');
+        } else {
+            $('#contact_message').addClass('invalid-input');
+        }
+    });
 </script>
+
+<style>
+    .invalid-input {
+        border: 1px solid red !important;
+    }
+</style>
 @endpush

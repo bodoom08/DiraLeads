@@ -17,28 +17,29 @@ class Email_enquiry extends CI_Controller
     $this->form_validation->set_rules('name', 'Name', 'required|trim');
     $this->form_validation->set_rules('email', 'Email', 'required|valid_email|trim');
     $this->form_validation->set_rules('phone', 'Mobile', 'required|trim|numeric|exact_length[10]');
-    $this->form_validation->set_rules('subject', 'Subject', 'required|trim');
+    // $this->form_validation->set_rules('subject', 'Subject', 'required|trim');
     $this->form_validation->set_rules('send_message', 'Message', 'required|trim');
 
-    if ($this->form_validation->run()) {
-      // $to = 'aniruddha.roy12061990@gmail.com';
-      $to = ACCOUNT_TO_EMAIL;
-      $from = $this->input->post('email');
-      $subject = $this->input->post('subject');
-      $name  = $this->input->post('name');
-      $email  = $this->input->post('email');
-      $phone  = $this->input->post('phone');
-      $send_message  = $this->input->post('send_message');
+    // if ($this->form_validation->run()) {
+    // $to = 'aniruddha.roy12061990@gmail.com';
+    $to = ACCOUNT_TO_EMAIL;
+    $from = $this->input->post('email');
+    // $subject = $this->input->post('subject');
+    $subject = '';
+    $name  = $this->input->post('name');
+    $email  = $this->input->post('email');
+    $phone  = $this->input->post('phone');
+    $send_message  = $this->input->post('send_message');
 
-      $body = "Name: " . $this->input->post('name') . "<br/>";
-      $body .= "Email: " . $this->input->post('email') . "<br/>";
-      $body .= "Phone: " . $this->input->post('phone') . "<br/>";
-      $body .= "Message: " . $this->input->post('send_message') . "<br/>";
+    $body = "Name: " . $this->input->post('name') . "<br/>";
+    $body .= "Email: " . $this->input->post('email') . "<br/>";
+    $body .= "Phone: " . $this->input->post('phone') . "<br/>";
+    $body .= "Message: " . $this->input->post('send_message') . "<br/>";
 
 
 
-      // Contact template
-      $body = '<table style="background:#f9f9f9; padding: 30px 20px; width: 100%;">
+    // Contact template
+    $body = '<table style="background:#f9f9f9; padding: 30px 20px; width: 100%;">
           <tr>
             <td class="h2-center" style="color:#000000; font-size:32px; line-height:36px; text-align:center; padding-bottom:20px;">Enquiry</td>
           </tr>
@@ -74,10 +75,11 @@ class Email_enquiry extends CI_Controller
         </table>';
 
 
-      $status = send_enq_email($from, $to, $subject, $body);
-      die(json_encode(['success' => true, 'error' => $status]));
-    } else
-      die(json_encode(['success' => false, 'error' => $this->form_validation->error_string()]));
+    $status = send_enq_email($from, $to, $subject, $body);
+    die(json_encode(['success' => true, 'error' => $status]));
+    // } else {
+    //   die(json_encode(['success' => false, 'error' => $this->form_validation->error_string()]));
+    // }
   }
 
   public function email_subscribe()

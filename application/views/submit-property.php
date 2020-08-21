@@ -567,7 +567,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         right: 0.1rem;
         transform: rotateZ(180deg);
     }
-
 </style>
 
 <div class="dashboard">
