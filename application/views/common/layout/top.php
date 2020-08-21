@@ -51,24 +51,24 @@
                         } ?>
                         <?php
                     } ?>-->
-                     <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/renters" style="font-family:'Raleway', sans-serif;">THE RENTER's VIEW</a>
                             <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">THE OWNER's VIEW</a>
-                            </div>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" href="/properties">Rentals</a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0);">Neighborhoods</a>
-                            </li>
-                            <li class="nav-item">
-                            <a class="nav-link" href="property">list your rental</a>
-                            </li>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/properties">Rentals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:void(0);">Neighborhoods</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="property">list your rental</a>
+                    </li>
                     <?php if(empty($_SESSION['id'])){ ?>
                     <li class="nav-item login">
                                 <a class="nav-link" href="<?php echo site_url('login') ?>">

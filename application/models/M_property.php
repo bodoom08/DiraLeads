@@ -25,10 +25,14 @@ class M_property extends CI_Model
 
     function property_listing()
     {
-        array_walk_recursive($_POST, 'trim');
+        // Just for testing
+        // return [
+        //     'type' => 'success',
+        //     'text' => 'Property listing done successfully!',
+        //     'virtual_number' => "+1 123123123"
+        // ];
 
-        // echo json_encode($_POST);
-        // exit;
+        array_walk_recursive($_POST, 'trim');
 
         extract($_POST);
         $available_date = $date;
