@@ -146,65 +146,67 @@
             <h2 class="secondary-text">Connecting renters with property owners for short-term stays in</h2>
             <h2 class="secondary-text">heimishe neighborhoods worldwide</h2>
         </div>
-    </div>
-    <div class="search-main">
-        <div class="tabbing-sec">
-            <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                    <div class="search-box">
-                        <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+        <div class="search-main">
+            <div class="tabbing-sec">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="search-box">
+                            <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                                             <li class="nav-item">
                                                 Find your perfect rental
                                             </li>
                                         </ul> -->
-                        <ul>
-                            <li>
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Area</label>
-                                    <select class="form-control areaSelect" id="exampleFormControlSelect1">
-                                        @if ( isset($areas))
-                                        <option value="any">Any</option>
-                                        @foreach ($areas as $area)
+                            <ul>
+                                <li>
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Area</label>
+                                        <select class="form-control areaSelect" id="exampleFormControlSelect1">
+                                            @if ( isset($areas))
+                                            <option value="any">Any</option>
+                                            @foreach ($areas as $area)
 
-                                        <option value="{{$area['title']}}">{{ $area['title'] }}</option>
+                                            <option value="{{$area['title']}}">{{ $area['title'] }}</option>
 
-                                        @endforeach
-                                        @endif
-                                    </select>
-                                </div>
-                            </li>
-                            <li style="width:36%">
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Dates</label>
-                                    <input type="text" class="form-control dateRangePicker" name="daterange" readonly>
-
-                                </div>
-                            </li>
-                            <li style="width:15%">
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Bedrooms</label>
-                                    <div class="max-min">
-                                        <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
+                                            @endforeach
+                                            @endif
+                                        </select>
                                     </div>
-                                </div>
-                            </li>
-                            <li style="width:15%">
-                                <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Price</label>
-                                    <div class="max-min">
-                                        <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
+                                </li>
+                                <li style="width:36%">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Dates</label>
+                                        <input type="text" class="form-control dateRangePicker" name="daterange" readonly>
+
                                     </div>
-                                </div>
-                            </li>
-                            <li>
-                                <a class="areaFilter">LOCATE MY DREAM RENTAL</a>
-                            </li>
-                        </ul>
+                                </li>
+                                <li style="width:15%">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Bedrooms</label>
+                                        <div class="max-min">
+                                            <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="width:15%">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Price</label>
+                                        <div class="max-min">
+                                            <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="areaFilter">LOCATE MY DREAM RENTAL</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     @endif
 

@@ -291,8 +291,8 @@ if (isset($livedata)) {
                     <div class="info-sec">
                         <p>Have a question? Need help finding the perfect rental? We’re eager to help!</p>
                         <div class="details">
-                            <p><span>Phone</span>📱 718-313-4643</p>
-                            <p><span>Email</span>📧 rentals@Diraleads.com</p>
+                            <p><span>📱 Phone</span>718-313-4643</p>
+                            <p><span>📧 Email</span>rentals@Diraleads.com</p>
                         </div>
                     </div>
                 </div>
