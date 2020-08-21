@@ -1624,7 +1624,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </ul>
 
                                             <label class="font-weight-bold">Virtual Number</label>
-                                            <p id="virtualNumber"></p>
+                                            <p id="virtualNumber">Getting virtual number...</p>
                                         </div>
                                     </div>
 
@@ -2144,7 +2144,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#amenitySpec').append(`<li>${amenity}</li>`);
             });
 
-            $('#datePriceSpec li label')[0].innerHTML = data['price'];
+            $('#datePriceSpec li label')[0].innerHTML = `Daily: $${document.getElementById('days').value}, Weekend: $${document.getElementById('weekend').value}, Weekly: $${document.getElementById('weekly').value}, Monthly: $${document.getElementById('monthly').value}`;
 
             switch (data['weekend_type']) {
                 case "5":
@@ -2157,6 +2157,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#datePriceSpec li label')[1].innerHTML = "Monday";
                     break;
             }
+
+            $('#propertyConfirmationModal').show();
 
             $('#listingForm').ajaxSubmit({
                 data: {
@@ -2173,7 +2175,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 success: function(response) {
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
-                        $('#propertyConfirmationModal').show();
+                        
                     } else {
                         toastr.warning(response.text);
                         return false;
@@ -3537,6 +3539,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#propertyConfirmationModal').hide();
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
+            document.location.href = "/my_rentals";
         });
 
         $(document).on('click', '#cancelSubmit', function() {
@@ -3573,19 +3576,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
         });
 
-        // $(document).ready(function () {
-        //     const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
-        //     if ($('#image_preview img').length == 0) {
-        //         document.getElementById('ctrlThumbLeft').style="display: none;";
-        //         document.getElementById('ctrlThumbRight').style="display: none;";
-        //     }
-        //     else if (index < 1) document.getElementById('ctrlThumbLeft').style="display: none;";
-        //     else if (index > $('#thumbnailPreview img').length - 2) document.getElementById('ctrlThumbRight').style="display: none;";
-        //     else {
-        //         document.getElementById('ctrlThumbLeft').style="display: block;";
-        //         document.getElementById('ctrlThumbRight').style="display: block;";
-        //     }
-        // });
+        $(document).ready(function () {
+            const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
+            if ($('#image_preview img').length == 0) {
+                document.getElementById('ctrlThumbLeft').style="display: none;";
+                document.getElementById('ctrlThumbRight').style="display: none;";
+            } else {
+                document.getElementById('ctrlThumbLeft').style="display: block;";
+                document.getElementById('ctrlThumbRight').style="display: block;";
+            }
+        });
 
     });
 </script>
