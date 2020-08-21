@@ -124,7 +124,7 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
             </ol>
-            <div class="carousel-inner" style="height:25rem;">
+            <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="assets/images/slide1.png" class="" alt="...">
                 </div>
@@ -142,8 +142,9 @@
             </a>
         </div>
         <div class="banner-text">
-            <p class="primary-text">The Jewish short-term rental marketplace</p>
-            <p class="secondary-text">Connecting renters with property owners for short-term stays in heimishe neighborhoods worldwide</p>
+            <h2 class="primary-text">The Jewish short-term rental marketplace</h2>
+            <h2 class="secondary-text">Connecting renters with property owners for short-term stays in</h2>
+            <h2 class="secondary-text">heimishe neighborhoods worldwide</h2>
         </div>
     </div>
     <div class="search-main">

@@ -217,8 +217,9 @@ ul li {
   bottom: 10px;
 }
 .service-sec .tabbing-sec {
-  box-shadow: none;
-  padding: 0;
+  /* box-shadow: none;
+  padding: 0; */
+  border-radius: 20px;
 }
 .service-sec {
   text-align: center;
@@ -582,7 +583,7 @@ div#content5 {
   padding: 0;
 }
 .search-main .tabbing-sec .search-box ul li:last-child {
-  width: 80%;
+  width: 50%;
 }
 .search-main .tabbing-sec .search-box ul li .form-group label,
 .checkbox label {
@@ -625,7 +626,7 @@ div#norecord {
   background: #f1f1f1;
   width: 38%;
   margin: 0 auto;
-  border-radius: 15px;
+  border-radius: 30px;
   padding: 10px 0;
 }
 .gallery-sec:hover:before {
@@ -665,16 +666,17 @@ div#norecord {
 .mesionary .gallery-sec .hovr-content {
   top: 34%;
 }
+
 .contact-sec .info-sec p {
   color: #000;
-  font-size: 16px;
+  font-size: 19px;
 }
 .contact-sec .info-sec .details {
   margin: 20px 0 0;
 }
 .contact-sec .info-sec .details p span {
   display: block;
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 600;
   color: #000;
   margin: 20px 0 0;
@@ -744,7 +746,7 @@ div#norecord {
   background: #ffffff;
   border: 0;
   border-radius: 30px;
-  height: 60px;
+  height: 51px;
   padding: 0 30px;
   box-shadow: 0 2px 85px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.05);
   width: 100%;
@@ -761,7 +763,7 @@ div#norecord {
   border-radius: 50%;
   position: absolute;
   right: 7px;
-  top: 40px;
+  /* top: 40px; */
   padding: 0;
   border: 0;
 }
@@ -1501,7 +1503,7 @@ ul.amnity li h4 {
   position: absolute;
   transition: all 0.4s ease-in-out;
   z-index: 0;
-  border-radius: 15px;
+  border-radius: 30px;
 }
 
 .feat_property:hover {
@@ -3279,18 +3281,23 @@ td.fc-more-cell {
     height: 50%; */
 }
 
-.banner-main .banner-text p {
+.banner-main .banner-text h2 {
+  font-family: "Raleway", sans-serif;
+  text-align:justify;
   color: white;
 }
 
 .banner-main .banner-text .primary-text {
-  font-size: 48px;
+  font-size: 42px;
   margin-bottom: 7rem;
+  color: white;
 }
 
 .banner-main .banner-text .secondary-text {
-  font-size: 36px;
+  font-size: 24px;
   line-height: 1.2;
+  color: white;
+  margin-bottom:1rem;
 }
 
 .split-section {
@@ -3301,8 +3308,13 @@ td.fc-more-cell {
 
 .split-section p {
   font-size: 24px;
+  font-family: "Raleway", sans-serif;
 }
 
 .simplifying-text{
   margin-top: 10rem;
+}
+
+.diraleads-heimishe-text{
+  margin-bottom: 30px;
 }

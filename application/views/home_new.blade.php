@@ -47,6 +47,7 @@ if (isset($livedata)) {
                                                 <img src="assets/images/icon1.png">
                                                 <h3>SIMPLIFIED PROCESS</h3>
                                                 <p>Search hundreds of listings in areas that suit your unique requirements - all in one place</p>
+                                                <br />
                                             </div>
                                         </a>
                                     </li>
@@ -69,8 +70,9 @@ if (isset($livedata)) {
                                         </a>
                                     </li>
                                 </ul>
+                                <a href="/renters">See More</a>
                             </div>
-                            <!-- <a href="javascript:void(0);">See More</a> -->
+
                         </div>
                         <div class="tab-pane fade show" id="ser-profile" role="tabpanel" aria-labelledby="ser-profile-tab">
                             <div class="service-box">
@@ -81,6 +83,7 @@ if (isset($livedata)) {
                                                 <img src="assets/images/icon1.png">
                                                 <h3>SIMPLIFIED PROCESS</h3>
                                                 <p>The hassle-free way of getting your apartment in front of thousands of potential renters</p>
+                                                <br />
                                             </div>
                                         </a>
                                     </li>
@@ -103,7 +106,7 @@ if (isset($livedata)) {
                                         </a>
                                     </li>
                                 </ul>
-                                <a href="javascript:void(0);">See More</a>
+                                <a href="/owners">See More</a>
                             </div>
                         </div>
                     </div>
@@ -113,7 +116,7 @@ if (isset($livedata)) {
     </div>
 </div>
 
-<div class="split-section">
+<div class="split-section diraleads-heimishe-text">
     <p><b>DiraLeads:</b> Forever changing the landscape of the heimishe short-term rentals industry</p>
 </div>
 <div class="property-sec">
@@ -288,8 +291,8 @@ if (isset($livedata)) {
                     <div class="info-sec">
                         <p>Have a question? Need help finding the perfect rental? We’re eager to help!</p>
                         <div class="details">
-                            <p><span>Phone</span>718-313-4643</p>
-                            <p><span>Email</span>rentals@Diraleads.com</p>
+                            <p><span>Phone</span>📱 718-313-4643</p>
+                            <p><span>Email</span>📧 rentals@Diraleads.com</p>
                         </div>
                     </div>
                 </div>
@@ -438,7 +441,7 @@ if (isset($livedata)) {
                 success: function(arg) {
                     if (arg.success == false) {
                         $('#frmsuccess').html('').hide();
-                        $('#frmerror').html(arg.error).show();
+                        $('#frmerror').html("Please fill required fields").show();
                         setTimeout(function() {
                             $('#frmerror').html('').hide();
                         }, 3000);
