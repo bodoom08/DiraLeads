@@ -3539,6 +3539,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#propertyConfirmationModal').hide();
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
+            document.location.href = "/my_rentals";
         });
 
         $(document).on('click', '#cancelSubmit', function() {
