@@ -546,6 +546,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         max-width: 250px;
         max-height: 250px;
     }
+
+    .control-thumbnail {
+        width: 2rem;
+        height: 2rem;
+        background-image: url(/assets/images/arrow_left.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+        position: absolute;
+        top: 50%;
+        cursor: pointer;
+    }
+
+    .control-thumbnail-left {
+        left: 0.1rem;
+    }
+
+    .control-thumbnail-right {
+        right: 0.1rem;
+        transform: rotateZ(180deg);
+    }
+
 </style>
 
 <div class="dashboard">
@@ -1578,7 +1600,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="col-md-6" class="font-weight-bold">
                                             <label class="font-weight-bold">Thumbnail</label>
-                                            <div class="d-flex justify-content-center" id="thumbnailPreview"></div>
+                                            <input type="hidden" id="ctrlThumbIndex" value="0" />
+                                            <span class="control-thumbnail control-thumbnail-left" id="ctrlThumbLeft"></span>
+                                            <span class="control-thumbnail control-thumbnail-right" id="ctrlThumbRight"></span>
+
+                                            <div class="d-flex justify-content-center" id="thumbnailPreview">
+                                            </div>
                                         </div>
                                     </div>
 
@@ -2093,6 +2120,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('Please fill required fields');
                 return false;
             }
+
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
@@ -3509,34 +3537,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#propertyConfirmationModal').hide();
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
-
-            // Submit Form
-            // $('#listingForm').ajaxSubmit({
-            //     data: {
-            //         'short_term_available_date': function() {
-            //             return $('#multi-date-select').multiDatesPicker('value');
-            //         }
-            //     },
-            //     dataType: 'json',
-            //     beforeSubmit: function() {
-            //         event.preventDefault();
-            //         // console.log($('#multi-date-select').multiDatesPicker('value')); 
-            //         $('.fa-spinner').prop('display', 'inline');
-            //         $('#submitBtn').prop('disabled', 'disabled');
-            //         $('#propertyConfirmationModal').hide();
-            //         $('#thumbnailPreview').empty();
-            //         $('#amenitySpec').empty();
-            //     },
-            //     success: function(response) {
-            //         console.log("Response: ", response);
-            //         // toastr[arg.type](arg.text);
-            //         // $('.fa-spinner').prop('display', 'block');
-            //         // $('#submitBtn').removeAttr('disabled');
-            //         // if (arg.type == 'success') {
-            //         //     window.location.href = '<?php echo site_url('my_rentals'); ?>';
-            //         // }
-            //     }
-            // });
         });
 
         $(document).on('click', '#cancelSubmit', function() {
@@ -3552,6 +3552,40 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
+
+        $(document).on('click', '#ctrlThumbLeft', function() {
+            // ThumbLeft
+            const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
+            if (index > 0) {
+                document.getElementById('ctrlThumbIndex').value = index - 1;
+                $('#thumbnailPreview').empty();
+                $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[index-1].src}' />`);
+            }
+        });
+
+        $(document).on('click', '#ctrlThumbRight', function() {
+            // ThumbRight
+            const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
+            if (index < $('#image_preview div img').length - 1) {
+                document.getElementById('ctrlThumbIndex').value = index + 1;
+                $('#thumbnailPreview').empty();
+                $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[index+1].src}' />`);
+            }
+        });
+
+        // $(document).ready(function () {
+        //     const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
+        //     if ($('#image_preview img').length == 0) {
+        //         document.getElementById('ctrlThumbLeft').style="display: none;";
+        //         document.getElementById('ctrlThumbRight').style="display: none;";
+        //     }
+        //     else if (index < 1) document.getElementById('ctrlThumbLeft').style="display: none;";
+        //     else if (index > $('#thumbnailPreview img').length - 2) document.getElementById('ctrlThumbRight').style="display: none;";
+        //     else {
+        //         document.getElementById('ctrlThumbLeft').style="display: block;";
+        //         document.getElementById('ctrlThumbRight').style="display: block;";
+        //     }
+        // });
 
     });
 </script>
