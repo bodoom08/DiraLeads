@@ -3318,3 +3318,11 @@ td.fc-more-cell {
 .diraleads-heimishe-text{
   margin-bottom: 30px;
 }
+
+.service-box ul li{
+  width: 33%;
+}
+
+.service-box ul li a{
+  height: 100%;
+}
