@@ -2158,6 +2158,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     break;
             }
 
+            if ($('#image_preview img').length < 2) {
+                document.getElementById('ctrlThumbLeft').style="display: none;";
+                document.getElementById('ctrlThumbRight').style="display: none;";
+            } else {
+                document.getElementById('ctrlThumbLeft').style="display: block;";
+                document.getElementById('ctrlThumbRight').style="display: block;";
+            }
+
             $('#propertyConfirmationModal').show();
 
             $('#listingForm').ajaxSubmit({
@@ -3573,17 +3581,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 document.getElementById('ctrlThumbIndex').value = index + 1;
                 $('#thumbnailPreview').empty();
                 $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[index+1].src}' />`);
-            }
-        });
-
-        $(document).ready(function () {
-            const index = parseInt(document.getElementById('ctrlThumbIndex').value, 10);
-            if ($('#image_preview img').length == 0) {
-                document.getElementById('ctrlThumbLeft').style="display: none;";
-                document.getElementById('ctrlThumbRight').style="display: none;";
-            } else {
-                document.getElementById('ctrlThumbLeft').style="display: block;";
-                document.getElementById('ctrlThumbRight').style="display: block;";
             }
         });
 
