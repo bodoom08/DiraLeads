@@ -543,7 +543,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
     #thumbnailPreview,
     #thumbnailPreview img {
-        max-width: 250px;
+        max-width: 100%;
         max-height: 250px;
     }
 
@@ -2132,6 +2132,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#propertySpec li label')[3].innerHTML = data['value[]'];
             else $('#propertySpec li')[3].style.display = "none";
 
+            document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
                 $('#thumbnailPreview').append(`<p class="text-center">No Image</p>`);
