@@ -26,11 +26,11 @@ class M_property extends CI_Model
     function property_listing()
     {
         // Just for testing
-        return [
-            'type' => 'success',
-            'text' => 'Property listing done successfully!',
-            'virtual_number' => "+1 123123123"
-        ];
+        // return [
+        //     'type' => 'success',
+        //     'text' => 'Property listing done successfully!',
+        //     'virtual_number' => "+1 123123123"
+        // ];
 
         array_walk_recursive($_POST, 'trim');
 

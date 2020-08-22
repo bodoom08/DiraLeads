@@ -2185,10 +2185,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             console.log(data);
 
-            // if (!checkValidate()) {
-            //     toastr.warning('Please fill required fields');
-            //     return false;
-            // }
+            if (!checkValidate()) {
+                toastr.warning('Please fill required fields');
+                return false;
+            }
 
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
