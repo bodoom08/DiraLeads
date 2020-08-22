@@ -182,8 +182,8 @@ ul li {
 }
 .tabbing-sec ul {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: flex-start;
   background: #f1f1f1;
   width: 38%;
   margin: 0 auto;
@@ -280,6 +280,7 @@ ul li {
   border-radius: 50px 0px;
   position: relative;
   transition: 0.5s ease-in-out;
+  height: 100%;
 }
 .service-box ul li .content-sec h3 {
   color: #281b3f;
