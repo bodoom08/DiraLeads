@@ -20,23 +20,36 @@ class Webhook extends CI_Controller
 
     function sms_receive()
     {
-        $requests = $this->input->post();
-        $this->load->helper('file');
+        if ($this->input->method() == 'post') {
+            $requests = json_decode(file_get_contents('php://input'), true);
+            $this->load->helper('file');
 
+            $sentByDiraLeads = "\nThis SMS was sent by DiraLeads";
+            $virtual_number = $requests['data']['payload']['to'];
+            $text = $requests['data']['payload']['text'] . $sentByDiraLeads;
 
+            $result = $this->db->select('*')
+                ->from('virtual_numbers')
+                ->where('virtual_numbers.number', $virtual_number)
+                ->join('properties', 'properties.vn_id = virtual_numbers.id', 'left')
+                ->join('users', 'users.id = properties.user_id', 'left')
+                ->get()->result_array();
 
-        $data = json_encode($requests);
-        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
-            echo 'Unable to write the file';
-        } else {
-            echo 'File written!';
+            $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
+
+            // $data = json_encode($requests);
+            // if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
+            //     // echo 'Unable to write the file';
+            // } else {
+            //     // echo $data;
+            // }
+
+            \Telnyx\Message::Create([
+                "from" => "+15166361518", // Your Telnyx number
+                "to" => $owner_number,
+                "text" => $text
+            ]);
         }
-
-        \Telnyx\Message::Create([
-            "from" => "+15166361518", // Your Telnyx number
-            "to" => "+17606165259",
-            "text" => "Hello, World!"
-        ]);
     }
 
     public function email($token)
@@ -88,22 +101,7 @@ class Webhook extends CI_Controller
 
         $requests = $this->input->post();
 
-        $data = json_encode($requests);
 
-        // return $this->output
-        //     ->set_content_type('application/json')
-        //     ->set_status_header(200)
-        //     ->set_output($data);
-
-        // $write_data = json_encode($requests);
-        // if (!write_file(FCPATH . 'webhook.txt', $write_data, 'a')) {
-        //     echo 'Unable to write the file';
-        // } else {
-        //     echo 'File written!';
-        // }
-
-        //find the rental owner's number from database
-        // $virtual_number = '+15162198991';
         $virtual_number = $requests['To'];
         $result = $this->db->select('*')
             ->from('virtual_numbers')
@@ -113,32 +111,9 @@ class Webhook extends CI_Controller
             ->get()->result_array();
 
         $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
-
-        // $this->load->helper('file');
-        // $write_data = json_encode($result[0]);
-        // if (!write_file(FCPATH . 'webhook.txt', $write_data, 'a')) {
-        //     echo 'Unable to write the file';
-        // } else {
-        //     echo 'File written!';
-        // }
-
         $voiceRes = new VoiceResponse();
 
         $isOwnerAvailable = true;
-
-        // $voiceRes->say("Thanks for choosing DiraLeads, we are now connecting you with the rental's owner");
-        // $voiceRes->play('https://api.twilio.com/cowbell.mp3', ['loop' => 1]);
-        // $roomName = "diraLeads2020";
-
-        // $dial = $voiceRes->dial('');
-        // $dial->number(
-        //     '+14062781888',
-        //     [
-        //         'statusCallbackEvent' => 'answered',
-        //         'statusCallback' => base_url() . 'webhook/call_receive',
-        //         'statusCallbackMethod' => 'POST'
-        //     ]
-        // );
 
         //Make a response for the incoming call
         if ($isOwnerAvailable) {
@@ -150,24 +125,12 @@ class Webhook extends CI_Controller
             $dial->number(
                 $owner_number,
                 [
-                    'statusCallbackEvent' => 'answered',
-                    'statusCallback' => base_url() . 'webhook/call_receive',
-                    'statusCallbackMethod' => 'POST'
+                    'url' => base_url() . 'webhook/call_receive',
                 ]
             );
         } else {
             $voiceRes->say("The rental owner is not available now, please try to call him when he is available");
         }
-
-        // $dial->conference(
-        //     $roomName,
-        //     [
-        //         // 'waitUrl' => 'http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient',
-        //         'maxParticipants' => 2,
-        //         // 'record' => 'record-from-start'
-        //         // 'statusCallback' => "https://api.safeup.co/v1/getStatusConference",
-        //     ]
-        // );
 
         //return response to Telnyx
         return $this->output
@@ -177,40 +140,9 @@ class Webhook extends CI_Controller
 
     public function call_receive() // manage actions when the customer receives outbounding calls
     {
-        $requests = $this->input->post();
-
-        // $data = json_encode($requests);
-
-        // return $this->output
-        //     ->set_content_type('application/json')
-        //     ->set_status_header(200)
-        //     ->set_output($data);
-
-        $this->load->helper('file');
-        $data = json_encode($requests);
-        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
-            // echo 'Unable to write the file';
-        } else {
-            // echo 'File written!';
-        }
-
         $voiceRes = new VoiceResponse();
 
-        $voiceRes->play('https://api.twilio.com/cowbell.mp3', ['loop' => 1]);
-        // $voiceRes->say("this is a caller from DiraLeads");
-
-        // $dial = $voiceRes->dial('');
-
-        // $roomName = "diraLeads2020";
-        // $dial->conference(
-        //     $roomName,
-        //     [
-        //         // 'waitUrl' => 'http://twimlets.com/holdmusic?Bucket=com.twilio.music.ambient',
-        //         'maxParticipants' => 2,
-        //         // 'record' => 'record-from-start'
-        //         // 'statusCallback' => "https://api.safeup.co/v1/getStatusConference",
-        //     ]
-        // );
+        $voiceRes->say("this is a caller from DiraLeads");
 
         return $this->output
             ->set_content_type('text/xml')
