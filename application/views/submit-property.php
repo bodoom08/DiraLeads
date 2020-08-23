@@ -22,8 +22,20 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     background-color: unset;
 }
 */
-    .date-actions {
-        position: relative;
+    .date-action-dialog {
+        width: 100%;
+        height: 100%;
+        background: transparent;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100;
+    }
+
+    .date-action {
+        display: none;
+        position: absolute;
         background: none;
         width: 100%;
         min-width: 200px;
@@ -32,7 +44,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         top: 25px;
         left: 10px;
         cursor: pointer;
-        z-index: 30;
+        z-index: 130;
         background-color: white;
         border: 1px #dfdfdf solid;
         border-radius: 5px;
@@ -51,18 +63,18 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         border-radius: 5px 5px 0 0;
     }
 
-    .date-actions ul li a {
+    .date-action ul li a {
         font-size: 14px;
         color: #76d0be;
         white-space: normal;
         white-space: nowrap;
     }
 
-    .date-actions ul li {
+    .date-action ul li {
         padding-bottom: 10px;
     }
 
-    .date-actions ul {
+    .date-action ul {
         padding: 11px 12px;
         margin: 0;
     }
@@ -1698,7 +1710,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 </div>
             </div>
 
-            <div class="date-actions" id="date-action" style="display: none;">
+            <!-- <div class="date-actions" id="date-action" style="display: none;">
                 <div class="date">
                     <label>${start}</label>
                     <a class="float-right mr-3" href="javascript:closeDateAction();">X</a>
@@ -1711,6 +1723,23 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     <li><a href="javascript:editManualBooking();">Edit a manual Booking</a></li>
                     <li><a href="javascript:removeManualBooking();">Remove a manual Booking</a></li>
                 </ul>
+            </div> -->
+
+            <div class="date-action-dialog" id="date-action-dialog">
+                <div class="date-action" id="date-action">
+                    <div class="date">
+                        <label>2020-08-18</label>
+                        <a class="float-right mr-3" href="javascript:closeDateAction();">X</a>
+                    </div>
+                    <ul>
+                        <li><a href="javascript:openManualBooking();" id="MainNavHelp">Add a manual Booking</a></li>
+                        <li><a href="javascript:openBlockDate();" id="MainNa">Block this date</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="javascript:editManualBooking();">Edit a manual Booking</a></li>
+                        <li><a href="javascript:removeManualBooking();">Remove a manual Booking</a></li>
+                    </ul>
+                </div>
             </div>
 
             <!-- </div> -->
@@ -2355,10 +2384,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#date-action ul')[1].style = "display: block";
                 }
 
+                const dialogEl = document.getElementById('date-action-dialog');
                 const dateEl = document.getElementById('date-action');
-                dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+                dialogEl.style.display = "block";
+                dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
+                // dateEl.style.top = jsEvent.pageY - 30;
+                // dateEl.style.left = jsEvent.pageX;
+                // dateEl.style.display = 'block';
 
                 $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
+
+
 
                 // $('.date-actions').css('display', 'none');
                 // var datedays = $('.datedays').val();
@@ -3860,11 +3896,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[index+1].src}' />`);
             }
         });
+        $('#date-action-dialog').click(function (e) {
+            if (e.target == this) closeDateAction();
+            console.log("Dialog CLICKED!", e.target);
+        });
     });
 
     function closeDateAction() {
+        const dialogEl = document.getElementById('date-action-dialog');
         const dateEl = document.getElementById('date-action');
-        dateEl.style = "display: none;";
+        dialogEl.style.display = "none";
+        dateEl.style.display = 'none';
     }
 
     function openManualBooking() {
