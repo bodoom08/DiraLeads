@@ -1047,6 +1047,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <input type="hidden" id="session" value="" name="rule_data">
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
+                                            <input type="hidden" class="disableDetail" value="[]" />
 
                                         </div>
                                         </form>
@@ -1166,6 +1167,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-12">
                                                 <label for="title">Title</label>
                                                 <input style="width: 100%;" type="text" name="title" id="editManualTitle" />
+                                                <input type="hidden" id="hid_editManualTitle" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -1184,20 +1186,24 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <div class="col-sm-6">
                                                 <label for="manualFirstName">First Name*</label>
                                                 <input type="text" name="first_name" class="" id="editManualFirstName" />
+                                                <input type="hidden" id="hid_editManualFirstName" />
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="manualLastName">Last Name*</label>
                                                 <input type="text" name="last_name" class="" id="editManualLastName" />
+                                                <input type="hidden" id="hid_editManualLastName" />
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="manualPhoneNumber">Phone number</label>
                                                 <input type="text" name="phone_number" class="" id="editManualPhoneNumber" />
+                                                <input type="hidden" id="hid_editManualPhoneNumber" />
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="manualEmail">Email</label>
                                                 <input type="text" name="email" class="" id="editManualEmail" />
+                                                <input type="hidden" id="hid_editManualEmail" />
                                             </div>
                                         </div>
                                     </div>
@@ -3035,7 +3041,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var firstName = $('#manualFirstName').val();
             var lastName = $('#manualLastName').val();
             var phoneNumber = $('#manualPhoneNumber').val();
-            var eamil = $('#manualEmail').val();
+            var email = $('#manualEmail').val();
 
 
             if (title == '') {
@@ -3101,6 +3107,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (disableDate != '') {
                 disableDate = disableDate + '|'
             }
+            var disableDetail = JSON.parse($('.disableDetail').val());
+            console.log("Disabled Detail: ", disableDetail);
+            
+            disableDetail.push({
+                title,
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                checkInDate: $('#manualStart').val(),
+                checkOutDate: $('#manualEnd').val()
+            });
+
             // var dateprice = $('#selectedPrice').val();
             // if (dateprice != '') {
             //     dateprice = dateprice + '&';
@@ -3109,6 +3128,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             // $('#date').val(convert(endd));
 
             $('.disableDate').val(disableDate + converts($('#manualStart').val()) + ',' + converts($('#manualEnd').val()));
+            $('.disableDetail').val(JSON.stringify(disableDetail));
 
             // $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
 
@@ -3174,16 +3194,18 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         });
 
         $('#update-manual-booking').on('click', function () {
+            removeManualBooking();
+
             var title = $('#editManualTitle').val();
             var startd = new Date($('#editManualStart').val());
             var endd = new Date($('#editManualEnd').val());
             var firstName = $('#editManualFirstName').val();
             var lastName = $('#editManualLastName').val();
             var phoneNumber = $('#editManualPhoneNumber').val();
-            var eamil = $('#editManualEmail').val();
+            var email = $('#editManualEmail').val();
 
-            var past_startd = new Date($('#hid_editManualStart').val());
-            var past_endd = new Date($('#hid_editManualEnd').val());
+            // var past_startd = new Date($('#hid_editManualStart').val());
+            // var past_endd = new Date($('#hid_editManualEnd').val());
 
             if (title == '') {
                 toastr.warning('Title field is required');
@@ -3199,8 +3221,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 return false;
             }
 
+            var disableDate = $('.disableDate').val();
+            if (disableDate != '') {
+                disableDate = disableDate + '|'
+            }
+            var disableDetail = JSON.parse($('.disableDetail').val());
+            console.log("Disabled Detail: ", disableDetail);
+            
+            disableDetail.push({
+                title,
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                checkInDate: startd,
+                checkOutDate: endd
+            });
+
+            $('.disableDate').val(disableDate + converts($('#editManualStart').val()) + ',' + converts($('#editManualEnd').val()));
+            $('.disableDetail').val(JSON.stringify(disableDetail));
+
+
             var middate = new Date((startd.getTime() + endd.getTime()) / 2);
-            var past_middate = new Date((past_startd.getTime() + past_endd.getTime()) / 2);
 
             var between = [];
             while (startd <= endd) {
@@ -3208,30 +3250,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 startd.setDate(startd.getDate() + 1);
             }
 
-            var past_between = [];
-            while (past_startd <= past_endd) {
-                past_between.push(new Date(past_startd));
-                past_startd.setDate(past_startd.getDate() + 1);
-            }
-
-            past_between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').empty();
-            });
-
-            $('.fc-widget-content[data-date="' + convert(past_middate) + '"]').empty();
-
             between.forEach(day => {
                 $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
             });
 
             $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
-
-            var disableDate = $('.disableDate').val();
-            if (disableDate != '') {
-                disableDate = disableDate + '|'
-            }
-
-            $('.disableDate').val(disableDate + converts($('#manualStart').val()) + ',' + converts($('#manualEnd').val()));
 
             $('#calendar').fullCalendar('unselect');
             $('#editManualBook').find('.eventClose').text('Close');
@@ -3928,51 +3951,71 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     function editManualBooking() {
-        const selectedDate = moment($('#date-action .date label').html(), "YYYY-MM-DD");
-        let disabledDates = $('.disableDate').val().split('|');
-        disabledDates = disabledDates.map( day => {
-            const oneDay = day.split(',');
-            return {
-                from: moment(oneDay[0], "DD/MM/YYYY"),
-                to: moment(oneDay[1], "DD/MM/YYYY")
-            }
-        });
+        const selectedDate = moment($('#date-action .date label').html());
+        let disabledData = JSON.parse($('.disableDetail').val());
+        disabledData = disabledData.map(day => ({
+            ...day,
+            checkInDate: moment(day.checkInDate),
+            checkOutDate: moment(day.checkOutDate)
+        }));
 
-        disabledDates = disabledDates.filter( day => {
-            if(day.from <= selectedDate && day.to >= selectedDate)
+        console.log("Selected Date: ", selectedDate);
+        console.log('Disabled Data: ', disabledData);
+
+        disabledData = disabledData.filter(day => {
+            if (day.checkInDate <= selectedDate && selectedDate <= day.checkOutDate)
                 return true;
             return false;
         });
+    
+        console.log('Disabled Data: ', disabledData);
 
-        
-        // Trying to get Title
-        const startDay = new Date(disabledDates[0].from.format('YYYY-MM-DD'));
-        const endDay = new Date(disabledDates[0].to.format('YYYY-MM-DD'));
-        const midDay = new Date((startDay.getTime() + endDay.getTime()) / 2);
+        if (disabledData.length == 0) {
+            console.log("No Data");
+            return ;
+        }
 
-        document.getElementById('editManualStart').value = disabledDates[0].from.format('MM-DD-YYYY');
-        document.getElementById('editManualEnd').value = disabledDates[0].to.format('MM-DD-YYYY');
-        document.getElementById('editManualTitle').value = $('.fc-widget-content[data-date="' + moment(midDay).format("YYYY-MM-DD") + '"] .day-background.manual-background').html();
+        document.getElementById('hid_editManualStart').value = disabledData[0].checkInDate.format('MM-DD-YYYY');
+        document.getElementById('hid_editManualEnd').value = disabledData[0].checkOutDate.format('MM-DD-YYYY');
+        document.getElementById('hid_editManualTitle').value = disabledData[0].title;
+        document.getElementById('hid_editManualFirstName').value = disabledData[0].firstName;
+        document.getElementById('hid_editManualLastName').value = disabledData[0].lastName;
+        document.getElementById('hid_editManualPhoneNumber').value = disabledData[0].phoneNumber;
+        document.getElementById('hid_editManualEmail').value = disabledData[0].email;
 
-        console.log("StartDay: ", startDay);
-        console.log("EndDay: ", endDay);
-        console.log("Mid Day: ", moment(midDay).format("YYYY-MM-DD"));
-        console.log('Text: ', $('.fc-widget-content[data-date="' + moment(midDay).format("YYYY-MM-DD") + '"] .day-background.manual-background').html());
-
-        // hidden tags
-        document.getElementById('hid_editManualStart').value = disabledDates[0].from.format('MM-DD-YYYY');
-        document.getElementById('hid_editManualEnd').value = disabledDates[0].to.format('MM-DD-YYYY');
+        document.getElementById('editManualStart').value = disabledData[0].checkInDate.format('MM-DD-YYYY');
+        document.getElementById('editManualEnd').value = disabledData[0].checkOutDate.format('MM-DD-YYYY');
+        document.getElementById('editManualTitle').value = disabledData[0].title;
+        document.getElementById('editManualFirstName').value = disabledData[0].firstName;
+        document.getElementById('editManualLastName').value = disabledData[0].lastName;
+        document.getElementById('editManualPhoneNumber').value = disabledData[0].phoneNumber;
+        document.getElementById('editManualEmail').value = disabledData[0].email;
 
         closeDateAction();
         $('#editManualBook').modal('show');
 
-        console.log("Edit Manual Booking", disabledDates[0]);
-
     }
 
     function removeManualBooking() {
-        const selectedDate = moment($('#date-action .date label').html(), "YYYY-MM-DD");
+        const selectedDate = moment($('#date-action .date label').html());
+        let disabledData = JSON.parse($('.disableDetail').val());
+        disabledData = disabledData.map(day => ({
+            ...day,
+            checkInDate: moment(day.checkInDate),
+            checkOutDate: moment(day.checkOutDate)
+        }));
+        disabledData = disabledData.filter(day => {
+            if (day.checkInDate <= selectedDate && selectedDate <= day.checkOutDate)
+                return false;
+            return true;
+        });
+
+        $('.disableDetail').val(JSON.stringify(disabledData));
+        
         let disabledDates = $('.disableDate').val().split('|');
+
+        console.log("disabledDates", disabledDates);
+
         disabledDates = disabledDates.map( day => {
             const oneDay = day.split(',');
             return {
@@ -3980,6 +4023,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 to: moment(oneDay[1], "DD/MM/YYYY")
             }
         });
+        console.log("disabledDates", disabledDates);
 
         let removableDate;
 
@@ -3991,13 +4035,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             return true;
         });
 
-        disabledDates = disabledDates.map(day => (`${day.from.format('MM-DD-YYYY')},${day.to.format('MM-DD-YYYY')}`));
+        disabledDates = disabledDates.map(day => (`${day.from.format('DD/MM/YYYY')},${day.to.format('DD/MM/YYYY')}`));
         $('.disableDate').val(disabledDates.join('|'));
         closeDateAction();
 
         const startDay = new Date(removableDate.from.format('YYYY-MM-DD'));
         const endDay = new Date(removableDate.to.format('YYYY-MM-DD'));
-        const midDay = new Date((startDay.getTime() + endDay.getTime()) / 2);
 
         let between = [];
         while (removableDate.from <= removableDate.to) {
@@ -4008,8 +4051,5 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         between.forEach(day => {
             $('.fc-widget-content[data-date="' +  moment(day).format("YYYY-MM-DD") + '"]').empty();
         });
-        $('.fc-widget-content[data-date="' +  moment(midDay).format("YYYY-MM-DD") + '"]').empty();
-
-        console.log("Remove Manual Booking Event");
     }
 </script>
