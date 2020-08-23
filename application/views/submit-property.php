@@ -1259,11 +1259,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="row">
                                             <div class="col-sm-6">
                                                 <label for="starts-at">Check-In date*</label>
-                                                <input type="text" name="starts_atblock" class="startDate" id="edit-starts-atblock" />
+                                                <input type="hidden" id="hid_editBlockStart" />
+                                                <input type="text" name="starts_atblock" class="updateBlockDate" id="edit-starts-atblock" />
                                             </div>
                                             <div class="col-sm-6">
                                                 <label for="ends-at">Check-out date*</label>
-                                                <input type="text" name="ends_atblock" class="startDate" id="edit-ends-atblock" />
+                                                <input type="hidden" id="hid_editBlockEnd" />
+                                                <input type="text" name="ends_atblock" class="updateBlockDate" id="edit-ends-atblock" />
                                             </div>
                                         </div>
                                         <div class="row">
@@ -3164,6 +3166,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
 
+            document.getElementById('hid_editManualStart').value = '';
+            document.getElementById('hid_editManualEnd').value = '';
             $('#calendar').fullCalendar('unselect');
             $('#editManualBook').find('.eventClose').text('Close');
             $('#editManualBook').find('input').val('');
@@ -3218,6 +3222,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
             $('.disableDate').val(disableDate + converts($('#edit-starts-atblock').val()) + ',' + converts($('#edit-ends-atblock').val()));
 
+            document.getElementById('hid_editBlockStart').value = '';
+            document.getElementById('hid_editBlockEnd').value = '';
             $('#calendar').fullCalendar('unselect');
             $('#updateBlockModal').find('.eventClose').text('Close');
             $('#updateBlockModal').find('input').val('');
@@ -3752,8 +3758,53 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             beforeShowDay: function(date) {
                 var disabledArrs = "12/06/2010,18/06/2010";
                 var disableDate = $('.disableDate').val();
-                const allowDateFrom = document.getElementById('hid_editManualStart').value;
-                const allowDateTo = document.getElementById('hid_editManualEnd').value;
+                let allowDateFrom = document.getElementById('hid_editManualStart').value;
+                let allowDateTo = document.getElementById('hid_editManualEnd').value;
+
+                if (disableDate != '') {
+                    disabledArrs = disableDate
+                }
+                var disabledArr = disabledArrs.split('|');
+                disabledArr = disabledArr.filter(day => {
+                    const between = day.split(',');
+                    if (moment(between[0], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateFrom, 'MM-DD-YYYY').format('YYYY-MM-DD') && moment(between[1], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateTo, 'MM-DD-YYYY').format('YYYY-MM-DD'))
+                        return false;
+                    return true;
+                });
+                console.log("DisabledArr", disabledArr);
+
+                for (i = 0; i < disabledArr.length; i++) {
+                    var data = disabledArr[i].split(",");
+                    var From = data[0].split('/');
+
+                    var To = data[1].split('/');
+                    var FromDate = new Date(From[2], From[1] - 1, From[0]);
+                    var ToDate = new Date(To[2], To[1] - 1, To[0]);
+
+                    // Set a flag to be used when found
+                    var found = false;
+                    // Compare date
+                    if (date >= FromDate && date <= ToDate) {
+                        found = true;
+                        return [false, "red"]; // Return false (disabled) and the "red" class.
+                    }
+                }
+
+                //At the end of the for loop, if the date wasn't found, return true.
+                if (!found) {
+                    return [true, ""]; // Return true (Not disabled) and no class.
+                }
+            }
+        });
+
+        $(".updateBlockDate").datepicker({
+            dateFormat: "mm-dd-yy",
+
+            beforeShowDay: function(date) {
+                var disabledArrs = "12/06/2010,18/06/2010";
+                var disableDate = $('.disableDate').val();
+                let allowDateFrom = document.getElementById('hid_editBlockStart').value;
+                let allowDateTo = document.getElementById('hid_editBlockEnd').value;
 
                 if (disableDate != '') {
                     disabledArrs = disableDate
@@ -4031,6 +4082,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         document.getElementById('edit-starts-atblock').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
         document.getElementById('edit-ends-atblock').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
         document.getElementById('edit-blockPrivateNote').value = blockDetail[0].privateNotes;
+
+        document.getElementById('hid_editBlockStart').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
+        document.getElementById('hid_editBlockEnd').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
         
         closeDateAction();
         $('#updateBlockModal').modal('show');
