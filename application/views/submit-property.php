@@ -2468,8 +2468,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('#date-action ul')[1].style = "display: block";
                     }
 
+                    const dialogEl = document.getElementById('date-action-dialog');
                     const dateEl = document.getElementById('date-action');
-                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+                    dialogEl.style.display = "block";
+                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
                     $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
 
@@ -2622,8 +2624,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('#date-action ul')[1].style = "display: block";
                     }
 
+                    const dialogEl = document.getElementById('date-action-dialog');
                     const dateEl = document.getElementById('date-action');
-                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+                    dialogEl.style.display = "block";
+                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
                     $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
                     
@@ -2670,8 +2674,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                             $('#date-action ul')[1].style = "display: block";
                         }
 
+                        const dialogEl = document.getElementById('date-action-dialog');
                         const dateEl = document.getElementById('date-action');
-                        dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+                        dialogEl.style.display = "block";
+                        dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
                         $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
 
