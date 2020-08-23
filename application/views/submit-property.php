@@ -1048,7 +1048,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
                                             <input type="hidden" class="disableDetail" value="[]" />
-
+                                            <input type="hidden" class="blockDetail" value="[]"/>
                                         </div>
                                         </form>
                                     </div>
@@ -1235,14 +1235,47 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-12">
-                                                <label for="blcokPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blcokPrivateNote">Notes</textarea>
+                                                <label for="blockPrivateNote">Private notes</label>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blockPrivateNote"></textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
                                         <button type="button" class="btn btn-primary" id="save-block-event">Block dates</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+
+                        <div class="fade modal custom-event" tabindex="-1" id="updateBlockModal" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content event-model">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="hidden" name="titleblock" id="edit-titleblock" value="Blocked" />
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="starts-at">Check-In date*</label>
+                                                <input type="text" name="starts_atblock" class="startDate" id="edit-starts-atblock" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="ends-at">Check-out date*</label>
+                                                <input type="text" name="ends_atblock" class="startDate" id="edit-ends-atblock" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="blockPrivateNote">Private notes</label>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="edit-blockPrivateNote">Notes</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="update-block-event">Block dates</button>
                                     </div>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -1744,6 +1777,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     <ul>
                         <li><a href="javascript:editManualBooking();">Edit a manual Booking</a></li>
                         <li><a href="javascript:removeManualBooking();">Remove a manual Booking</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="javascript:editBlockDate();">Edit a block date</a></li>
+                        <li><a href="javascript:removeBlockDate();">Remove a block date</a></li>
                     </ul>
                 </div>
             </div>
@@ -2321,8 +2358,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         */
         });
 
-
-
         $(document).on('change', '#florbas', function() {
             var val = $(this).val();
             // var text = $(this).text();
@@ -2381,74 +2416,28 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             },
 
             select: function(start, end, jsEvent, view) {
-
-                if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
-                    $('#date-action ul')[0].style = "display: block";
-                    $('#date-action ul')[1].style = "display: none";
-                } else {
+                if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length > 0) {
                     $('#date-action ul')[0].style = "display: none";
                     $('#date-action ul')[1].style = "display: block";
+                    $('#date-action ul')[2].style = "display: none";
+                } else if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.unavailable-background').length > 0) {
+                    $('#date-action ul')[0].style = "display: none";
+                    $('#date-action ul')[1].style = "display: none";
+                    $('#date-action ul')[2].style = "display: block";
+                } else {
+                    $('#date-action ul')[0].style = "display: block";
+                    $('#date-action ul')[1].style = "display: none";
+                    $('#date-action ul')[2].style = "display: none";
                 }
 
                 const dialogEl = document.getElementById('date-action-dialog');
                 const dateEl = document.getElementById('date-action');
                 dialogEl.style.display = "block";
                 dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
-                // dateEl.style.top = jsEvent.pageY - 30;
-                // dateEl.style.left = jsEvent.pageX;
-                // dateEl.style.display = 'block';
 
                 $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
-
-
-
-                // $('.date-actions').css('display', 'none');
-                // var datedays = $('.datedays').val();
-                // var weekenddays = $('.weekenddays').val();
-                // if (datedays == '') {
-                //     toastr.warning('Price fields are required');
-                //     return false;
-                // }
-                // if (weekenddays == '') {
-                //     toastr.warning('Price fields are required');
-                //     return false;
-                // }
-                // if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
-                //     $(".fc-day-grid-event").attr("href", 'javascript:void');
-                //     var start = moment(start).format('YYYY-MM-DD');
-                //     var end = moment(end).format('YYYY-MM-DD');
-                //     var a = start.split("-");
-
-                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
-
-                    // for (var i=0, length=$('.date-actions').length; i<length; i++)
-                    //     $('.date-actions')[i].remove();
-
-                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + `
-                    // <div class="date-actions">
-                    //     <div class="date">
-                    //         ${start}
-                    //     </div>
-                    //     <ul>
-                    //         <li>
-                    //             <a class="MainNavText manualBooking" id="MainNavHelp" currentdata="${start}" href="javascript:void(0)">
-                    //             Add a manual Booking
-                    //             </a>
-                    //         </li>
-                    //         <li>
-                    //             <a class="MainNavText blockDates" id="MainNa" currentdata="${start}" href="javascript:void(0)">
-                    //             Block this date
-                    //             </a>
-                    //         </li>
-                    //     </ul>
-                    // </div>`);
-                    // $('#actionStart').val(start);
-                    // $('#actionModal').modal('show');
-                // }
             },
             eventClick: function(event, jsEvent) {
-                console.log("eventClick", event);
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
                     $('#blockModal').modal('show');
@@ -2457,21 +2446,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#blockModal').find('#ends-atblock').val(event.end);
                     $('#blockModal').find('.eventClose').text('Delete');
                 } else {
-                    // $('.date-actions').css('display', 'none');
-                    // $('#manualBook').modal('show');
-                    // $('#manualBook').find('#manualTitle').val(event.title.split("$")[0]);
-                    // $('#manualBook').find('#seaonPrice').val(event.description);
-                    // $('#manualBook').find('#manualStart').val(event.start);
-                    // $('#manualBook').find('#manualEnd').val(event.end);
-                    // $('#manualBook').find('.eventClose').text('Delete');
 
-                    
-                    if ($('.fc-widget-content[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
-                        $('#date-action ul')[0].style = "display: block";
-                        $('#date-action ul')[1].style = "display: none";
-                    } else {
+                    if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length > 0) {
                         $('#date-action ul')[0].style = "display: none";
                         $('#date-action ul')[1].style = "display: block";
+                        $('#date-action ul')[2].style = "display: none";
+                    } else if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.unavailable-background').length > 0) {
+                        $('#date-action ul')[0].style = "display: none";
+                        $('#date-action ul')[1].style = "display: none";
+                        $('#date-action ul')[2].style = "display: block";
+                    } else {
+                        $('#date-action ul')[0].style = "display: block";
+                        $('#date-action ul')[1].style = "display: none";
+                        $('#date-action ul')[2].style = "display: none";
                     }
 
                     const dialogEl = document.getElementById('date-action-dialog');
@@ -2481,36 +2468,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                     $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
 
-
                     $(".fc-day-grid-event").attr("href", 'javascript:void');
                     var start = convert(moment(event.start._i).format());
                     var end = convert(moment(end).format());
                     var a = start.split("-");
-
-                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
-                    /*
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + `
-                    <div class="date-actions">
-                        <div class="date">
-                            ${start}
-                        </div>
-                        <ul>
-                            <li>
-                                <a class="MainNavText manualBooking" id="MainNavHelp" currentdata="${start}" href="javascript:void(0);">
-                                Add a manual Booking
-                                </a>
-                            </li>
-                            <li>
-                                <a class="MainNavText blockDates" id="MainNa" currentdata="${start}" href="javascript:void(0);">
-                                Block this date
-                                </a>
-                            </li>
-                        </ul>
-                    </div>`);
-                    */
-                    // $('#actionStart').val(start);
-                    // $('#actionModal').modal('show');
                 }
                 $(".eventClose").click(function() {
                     var startDate = new Date(convert(event.start));
@@ -2554,35 +2515,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 });
             }
         });
-        // $('.costomSession').on('click', function() {
-        // $('#seasonCalendar').fullCalendar({
-        //     header: {
-        //         left: 'prev,next today',
-        //         center: 'title',
-        //         right: 'month'
-        //         // right: 'month,agendaWeek'
-        //     },
-        //     defaultDate: d,
-        //     defaultView: 'month',
-        //     editable: true,
-        //     selectable: true,
-        //     fixedWeekCount: false,
-        //     timezone: false,
-        //     eventOrder: "-id",
-        //     events: {
-        //         url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-        //         cache: true
-        //     },
-        // });
-        //     console.log("yearly");
-        // });
-
-        // $(document).click(function(event) {
-        //     console.log(event);
-        //     if (!$(event.target).is('.date-actions')) {
-        //         $('.date-actions').css('display', 'none');
-        //     }
-        // });
 
         $(document).on('click', '.costomSession', function() {
             $('#seasonCalendar').fullCalendar({
@@ -2622,12 +2554,18 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                 select: function(start, end, jsEvent, view) {
 
-                    if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
-                        $('#date-action ul')[0].style = "display: block";
-                        $('#date-action ul')[1].style = "display: none";
-                    } else {
+                    if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length > 0) {
                         $('#date-action ul')[0].style = "display: none";
                         $('#date-action ul')[1].style = "display: block";
+                        $('#date-action ul')[2].style = "display: none";
+                    } else if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.unavailable-background').length > 0) {
+                        $('#date-action ul')[0].style = "display: none";
+                        $('#date-action ul')[1].style = "display: none";
+                        $('#date-action ul')[2].style = "display: block";
+                    } else {
+                        $('#date-action ul')[0].style = "display: block";
+                        $('#date-action ul')[1].style = "display: none";
+                        $('#date-action ul')[2].style = "display: none";
                     }
 
                     const dialogEl = document.getElementById('date-action-dialog');
@@ -2636,33 +2574,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
                     $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
-                    
-                    // var datedays = $('.datedays').val();
-                    // var weekenddays = $('.weekenddays').val();
-                    // if (datedays == '') {
-                    //     toastr.warning('Price fields are required');
-                    //     return false;
-                    // }
-                    // if (weekenddays == '') {
-                    //     toastr.warning('Price fields are required');
-                    //     return false;
-                    // }
-                    // if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
-                    //     $(".fc-day-grid-event").attr("href", 'javascript:void');
-                    //     var start = convert(moment(start).format());
-                    //     var end = convert(moment(end).format());
-                    //     var a = start.split("-");
-
-                    //     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    //     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
-                    //     // $('#actionStart').val(start);
-                    //     // $('#actionModal').modal('show');
-                    // }
                 },
                 eventClick: function(event, jsEvent) {
-                    console.log(event.title);
-
-                    
                     // Display the modal and set the values to the event values.
                     if (event.title == 'Blocked') {
                         $('#blockModal').modal('show');
@@ -2672,12 +2585,18 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('#blockModal').find('.eventClose').text('Delete');
                     } else {
 
-                        if ($('.fc-widget-content[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
-                            $('#date-action ul')[0].style = "display: block";
-                            $('#date-action ul')[1].style = "display: none";
-                        } else {
+                        if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length > 0) {
                             $('#date-action ul')[0].style = "display: none";
                             $('#date-action ul')[1].style = "display: block";
+                            $('#date-action ul')[2].style = "display: none";
+                        } else if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.unavailable-background').length > 0) {
+                            $('#date-action ul')[0].style = "display: none";
+                            $('#date-action ul')[1].style = "display: none";
+                            $('#date-action ul')[2].style = "display: block";
+                        } else {
+                            $('#date-action ul')[0].style = "display: block";
+                            $('#date-action ul')[1].style = "display: none";
+                            $('#date-action ul')[2].style = "display: none";
                         }
 
                         const dialogEl = document.getElementById('date-action-dialog');
@@ -2686,24 +2605,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
                         $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
-
-                        // $('.date-actions').css('display', 'none');
-                        // // $('#manualBook').modal('show');
-                        // // $('#manualBook').find('#manualTitle').val(event.title.split("$")[0]);
-                        // // $('#manualBook').find('#seaonPrice').val(event.description);
-                        // // $('#manualBook').find('#manualStart').val(event.start);
-                        // // $('#manualBook').find('#manualEnd').val(event.end);
-                        // // $('#manualBook').find('.eventClose').text('Delete');
-
-                        // $(".fc-day-grid-event").attr("href", 'javascript:void');
-                        // var start = convert(moment(event.start._i).format());
-                        // var end = convert(moment(end).format());
-                        // var a = start.split("-");
-
-                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
-                        // $('#actionStart').val(start);
-                        // $('#actionModal').modal('show');
 
                     }
                 }
@@ -3145,9 +3046,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             // var startd = new Date($('#starts-atblock').val());
             // var endd = new Date($('#ends-atblock').val());
 
-
             var startd = new Date($('#starts-atblock').val());
             var endd = new Date($('#ends-atblock').val());
+            var notes = $('#blockPrivateNote').val();
+            var blockDetail = JSON.parse($('.blockDetail').val());
 
             if (startd == '') {
                 toastr.warning('Start date is required');
@@ -3159,10 +3061,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 return false;
             }
 
+            blockDetail.push({
+                checkInDate: moment(startd).format("YYYY-MM-DD"),
+                checkOutDate: moment(endd).format("YYYY-MM-DD"),
+                privateNotes: notes
+            });
+
+            $('.blockDetail').val(JSON.stringify(blockDetail));
+
             var middate = new Date((startd.getTime() + endd.getTime()) / 2);
-
-            // console.log("mid date->", middate);
-
             var between = [];
             while (startd <= endd) {
                 between.push(new Date(startd));
@@ -3190,6 +3097,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#calendar').fullCalendar('unselect');
             $('#blockModal').find('.eventClose').text('Close');
             $('#blockModal').find('input').val('');
+            $('#blockModal').find('textarea').val('');
             $('#blockModal').modal('hide');
         });
 
@@ -3260,6 +3168,62 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#editManualBook').find('.eventClose').text('Close');
             $('#editManualBook').find('input').val('');
             $('#editManualBook').modal('hide');
+        });
+
+        $('#update-block-event').on('click', function () {
+            removeBlockDate();
+
+            let startd = $('#edit-starts-atblock').val();
+            let endd = $('#edit-ends-atblock').val();
+            const note = $('#edit-blockPrivateNote').val();
+            let blockDetail = JSON.parse($('.blockDetail').val());
+
+            if (startd == '') {
+                toastr.warning('Start date is required');
+                return false;
+            }
+
+            if (endd == '') {
+                toastr.warning('End date is required');
+                return false;
+            }
+
+            blockDetail.push({
+                checkInDate: moment(startd).format("YYYY-MM-DD"),
+                checkOutDate: moment(endd).format("YYYY-MM-DD"),
+                privateNotes: note
+            });
+
+            $('.blockDetail').val(JSON.stringify(blockDetail));
+
+            startd = new Date(startd);
+            endd = new Date(endd);
+
+            var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+            var between = [];
+            while (startd <= endd) {
+                between.push(new Date(startd));
+                startd.setDate(startd.getDate() + 1);
+            }
+
+            between.forEach(day => {
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+            });
+
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePrice('unavailable'));
+
+            var disableDate = $('.disableDate').val();
+            if (disableDate != '') {
+                disableDate = disableDate + '|'
+            }
+            $('.disableDate').val(disableDate + converts($('#edit-starts-atblock').val()) + ',' + converts($('#edit-ends-atblock').val()));
+
+            $('#calendar').fullCalendar('unselect');
+            $('#updateBlockModal').find('.eventClose').text('Close');
+            $('#updateBlockModal').find('input').val('');
+            $('#updateBlockModal').find('textarea').val('');
+            $('#updateBlockModal').modal('hide');
+
         });
 
         $('#datePrice').click(function() {
@@ -3795,7 +3759,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     disabledArrs = disableDate
                 }
                 var disabledArr = disabledArrs.split('|');
-                console.log("DisabledArr", disabledArr);
                 disabledArr = disabledArr.filter(day => {
                     const between = day.split(',');
                     if (moment(between[0], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateFrom, 'MM-DD-YYYY').format('YYYY-MM-DD') && moment(between[1], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateTo, 'MM-DD-YYYY').format('YYYY-MM-DD'))
@@ -3946,6 +3909,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     function openBlockDate() {
+        document.getElementById('starts-atblock').value = moment($('#date-action .date label').html()).format("MM-DD-YYYY");
+
         closeDateAction();
         $('#blockModal').modal('show');
     }
@@ -3959,17 +3924,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             checkOutDate: moment(day.checkOutDate)
         }));
 
-        console.log("Selected Date: ", selectedDate);
-        console.log('Disabled Data: ', disabledData);
-
         disabledData = disabledData.filter(day => {
             if (day.checkInDate <= selectedDate && selectedDate <= day.checkOutDate)
                 return true;
             return false;
         });
     
-        console.log('Disabled Data: ', disabledData);
-
         if (disabledData.length == 0) {
             console.log("No Data");
             return ;
@@ -4051,5 +4011,67 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         between.forEach(day => {
             $('.fc-widget-content[data-date="' +  moment(day).format("YYYY-MM-DD") + '"]').empty();
         });
+    }
+
+    function editBlockDate() {
+        // Edit Block Date
+        const selectedDate = moment($('#date-action .date label').html());
+        let blockDetail =  JSON.parse($('.blockDetail').val());
+
+        blockDetail = blockDetail.filter(day => {
+            if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) return true;
+            return false;
+        });
+
+        if (blockDetail.length == 0) {
+            console.log("No Data");
+            return ;
+        }
+
+        document.getElementById('edit-starts-atblock').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
+        document.getElementById('edit-ends-atblock').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
+        document.getElementById('edit-blockPrivateNote').value = blockDetail[0].privateNotes;
+        
+        closeDateAction();
+        $('#updateBlockModal').modal('show');
+    }
+
+    function removeBlockDate() {
+        // Remove Block Date
+        const selectedDate = moment($('#date-action .date label').html());
+        let blockDetail =  JSON.parse($('.blockDetail').val());
+        let disableDate = $('.disableDate').val().split('|');
+        let removableDate;
+
+        blockDetail = blockDetail.filter(day => {
+            if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) {
+                removableDate = {
+                    checkInDate: moment(day.checkInDate),
+                    checkOutDate: moment(day.checkOutDate)
+                };
+                return false;
+            }
+            return true;
+        });
+
+        disableDate = disableDate.filter(day => {
+            const date = day.split(',');
+            if (moment(date[0], "DD/MM/YYYY") <= selectedDate && selectedDate <= moment(date[1], "DD/MM/YYYY")) return false;
+            return true;
+        });
+
+        $('.disableDate').val(disableDate.join('|'));
+        $('.blockDetail').val(JSON.stringify(blockDetail));
+
+        var between = [];
+        while (removableDate.checkInDate <= removableDate.checkOutDate) {
+            between.push(removableDate.checkInDate.format("YYYY-MM-DD"));
+            removableDate.checkInDate.add(1, 'days');
+        }
+
+        between.forEach(day => {
+            $('.fc-widget-content[data-date="' + day + '"]').empty();
+        });
+        closeDateAction();
     }
 </script>
