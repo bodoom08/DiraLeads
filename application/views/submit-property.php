@@ -1142,6 +1142,61 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
 
+                        <div class="modal fade modal-event" tabindex="-1" id="editManualBook" role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content event-model">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Edit a manual booking</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <label for="title">Title</label>
+                                                <input style="width: 100%;" type="text" name="title" id="editManualTitle" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="manualStart">Check-In Date*</label>
+                                                <input type="text" name="starts_at" class="updateStartDate" id="editManualStart" />
+                                                <input type="hidden" id="hid_editManualStart" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="manualEnd">Check-Out Date*</label>
+                                                <input type="text" name="ends_at" class="updateStartDate" id="editManualEnd" />
+                                                <input type="hidden" id="hid_editManualEnd" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="manualFirstName">First Name*</label>
+                                                <input type="text" name="first_name" class="" id="editManualFirstName" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="manualLastName">Last Name*</label>
+                                                <input type="text" name="last_name" class="" id="editManualLastName" />
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <label for="manualPhoneNumber">Phone number</label>
+                                                <input type="text" name="phone_number" class="" id="editManualPhoneNumber" />
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label for="manualEmail">Email</label>
+                                                <input type="text" name="email" class="" id="editManualEmail" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary" id="update-manual-booking">Update booking</button>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div>
+
                         <div class="fade modal custom-event" tabindex="-1" id="blockModal" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
@@ -1641,6 +1696,21 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         <!-- /.modal -->
                     </div>
                 </div>
+            </div>
+
+            <div class="date-actions" id="date-action" style="display: none;">
+                <div class="date">
+                    <label>${start}</label>
+                    <a class="float-right mr-3" href="javascript:closeDateAction();">X</a>
+                </div>
+                <ul>
+                    <li><a href="javascript:openManualBooking();" id="MainNavHelp">Add a manual Booking</a></li>
+                    <li><a href="javascript:openBlockDate();" id="MainNa">Block this date</a></li>
+                </ul>
+                <ul>
+                    <li><a href="javascript:editManualBooking();">Edit a manual Booking</a></li>
+                    <li><a href="javascript:removeManualBooking();">Remove a manual Booking</a></li>
+                </ul>
             </div>
 
             <!-- </div> -->
@@ -2264,7 +2334,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             editable: false,
             selectable: true,
             fixedWeekCount: false,
-            timezone: false,
+            timeZone: 'local',
             eventOrder: "-title",
             events: {
                 url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
@@ -2277,9 +2347,20 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             select: function(start, end, jsEvent, view) {
 
-                console.log("select");
+                if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
+                    $('#date-action ul')[0].style = "display: block";
+                    $('#date-action ul')[1].style = "display: none";
+                } else {
+                    $('#date-action ul')[0].style = "display: none";
+                    $('#date-action ul')[1].style = "display: block";
+                }
 
-                $('.date-actions').css('display', 'none');
+                const dateEl = document.getElementById('date-action');
+                dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+
+                $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
+
+                // $('.date-actions').css('display', 'none');
                 // var datedays = $('.datedays').val();
                 // var weekenddays = $('.weekenddays').val();
                 // if (datedays == '') {
@@ -2290,20 +2371,42 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 //     toastr.warning('Price fields are required');
                 //     return false;
                 // }
-                if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
-                    $(".fc-day-grid-event").attr("href", 'javascript:void');
-                    var start = convert(moment(start).format());
-                    var end = convert(moment(end).format());
-                    var a = start.split("-");
+                // if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
+                //     $(".fc-day-grid-event").attr("href", 'javascript:void');
+                //     var start = moment(start).format('YYYY-MM-DD');
+                //     var end = moment(end).format('YYYY-MM-DD');
+                //     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+
+                    // for (var i=0, length=$('.date-actions').length; i<length; i++)
+                    //     $('.date-actions')[i].remove();
+
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + `
+                    // <div class="date-actions">
+                    //     <div class="date">
+                    //         ${start}
+                    //     </div>
+                    //     <ul>
+                    //         <li>
+                    //             <a class="MainNavText manualBooking" id="MainNavHelp" currentdata="${start}" href="javascript:void(0)">
+                    //             Add a manual Booking
+                    //             </a>
+                    //         </li>
+                    //         <li>
+                    //             <a class="MainNavText blockDates" id="MainNa" currentdata="${start}" href="javascript:void(0)">
+                    //             Block this date
+                    //             </a>
+                    //         </li>
+                    //     </ul>
+                    // </div>`);
                     // $('#actionStart').val(start);
                     // $('#actionModal').modal('show');
-                }
+                // }
             },
-            eventClick: function(event, element) {
-                console.log("eventClick");
+            eventClick: function(event, jsEvent) {
+                console.log("eventClick", event);
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
                     $('#blockModal').modal('show');
@@ -2312,7 +2415,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#blockModal').find('#ends-atblock').val(event.end);
                     $('#blockModal').find('.eventClose').text('Delete');
                 } else {
-                    $('.date-actions').css('display', 'none');
+                    // $('.date-actions').css('display', 'none');
                     // $('#manualBook').modal('show');
                     // $('#manualBook').find('#manualTitle').val(event.title.split("$")[0]);
                     // $('#manualBook').find('#seaonPrice').val(event.description);
@@ -2320,16 +2423,50 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     // $('#manualBook').find('#manualEnd').val(event.end);
                     // $('#manualBook').find('.eventClose').text('Delete');
 
+                    
+                    if ($('.fc-widget-content[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
+                        $('#date-action ul')[0].style = "display: block";
+                        $('#date-action ul')[1].style = "display: none";
+                    } else {
+                        $('#date-action ul')[0].style = "display: none";
+                        $('#date-action ul')[1].style = "display: block";
+                    }
+
+                    const dateEl = document.getElementById('date-action');
+                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+
+                    $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
+
+
                     $(".fc-day-grid-event").attr("href", 'javascript:void');
                     var start = convert(moment(event.start._i).format());
                     var end = convert(moment(end).format());
                     var a = start.split("-");
 
                     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText blockDates" currentdata="' + start + '" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    /*
+                    $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + `
+                    <div class="date-actions">
+                        <div class="date">
+                            ${start}
+                        </div>
+                        <ul>
+                            <li>
+                                <a class="MainNavText manualBooking" id="MainNavHelp" currentdata="${start}" href="javascript:void(0);">
+                                Add a manual Booking
+                                </a>
+                            </li>
+                            <li>
+                                <a class="MainNavText blockDates" id="MainNa" currentdata="${start}" href="javascript:void(0);">
+                                Block this date
+                                </a>
+                            </li>
+                        </ul>
+                    </div>`);
+                    */
                     // $('#actionStart').val(start);
                     // $('#actionModal').modal('show');
-
                 }
                 $(".eventClose").click(function() {
                     var startDate = new Date(convert(event.start));
@@ -2441,7 +2578,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                 select: function(start, end, jsEvent, view) {
 
-                    $('.date-actions').css('display', 'none');
+                    if ($('.fc-widget-content[data-date="'+ moment(start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
+                        $('#date-action ul')[0].style = "display: block";
+                        $('#date-action ul')[1].style = "display: none";
+                    } else {
+                        $('#date-action ul')[0].style = "display: none";
+                        $('#date-action ul')[1].style = "display: block";
+                    }
+
+                    const dateEl = document.getElementById('date-action');
+                    dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+
+                    $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
+                    
                     // var datedays = $('.datedays').val();
                     // var weekenddays = $('.weekenddays').val();
                     // if (datedays == '') {
@@ -2452,20 +2601,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     //     toastr.warning('Price fields are required');
                     //     return false;
                     // }
-                    if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
-                        $(".fc-day-grid-event").attr("href", 'javascript:void');
-                        var start = convert(moment(start).format());
-                        var end = convert(moment(end).format());
-                        var a = start.split("-");
+                    // if (moment(start._d).add(1, 'days').format('YYYY-MM-DD') == moment(end._d).format('YYYY-MM-DD')) {
+                    //     $(".fc-day-grid-event").attr("href", 'javascript:void');
+                    //     var start = convert(moment(start).format());
+                    //     var end = convert(moment(end).format());
+                    //     var a = start.split("-");
 
-                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                        $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
-                        // $('#actionStart').val(start);
-                        // $('#actionModal').modal('show');
-                    }
+                    //     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
+                    //     // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                    //     // $('#actionStart').val(start);
+                    //     // $('#actionModal').modal('show');
+                    // }
                 },
-                eventClick: function(event, element) {
-                    console.log(event.titlte);
+                eventClick: function(event, jsEvent) {
+                    console.log(event.title);
+
+                    
                     // Display the modal and set the values to the event values.
                     if (event.title == 'Blocked') {
                         $('#blockModal').modal('show');
@@ -2474,27 +2625,39 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('#blockModal').find('#ends-atblock').val(event.end);
                         $('#blockModal').find('.eventClose').text('Delete');
                     } else {
-                        $('.date-actions').css('display', 'none');
-                        // $('#manualBook').modal('show');
-                        // $('#manualBook').find('#manualTitle').val(event.title.split("$")[0]);
-                        // $('#manualBook').find('#seaonPrice').val(event.description);
-                        // $('#manualBook').find('#manualStart').val(event.start);
-                        // $('#manualBook').find('#manualEnd').val(event.end);
-                        // $('#manualBook').find('.eventClose').text('Delete');
 
-                        $(".fc-day-grid-event").attr("href", 'javascript:void');
-                        var start = convert(moment(event.start._i).format());
-                        var end = convert(moment(end).format());
-                        var a = start.split("-");
+                        if ($('.fc-widget-content[data-date="'+ moment(event.start).format('YYYY-MM-DD') +'"] p.day-background.manual-background').length == 0) {
+                            $('#date-action ul')[0].style = "display: block";
+                            $('#date-action ul')[1].style = "display: none";
+                        } else {
+                            $('#date-action ul')[0].style = "display: none";
+                            $('#date-action ul')[1].style = "display: block";
+                        }
+
+                        const dateEl = document.getElementById('date-action');
+                        dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important;`;
+
+                        $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
+
+                        // $('.date-actions').css('display', 'none');
+                        // // $('#manualBook').modal('show');
+                        // // $('#manualBook').find('#manualTitle').val(event.title.split("$")[0]);
+                        // // $('#manualBook').find('#seaonPrice').val(event.description);
+                        // // $('#manualBook').find('#manualStart').val(event.start);
+                        // // $('#manualBook').find('#manualEnd').val(event.end);
+                        // // $('#manualBook').find('.eventClose').text('Delete');
+
+                        // $(".fc-day-grid-event").attr("href", 'javascript:void');
+                        // var start = convert(moment(event.start._i).format());
+                        // var end = convert(moment(end).format());
+                        // var a = start.split("-");
 
                         // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a seasonal booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li><li><a  data-target="#priceModal" data-toggle="modal" class="MainNavText changepricefin" id="MainNa" href="#priceModal" currentdata="' + start + '">Change Price</a></li></ul></div>');
-                        $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
+                        // $('.fc-day-number[data-date="' + start + '"]').html(a[2].replace(/^0+/, '') + '<div class="date-actions"><div class="date">' + start + '</div><ul><li><a data-target="#manualBook" data-toggle="modal" class="MainNavText manualBooking" id="MainNavHelp" currentdata="' + start + '" href="#manualBook">Add a manual booking</a></li><li><a  data-target="#blockModal" data-toggle="modal" class="MainNavText" id="MainNa" href="#blockModal">Block this date</a></li></ul></div>');
                         // $('#actionStart').val(start);
                         // $('#actionModal').modal('show');
 
                     }
-
-
                 }
             });
         });
@@ -2914,6 +3077,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.date-actions').css('display', 'none');
 
         });
+
         $('#save-block-event').on('click', function() {
             // var title = $('#titleblock').val();
             // var startd = new Date($('#starts-atblock').val());
@@ -2966,6 +3130,73 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#blockModal').find('input').val('');
             $('#blockModal').modal('hide');
         });
+
+        $('#update-manual-booking').on('click', function () {
+            var title = $('#editManualTitle').val();
+            var startd = new Date($('#editManualStart').val());
+            var endd = new Date($('#editManualEnd').val());
+            var firstName = $('#editManualFirstName').val();
+            var lastName = $('#editManualLastName').val();
+            var phoneNumber = $('#editManualPhoneNumber').val();
+            var eamil = $('#editManualEmail').val();
+
+            var past_startd = new Date($('#hid_editManualStart').val());
+            var past_endd = new Date($('#hid_editManualEnd').val());
+
+            if (title == '') {
+                toastr.warning('Title field is required');
+                return false;
+            }
+            if (startd == '') {
+                toastr.warning('Start date is required');
+                return false;
+            }
+
+            if (endd == '') {
+                toastr.warning('End date is required');
+                return false;
+            }
+
+            var middate = new Date((startd.getTime() + endd.getTime()) / 2);
+            var past_middate = new Date((past_startd.getTime() + past_endd.getTime()) / 2);
+
+            var between = [];
+            while (startd <= endd) {
+                between.push(new Date(startd));
+                startd.setDate(startd.getDate() + 1);
+            }
+
+            var past_between = [];
+            while (past_startd <= past_endd) {
+                past_between.push(new Date(past_startd));
+                past_startd.setDate(past_startd.getDate() + 1);
+            }
+
+            past_between.forEach(day => {
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').empty();
+            });
+
+            $('.fc-widget-content[data-date="' + convert(past_middate) + '"]').empty();
+
+            between.forEach(day => {
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+            });
+
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+
+            var disableDate = $('.disableDate').val();
+            if (disableDate != '') {
+                disableDate = disableDate + '|'
+            }
+
+            $('.disableDate').val(disableDate + converts($('#manualStart').val()) + ',' + converts($('#manualEnd').val()));
+
+            $('#calendar').fullCalendar('unselect');
+            $('#editManualBook').find('.eventClose').text('Close');
+            $('#editManualBook').find('input').val('');
+            $('#editManualBook').modal('hide');
+        });
+
         $('#datePrice').click(function() {
 
             setTimeout(function() {
@@ -3485,9 +3716,56 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
             }
         });
+        
+        $(".updateStartDate").datepicker({
+            dateFormat: "mm-dd-yy",
+
+            beforeShowDay: function(date) {
+                var disabledArrs = "12/06/2010,18/06/2010";
+                var disableDate = $('.disableDate').val();
+                const allowDateFrom = document.getElementById('hid_editManualStart').value;
+                const allowDateTo = document.getElementById('hid_editManualEnd').value;
+
+                if (disableDate != '') {
+                    disabledArrs = disableDate
+                }
+                var disabledArr = disabledArrs.split('|');
+                console.log("DisabledArr", disabledArr);
+                disabledArr = disabledArr.filter(day => {
+                    const between = day.split(',');
+                    if (moment(between[0], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateFrom, 'MM-DD-YYYY').format('YYYY-MM-DD') && moment(between[1], "DD/MM/YYYY").format('YYYY-MM-DD') == moment(allowDateTo, 'MM-DD-YYYY').format('YYYY-MM-DD'))
+                        return false;
+                    return true;
+                });
+                console.log("DisabledArr", disabledArr);
+
+                for (i = 0; i < disabledArr.length; i++) {
+                    var data = disabledArr[i].split(",");
+                    var From = data[0].split('/');
+
+                    var To = data[1].split('/');
+                    var FromDate = new Date(From[2], From[1] - 1, From[0]);
+                    var ToDate = new Date(To[2], To[1] - 1, To[0]);
+
+                    // Set a flag to be used when found
+                    var found = false;
+                    // Compare date
+                    if (date >= FromDate && date <= ToDate) {
+                        found = true;
+                        return [false, "red"]; // Return false (disabled) and the "red" class.
+                    }
+                }
+
+                //At the end of the for loop, if the date wasn't found, return true.
+                if (!found) {
+                    return [true, ""]; // Return true (Not disabled) and no class.
+                }
+            }
+        });
+
         $(document).on('click', '.eventClose', function() {
             $('.date-actions').css('display', 'none');
-        })
+        });
 
         $(document).on('click', '.changepricefin', function() {
             var date = $(this).attr('currentdata');
@@ -3497,12 +3775,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#pricechange').val(itemId);
         });
 
-        $(document).on('click', '.manualBooking', function(event) {
-            var date = $(this).attr('currentdata');
-            $('#manualStart').val(date);
-            console.log(event);
-            event.stopPropagation();
-        });
+        // $(document).on('click', '.manualBooking', function(event) {
+        //     var date = $(this).attr('currentdata');
+        //     $('#manualStart').val(date);
+        //     console.log(event);
+        //     event.stopPropagation();
+        // });
 
         // $('#addManualBooking').click(function(event) {
         //     var date = $('#actionStart').val();
@@ -3513,7 +3791,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         //     console.log(event);
         //     event.stopPropagation();
         // });
-
 
         $(document).on('click', '.blockDates', function() {
             var date = $(this).attr('currentdata');
@@ -3583,6 +3860,108 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[index+1].src}' />`);
             }
         });
-
     });
+
+    function closeDateAction() {
+        const dateEl = document.getElementById('date-action');
+        dateEl.style = "display: none;";
+    }
+
+    function openManualBooking() {
+        closeDateAction();
+        const dateEl = document.getElementById('manualStart');
+        dateEl.value = moment($('#date-action .date label').html(), "YYYY-MM-DD").format("MM-DD-YYYY");
+        $('#manualBook').modal('show');
+    }
+
+    function openBlockDate() {
+        closeDateAction();
+        $('#blockModal').modal('show');
+    }
+
+    function editManualBooking() {
+        const selectedDate = moment($('#date-action .date label').html(), "YYYY-MM-DD");
+        let disabledDates = $('.disableDate').val().split('|');
+        disabledDates = disabledDates.map( day => {
+            const oneDay = day.split(',');
+            return {
+                from: moment(oneDay[0], "DD/MM/YYYY"),
+                to: moment(oneDay[1], "DD/MM/YYYY")
+            }
+        });
+
+        disabledDates = disabledDates.filter( day => {
+            if(day.from <= selectedDate && day.to >= selectedDate)
+                return true;
+            return false;
+        });
+
+        
+        // Trying to get Title
+        const startDay = new Date(disabledDates[0].from.format('YYYY-MM-DD'));
+        const endDay = new Date(disabledDates[0].to.format('YYYY-MM-DD'));
+        const midDay = new Date((startDay.getTime() + endDay.getTime()) / 2);
+
+        document.getElementById('editManualStart').value = disabledDates[0].from.format('MM-DD-YYYY');
+        document.getElementById('editManualEnd').value = disabledDates[0].to.format('MM-DD-YYYY');
+        document.getElementById('editManualTitle').value = $('.fc-widget-content[data-date="' + moment(midDay).format("YYYY-MM-DD") + '"] .day-background.manual-background').html();
+
+        console.log("StartDay: ", startDay);
+        console.log("EndDay: ", endDay);
+        console.log("Mid Day: ", moment(midDay).format("YYYY-MM-DD"));
+        console.log('Text: ', $('.fc-widget-content[data-date="' + moment(midDay).format("YYYY-MM-DD") + '"] .day-background.manual-background').html());
+
+        // hidden tags
+        document.getElementById('hid_editManualStart').value = disabledDates[0].from.format('MM-DD-YYYY');
+        document.getElementById('hid_editManualEnd').value = disabledDates[0].to.format('MM-DD-YYYY');
+
+        closeDateAction();
+        $('#editManualBook').modal('show');
+
+        console.log("Edit Manual Booking", disabledDates[0]);
+
+    }
+
+    function removeManualBooking() {
+        const selectedDate = moment($('#date-action .date label').html(), "YYYY-MM-DD");
+        let disabledDates = $('.disableDate').val().split('|');
+        disabledDates = disabledDates.map( day => {
+            const oneDay = day.split(',');
+            return {
+                from: moment(oneDay[0], "DD/MM/YYYY"),
+                to: moment(oneDay[1], "DD/MM/YYYY")
+            }
+        });
+
+        let removableDate;
+
+        disabledDates = disabledDates.filter( day => {
+            if(day.from <= selectedDate && day.to >= selectedDate) {
+                removableDate = {...day};
+                return false;
+            }
+            return true;
+        });
+
+        disabledDates = disabledDates.map(day => (`${day.from.format('MM-DD-YYYY')},${day.to.format('MM-DD-YYYY')}`));
+        $('.disableDate').val(disabledDates.join('|'));
+        closeDateAction();
+
+        const startDay = new Date(removableDate.from.format('YYYY-MM-DD'));
+        const endDay = new Date(removableDate.to.format('YYYY-MM-DD'));
+        const midDay = new Date((startDay.getTime() + endDay.getTime()) / 2);
+
+        let between = [];
+        while (removableDate.from <= removableDate.to) {
+            between.push(removableDate.from.format('YYYY-MM-DD'));
+            removableDate.from.add(1, 'days');
+        }
+
+        between.forEach(day => {
+            $('.fc-widget-content[data-date="' +  moment(day).format("YYYY-MM-DD") + '"]').empty();
+        });
+        $('.fc-widget-content[data-date="' +  moment(midDay).format("YYYY-MM-DD") + '"]').empty();
+
+        console.log("Remove Manual Booking Event");
+    }
 </script>
