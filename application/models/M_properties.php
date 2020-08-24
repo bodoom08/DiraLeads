@@ -13,116 +13,112 @@ class M_properties extends CI_Model
             ->where('a.status = "active"')
             ->where('a.sold = "false"');
 
-            if($street && $street != "") {
-                $this->db->like('a.street', $street);
-            }
+        if ($street && $street != "") {
+            $this->db->like('a.street', $street);
+        }
 
-            if ($for && $for != "any") {
-                $this->db->where('a.for', $for);
-                if($for == 'short term rent') {
-                    if($fromdate && $todate) {
-                        $fromdate = new DateTime($fromdate);
-                        $todate = new DateTime($todate);
-                        $count = 1;
-                        $query = '';
-                        for ($i=$fromdate; $i <= $todate; $i->modify('+1 days')) { 
-                            if($count == 1) {
-                                $query .= "(FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
-                            } else {
-                                $query .= " OR FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
-                            }
-                            $count++;
+        if ($for && $for != "any") {
+            $this->db->where('a.for', $for);
+            if ($for == 'short term rent') {
+                if ($fromdate && $todate) {
+                    $fromdate = new DateTime($fromdate);
+                    $todate = new DateTime($todate);
+                    $count = 1;
+                    $query = '';
+                    for ($i = $fromdate; $i <= $todate; $i->modify('+1 days')) {
+                        if ($count == 1) {
+                            $query .= "(FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
+                        } else {
+                            $query .= " OR FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
                         }
-                        $query .= ")";
-                        $this->db->where($query);
+                        $count++;
                     }
+                    $query .= ")";
+                    $this->db->where($query);
                 }
             }
-            if ($type && $type != "any") {
-                $this->db->where('a.type', $type);
-            }
+        }
+        if ($type && $type != "any") {
+            $this->db->where('a.type', $type);
+        }
 
-            if ($price_max && $price_max != 0 && $price_max != '') {
-                $this->db->where('a.price <=', $price_max);
-            }
-            if ($price_min && $price_min != '') {
-                $this->db->where('a.price >=', $price_min);
-            }
-            
+        if ($price_max && $price_max != 0 && $price_max != '') {
+            $this->db->where('a.price <=', $price_max);
+        }
+        if ($price_min && $price_min != '') {
+            $this->db->where('a.price >=', $price_min);
+        }
 
-            switch ($sort_by) {
-                case 'low-high':
-                    $this->db->order_by('a.price', 'asc');
-                    break;
-                case 'high-low':
-                    $this->db->order_by('a.price', 'desc');
-                    break;
-                case 'newest':
-                    $this->db->order_by('a.created_at', 'desc');
-                    break;
-                case 'oldest':
-                    $this->db->order_by('a.created_at', 'asc');
-                    break;
-                
-                default:
-                    # code...
-                    break;
-            }
-            $this->db->query("set session sql_mode=''");
-            $data = $this->db->get('properties a,users b')->result_array();
-            // echo $this->db->last_query();
-            // die;
-            
-            // if($bedroom && $bedroom != 'any'){
-            //     $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-                
-            //     foreach($data as $key => $value){
-                    
-            //         $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->get('property_attribute_values')->row_array()['value'];
-                    
-            //         if($bedroom_attr_val > $bedroom){
-            //             continue;
-            //         } else {
-            //             unset($data[$key]);
-            //         }
-                    
-            //     }
-            // }
 
-            // echo '<pre>';
-            // print_r($data);
+        switch ($sort_by) {
+            case 'low-high':
+                $this->db->order_by('a.price', 'asc');
+                break;
+            case 'high-low':
+                $this->db->order_by('a.price', 'desc');
+                break;
+            case 'newest':
+                $this->db->order_by('a.created_at', 'desc');
+                break;
+            case 'oldest':
+                $this->db->order_by('a.created_at', 'asc');
+                break;
+
+            default:
+                # code...
+                break;
+        }
+        $this->db->query("set session sql_mode=''");
+        $data = $this->db->get('properties a,users b')->result_array();
+        // echo $this->db->last_query();
+        // die;
+
+        // if($bedroom && $bedroom != 'any'){
+        //     $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
+
+        //     foreach($data as $key => $value){
+
+        //         $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->get('property_attribute_values')->row_array()['value'];
+
+        //         if($bedroom_attr_val > $bedroom){
+        //             continue;
+        //         } else {
+        //             unset($data[$key]);
+        //         }
+
+        //     }
+        // }
+
+        // echo '<pre>';
+        // print_r($data);
 
         if ($bedroom && $bedroom != 0) {
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            foreach($data as $key => $value){                 
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+            foreach ($data as $key => $value) {
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($data[$key]);
                 }
             }
             $data = array_values($data);
-        }
-        else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            foreach($data as $key => $value){                    
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom_min))->where('value <=',intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+        } else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+            foreach ($data as $key => $value) {
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom_min))->where('value <=', intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($data[$key]);
                 }
-                
             }
             $data = array_values($data);
             // echo '<pre>';
             // print_r($data);
             // die();
         }
-        if(sizeof($data) < 1) {
+        if (sizeof($data) < 1) {
             die(json_encode(['result_empty' => true]));
         }
 
@@ -137,27 +133,27 @@ class M_properties extends CI_Model
         $attributes = array_column($attributes, 'attrs', 'property_id');
 
         $attributes_icon = $this->db
-                    ->select('b.property_id, GROUP_CONCAT(JSON_OBJECT("text", a.text, "value", a.icon)) attrs_icon')
-                    ->where('b.attribute_id = a.id')
-                    ->where_in('b.property_id', array_column($data, 'id'))
-                    ->group_by('b.property_id')
-                    ->get('property_attributes a, property_attribute_values b')
-                    ->result_array();
+            ->select('b.property_id, GROUP_CONCAT(JSON_OBJECT("text", a.text, "value", a.icon)) attrs_icon')
+            ->where('b.attribute_id = a.id')
+            ->where_in('b.property_id', array_column($data, 'id'))
+            ->group_by('b.property_id')
+            ->get('property_attributes a, property_attribute_values b')
+            ->result_array();
 
         $attributes_icon = array_column($attributes_icon, 'attrs_icon', 'property_id');
-        
+
 
         $favourites = $this->db
-                    ->select('b.user_id, b.property_id')
-                    ->where('a.id = b.property_id')
-                    ->where('b.user_id', $_SESSION['id'])
-                    ->get('properties a, favorites b')
-                    ->result_array(); 
-                
-        
+            ->select('b.user_id, b.property_id')
+            ->where('a.id = b.property_id')
+            ->where('b.user_id', $_SESSION['id'])
+            ->get('properties a, favorites b')
+            ->result_array();
 
-            
-        array_walk($data, function(&$row) use ($attributes, $attributes_icon, $favourites) {
+
+
+
+        array_walk($data, function (&$row) use ($attributes, $attributes_icon, $favourites) {
             $dateInterval = (new DateTime())->diff(new DateTime($row['date']));
             $row['date'] = $dateInterval->format('%d days ago');
             $row['created'] = (new DateTime($row['created']))->format('d M y');
@@ -168,13 +164,13 @@ class M_properties extends CI_Model
             $row['favourites'] = json_encode($favourites);
             $row = array_filter($row);
         });
-        
+
         // print_r($data);
         // die();
         return compact('data');
     }
 
-   public function getAllDevlopment()
+    public function getAllDevlopment()
     {
         extract($this->input->get());
 
@@ -185,116 +181,112 @@ class M_properties extends CI_Model
             ->where('a.status = "active"')
             ->where('a.sold = "false"');
 
-            if($street && $street != "") {
-                $this->db->like('a.street', $street);
-            }
+        if ($street && $street != "") {
+            $this->db->like('a.street', $street);
+        }
 
-            if ($for && $for != "any") {
-                $this->db->where('a.for', $for);
-                if($for == 'short term rent') {
-                    if($fromdate && $todate) {
-                        $fromdate = new DateTime($fromdate);
-                        $todate = new DateTime($todate);
-                        $count = 1;
-                        $query = '';
-                        for ($i=$fromdate; $i <= $todate; $i->modify('+1 days')) { 
-                            if($count == 1) {
-                                $query .= "(FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
-                            } else {
-                                $query .= " OR FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
-                            }
-                            $count++;
+        if ($for && $for != "any") {
+            $this->db->where('a.for', $for);
+            if ($for == 'short term rent') {
+                if ($fromdate && $todate) {
+                    $fromdate = new DateTime($fromdate);
+                    $todate = new DateTime($todate);
+                    $count = 1;
+                    $query = '';
+                    for ($i = $fromdate; $i <= $todate; $i->modify('+1 days')) {
+                        if ($count == 1) {
+                            $query .= "(FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
+                        } else {
+                            $query .= " OR FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
                         }
-                        $query .= ")";
-                        $this->db->where($query);
+                        $count++;
                     }
+                    $query .= ")";
+                    $this->db->where($query);
                 }
             }
-            if ($type && $type != "any") {
-                $this->db->where('a.type', $type);
-            }
+        }
+        if ($type && $type != "any") {
+            $this->db->where('a.type', $type);
+        }
 
-            if ($price_max && $price_max != 0 && $price_max != '') {
-                $this->db->where('a.price <=', $price_max);
-            }
-            if ($price_min && $price_min != '') {
-                $this->db->where('a.price >=', $price_min);
-            }
-            
+        if ($price_max && $price_max != 0 && $price_max != '') {
+            $this->db->where('a.price <=', $price_max);
+        }
+        if ($price_min && $price_min != '') {
+            $this->db->where('a.price >=', $price_min);
+        }
 
-            switch ($sort_by) {
-                case 'low-high':
-                    $this->db->order_by('a.price', 'asc');
-                    break;
-                case 'high-low':
-                    $this->db->order_by('a.price', 'desc');
-                    break;
-                case 'newest':
-                    $this->db->order_by('a.created_at', 'desc');
-                    break;
-                case 'oldest':
-                    $this->db->order_by('a.created_at', 'asc');
-                    break;
-                
-                default:
-                    # code...
-                    break;
-            }
 
-            $data = $this->db->get('properties a,users b')->result_array();
-            // echo $this->db->last_query();
-            // die;
-            
-            // if($bedroom && $bedroom != 'any'){
-            //     $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-                
-            //     foreach($data as $key => $value){
-                    
-            //         $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->get('property_attribute_values')->row_array()['value'];
-                    
-            //         if($bedroom_attr_val > $bedroom){
-            //             continue;
-            //         } else {
-            //             unset($data[$key]);
-            //         }
-                    
-            //     }
-            // }
+        switch ($sort_by) {
+            case 'low-high':
+                $this->db->order_by('a.price', 'asc');
+                break;
+            case 'high-low':
+                $this->db->order_by('a.price', 'desc');
+                break;
+            case 'newest':
+                $this->db->order_by('a.created_at', 'desc');
+                break;
+            case 'oldest':
+                $this->db->order_by('a.created_at', 'asc');
+                break;
 
-            // echo '<pre>';
-            // print_r($data);
+            default:
+                # code...
+                break;
+        }
+
+        $data = $this->db->get('properties a,users b')->result_array();
+        // echo $this->db->last_query();
+        // die;
+
+        // if($bedroom && $bedroom != 'any'){
+        //     $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
+
+        //     foreach($data as $key => $value){
+
+        //         $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->get('property_attribute_values')->row_array()['value'];
+
+        //         if($bedroom_attr_val > $bedroom){
+        //             continue;
+        //         } else {
+        //             unset($data[$key]);
+        //         }
+
+        //     }
+        // }
+
+        // echo '<pre>';
+        // print_r($data);
 
         if ($bedroom && $bedroom != 0) {
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            foreach($data as $key => $value){                 
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+            foreach ($data as $key => $value) {
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($data[$key]);
                 }
             }
             $data = array_values($data);
-        }
-        else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            foreach($data as $key => $value){                    
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom_min))->where('value <=',intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+        } else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+            foreach ($data as $key => $value) {
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $value['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom_min))->where('value <=', intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($data[$key]);
                 }
-                
             }
             $data = array_values($data);
             // echo '<pre>';
             // print_r($data);
             // die();
         }
-        if(sizeof($data) < 1) {
+        if (sizeof($data) < 1) {
             die(json_encode(['result_empty' => true]));
         }
 
@@ -309,27 +301,27 @@ class M_properties extends CI_Model
         $attributes = array_column($attributes, 'attrs', 'property_id');
 
         $attributes_icon = $this->db
-                    ->select('b.property_id, GROUP_CONCAT(JSON_OBJECT("text", a.text, "value", a.icon)) attrs_icon')
-                    ->where('b.attribute_id = a.id')
-                    ->where_in('b.property_id', array_column($data, 'id'))
-                    ->group_by('b.property_id')
-                    ->get('property_attributes a, property_attribute_values b')
-                    ->result_array();
+            ->select('b.property_id, GROUP_CONCAT(JSON_OBJECT("text", a.text, "value", a.icon)) attrs_icon')
+            ->where('b.attribute_id = a.id')
+            ->where_in('b.property_id', array_column($data, 'id'))
+            ->group_by('b.property_id')
+            ->get('property_attributes a, property_attribute_values b')
+            ->result_array();
 
         $attributes_icon = array_column($attributes_icon, 'attrs_icon', 'property_id');
-        
+
 
         $favourites = $this->db
-                    ->select('b.user_id, b.property_id')
-                    ->where('a.id = b.property_id')
-                    ->where('b.user_id', $_SESSION['id'])
-                    ->get('properties a, favorites b')
-                    ->result_array(); 
-                
-        
+            ->select('b.user_id, b.property_id')
+            ->where('a.id = b.property_id')
+            ->where('b.user_id', $_SESSION['id'])
+            ->get('properties a, favorites b')
+            ->result_array();
 
-            
-        array_walk($data, function(&$row) use ($attributes, $attributes_icon, $favourites) {
+
+
+
+        array_walk($data, function (&$row) use ($attributes, $attributes_icon, $favourites) {
             $dateInterval = (new DateTime())->diff(new DateTime($row['date']));
             $row['date'] = $dateInterval->format('%d days ago');
             $row['created'] = (new DateTime($row['created']))->format('d M y');
@@ -340,14 +332,14 @@ class M_properties extends CI_Model
             $row['favourites'] = json_encode($favourites);
             $row = array_filter($row);
         });
-        
+
         // print_r($data);
         // die();
         $image = $this->db
             ->select('property_id, path')
             ->get('property_images')
             ->result_array();
-        return compact('data','image');
+        return compact('data', 'image');
     }
     public function getPropertiesWithAttributes()
     {
@@ -365,12 +357,12 @@ class M_properties extends CI_Model
         $bathroom = $this->input->get('bathroom');
         $favourite = $this->input->get('favourite');
         $areasData = $this->db
-        ->select('id')
-        ->where('title',$area)
-        ->get('areas');
+            ->select('id')
+            ->where('title', $area)
+            ->get('areas');
         $res =  $areasData->row();
         $area_id = $res->id;
-     
+
         $max_price = $this->input->get('price_max');
         $min_price = $this->input->get('price_min');
         $available = $this->input->get('available');
@@ -380,46 +372,46 @@ class M_properties extends CI_Model
         $fromdate = '';
         $todate = '';
 
-       
+
 
         $this->db->select('a.*');
         $this->db->start_cache();
         $this->db->where('a.status', 'active');
         $this->db->where('a.sold', 'false');
-          if($toDate){
-           // $this->db->where('a.available_date BETWEEN "'.$fromDate. '" and "'.$toDate.'"');
+        if ($toDate) {
+            // $this->db->where('a.available_date BETWEEN "'.$fromDate. '" and "'.$toDate.'"');
             $this->db->where("available_date BETWEEN '$fromDate' AND '$toDate'");
             // $this->db->where('available_date <=', $fromDate);
         }
-        
+
         // die($for); 
         $paramsArr = '';
-        if(strpos($_GET['for'], 'short term rent') !== false) {
+        if (strpos($_GET['for'], 'short term rent') !== false) {
             $for = 'short term rent';
             $arrInput = explode('&', $_GET['for']);
             $fromdate = explode('=', $arrInput[1]);
-            if($fromdate) {
+            if ($fromdate) {
                 $fromdate = $fromdate[1];
             }
             $todate = explode('=', $arrInput[2]);
-            if($todate) {
+            if ($todate) {
                 $todate = $todate[1];
             }
-        }       
+        }
 
         if ($for && $for != "any") {
             $this->db->where('a.for', $for);
-            if($for == 'short term rent') {
-                if($fromdate && $todate) {
+            if ($for == 'short term rent') {
+                if ($fromdate && $todate) {
                     $fromdate = new DateTime($fromdate);
                     $todate = new DateTime($todate);
                     $count = 1;
                     $query = '';
-                    for ($i=$fromdate; $i <= $todate; $i->modify('+1 days')) { 
-                        if($count == 1) {
-                            $query .= "(FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
+                    for ($i = $fromdate; $i <= $todate; $i->modify('+1 days')) {
+                        if ($count == 1) {
+                            $query .= "(FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
                         } else {
-                            $query .= " OR FIND_IN_SET('".$i->format("Y-m-d")."', `a`.`short_term_available_date`)";
+                            $query .= " OR FIND_IN_SET('" . $i->format("Y-m-d") . "', `a`.`short_term_available_date`)";
                         }
                         $count++;
                     }
@@ -427,7 +419,7 @@ class M_properties extends CI_Model
                     $this->db->where($query);
                 }
             }
-            
+
             // die($query);
         }
         if ($type && $type != "any") {
@@ -471,7 +463,7 @@ class M_properties extends CI_Model
             case 'oldest':
                 $this->db->order_by('a.created_at', 'asc');
                 break;
-            
+
             default:
                 # code...
                 break;
@@ -481,116 +473,102 @@ class M_properties extends CI_Model
         $this->db->join('virtual_numbers b', 'a.vn_id = b.id', 'right');
         $this->db->stop_cache();
 
-        if(isset($bedroom)) {
-        }
-        else if(isset($bedroom_min)) {
-        }
-        else
+        if (isset($bedroom)) {
+        } else if (isset($bedroom_min)) {
+        } else
             $this->db->limit(9, $page * 9);
 
 
         $properties = $this->db->get()->result_array(); //die($this->db->last_query());
         $all_properties_count = $this->db->count_all_results();
         $this->db->flush_cache();
-        
+
         if (count($properties) == 0) {
             return [];
         }
 
-         if($favourite){
-        $fav_propry_ids = $this->db->select('property_id')->where('user_id', $_SESSION['id'])->get('favorites')->result_array();
-// print_r($properties);
-// die();
-foreach($fav_propry_ids as $k => $y){
-        foreach($properties as $key => $property){
-            if($k == $key){
-             echo   $y['property_id'];
+        if ($favourite) {
+            $fav_propry_ids = $this->db->select('property_id')->where('user_id', $_SESSION['id'])->get('favorites')->result_array();
+            // print_r($properties);
+            // die();
+            foreach ($fav_propry_ids as $k => $y) {
+                foreach ($properties as $key => $property) {
+                    if ($k == $key) {
+                        echo   $y['property_id'];
 
-        $bedroom_attr_val = $this->db->select('id')->where('id', $y['property_id'])->get('properties')->row_array();
- 
-        if(!is_null($bedroom_attr_val)) {
-        continue;
-        }
-        else {
-        unset($properties[$key]);
-        }
-       
-        }
-        }
-    }
-   
+                        $bedroom_attr_val = $this->db->select('id')->where('id', $y['property_id'])->get('properties')->row_array();
+
+                        if (!is_null($bedroom_attr_val)) {
+                            continue;
+                        } else {
+                            unset($properties[$key]);
+                        }
+                    }
+                }
+            }
         }
 
-        if($more){
-        $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => $more],1)->row_array()['id'];
+        if ($more) {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => $more], 1)->row_array()['id'];
 
-        foreach($properties as $key => $property){
+            foreach ($properties as $key => $property) {
 
-        $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id',$bedroom_id)->get('property_attribute_values')->row_array()['value'];
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id', $bedroom_id)->get('property_attribute_values')->row_array()['value'];
 
-        // if($bedroom_attr_val > $bedroom){
-        //     continue;
-        // } else {
-        //     unset($properties[$key]);
-        // }
-
-        if(!is_null($bedroom_attr_val)) {
-        continue;
-        }
-        else {
-        unset($properties[$key]);
-        }
-
-        }
-        }
-        if($bedroom){
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            
-            foreach($properties as $key => $property){
-                
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom))->get('property_attribute_values')->row_array()['value'];
-                
                 // if($bedroom_attr_val > $bedroom){
                 //     continue;
                 // } else {
                 //     unset($properties[$key]);
                 // }
 
-                if(!is_null($bedroom_attr_val)) {
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($properties[$key]);
                 }
-                
             }
         }
-          if($bathroom){
-            $bathroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bathroom'],1)->row_array()['id'];
-            
-            foreach($properties as $key => $property){
-                
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id',$bathroom_id)->where('value >=',intval($bathroom))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+        if ($bedroom) {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+
+            foreach ($properties as $key => $property) {
+
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom))->get('property_attribute_values')->row_array()['value'];
+
+                // if($bedroom_attr_val > $bedroom){
+                //     continue;
+                // } else {
+                //     unset($properties[$key]);
+                // }
+
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($properties[$key]);
                 }
-                
             }
         }
-        else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
-            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'],1)->row_array()['id'];
-            foreach($properties as $key => $property){
-                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id',$bedroom_id)->where('value >=',intval($bedroom_min))->where('value <=',intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
-                if(!is_null($bedroom_attr_val)) {
+        if ($bathroom) {
+            $bathroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bathroom'], 1)->row_array()['id'];
+
+            foreach ($properties as $key => $property) {
+
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id', $bathroom_id)->where('value >=', intval($bathroom))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
                     continue;
-                }
-                else {
+                } else {
                     unset($properties[$key]);
                 }
-                
+            }
+        } else if ($bedroom_min && $bedroom_max != 0 && $bedroom_max != '') {
+            $bedroom_id = $this->db->select('id')->get_where('property_attributes', ['text' => 'Bedroom'], 1)->row_array()['id'];
+            foreach ($properties as $key => $property) {
+                $bedroom_attr_val = $this->db->select('`value`')->where('property_id', $property['id'])->where('attribute_id', $bedroom_id)->where('value >=', intval($bedroom_min))->where('value <=', intval($bedroom_max))->get('property_attribute_values')->row_array()['value'];
+                if (!is_null($bedroom_attr_val)) {
+                    continue;
+                } else {
+                    unset($properties[$key]);
+                }
             }
             $properties = array_values($properties);
             // echo '<pre>';
@@ -598,16 +576,15 @@ foreach($fav_propry_ids as $k => $y){
             // die();
         }
         // $bedroom_attr_val = $this->db->get('property_attribute_values');
-         
-        if(count($properties) > 0) {
+
+        if (count($properties) > 0) {
             $attributes =  $this->db
                 ->select('a.text,a.icon,b.property_id,b.attribute_id,b.value ')
                 ->where('a.id = b.attribute_id')
                 ->where_in('b.property_id', array_column($properties, 'id'))
                 ->get('property_attribute_values b,property_attributes a')
                 ->result_array();
-        }
-        else {
+        } else {
             $attributes = [];
         }
 
@@ -624,16 +601,16 @@ foreach($fav_propry_ids as $k => $y){
                 return $attributes[$key];
             }, $keys);
         });
- $images = $this->db
+        $images = $this->db
             ->select('property_id, path')
             // ->group_by('property_id')
             ->get('property_images')
             ->result_array();
-        return compact('properties', 'all_properties_count','images');
+        return compact('properties', 'all_properties_count', 'images');
     }
     public function getAllImages()
     {
-         return $this->db
+        return $this->db
             ->select('property_id, path')
             ->get('property_images')
             ->result_array();
@@ -680,8 +657,8 @@ foreach($fav_propry_ids as $k => $y){
 
         $properties = $this->db->get()->result_array();
         $propertyCoords = array_filter(array_column($properties, 'coords', 'id'));
-        
-        array_walk($propertyCoords, function(&$str) {
+
+        array_walk($propertyCoords, function (&$str) {
             $str = json_decode($str);
         });
 
@@ -724,8 +701,8 @@ foreach($fav_propry_ids as $k => $y){
 
     function addToFavorite($id)
     {
-        if(count($this->db->select('id')->where('user_id', $_SESSION['id'])->where('property_id', $id)->get('favorites')->result_array()) > 0){
-            if($this->db->where('user_id', $_SESSION['id'])->where('property_id', $id)->delete('favorites')){
+        if (count($this->db->select('id')->where('user_id', $_SESSION['id'])->where('property_id', $id)->get('favorites')->result_array()) > 0) {
+            if ($this->db->where('user_id', $_SESSION['id'])->where('property_id', $id)->delete('favorites')) {
                 return 'remove';
             }
             return false;
@@ -734,13 +711,14 @@ foreach($fav_propry_ids as $k => $y){
             'user_id' => $_SESSION['id'],
             'property_id' => $id
         ];
-        if($this->db->insert('favorites', $data)){
+        if ($this->db->insert('favorites', $data)) {
             return 'insert';
         }
         return false;
     }
 
-    function getFavorites(){
+    function getFavorites()
+    {
         return $this->db->select('property_id')->where('user_id', $_SESSION['id'])->get('favorites')->result_array();
     }
 }

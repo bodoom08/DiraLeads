@@ -4,6 +4,7 @@ require(APPPATH . 'third_party/vendor/autoload.php');
 require_once(APPPATH . 'third_party/vendor/telnyx/telnyx-php/init.php');
 
 use Twilio\TwiML\VoiceResponse;
+use Twilio\TwiML\MessagingResponse;
 // use Telnyx;
 
 class Webhook extends CI_Controller
@@ -21,21 +22,22 @@ class Webhook extends CI_Controller
     function sms_receive()
     {
         if ($this->input->method() == 'post') {
-            $requests = json_decode(file_get_contents('php://input'), true);
-            $this->load->helper('file');
+            $response = new MessagingResponse();
+            // $requests = json_decode(file_get_contents('php://input'), true);
+            // $this->load->helper('file');
 
-            $sentByDiraLeads = "\nThis SMS was sent by DiraLeads";
-            $virtual_number = $requests['data']['payload']['to'];
-            $text = $requests['data']['payload']['text'] . $sentByDiraLeads;
+            // $sentByDiraLeads = "\nThis SMS was sent by DiraLeads";
+            // $virtual_number = $requests['data']['payload']['to'];
+            // $text = $requests['data']['payload']['text'] . $sentByDiraLeads;
 
-            $result = $this->db->select('*')
-                ->from('virtual_numbers')
-                ->where('virtual_numbers.number', $virtual_number)
-                ->join('properties', 'properties.vn_id = virtual_numbers.id', 'left')
-                ->join('users', 'users.id = properties.user_id', 'left')
-                ->get()->result_array();
+            // $result = $this->db->select('*')
+            //     ->from('virtual_numbers')
+            //     ->where('virtual_numbers.number', $virtual_number)
+            //     ->join('properties', 'properties.vn_id = virtual_numbers.id', 'left')
+            //     ->join('users', 'users.id = properties.user_id', 'left')
+            //     ->get()->result_array();
 
-            $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
+            // $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
 
             // $data = json_encode($requests);
             // if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
@@ -44,11 +46,22 @@ class Webhook extends CI_Controller
             //     // echo $data;
             // }
 
-            \Telnyx\Message::Create([
-                "from" => "+15166361518", // Your Telnyx number
-                "to" => $owner_number,
-                "text" => $text
-            ]);
+            // \Telnyx\Message::Create([
+            //     "from" => "+15166361518", // Your Telnyx number
+            //     "to" => $owner_number,
+            //     "text" => $text
+            // ]);
+
+            $response->message(
+                "hello",
+                [
+                    "to" => '+17606165259'
+                ]
+            );
+
+            return $this->output
+                ->set_content_type('text/xml')
+                ->set_output($response);
         }
     }
 
