@@ -89,6 +89,7 @@ class M_property extends CI_Model
             'date_price' => $date_price,
             'available_date' => date('Y-m-d', strtotime($available_date)),
             'description' => $property_desc,
+            'status' => 'inactive',
             // 'coords' => json_encode(explode('|', $lat_lng)),
             'coords'    => '[""]',
             'created_by' => $_SESSION['id'],
