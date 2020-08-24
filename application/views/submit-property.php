@@ -472,6 +472,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         align-items: flex-start;
     }
 
+    .daily-container input {
+        width: 90%;
+    }
+
     .day-background {
         width: 100%;
         height: 25%;
@@ -2554,6 +2558,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         });
 
         $(document).on('click', '.costomSession', function() {
+
             $('#seasonCalendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -2655,6 +2660,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     }
                 }
             });
+            //clear calendar and cards
+            $('.fc-bg td').html('');
         });
 
         function renderCalendarPrice() {
@@ -2770,7 +2777,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                             price = "Weekend: $" + weekendPriceValue;
                         }
                     }
-                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPriceValue + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + weekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + weekendTo + '"></div>');
+                    $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPriceValue + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + seasonID + '" value="' + weekendFrom + '"><input type="hidden" class="rulWeekendEnd' + seasonID + '" value="' + weekendTo + '"></div>');
                 } else {
                     var fixedPrice = values[5];
                     var fixedPriceD = '$' + fixedPrice;
@@ -2890,6 +2897,118 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                 $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePrice('unavailable'));
             });
+        }
+
+        function renderSession() {
+            //clear calendar and cards
+            $('.fc-bg td').html('');
+
+            $('.rule').html('');
+
+
+            // set price in dates and render cards
+            var seasonData = $('#session').val();
+            var seasons = seasonData != '' ? seasonData.split('&') : [];
+            console.log("renderSession", seasons);
+            seasons.forEach(season => {
+                var values = season.split('|');
+                var seasonID = values[0];
+                var title = values[1];
+                var startDate = new Date(values[2]);
+                var endDate = new Date(values[3]);
+                var seasonRate = values[4];
+                if (seasonRate == 'daily') {
+                    var dayPrice = values[5];
+                    var weekendPriceValue = values[6];
+                    var isOnlyWeekend = values[7];
+                    var weekendFrom = values[8];
+                    var weekendTo = values[9];
+                    var dailyPriceD = dayPrice != '' ? '$' + dayPrice : '';
+
+                    console.log(dayPrice, weekendPriceValue, isOnlyWeekend, weekendFrom, weekendTo);
+                    if (dayPrice) {
+                        price = "Day: $" + dayPrice;
+                        if (weekendPriceValue) {
+                            if (isOnlyWeekend == 'true') {
+                                price = "Only Weekend: $" + weekendPriceValue;
+                            } else {
+                                price += "  Weekend: $" + weekendPriceValue;
+                            }
+                        }
+                    } else {
+                        if (weekendPriceValue) {
+                            price = "Weekend: $" + weekendPriceValue;
+                        }
+                    }
+                    $('.rule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="2" aria-hidden="true"></i><span class="rulEdit" tab="2" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + seasonID + '" value="' + dayPrice + '"><input type="hidden" class="rulWeekendPrice' + seasonID + '" value="' + weekendPriceValue + '"><input type="hidden" class="rulWeekendAval' + seasonID + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + seasonID + '" value="' + weekendFrom + '"><input type="hidden" class="rulWeekendEnd' + seasonID + '" value="' + weekendTo + '"></div>');
+                } else {
+                    var fixedPrice = values[5];
+                    var fixedPriceD = '$' + fixedPrice;
+                    price = 'Fixed: $' + fixedPrice;
+                    $('.rule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="2" aria-hidden="true"></i><span class="rulEdit" tab="2" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + fixedPrice + '"></div>');
+                }
+                console.log(values);
+                var middate = new Date((startDate.getTime() + endDate.getTime()) / 2);
+                var between = [];
+                var tempDate = startDate;
+                while (tempDate <= endDate) {
+                    between.push(new Date(tempDate));
+                    tempDate.setDate(tempDate.getDate() + 1);
+                }
+
+                if (seasonRate == 'daily') {
+                    var weekday = [
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        [],
+                        []
+                    ];
+                    between.forEach(day => {
+                        var dayObj = $('.fc-widget-content[data-date="' + convert(day) + '"]');
+                        dayObj.html(dailyPriceD);
+                        if (dayObj.hasClass('fc-mon')) {
+                            weekday[0].push(dayObj);
+                        } else if (dayObj.hasClass('fc-tue')) {
+                            weekday[1].push(dayObj);
+                        } else if (dayObj.hasClass('fc-wed')) {
+                            weekday[2].push(dayObj);
+                        } else if (dayObj.hasClass('fc-thu')) {
+                            weekday[3].push(dayObj);
+                        } else if (dayObj.hasClass('fc-fri')) {
+                            weekday[4].push(dayObj);
+                        } else if (dayObj.hasClass('fc-sat')) {
+                            weekday[5].push(dayObj);
+                        } else if (dayObj.hasClass('fc-sun')) {
+                            weekday[6].push(dayObj);
+                        }
+                    });
+
+                    var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
+                    for (var i = weekendFrom; i <= weekendTo; i++) {
+                        console.log(weekday[i % 7]);
+                        weekday[i % 7].forEach(weekendDay => {
+                            weekendDay.html('$' + weekendPriceValue);
+                        })
+                    }
+                    // weekday[midWeekend].forEach(weekendDay => {
+                    //     weekendDay.html(weekendPrice(weekendPriceValue));
+                    // });
+
+                } else {
+
+                    between.forEach(day => {
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                    });
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                }
+            });
+
+            renderManualBooking();
+            renderBlockDate();
+
         }
 
         var seasonID = 0;
@@ -3452,43 +3571,61 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('End date is required');
                 return false;
             }
-            if (seasonRate == "daily") {
-                if (!sDayPrice && !sWeekendPrice) {
-                    toastr.warning('Price is required');
-                    return false;
-                }
-                var price = '';
-
-                if (sDayPrice) {
-                    price = "Day: $" + sDayPrice;
-                    if (sWeekendPrice) {
-                        if (isOnlyWeekend) {
-                            price = "Only Weekend: $" + sWeekendPrice;
-                        } else {
-                            price += "  Weekend: $" + sWeekendPrice;
-                        }
-                    }
-                } else {
-                    if (sWeekendPrice) {
-                        price = "Weekend: $" + sWeekendPrice;
-                    }
-                }
-                $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + click + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + click + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + click + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '"></div>');
-            } else {
-                if (!seasonFixedPrice) {
-                    toastr.warning('Price is required');
-                    return false;
-                }
-                price = 'Fixed: $' + seasonFixedPrice;
-                $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + click + '" value="' + seasonFixedPrice + '"></div>');
-
-            }
 
             var sessionData = $('#session').val();
             if (sessionData != '') {
                 sessionData = sessionData + '&';
             }
-            $('#session').val(sessionData + click + '|' + seasonName + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate);
+
+            if (seasonRate == "daily") {
+
+                if (!sDayPrice && !sWeekendPrice) {
+                    toastr.warning('Price is required');
+                    return false;
+                }
+                $('#session').val(sessionData + click + '|' + seasonName + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + sDayPrice + '|' + sWeekendPrice + '|' + isOnlyWeekend + '|' + sWeekendFrom + '|' + sWeekendTo);
+
+            } else {
+                if (!seasonFixedPrice) {
+                    toastr.warning('Price is required');
+                    return false;
+                }
+                $('#session').val(sessionData + click + '|' + seasonName + '|' + convert(startDate) + '|' + convert(endDate) + '|' + seasonRate + '|' + seasonFixedPrice);
+            }
+
+            // if (seasonRate == "daily") {
+            //     if (!sDayPrice && !sWeekendPrice) {
+            //         toastr.warning('Price is required');
+            //         return false;
+            //     }
+            //     var price = '';
+
+            //     if (sDayPrice) {
+            //         price = "Day: $" + sDayPrice;
+            //         if (sWeekendPrice) {
+            //             if (isOnlyWeekend) {
+            //                 price = "Only Weekend: $" + sWeekendPrice;
+            //             } else {
+            //                 price += "  Weekend: $" + sWeekendPrice;
+            //             }
+            //         }
+            //     } else {
+            //         if (sWeekendPrice) {
+            //             price = "Weekend: $" + sWeekendPrice;
+            //         }
+            //     }
+            //     $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + click + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + click + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + click + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '"></div>');
+            // } else {
+            //     if (!seasonFixedPrice) {
+            //         toastr.warning('Price is required');
+            //         return false;
+            //     }
+            //     price = 'Fixed: $' + seasonFixedPrice;
+            //     $('.rule').append('<div class="sessionalRule sessionHide' + click + '" style="background-color:#DCDCDC"><p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + click + '" value="' + seasonFixedPrice + '"></div>');
+
+            // }
+
+            renderSession();
             $('#date').val(convert(endDate));
             $('#price').val(price);
             click++;
@@ -3496,6 +3633,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 this.reset();
             });
             $('#myModal').hide();
+
         });
         $('.close').click(function() {
             $('#newsletterform').each(function() {
@@ -3536,41 +3674,27 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 toastr.warning('End date is required');
                 return false;
             }
+
             if (seasonRate == "daily") {
                 if (!sDayPrice && !sWeekendPrice) {
                     toastr.warning('Price is required');
                     return false;
                 }
-                var price = '';
+                var updateItem = '' + id + '|' + seasonName + '|' + startDate + '|' + endDate + '|' + seasonRate + '|' + sDayPrice + '|' + sWeekendPrice + '|' + isOnlyWeekend + '|' + sWeekendFrom + '|' + sWeekendTo;
 
-                if (sDayPrice) {
-                    price = "Day: $" + sDayPrice;
-                    if (sWeekendPrice) {
-                        if (isOnlyWeekend) {
-                            price = "Only Weekend: $" + sWeekendPrice;
-                        } else {
-                            price += "  Weekend: $" + sWeekendPrice;
-                        }
-                    }
-                } else {
-                    if (sWeekendPrice) {
-                        price = "Weekend: $" + sWeekendPrice;
-                    }
-                }
-                var updatedRule = '<p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulDayPrice' + click + '" value="' + sDayPrice + '"><input type="hidden" class="rulWeekendPrice' + click + '" value="' + sWeekendPrice + '"><input type="hidden" class="rulWeekendAval' + click + '" value="' + isOnlyWeekend + '"><input type="hidden" class="rulWeekendStart' + click + '" value="' + sWeekendFrom + '"><input type="hidden" class="rulWeekendEnd' + click + '" value="' + sWeekendTo + '">';
             } else {
                 if (!seasonFixedPrice) {
                     toastr.warning('Price is required');
                     return false;
                 }
-                price = 'Fixed: $' + seasonFixedPrice;
-                var updatedRule = '<p>' + seasonName + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + startDate + ' - ' + endDate + '</p><div class="season-action"><i class="fa fa-trash" data=' + click + ' aria-hidden="true"></i><span class="rulEdit" data=' + click + ' edit-id=' + click + '>Edit</span></div><input type="hidden" class="rulname' + click + '" value="' + seasonName + '"><input type="hidden" class="rulStartDate' + click + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + click + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + click + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + click + '" value="' + seasonFixedPrice + '">';
+                var updateItem = '' + id + '|' + seasonName + '|' + startDate + '|' + endDate + '|' + seasonRate + '|' + seasonFixedPrice;
             }
+            console.log('UpdatedItem', updateItem);
 
             var session = $('#session').val();
             var y = session.split('&');
-            console.log(y);
-            var updateItem = '' + id + '|' + name + '|' + startDate + '|' + endDate + '|' + seasonRate;
+            console.log('y', y);
+
             updatedY = y.map((item) => {
                 var values = item.split('|');
                 if (values[0] == id) {
@@ -3581,7 +3705,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             });
             var seval = updatedY.join('&');
             $('#session').val(seval);
-            $('.sessionHide' + id).html(updatedRule);
+            // $('.sessionHide' + id).html(updatedRule);
+
+            renderSession();
 
             $('#editSeasonModal').hide();
         });
@@ -3722,18 +3848,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 renderCalendarPrice();
             } else { //second tab
                 var days = $('.rulDays' + id).val();
-                var session = $('#session').val();
-                var y = session.split('&');
-                console.log(y);
-                var removeItem = '' + id + '|' + name + '|' + startDate + '|' + endDate + '|' + seasonRate;
-                y = $.grep(y, function(value) {
-                    return value != removeItem;
-                });
-                var seval = y.join('&');
-                $('#session').val(seval);
+                var sessionData = $('#session').val();
+                var sessions = sessionData.split('&');
 
+                var newSession = sessions.filter(session => {
+                    var values = session.split('|');
+                    if (values[0] == id) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                });
+                var newSessionData = newSession.length > 0 ? newSession.join('&') : [];
+                console.log(newSessionData);
+                $('#session').val(newSessionData);
+                renderSession();
             }
-            $('.sessionHide' + id).hide();
 
         });
 
@@ -3801,7 +3931,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 } else {
                     var dayPrice = $('.rulDayPrice' + id).val();
                     var weekendPrice = $('.rulWeekendPrice' + id).val();
-                    var weekendAval = $('.rulWeekendAval' + id).val();
+                    var weekendAval = $('.rulWeekendAval' + id).val() == 'true' ? true : false;
                     var weekendStart = $('.rulWeekendStart' + id).val();
                     var weekendEnd = $('.rulWeekendEnd' + id).val();
 
