@@ -477,23 +477,32 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         height: 25%;
         margin-bottom: 0px !important;
         font-size: 16px;
+
+        
+        margin-right: -1px;
+        margin-left: -1px;
+        position: relative;
     }
 
     .weekend-background {
+        border: 1px solid #ea7676;
         background-color: #ea7676;
     }
 
     .season-background {
+        border: 1px solid #76eaaf;
         background-color: #76eaaf;
         font-weight: bold;
     }
 
     .manual-background {
+        border: 1px solid #76a7ea;
         background-color: #76a7ea;
         font-weight: bold;
     }
 
     .unavailable-background {
+        border: 1px solid #d4d0d0;
         background-color: #d4d0d0;
     }
 
