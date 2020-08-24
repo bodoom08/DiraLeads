@@ -4108,7 +4108,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         between.forEach(day => {
             $('.fc-widget-content[data-date="' + moment(day).format("YYYY-MM-DD") + '"]').empty();
         });
-
+    }
         function editBlockDate() {
             // Edit Block Date
             const selectedDate = moment($('#date-action .date label').html());
@@ -4173,5 +4173,4 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             });
             closeDateAction();
         }
-    }
 </script>
