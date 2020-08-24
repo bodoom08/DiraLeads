@@ -478,7 +478,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         margin-bottom: 0px !important;
         font-size: 16px;
 
-        
+
         margin-right: -1px;
         margin-left: -1px;
         position: relative;
@@ -1839,7 +1839,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 <script src="<?php echo site_url('assets/js/moment.min.js') ?>"></script>
 <script src="<?php echo site_url('assets/js/jquery-ui.custom.min.js') ?>"></script>
 
-<script src='<?php echo site_url('assets/js/fullcalendar.js');?>'></script>
+<script src='<?php echo site_url('assets/js/fullcalendar.js'); ?>'></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> -->
 <!-- Update for Google Autocomplete Places API -->
@@ -2571,7 +2571,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 events: {
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                     cache: true,
-                    success: function(events) { 
+                    success: function(events) {
                         console.log("Success function");
                         // a function that returns an object
                         for (var i = 0; i < events.length; i++) {
@@ -4178,68 +4178,69 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.fc-widget-content[data-date="' + moment(day).format("YYYY-MM-DD") + '"]').empty();
         });
     }
-        function editBlockDate() {
-            // Edit Block Date
-            const selectedDate = moment($('#date-action .date label').html());
-            let blockDetail = JSON.parse($('.blockDetail').val());
 
-            blockDetail = blockDetail.filter(day => {
-                if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) return true;
+    function editBlockDate() {
+        // Edit Block Date
+        const selectedDate = moment($('#date-action .date label').html());
+        let blockDetail = JSON.parse($('.blockDetail').val());
+
+        blockDetail = blockDetail.filter(day => {
+            if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) return true;
+            return false;
+        });
+
+        if (blockDetail.length == 0) {
+            console.log("No Data");
+            return;
+        }
+
+        document.getElementById('edit-starts-atblock').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
+        document.getElementById('edit-ends-atblock').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
+        document.getElementById('edit-blockPrivateNote').value = blockDetail[0].privateNotes;
+
+        document.getElementById('hid_editBlockStart').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
+        document.getElementById('hid_editBlockEnd').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
+
+        closeDateAction();
+        $('#updateBlockModal').modal('show');
+    }
+
+    function removeBlockDate() {
+        // Remove Block Date
+        const selectedDate = moment($('#date-action .date label').html());
+        let blockDetail = JSON.parse($('.blockDetail').val());
+        let disableDate = $('.disableDate').val().split('|');
+        let removableDate;
+
+        blockDetail = blockDetail.filter(day => {
+            if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) {
+                removableDate = {
+                    checkInDate: moment(day.checkInDate),
+                    checkOutDate: moment(
+                        day.checkOutDate)
+                };
                 return false;
-            });
-
-            if (blockDetail.length == 0) {
-                console.log("No Data");
-                return;
             }
+            return true;
+        });
+        disableDate = disableDate.filter(day => {
+            const date = day.split(',');
+            if (moment(date[0], "DD/MM/YYYY") <= selectedDate && selectedDate <= moment(date[1], "DD/MM/YYYY")) return false;
+            return true;
+        });
 
-            document.getElementById('edit-starts-atblock').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
-            document.getElementById('edit-ends-atblock').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
-            document.getElementById('edit-blockPrivateNote').value = blockDetail[0].privateNotes;
+        $('.disableDate').val(disableDate.join('|'));
+        $('.blockDetail').val(JSON.stringify(blockDetail));
 
-            document.getElementById('hid_editBlockStart').value = moment(blockDetail[0].checkInDate).format("MM-DD-YYYY");
-            document.getElementById('hid_editBlockEnd').value = moment(blockDetail[0].checkOutDate).format("MM-DD-YYYY");
-
-            closeDateAction();
-            $('#updateBlockModal').modal('show');
+        var between = [];
+        while (removableDate.checkInDate <= removableDate.checkOutDate) {
+            between.push(removableDate.checkInDate.format("YYYY-MM-DD"));
+            removableDate.checkInDate.add(1, 'days');
         }
 
-        function removeBlockDate() {
-            // Remove Block Date
-            const selectedDate = moment($('#date-action .date label').html());
-            let blockDetail = JSON.parse($('.blockDetail').val());
-            let disableDate = $('.disableDate').val().split('|');
-            let removableDate;
-
-            blockDetail = blockDetail.filter(day => {
-                if (moment(day.checkInDate) <= selectedDate && selectedDate <= moment(day.checkOutDate)) {
-                    removableDate = {
-                        checkInDate: moment(day.checkInDate),
-                        checkOutDate: moment(
-                            day.checkOutDate)
-                    };
-                    return false;
-                }
-                return true;
-            });
-            disableDate = disableDate.filter(day => {
-                const date = day.split(',');
-                if (moment(date[0], "DD/MM/YYYY") <= selectedDate && selectedDate <= moment(date[1], "DD/MM/YYYY")) return false;
-                return true;
-            });
-
-            $('.disableDate').val(disableDate.join('|'));
-            $('.blockDetail').val(JSON.stringify(blockDetail));
-
-            var between = [];
-            while (removableDate.checkInDate <= removableDate.checkOutDate) {
-                between.push(removableDate.checkInDate.format("YYYY-MM-DD"));
-                removableDate.checkInDate.add(1, 'days');
-            }
-
-            between.forEach(day => {
-                $('.fc-widget-content[data-date="' + day + '"]').empty();
-            });
-            closeDateAction();
-        }
+        between.forEach(day => {
+            $('.fc-widget-content[data-date="' + day + '"]').empty();
+        });
+        closeDateAction();
+    }
 </script>
