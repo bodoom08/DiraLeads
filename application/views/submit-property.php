@@ -2731,7 +2731,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             // set price in dates and render cards
             var seasonData = $('#season').val();
             var seasons = seasonData != '' ? seasonData.split('&') : [];
-            console.log("renderCalendarPrice", seasons);
             seasons.forEach(season => {
                 var values = season.split('|');
                 var seasonID = values[0];
@@ -2834,11 +2833,54 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
 
         function renderManualBooking() {
+            let disableDetails = JSON.parse($('.disableDetail').val());
+            console.log("DisabledDatails: ", disableDetails)
+            disableDetails.forEach(detail => {
+                let startd = new Date(detail.checkInDate);
+                let endd = new Date(detail.checkOutDate);
 
+                console.log("StartD: ", startd);
+                console.log("EndD: ", endd);
+                const midd = new Date((startd.getTime() + endd.getTime()) / 2);
+                let between = [];
+                while (startd <= endd) {
+                    between.push(new Date(startd));
+                    startd.setDate(startd.getDate() + 1);;
+                }
+
+                between.forEach(day => {
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                });
+
+                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPrice(detail.title));
+
+            })
         }
 
         function renderBlockDate() {
+            let blockDetails = JSON.parse($('.blockDetail').val());
+            console.log("BlockDetails: ", blockDetails)
+            blockDetails.forEach(detail => {
+                let startd = new Date(moment(detail.checkInDate).format("MM-DD-YYYY"));
+                let endd = new Date(moment(detail.checkOutDate).format("MM-DD-YYYY"));
 
+                console.log("StartD:", startd);
+                console.log("EndD: ", endd);
+                const midd = new Date((startd.getTime() + endd.getTime()) / 2);
+                let between = [];
+                while (startd <= endd) {
+                    between.push(new Date(startd));
+                    startd.setDate(startd.getDate() + 1);
+                }
+
+                // console.log("Between: ", between);
+
+                between.forEach(day => {
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+                });
+
+                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePrice('unavailable'));
+            });
         }
 
         var seasonID = 0;
