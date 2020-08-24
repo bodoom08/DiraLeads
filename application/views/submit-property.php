@@ -579,6 +579,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         right: 0.1rem;
         transform: rotateZ(180deg);
     }
+
+    .fc-content-skeleton tbody tr:first-child {
+        height: unset;
+    }
+
+    .fc-content-skeleton tbody tr {
+        height: 20px;
+    }
 </style>
 
 <div class="dashboard">
@@ -2820,6 +2828,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
                 }
             });
+
+            renderManualBooking();
+            renderBlockDate();
+        }
+
+        function renderManualBooking() {
+
+        }
+
+        function renderBlockDate() {
 
         }
 
