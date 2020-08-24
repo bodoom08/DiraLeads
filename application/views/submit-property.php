@@ -1822,7 +1822,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 <script src="<?php echo site_url('assets/js/moment.min.js') ?>"></script>
 <script src="<?php echo site_url('assets/js/jquery-ui.custom.min.js') ?>"></script>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.0/fullcalendar.min.js'></script>
+<script src='<?php echo site_url('assets/js/fullcalendar.js');?>'></script>
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script> -->
 <!-- Update for Google Autocomplete Places API -->
@@ -2427,16 +2427,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             selectable: true,
             fixedWeekCount: false,
             timeZone: 'local',
-            eventOrder: "-title",
             events: {
                 url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-                cache: true,
+                cache: true
             },
-            eventRender: function(eventObj, $el) {
-                // $el.addClass("custom-event");
-                // console.log(eventObj);
-            },
-
             select: function(start, end, jsEvent, view) {
 
 
@@ -2560,7 +2554,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 events: {
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                     cache: true,
-                    success: function(events) { // a function that returns an object
+                    success: function(events) { 
+                        console.log("Success function");
+                        // a function that returns an object
                         for (var i = 0; i < events.length; i++) {
                             if (events[i].className == "hebdate") {
                                 events[i].order = 1;
@@ -2574,6 +2570,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     }
                 },
                 eventRender: function(eventObj, $el) {
+                    console.log("Event Rendering");
                     // $el.addClass("custom-event");
                     // console.log(eventObj);
                 },
