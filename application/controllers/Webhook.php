@@ -26,7 +26,7 @@ class Webhook extends CI_Controller
             $requests = json_decode(file_get_contents('php://input'), true);
             // $this->load->helper('file');
 
-            // $sentByDiraLeads = "\nThis SMS was sent by DiraLeads";
+            $sentByDiraLeads = "\nThis SMS was sent by DiraLeads";
             $virtual_number = $requests['data']['payload']['to'];
             $text = $requests['data']['payload']['text'] . $sentByDiraLeads;
 
