@@ -213,8 +213,11 @@ class M_property extends CI_Model
                             \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
                             \Telnyx\PhoneNumber::Update($number_e164, [
                                 "connection_id" => TEXML_APP_ID,
+                                "messaging_product" => "P2P",
                                 "messaging_profile_id" => MESSAGE_PROFILE_ID
                             ]);
+
+                            // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
                         } else {
                             return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
                         }

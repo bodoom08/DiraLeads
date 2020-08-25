@@ -53,7 +53,7 @@ if (!isset($_GET['for'])) { //ben
 }
 if (strpos($for, 'short term rent') !== false) {
     $shortTermFor = true;
-    
+
     $arrInput = explode('&', $for);
     $fromdate = explode('=', $arrInput[1]);
     if ($fromdate) {
