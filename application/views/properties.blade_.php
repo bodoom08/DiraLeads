@@ -247,16 +247,13 @@ if (strpos($for_get, 'short term rent') !== false) {
                 <div id="content4">
                     <h4>Sort By</h4>
                     <ul class="main-33">
-                        <li class="active"> <button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
-                        <li>
-                            <button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
-                        <li class="active"> <button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
-                        <li class="active"> <button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
+                        <li><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
                         <div class="clearfix"></div>
                     </ul>
-
                 </div>
-
             </div>
             <div class="filter-btn-mobo sortby">
                 <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> More &nbsp;<i class="fa fa-angle-down"></i> </button>

@@ -10,10 +10,24 @@ class Properties extends MOBO_Controller
         $this->load->library('session');
     }
 
+    // public function index()
+    // {
+    //     $this->load->view('properties');
+    // }
+
     public function index()
     {
-        $this->load->view('properties');
+        // return 'hi';
+        $data['areas'] = $this->M_properties->getAllAreas();
+        $properties = $this->M_properties->getPropertiesWithAttributes();
+        $data['properties'] = $properties['properties'];
+        $this->paginate($properties['all_properties_count']);
+
+        // $data['coords'] = $this->M_properties->getPropertyCoords();
+
+        $this->load->view('properties', $data);
     }
+
     public function getAllImages()
     {
         $this->output
@@ -33,18 +47,7 @@ class Properties extends MOBO_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($this->M_properties->getAllDevlopment()));
     }
-    public function _index()
-    {
-        // return 'hi';
-        $data['areas'] = $this->M_properties->getAllAreas();
-        $properties = $this->M_properties->getPropertiesWithAttributes();
-        $data['properties'] = $properties['properties'];
-        $this->paginate($properties['all_properties_count']);
-
-        // $data['coords'] = $this->M_properties->getPropertyCoords();
-
-        $this->load->view('properties', $data);
-    }
+    
 
     public function map()
     {
