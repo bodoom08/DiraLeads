@@ -361,7 +361,11 @@ class M_properties extends CI_Model
             ->where('title', $area)
             ->get('areas');
         $res =  $areasData->row();
-        $area_id = $res->id;
+        if (isset($res->id)) { //Ben
+            $area_id = $res->id;
+        } else {
+            $area_id = null;
+        }
 
         $max_price = $this->input->get('price_max');
         $min_price = $this->input->get('price_min');
@@ -386,9 +390,10 @@ class M_properties extends CI_Model
 
         // die($for); 
         $paramsArr = '';
-        if (strpos($_GET['for'], 'short term rent') !== false) {
+        $for_get = isset($_GET['for']) ? $_GET['for'] : 'rent';
+        if (strpos($for_get, 'short term rent') !== false) {
             $for = 'short term rent';
-            $arrInput = explode('&', $_GET['for']);
+            $arrInput = explode('&', $for_get);
             $fromdate = explode('=', $arrInput[1]);
             if ($fromdate) {
                 $fromdate = $fromdate[1];
@@ -719,6 +724,10 @@ class M_properties extends CI_Model
 
     function getFavorites()
     {
-        return $this->db->select('property_id')->where('user_id', $_SESSION['id'])->get('favorites')->result_array();
+        if (isset($_SESSION['id'])) {
+            return $this->db->select('property_id')->where('user_id', $_SESSION['id'])->get('favorites')->result_array();
+        } else {
+            return null;
+        }
     }
 }

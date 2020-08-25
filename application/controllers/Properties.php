@@ -14,9 +14,9 @@ class Properties extends MOBO_Controller
     {
         $this->load->view('properties');
     }
-  public function getAllImages()
+    public function getAllImages()
     {
-           $this->output
+        $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode($this->M_properties->getAllImages()));
     }
@@ -27,7 +27,7 @@ class Properties extends MOBO_Controller
             ->set_output(json_encode($this->M_properties->getAll()));
     }
 
- public function with_coordsDevlop()
+    public function with_coordsDevlop()
     {
         $this->output
             ->set_content_type('application/json')
@@ -42,7 +42,7 @@ class Properties extends MOBO_Controller
         $this->paginate($properties['all_properties_count']);
 
         // $data['coords'] = $this->M_properties->getPropertyCoords();
-        
+
         $this->load->view('properties', $data);
     }
 
@@ -50,7 +50,7 @@ class Properties extends MOBO_Controller
     {
         $coords = $this->M_properties->getPropertyCoords();
         // var_dump($coords); die;
-        
+
         $this->load->view('map_properties', compact('coords'));
     }
 
@@ -84,73 +84,72 @@ class Properties extends MOBO_Controller
 
     public function viewDetails()
     {
-        if($this->input->is_ajax_request()) {
+        if ($this->input->is_ajax_request()) {
             // die(json_encode($_POST));
             // die;
             exit(json_encode($this->M_properties->viewDetails()));
         }
-        
+
         redirect('/properties');
     }
 
     public function property_detail()
-	{
+    {
         $data['areas'] = $this->M_properties->getAllAreas();
         $properties = $this->M_properties->getPropertiesWithAttributes();
         $data['properties'] = $properties['properties'];
         echo json_encode($data);
         // $this->paginate($properties['all_properties_count']);
-		// $this->load->view('property_detail',$data);
+        // $this->load->view('property_detail',$data);
     }
-    
+
     function lists()
     {
         $data = $this->M_properties->getPropertiesWithAttributes();
         $data['favorites'] = $this->M_properties->getFavorites();
         $data['no_to_paginate'] = ceil($data['all_properties_count'] / 9);
         extract($_GET);
-        if(isset($bedroom) && (strtolower($bedroom) != 'any')) {
+        if (isset($bedroom) && (strtolower($bedroom) != 'any')) {
             $data['no_to_paginate'] = 1;
-        }
-        else if(isset($bedroom_min)) {
+        } else if (isset($bedroom_min)) {
             $data['no_to_paginate'] = 1;
         }
 
         $query_string = $this->input->server('QUERY_STRING');
-        if($query_string != '') {
+        if ($query_string != '') {
             $query_arr = explode('&', $query_string);
             foreach ($query_arr as $key => $value) {
                 $val = explode('=', $value);
-                if($val[0] == 'page') {
+                if ($val[0] == 'page') {
                     unset($query_arr[$key]);
                 }
             }
             $query_string = implode('&', $query_arr);
         }
-
-        if(($page == null) || ($page == 1)) {
+        if (!isset($page)) { //ben
+            $page = null;
+        }
+        if (($page == null) || ($page == 1)) {
             $data['prev_link'] = false;
-        }
-        else {
-            $data['prev_link'] = "?page=".($page-1).($query_string != '') ? '&'.$query_string:'';
+        } else {
+            $data['prev_link'] = "?page=" . ($page - 1) . ($query_string != '') ? '&' . $query_string : '';
         }
 
-        if(($page == null) || ($page == $data['no_to_paginate'])) {
+        if (($page == null) || ($page == $data['no_to_paginate'])) {
             $data['next_link'] = false;
+        } else {
+            $data['next_link'] = "?page=" . ($page + 1) . ($query_string != '') ? '&' . $query_string : '';
         }
-        else {
-            $data['next_link'] = "?page=".($page+1).($query_string != '') ? '&'.$query_string:'';
-        }
-        
-        $data['page'] = ($page == null) ? 1 : $page; 
+
+        $data['page'] = ($page == null) ? 1 : $page;
         $data['query_string'] = $query_string;
-        $data['token_name'] = $this->security->get_csrf_token_name(); 
-        $data['token_hash'] = $this->security->get_csrf_hash(); 
+        $data['token_name'] = $this->security->get_csrf_token_name();
+        $data['token_hash'] = $this->security->get_csrf_hash();
 
         // echo '<pre>';
         // print_r($data);
         // die;
-        $this->load->view('properties_list_view',$data);
+        $this->load->view('properties_list_view', $data);
     }
 
     function addToFavorites()
@@ -160,14 +159,15 @@ class Properties extends MOBO_Controller
         // redirect($_SERVER['HTTP_REFERER']);
     }
 
-    function addToViews() {
+    function addToViews()
+    {
         extract($_POST);
-        if($session_id && $property_id) {
+        if ($session_id && $property_id) {
             $rec = $this->db
-                        ->where('session_id', $session_id)
-                        ->where('property_id', $property_id)
-                        ->count_all_results('property_views');
-            if($rec == 0) {
+                ->where('session_id', $session_id)
+                ->where('property_id', $property_id)
+                ->count_all_results('property_views');
+            if ($rec == 0) {
                 $this->db
                     ->insert('property_views', [
                         'session_id' => $session_id,
@@ -178,22 +178,23 @@ class Properties extends MOBO_Controller
         }
     }
 
-    function details(){
+    function details()
+    {
         echo json_encode($_POST);
     }
 
-    function reportProperty() {
+    function reportProperty()
+    {
         $this->load->library('form_validation');
         $this->form_validation->set_rules('reason', 'Reason', 'required|trim');
-        if($this->form_validation->run()) {
-            if($this->input->post('reason') != null && ($_POST['reason'] == 'other')) {
-                if(empty($_POST['other_reason'])) {
+        if ($this->form_validation->run()) {
+            if ($this->input->post('reason') != null && ($_POST['reason'] == 'other')) {
+                if (empty($_POST['other_reason'])) {
                     die(json_encode(['type' => 'error', 'text' => 'Other Reason is required, if you select choose reason is other']));
                 }
             }
-            if(!isset($_SESSION['id'])) {
+            if (!isset($_SESSION['id'])) {
                 die(json_encode(['type' => 'error', 'text' => 'Oops! only registered user can report property.']));
-
             }
 
             $data = [
@@ -208,6 +209,5 @@ class Properties extends MOBO_Controller
         } else {
             die(json_encode(['type' => 'error', 'text' => $this->form_validation->error_string()]));
         }
-
     }
 }
