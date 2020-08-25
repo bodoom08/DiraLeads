@@ -16,31 +16,32 @@ class Page extends MOBO_Controller
 
 		if (is_null($data)) {
 			// show_404();			
-			redirect('notfound','refresh');
+			redirect('notfound', 'refresh');
 			exit;
 		}
-		
-		if($this->slug == 'home') {
+
+		if ($this->slug == 'home') {
 			$data['livedata'] = $this->M_page->home_page_livedata();
 			$data['areas'] = $this->M_page->get_areas();
 			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
 		}
-	
-		if($this->slug == 'home') {
+
+		if ($this->slug == 'home') {
 			$this->load->view('home_new', $data);
-		}elseif($this->slug == 'renters'){
+		} elseif ($this->slug == 'renters') {
 			$this->load->view('renters', $data);
-		}elseif($this->slug == 'owners') {
+		} elseif ($this->slug == 'owners') {
 			$this->load->view('owners', $data);
-		}elseif($this->slug == 'neighborhood'){
+		} elseif ($this->slug == 'neighborhood') {
 			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
 			$this->load->view('neighborhood', $data);
-		}else{
+		} else {
 			$this->load->view('page', $data);
 		}
 	}
 
-	function appendHTML(DOMNode &$parent, $source) {
+	function appendHTML(DOMNode &$parent, $source)
+	{
 		$tmpDoc = new DOMDocument();
 		$tmpDoc->loadHTML($source);
 		foreach ($tmpDoc->getElementsByTagName('body')->item(0)->childNodes as $node) {
@@ -58,7 +59,7 @@ class Page extends MOBO_Controller
 
 	public function contact()
 	{
-		if($this->input->method() != 'post' || !$this->input->is_ajax_request() ) {
+		if ($this->input->method() != 'post' || !$this->input->is_ajax_request()) {
 			redirect('/');
 		}
 
