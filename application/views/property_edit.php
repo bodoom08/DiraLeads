@@ -2155,8 +2155,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 valid = false;
             }
             if ($('#floorNumber').val() == '') {
-                $('#floorNumber').addClass('invaild-input');
-                valid = false;
+                if ($('#propertyType').val() == 'house' || $('#propertyType').val() == 'villa') {
+                    $('#floorNumber').removeClass('invaild-input');
+                } else {
+                    $('#floorNumber').addClass('invaild-input');
+                    valid = false;
+                }
+
             }
 
             if ($('#description').val() == '') {
