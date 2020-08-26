@@ -1000,7 +1000,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
@@ -1029,7 +1029,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
