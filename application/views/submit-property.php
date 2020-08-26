@@ -14,14 +14,6 @@ $this->load->view('common/front_end_layout/top', [
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
 <style>
-    /*
-.fc-time {
-    display: none;
-}
-a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
-    background-color: unset;
-}
-*/
     .date-action-dialog {
         width: 100%;
         height: 100%;
@@ -951,7 +943,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             </a>
                                                         </li>
 
-                                                        <li role="presentation8" style="width:40%" class="costomSession">
+                                                        <li role="presentation8" style="width:40%" class="customSession">
                                                             <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
                                                                 <p>My Rental is seasonal</p>
                                                             </a>
@@ -966,19 +958,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="days">Days ($)</label>
-                                                                                <input type="number" id="days" class="datedays" placeholder="Days *">
+                                                                                <input type="number" name="prices[days]" id="days" class="datedays" placeholder="Days *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekend">Weekend ($)</label>
-                                                                                <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                                <input type="number" name="prices[weekend]" id="weekend" class="weekenddays" placeholder="Weekend *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekly">Weekly ($)</label>
-                                                                                <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                                <input type="number" name="prices[weekly]" id="weekly" class="weekly" placeholder="Weekly *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="monthly">Monthly ($)</label>
-                                                                                <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                                <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="Monthly *">
                                                                             </div>
                                                                             <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
                                                                         </div>
@@ -986,14 +978,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                             <div class="form-group weekend-container">
                                                                                 <label for="weekendFrom">Weekend </label>
                                                                                 <label for="weekendFrom"> From</label>
-                                                                                <select class="form-control" name="weekend_type" id="weekendFrom">
+                                                                                <select class="form-control" name="weekend_type[from]" id="weekendFrom">
                                                                                     <option value="3">Thursday</option>
                                                                                     <option value="4">Friday</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group weekend-container">
                                                                                 <label for="weekendTo">Till</label>
-                                                                                <select class="form-control" name="weekend_type" id="weekendTo">
+                                                                                <select class="form-control" name="weekend_type[to]" id="weekendTo">
                                                                                     <option value="5">Motzei Shabbos</option>
                                                                                     <option value="6">Sunday</option>
                                                                                     <option value="7">Monday</option>
@@ -1068,8 +1060,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <input type="hidden" id="session" value="" name="rule_data">
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
-                                            <input type="hidden" class="disableDetail" value="[]" />
-                                            <input type="hidden" class="blockDetail" value="[]" />
+                                            <input type="hidden" name="geolocation" class="geolocation" value='' />
+                                            <input type="hidden" name="is_annual" class="isAnnual" value="true" />
+                                            <input type="hidden" name="manualBooking" class="disableDetail" value="[]" />
+                                            <input type="hidden" name="blockedDate" class="blockDetail" value="[]" />
                                         </div>
                                         </form>
                                     </div>
@@ -2119,6 +2113,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
         $('.next').click(function() {
             // var valid = validateFirstTab();
+            if ($('.geolocation').val() == '') {
+                fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${$('#geoLocation').val()}&key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A`)
+                    .then(response => response.json())
+                    .then(data => {
+                        $('.geolocation').val(JSON.stringify(data.results[0].geometry.location));
+                    }).catch(err => {
+                        console.log("Error: ", err);
+                    });
+            }
             if (!validateFirstTab()) {
                 toastr.warning('Please fill the required fields');
                 return false;
@@ -2382,37 +2385,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 success: function(response) {
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
-
                     } else {
                         toastr.warning(response.text);
                         return false;
                     }
                 }
             });
-            /*
-                        $('#listingForm').ajaxSubmit({
-                            data: {
-                                'short_term_available_date': function() {
-                                    return $('#multi-date-select').multiDatesPicker('value');
-                                }
-                            },
-                            dataType: 'json',
-                            beforeSubmit: function() {
-                                event.preventDefault();
-                                // console.log($('#multi-date-select').multiDatesPicker('value')); 
-                                $('.fa-spinner').prop('display', 'inline');
-                                $('#submitBtn').prop('disabled', 'disabled');
-                            },
-                            success: function(arg) {
-                                toastr[arg.type](arg.text);
-                                $('.fa-spinner').prop('display', 'block');
-                                $('#submitBtn').removeAttr('disabled');
-                                if (arg.type == 'success') {
-                                    window.location.href = '<?php echo site_url('my_rentals'); ?>';
-                                }
-                            }
-                        });
-                        */
         });
 
         $(document).on('change', '#florbas', function() {
@@ -2571,7 +2549,21 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
         });
 
-        $(document).on('click', '.costomSession', function() {
+        $(document).on('click', '.customCalender', function () {
+            if ($('.isAnnual').val() == 'true') return;
+            $('.isAnnual').val('true');
+            $('.disableDate').val('[]');
+            $('.manualBooking').val('[]');
+            $('.blockedDate').val('[]');
+        });
+
+        $(document).on('click', '.customSession', function() {
+            if ($('.isAnnual').val() == 'true') {
+                $('.isAnnual').val('false');
+                $('.disableDate').val('[]');
+                $('.manualBooking').val('[]');
+                $('.blockedDate').val('[]');
+            }
 
             $('#seasonCalendar').fullCalendar({
                 header: {
@@ -2586,36 +2578,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 selectable: true,
                 fixedWeekCount: false,
                 timezone: false,
-                eventOrder: "-title",
                 events: {
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-                    cache: true,
-                    success: function(events) {
-                        console.log("Success function");
-                        // a function that returns an object
-                        for (var i = 0; i < events.length; i++) {
-                            if (events[i].className == "hebdate") {
-                                events[i].order = 1;
-                            } else {
-                                events[i].order = 0;
-                            }
-                        }
-                        var filter = compare("order");
-                        events.sort(filter);
-                        return events;
-                    }
-                },
-                eventRender: function(eventObj, $el) {
-                    console.log("Event Rendering");
-                    // $el.addClass("custom-event");
-                    // console.log(eventObj);
+                    cache: true
                 },
 
                 select: function(start, end, jsEvent, view) {
-
-
                     if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
-
                         $('#date-action ul')[0].style = "display: none";
                         $('#date-action ul')[1].style = "display: block";
                         $('#date-action ul')[2].style = "display: none";
@@ -2634,7 +2603,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     dialogEl.style.display = "block";
                     dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
-
                     $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
                 },
                 eventClick: function(event, jsEvent) {
@@ -2647,10 +2615,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                         $('#blockModal').find('#ends-atblock').val(event.end);
                         $('#blockModal').find('.eventClose').text('Delete');
                     } else {
-
-
                         if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
-
                             $('#date-action ul')[0].style = "display: none";
                             $('#date-action ul')[1].style = "display: block";
                             $('#date-action ul')[2].style = "display: none";
@@ -3151,6 +3116,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         function manualPrice(price = '') {
             return '<p class="day-background manual-background">' + price + '</p>';
         }
+
         $('#addSeasonPrice').click(function() {
             $('#seasonTitle').val('');
             $('#seasonStart').val('');
@@ -3168,6 +3134,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('#seasonModal').modal('show');
         });
+
         $('#add-manual-booking').on('click', function() {
             var title = $('#manualTitle').val();
             var startd = new Date($('#manualStart').val());
@@ -3334,7 +3301,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#blockModal').modal('hide');
         });
 
-
         $('#update-manual-booking').on('click', function() {
             removeManualBooking();
 
@@ -3476,6 +3442,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }, 1000);
 
         });
+
         $('.fc-next-button').click(function() {
             setTimeout(function() {
                 $(".fc-day-grid-event").attr("href", 'javascript:void');
@@ -3508,6 +3475,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             day = ("0" + date.getDate()).slice(-2);
             return [day, mnth, date.getFullYear()].join("/");
         }
+
         var enumerateDaysBetweenDates = function(startDate, endDate) {
             var dates = [];
 
@@ -3528,6 +3496,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             day = ("0" + date.getDate()).slice(-2);
             return [mnth, day, date.getFullYear()].join("/");
         }
+
         $('#addRule').click(function() {
             $('#fname').val('');
             $('#startDate').val('');
@@ -3791,7 +3760,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             renderCalendarPrice();
         });
-
 
         $('#seasonRate').on("change paste keyup", function() {
             var seasonalRate = $(this).val();
@@ -4386,5 +4354,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.fc-widget-content[data-date="' + day + '"]').empty();
         });
         closeDateAction();
+    }
+
+    function changeTab(flag) {
+        console.log("Flag: ", flag);
+        $('.isAnnual').val(`${flag}`);
     }
 </script>

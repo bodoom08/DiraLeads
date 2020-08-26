@@ -90,11 +90,25 @@ class M_property extends CI_Model
             'available_date' => date('Y-m-d', strtotime($available_date)),
             'description' => $property_desc,
             'status' => 'inactive',
-            // 'coords' => json_encode(explode('|', $lat_lng)),
-            'coords'    => '[""]',
+            'coords'    => isset($geolocation) ? $geolocation : "[]",
             'created_by' => $_SESSION['id'],
-            'created_at' => date('Y-m-d H:i:s')
+            // 'created_at' => date('Y-m-d H:i:s'),
+            'manual_booking' => $manualBooking,
+            'blocked_date' => $blockedDate,
+            'is_annual' => $is_annual
         ];
+
+        if ($is_annual == "true") {
+            $property_data['days_price'] = $prices['days'];
+            $property_data['weekend_price'] = $prices['weekend'];
+            $property_data['weekly_price'] = $prices['weekly'];
+            $property_data['monthly_price'] = $prices['monthly'];
+            $property_data['private_note'] = $private_note['manual'];
+            $property_data['weekend_from'] = $weekend_type['from'];
+            $property_data['weekend_to'] = $weekend_type['to'];
+        } else {
+            $property_data['private_note'] = $private_note['sessional'];
+        }
 
         if ($this->db->insert('properties', $property_data)) {
             $property_id = $this->db->insert_id();
