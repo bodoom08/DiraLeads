@@ -708,7 +708,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                 </div>
                                                             </li>
 
-                                                            <li class="col-lg-4">
+                                                            <li class="col-lg-4" id="floorContainer">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Floor Number *</label>
                                                                     <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
@@ -1000,7 +1000,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote">Notes</textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
@@ -1028,8 +1028,8 @@ $this->load->view('common/front_end_layout/top', [
                                                                     <li class="col-lg-10 m-auto">
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
-                                                                                <label for=" sessionalPrivateNotes">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="sessionalPrivateNotes">Notes</textarea>
+                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -1251,7 +1251,7 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <label for="blockPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blockPrivateNote"></textarea>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blockPrivateNote" placeholder="Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1286,7 +1286,7 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <label for="blockPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="edit-blockPrivateNote">Notes</textarea>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="edit-blockPrivateNote" placeholder="Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1989,6 +1989,15 @@ $this->load->view('common/front_end_layout/top', [
     }
 
     $(document).ready(function() {
+
+        $('#propertyType').on("change paste keyup", function() {
+            if ($('#propertyType').val() == 'house' || $('#propertyType').val() == 'villa') {
+                $('#floorContainer').css('display', 'none');
+            } else {
+                $('#floorContainer').css('display', 'block');
+            }
+        });
+
         $('#bedrooms').on("change paste keyup", function() {
             if ($('#bedrooms').val() != '') {
                 $('#bedrooms').removeClass('invaild-input');
@@ -2081,8 +2090,13 @@ $this->load->view('common/front_end_layout/top', [
                 valid = false;
             }
             if ($('#floorNumber').val() == '') {
-                $('#floorNumber').addClass('invaild-input');
-                valid = false;
+                if ($('#propertyType').val() == 'house' || $('#propertyType').val() == 'villa') {
+                    $('#floorNumber').removeClass('invaild-input');
+                } else {
+                    $('#floorNumber').addClass('invaild-input');
+                    valid = false;
+                }
+
             }
 
             if ($('#description').val() == '') {

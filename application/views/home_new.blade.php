@@ -328,12 +328,12 @@ if (isset($livedata)) {
                             </div>
                             <div class="col-md-6">
                                 <div class="md-form">
-                                    <input name="phone" id="contact_phone" type="number" class="form-control" placeholder="Phone Number *" maxlength="10" minlength="10" required="">
+                                    <input name="phone" id="contact_phone" type="number" class="form-control" placeholder="Phone Number *" maxlength="11" minlength="10" required="">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="md-form">
-                                    <textarea name="message" id="contact_message" class="form-control" placeholder="Message *" required=""></textarea>
+                                    <textarea name="message" id="contact_message" class="form-control" placeholder="How can we help?" required=""></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -458,9 +458,9 @@ if (isset($livedata)) {
                 // toastr.warning('Please fill phone field');
                 valid = false;
             } else {
-                if ($('#contact_phone').val().length != 10) {
+                if ($('#contact_phone').val().length < 10 || $('#contact_phone').val().length > 11) {
                     toastr.warning('Please input valid phone number');
-                    $('#description').addClass('invaild-input');
+                    $('#contact_phone').addClass('invalid-input');
                     valid = false;
                 } else {
                     $('#contact_phone').removeClass('invalid-input');
@@ -553,8 +553,8 @@ if (isset($livedata)) {
     });
 
     function validateEmail(email) {
-        const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
     }
 
     $('#contact_name').on("change paste keyup", function() {
@@ -569,7 +569,7 @@ if (isset($livedata)) {
 
     $('#contact_email').on("change paste keyup", function() {
         var email = $('#contact_email').val();
-        if (!validateEmail(email)) {
+        if (validateEmail(email)) {
             $('#contact_email').removeClass('invalid-input');
         } else {
             $('#contact_email').addClass('invalid-input');
@@ -577,11 +577,10 @@ if (isset($livedata)) {
     });
 
     $('#contact_phone').on("change paste keyup", function() {
-
+        console.log($('#contact_phone').val().length == 10 || $('#contact_phone').val().length == 11);
         if ($('#contact_phone').val() != '') {
-            if ($('#contact_phone').val().length < 10) {
-                $('#description').addClass('invaild-input');
-
+            if ($('#contact_phone').val().length < 10 || $('#contact_phone').val().length > 11) {
+                $('#contact_phone').addClass('invalid-input');
             } else {
                 $('#contact_phone').removeClass('invalid-input');
             }

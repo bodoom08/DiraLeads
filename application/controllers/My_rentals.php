@@ -16,8 +16,11 @@ class My_rentals extends CI_Controller
         }
         $data['areas'] = $this->M_property->getAllAreas();
         $properties = $this->M_property->getUserProperties();
-        $data['my_properties'] = $properties['properties'];
-        $this->paginate($properties['all_properties_count']);
+        $data['my_properties'] = isset($properties['properties']) ? $properties['properties'] : [];
+        if (isset($properties['all_properties_count'])) {
+            $this->paginate($properties['all_properties_count']);
+        }
+
 
         $this->load->view('my-properties', $data);
     }
