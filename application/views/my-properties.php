@@ -84,7 +84,7 @@ $this->load->view('common/front_end_layout/top', [
                                         </div>
                                         <div class="pagination-box hidden-mb-45 text-center">
                                             <nav aria-label="Page navigation example">
-                                                <?php echo $this->pagination->create_links(); ?>
+                                                <?php echo isset($this->pagination) ? $this->pagination->create_links() : ''; ?>
                                             </nav>
                                         </div>
                                     </div>
