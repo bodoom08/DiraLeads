@@ -716,7 +716,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                 </div>
                                                             </li>
 
-                                                            <li class="col-lg-4">
+                                                            <li class="col-lg-4" id="floorContainer">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Floor Number *</label>
                                                                     <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
@@ -1008,7 +1008,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
@@ -1037,7 +1037,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote">Notes</textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -1257,7 +1257,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <label for="blockPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blockPrivateNote"></textarea>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="blockPrivateNote" placeholder="Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1292,7 +1292,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         <div class="row">
                                             <div class="col-sm-12">
                                                 <label for="blockPrivateNote">Private notes</label>
-                                                <textarea rows="5" style="width: 100%;" name="private_note" id="edit-blockPrivateNote">Notes</textarea>
+                                                <textarea rows="5" style="width: 100%;" name="private_note" id="edit-blockPrivateNote" placeholder="Notes"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1995,6 +1995,15 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     $(document).ready(function() {
+
+        $('#propertyType').on("change paste keyup", function() {
+            if ($('#propertyType').val() == 'house' || $('#propertyType').val() == 'villa') {
+                $('#floorContainer').css('display', 'none');
+            } else {
+                $('#floorContainer').css('display', 'block');
+            }
+        });
+
         $('#bedrooms').on("change paste keyup", function() {
             if ($('#bedrooms').val() != '') {
                 $('#bedrooms').removeClass('invaild-input');
