@@ -60,21 +60,21 @@
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/renters" style="font-family:'Raleway', sans-serif;">THE RENTER's VIEW</a>
-                            <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">THE OWNER's VIEW</a>
+                            <a class="dropdown-item" href="/renters" style="font-family:'Raleway', sans-serif;">THE RENTER'S VIEW</a>
+                            <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">THE OWNER'S PERCH</a>
                         </div>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="/about">Why DiraLeads</a>
                     </li> -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/properties">Rentals</a>
+                        <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);">Neighborhoods</a>
+                        <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/rental">list your rental</a>
+                        <a class="nav-link" href="/rental">List Your Rental</a>
                     </li>
 
                     @if (!isset($_SESSION['id']))
