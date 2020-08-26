@@ -45,20 +45,20 @@ class M_area extends CI_Model
     {
         array_walk_recursive($_POST, 'trim');
         extract($this->input->post());
-        
+
         // if($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('users') > 0) {
         //     return ['type' => 'warning', 'text' => 'Email or mobile no already exist!'];
         // }
-        if(empty($name))
+        if (empty($name))
             return ['type' => 'warning', 'text' => 'Area Name is required!'];
-            
-        
+
+
         if ($name) {
-            if(empty($area_type))
+            if (empty($area_type))
                 $arr = ['title' => $name, 'area' => NULL];
             else
                 $arr = ['title' => $name, 'area' => $area_type];
-            
+
             $this->db->insert('areas', $arr);
             return ['type' => 'success', 'text' => 'Area Added Successfully'];
         }
@@ -87,22 +87,20 @@ class M_area extends CI_Model
         // print_r($this->input->post());
         // die();
 
-        if(empty($name))
+        if (empty($name))
             return ['type' => 'warning', 'text' => 'Area Name is required!'];
-        if($area_type == $id)
+        if ($area_type == $id)
             return ['type' => 'warning', 'text' => 'Area title and Parent Area title can not be identical!'];
 
         if ($name) {
-            if(empty($area_type))
+            if (empty($area_type))
                 $arr = ['title' => $name, 'area' => NULL];
             else
                 $arr = ['title' => $name, 'area' => $area_type];
-            
+
             $this->db->where('id', $id);
             $this->db->update('areas', $arr);
             return ['type' => 'success', 'text' => 'Area Updated Successfully'];
         }
-        
     }
-
 }

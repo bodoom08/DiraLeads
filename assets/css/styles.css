@@ -2322,7 +2322,7 @@ div#Properties-popup .carousel-item img {
   left: 0;
 }
 li.customCalender.active {
-  margin-right: 0px !important;
+  margin-right: 1rem !important;
 }
 ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon:after {
   background: none;
