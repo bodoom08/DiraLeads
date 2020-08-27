@@ -1,0 +1,18 @@
+ALTER TABLE `properties` ADD `manual_booking` TEXT NULL AFTER `short_term_available_date`, ADD `blocked_date` TEXT NULL AFTER `manual_booking`, ADD `is_annual` VARCHAR(10) NOT NULL DEFAULT 'true' AFTER `blocked_date`, ADD `days_price` DOUBLE NULL AFTER `is_annual`, ADD `weekend_price` DOUBLE NULL AFTER `days_price`, ADD `weekly_price` DOUBLE NULL AFTER `weekend_price`, ADD `monthly_price` DOUBLE NULL AFTER `weekly_price`, ADD `private_note` TEXT NULL AFTER `monthly_price`, ADD `weekend_from` INT NULL AFTER `private_note`, ADD `weekend_to` INT NULL AFTER `weekend_from`, ADD `bedrooms` INT NOT NULL AFTER `weekend_to`, ADD `bathrooms` INT NOT NULL AFTER `bedrooms`, ADD `florbas` INT NOT NULL AFTER `bathrooms`, ADD `area_other` INT NULL AFTER `florbas`;
+ALTER TABLE `properties` ADD `only_weekend` VARCHAR(10) NULL AFTER `is_annual`;
+
+manual_booking
+blocked_date
+is_annual
+only_weekend
+days_price
+weekend_price
+weekly_price
+monthly_price
+private_note
+weekend_from
+weekend_to
+bedrooms
+bathrooms
+florbas
+area_other
