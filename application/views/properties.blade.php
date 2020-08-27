@@ -1,383 +1,281 @@
 @extends('common.layout')
 
 @push('styles')
-<link rel='stylesheet'
-    href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/css/bootstrap-select.min.css' />
-<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.css' />
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/lightslider.css') }}" />
+<link rel="stylesheet" type="text/css" href="assets/properties/css/bootstrap-select.min.css" />
+<link rel="stylesheet" href="assets/properties/css/leaflet.css" type="text/css" />
+<link rel="stylesheet" href="assets/properties/css/map.css" type="text/css" />
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css' />
+<link rel="stylesheet" type="text/css" href="assets/properties/css/jquery.mCustomScrollbar.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&callback=initMap">
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
 <style>
-    .shadow {
-        filter: drop-shadow(1px 5px 2px grey);
+    .map-marker {
+        background-color: transparent !important;
+        bottom: -2px;
+    }
+
+    .marker-cluster-small {
+        background-color: transparent !important;
+    }
+
+    .map-marker:before {
+        display: none;
+    }
+
+    .map-marker .icon {
+        border: none !important;
+    }
+
+    .map-marker:after {
+        display: none
+    }
+
+    .map-marker .icon {
+        background-color: transparent !important;
+    }
+
+    footer,
+    .sub-footer {
+        display: none;
+    }
+
+    #content,
+    #content1,
+    #content2,
+    #content3,
+    #content4 {
+        display: none;
+    }
+
+    body {
+        overflow: hidden;
+    }
+
+    .daterangepicker.show-calendar {
+        width: 604px !important;
+    }
+
+    #norecord p i {
+        font-size: 30px;
+        padding: 7px 12px;
+        color: #84b95c;
+    }
+
+    #norecord p.text-head {
+        font-size: 30px;
+        font-weight: 500;
+    }
+
+    #norecord p.text-details {
+        margin: 0 auto;
+        line-height: 25px;
+        color: #928f8f;
     }
 </style>
+
 @endpush
 
 @section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-lg-12 mt-2 mb-3">
-            <div class="card">
-                <div class="card-body p-3">
-                    <form id="filter">
-                        <div class="form-row align-items-center">
-                            <div class="col-lg-2">
-                                <select class="form-control form-control-sm selectpicker search-fields" name="for"
-                                    multiple="multiple" data-title="Looking for">
-                                    <option value="sale">Sale</option>
-                                    <option value="rent">Rent</option>
-                                    <option value="short term rent">Short Term</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <select class="form-control form-control-sm selectpicker search-fields" name="area"
-                                    multiple="multiple" data-title="Choose Area">
-                                    @foreach ($areas as $area)
-                                    <option value="{{ $area['id'] }}"
-                                        {{ isset($_GET['area_id']) && ($_GET['area_id'] == $area['id']) ? 'selected' : '' }}>
-                                        {{ $area['title'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <select class="form-control form-control-sm selectpicker search-fields" name="for"
-                                    multiple="multiple" data-title="Choose Type">
-                                    <option value="house"
-                                        {{ isset($_GET['type']) && ($_GET['type'] == 'house') ? 'selected' : '' }}>House
-                                    </option>
-                                    <option value="appartment"
-                                        {{ isset($_GET['type']) && ($_GET['type'] == 'appartment') ? 'selected' : '' }}>
-                                        Appartment</option>
-                                    <option value="duplex"
-                                        {{ isset($_GET['type']) && ($_GET['type'] == 'duplex') ? 'selected' : '' }}>
-                                        Duplex</option>
-                                    <option value="office"
-                                        {{ isset($_GET['type']) && ($_GET['type'] == 'office') ? 'selected' : '' }}>
-                                        Office</option>
-                                    <option value="other"
-                                        {{ isset($_GET['type']) && ($_GET['type'] == 'other') ? 'selected' : '' }}>
-                                        Others</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-2">
-                                <input type="text" class="form-control form-control-sm" name="min_price"
-                                    placeholder="Min Price">
-                            </div>
-                            <div class="col-lg-2">
-                                <input type="text" class="form-control form-control-sm" name="max_price"
-                                    placeholder="Max Price">
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<?php
+?>
+<div class="explore-search">
+    <div class="container">
+        <div class="inner-search">
+            <div class="find-search-box">
+                <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value={{ isset($_GET['street']) ? $_GET['street'] : '' }}>
+                <span><a href="javascript:void()" name="button_search"><img src="{{site_url()}}assets/images/search.png"></a></span>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-7 pr-2">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        @forelse ($properties as $property)
-                        <div class="col-lg-6 col-md-6 col-sm-12">
-                            <div onclick="getThisDetails({{ $property['id'] }})" data-id="{{ $property['id'] }}" class="property-box"
-                                style="cursor: pointer;">
-                                <div class="property-thumbnail">
-                                    <div class="property-img">
-                                        <div class="listing-badges">
-                                            @switch($property['for'])
-                                            @case('rent')
-                                            <span class="featured">For Rent</span>
-                                            @break
-                                            @case('sale')
-                                            <span class="featured">For Sale</span>
-                                            @break
-                                            @default
-                                            <span class="featured">For Short Term Rental</span>
-                                            @endswitch
-                                        </div>
-                                        <img class="d-block w-100"
-                                            src="{{ site_url('uploads/' . $property['images']) }}" alt="properties">
-                                    </div>
-                                </div>
-                                <div class="detail">
-                                    <h1 class="title">
-                                        <a onclick="getThisDetails({{ $property['id'] }})">${{ $property['price'] }}</a>
-                                    </h1>
-                                    <div class="location">
-                                        <a onclick="getThisDetails({{ $property['id'] }})">
-                                            <i class="flaticon-pin"></i>{{ $property['house_number'] }}
-                                            {{ $property['street'] }}
-                                        </a>
-                                    </div>
-                                </div>
-                                <ul class="facilities-list clearfix">
-                                    @foreach ($property['attributes'] as $attr)
-                                    <li>
-                                        <img src="{{ $attr['icon'] }}"> {{ $attr['value'] }}
-                                    </li>
-                                    @endforeach
-                                </ul>
-                                <div class="footer">
-                                    <div class="price-box"><span>${{ $property['price'] }} Per month</span></div>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                        @empty
-                        <h1>No Property Found</h1>
-                        @endforelse
-                    </div>
 
-                    <div class="pagination-box hidden-mb-45 text-center">
-                        <nav aria-label="Page navigation example">
-                        </nav>
+            <div class="filter-btn-mobo">
+                <button id="example" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Rental Type
+                    &nbsp;<i class="fa fa-angle-down"></i></button>
+                <div id="content">
+                    <h4>Rental Type</h4>
+                    <ul class="main-34">
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'any' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'any'})">
+                                <i class="fa fa-building-o"></i>
+                                Any
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'house' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'house' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'house'})">
+                                <i class="fa fa-home"></i>
+                                House
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'apartment'})">
+                                <i class="fa fa-building-o"></i>
+                                Apartments
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'duplex'})">
+                                <i class="fa fa-building-o"></i>
+                                Duplex
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'villa' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'villa' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'villa'})">
+                                <i class="fa fa-home"></i>
+                                Villa
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['type']) && $_GET['type'] == 'basement' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'basement' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'basement'})">
+                                <i class="fa fa-home"></i>
+                                Basement
+                            </button>
+                        </li>
+                        <div class="clearfix"></div>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <div class="filter-btn-mobo">
+                <button id="example2" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Price &nbsp;<i class="fa fa-angle-down"></i></button>
+                <div id="content2">
+
+                    <h4>Price</h4>
+                    <div class="main-35 input-box-mob">
+                        <ul class="main-36">
+                            <li {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'class=active' : '' }}>
+                                <input type="hidden" id="price_min1" value=''>
+                                <input type="hidden" id="price_max1" value=''>
+                                <button class="btn propery_any {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'active' : '' }}" onclick="filter({name: 'price', value: '1'})">
+                                    Any
+                                </button>
+                            </li>
+                            <ul class="p-sec-n">
+                                <li>
+                                    <input type="number" class="form-control" placeholder="No Min" name="min" title="No Min" value="{{ isset($_GET['price_min']) && $_GET['price_min'] != '' ? $_GET['price_min'] : '' }}">
+                                </li>
+                                <li class="middle-s">
+                                    to
+                                </li>
+                                <li>
+                                    <input type="number" class="form-control" placeholder="No Max" name="max" title="No Max" value="{{ isset($_GET['price_max']) && $_GET['price_max'] != '' ? $_GET['price_max'] : '' }}">
+                                </li>
+                            </ul>
+
+                        </ul>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <button class="btn-md button-theme btn-block" name="pricefilter_button">Filter</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-lg-5 pl-2">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div id="map" style="height: 600px"></div>
+
+            <div class="filter-btn-mobo">
+                <button id="example3" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bedrooms &nbsp;<i class="fa fa-angle-down"></i></button>
+                <div id="content3">
+                    <h4>Bedrooms</h4>
+                    <ul class="main-36">
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' ? 'class=active' : '' }}>
+                            <button class="btn propery_any {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: 'any'})">
+                                Any
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: '1'})">
+                                1+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: '2'})">
+                                2+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: '3'})">
+                                3+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: '4'})">
+                                4+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: '5'})">
+                                5+
+                            </button>
+                        </li>
+                        <div class="clearfix"></div>
+                    </ul>
+
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="filter-btn-mobo sortby">
+                <button id="example4" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Sort By &nbsp;<i class="fa fa-angle-down"></i> </button>
+                <div id="content4">
+                    <h4>Sort By</h4>
+                    <ul class="main-33">
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
+                        <li><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
+                        <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
+                        <div class="clearfix"></div>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="filter-btn-mobo sortby">
+                <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> More &nbsp;<i class="fa fa-angle-down"></i> </button>
+                <div id="content5">
+                    <h4>More</h4>
+                    <h5 style="text-align: center;">Bathroom</h5>
+                    <ul class="main-36">
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' ? 'class=active' : '' }}>
+                            <button class="btn propery_any {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: 'any'})">
+                                Any
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: '1'})">
+                                1+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: '2'})">
+                                2+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: '3'})">
+                                3+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: '4'})">
+                                4+
+                            </button>
+                        </li>
+                        <li {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'class=active' : '' }}>
+                            <button class="btn {{ isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: '5'})">
+                                5+
+                            </button>
+                        </li>
+                        <div class="clearfix"></div>
+                    </ul>
+                    <ul class="main-33 more-sec">
+
+                        <li> <button class="btn {{ isset($_GET['more']) && $_GET['more'] == 'Floor' ? 'active' : '' }}" onclick="filter({name: 'more', value: 'Floor'})">Floor</button> </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.10/js/bootstrap-select.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.5.1/leaflet.js'></script>
-<script>
-    var markers = {};
-    var icon = L.icon({
-        iconUrl: 'assets/favicon.svg',
-        iconRetinaUrl: 'assets/favicon.svg',
-        iconSize: [40, 70],
-        iconAnchor: [19, 60],
-        popupAnchor: [1, -25]
-    });
-
-    var defaultIcon = L.icon({
-        iconUrl: 'assets/favicon-invert.svg',
-        iconRetinaUrl: 'assets/favicon-invert.svg',
-        iconSize: [40, 70],
-        iconAnchor: [19, 60],
-        popupAnchor: [1, -25]
-    });
-    var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
-    var initMap = (latLng = [41.1009, -74.1163]) => {
-        try {    
-            window.map = L.map('map', {
-                center: latLng,
-                zoom: 15
-            });
-
-            $('#lat_lng').val(`${latLng[0]}|${latLng[1]}`);
-
-            L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en', {
-                attribution: 'Map Data &copy; <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>'
-            }).addTo(map);
-
-            var properties = @json($properties);
-            // console.log(properties);
-            var latLngFitBounds = [];
-            properties.forEach(property => {
-                var latLng = JSON.parse(property.coords).map(parseFloat);
-                latLngFitBounds.push(latLng);
-                markers[property.id] = L.marker(latLng, {
-                    autoPan: true,
-                    icon: defaultIcon
-                })
-                .addTo(map);
-                markers[property.id].bindPopup(`
-                    <p>${property.street}</br>${formatter.format(property.price)}</p>
-                `);
-            });
-
-            console.log(latLngFitBounds);
-
-            map.fitBounds(latLngFitBounds);
-        } catch (err) {
-            console.error(err);
-            window.map.panTo(latLng);
-        }
-    };
-
-    $('.property-box').mouseenter(e => markers[$(e.delegateTarget).data('id')].setIcon(icon).openPopup());
-    $('.property-box').mouseleave(e => markers[$(e.delegateTarget).data('id')].setIcon(defaultIcon).closePopup());
-
-    initMap();
-</script>
-<script>
-    // var properties = @json($properties);
-    // function drawInfoWindow(property) {
-    //     var image = 'img/logo.png';
-    //     // if (property.image) {
-    //     //     image = property.image
-    //     // }
-
-    //     var title = 'N/A';
-    //     if (property.title) {
-    //         title = property.title
-    //     }
-
-    //     var address = '';
-    //     if (property.address) {
-    //         address = property.address
-    //     }
-
-    //     var area = 1000;
-    //     if (property.area) {
-    //         area = property.area
-    //     }
-
-    //     var bedroom = 5;
-    //     if (property.bedroom) {
-    //         bedroom = property.bedroom
-    //     }
-
-    //     var bathroom = 5;
-    //     if (property.bathroom) {
-    //         bathroom = property.bathroom
-    //     }
-
-    //     var garage = 1;
-    //     if (property.garage) {
-    //         garage = property.garage
-    //     }
-
-    //     var price = 253.33;
-    //     if (property.price) {
-    //         price = property.price
-    //     }
-
-    //     var ibContent = '';
-    //     ibContent =
-    //         "<div class='map-properties'>" +
-    //         "<div class='map-img'>" +
-    //         "<img src='" + image + "'/><div class=\"price-ratings-box\">\n" +
-
-    //         "                                </div>" +
-    //         "</div>" +
-    //         "<div class='map-content'>" +
-    //         "<h4><a href='properties-details.html'>" + title + "</a></h4>" +
-    //         "<p class='address'> <i class='flaticon-pin'></i>" + address + "</p>" +
-    //         "<div class='map-properties-fetures'> " +
-    //         "<span><i class='flaticon-area'></i>  " + area + " sqft</span> " +
-    //         "<span><i class='flaticon-hotel'></i>  " + bedroom + " Beds</span> " +
-    //         "<span><i class='flaticon-bathroom'></i>  " + bathroom + " Baths</span> " +
-    //         "</div>" +
-    //         "</div>";
-    //     return ibContent;
-    // }
-    // function animatedMarkers(map, propertiesMarkers, properties, layout) {
-    //     var bounds = map.getBounds();
-    //     var propertiesArray = [];
-    //     $.each(propertiesMarkers, function (key, value) {
-    //         if (bounds.contains(propertiesMarkers[key].getLatLng())) {
-    //             propertiesArray.push(insertPropertyToArray(properties.data[key], layout));
-    //             setTimeout(function () {
-    //                 if (propertiesMarkers[key]._icon != null) {
-    //                     propertiesMarkers[key]._icon.className = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable bounce-animation marker-loaded';
-    //                 }
-    //             }, key * 50);
-    //         }
-    //         else {
-    //             if (propertiesMarkers[key]._icon != null) {
-    //                 propertiesMarkers[key]._icon.className = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable';
-    //             }
-    //         }
-    //     });
-    //     $('.fetching-properties').html(propertiesArray);
-    // }
-
-    // function generateMap(latitude, longitude) {
-
-    //     var map = L.map('map', {
-    //         center: [latitude, longitude],
-    //         zoom: 14,
-    //         scrollWheelZoom: false
-    //     });
-
-    //     L.tileLayer('https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png?lang=en', {
-    //         attribution: 'Map Data &copy; <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia</a>'
-    //     }).addTo(map);
-    //     var markers = L.markerClusterGroup({
-    //         showCoverageOnHover: false,
-    //         zoomToBoundsOnClick: false
-    //     });
-    //     var propertiesMarkers = [];
-
-    //     $.each(properties, function (id, property) {
-    //         var icon = '<img src="uploads/diraleads-logo.svg">';
-    //         // if (property.type_icon) {
-    //         //     icon = '<img src="' + property.type_icon + '">';
-    //         // }
-    //         var latLng = JSON.parse(property.coords).map(parseFloat);
-    //         var color = '<i class="fa fa-building-o"></i>';
-    //         var markerContent =
-    //             '<div class="map-marker ' + color + '">' +
-    //             '<div class="icon">' +
-    //             icon +
-    //             '</div>' +
-    //             '</div>';
-
-    //         var _icon = L.divIcon({
-    //             html: markerContent,
-    //             iconSize: [36, 46],
-    //             iconAnchor: [18, 32],
-    //             popupAnchor: [130, -28],
-    //             className: ''
-    //         });
-
-    //         var marker = L.marker(latLng, {
-    //             title: property.title,
-    //             icon: _icon
-    //         });
-
-    //         propertiesMarkers.push(marker);
-    //         marker.bindPopup(drawInfoWindow(property));
-    //         markers.addLayer(marker);
-    //         marker.on('popupopen', function () {
-    //             this._icon.className += ' marker-active';
-    //         });
-    //         marker.on('popupclose', function () {
-    //             this._icon.className = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable marker-loaded';
-    //         });
-    //     });
-
-    //     map.addLayer(markers);
-    //     // animatedMarkers(map, propertiesMarkers, properties, layout);
-    //     // map.on('moveend', function () {
-    //     //     animatedMarkers(map, propertiesMarkers, properties, layout);
-    //     // });
-
-    //     $('.fetching-properties .property-box-2, .fetching-properties .property-box').hover(
-    //         function () {
-    //             propertiesMarkers[$(this).attr('id') - 1]._icon.className = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable marker-loaded marker-active';
-    //         },
-    //         function () {
-    //             propertiesMarkers[$(this).attr('id') - 1]._icon.className = 'leaflet-marker-icon leaflet-zoom-animated leaflet-clickable marker-loaded';
-    //         }
-    //     );
-
-
-
-    //     $('.geolocation').on("click", function () {
-    //         map.locate({setView: true})
-    //     });
-    //     $('#map').removeClass('fade-map');
-    // }
-
-    // generateMap(41.1009, -74.1163)
-</script>
-<script>
-    $('#filter [name]').change(() => {
-        $('#filter').submit();
-    });
-</script>
-@endpush
