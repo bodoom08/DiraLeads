@@ -117,11 +117,14 @@ class M_property extends CI_Model
             $property_data['private_note'] = $private_note['sessional'];
         }
 
-        try {
-            $this->db->insert('properties', $property_data);
-        } catch (Exception $e) {
+        // try {
+        //     $this->db->insert('properties', $property_data);
+        // } catch (Exception $e) {
+        //     return ['type' => 'error', 'text' => $e->getMessage()];
+        // }
+
+        if (!$this->db->insert('properties', $property_data))
             return ['type' => 'error', 'text' => $e->getMessage()];
-        }
 
         $property_id = $this->db->insert_id();
         foreach ($attribute_id as $key => $attribute) {
@@ -218,11 +221,11 @@ class M_property extends CI_Model
                         allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
                         $response['virtual_number'] = $number_e164;
 
-                        // \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
-                        // \Telnyx\PhoneNumber::Update($number_e164, [
-                        //     "connection_id" => TEXML_APP_ID,
-                        // ]);
-                        return assign_messaging_profile($number_e164);
+                        \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
+                        \Telnyx\PhoneNumber::Update($number_e164, [
+                            "connection_id" => TEXML_APP_ID,
+                        ]);
+                        // return assign_messaging_profile($number_e164);
                         // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
                     } else {
                         return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
