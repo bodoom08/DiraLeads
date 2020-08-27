@@ -117,12 +117,6 @@ class M_property extends CI_Model
             $property_data['private_note'] = $private_note['sessional'];
         }
 
-        // try {
-        //     $this->db->insert('properties', $property_data);
-        // } catch (Exception $e) {
-        //     return ['type' => 'error', 'text' => $e->getMessage()];
-        // }
-
         if (!$this->db->insert('properties', $property_data))
             return ['type' => 'error', 'text' => 'Error saving data'];
 
