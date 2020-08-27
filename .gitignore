@@ -18,7 +18,7 @@ vendor
 
 uploads/*
 !uploads/diraleads-logo.svg
-tmp_uploads
+tmp_uploads/*
 
 # IDE Files
 #-------------------------

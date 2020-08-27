@@ -101,6 +101,7 @@ class M_property extends CI_Model
             'florbas' => $property_type == 'house' ? 0 : $value['florbas'],
             'area_other' => $area_id == 'other' ? $value['area_other'] : '',
             'sleep_number' => strpos($amenitie, 'Sukkah') ? $sleep_number : 0
+            // 'seasonal_price' => isset($seasonal_price) ? $seasonal_price : ''
         ];
 
         if ($is_annual == "true") {
@@ -116,123 +117,123 @@ class M_property extends CI_Model
             $property_data['private_note'] = $private_note['sessional'];
         }
 
-        if ($this->db->insert('properties', $property_data)) {
-            $property_id = $this->db->insert_id();
-            foreach ($attribute_id as $key => $attribute) {
-                $i = array_search($attribute, $attribute_id);
-                if (!$value[$i]) {
-                    return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
-                }
-                $attribute_data[] = [
-                    'property_id' => $property_id,
-                    'attribute_id' => $attribute,
-                    'value' => $value[$i],
-                    'created_at' => date('Y-m-d H:i:s')
-                ];
+        if (!$this->db->insert('properties', $property_data))
+            return ['type' => 'error', 'text' => 'Error saving data'];
+
+        $property_id = $this->db->insert_id();
+        foreach ($attribute_id as $key => $attribute) {
+            $i = array_search($attribute, $attribute_id);
+            if (!$value[$i]) {
+                return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
             }
-
-            if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
-
-                if (!empty($_FILES)) {
-                    $this->load->library('upload');
-                    $cpt = count($files['userfile']['name']);
-                    $path = FCPATH . "/uploads";
-                    $config = array();
-                    $config['upload_path'] = $path;
-                    $config['allowed_types'] = 'jpg|jpeg|png';
-                    $config['max_size'] = '0';
-                    $config['overwrite'] = false;
-                    for ($i = 0; $i < $cpt; $i++) {
-                        $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-                        $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-                        $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-                        $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-                        $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-
-                        $this->upload->initialize($config);
-
-                        if (!$this->upload->do_upload()) {
-                            $errors = $this->upload->display_errors();
-                            return ['type' => 'error', 'text' => $errors];
-                        } else {
-                            $dataupload = array('upload_data' => $this->upload->data());
-                            $image_data[] = array(
-                                'property_id' => $property_id,
-                                'path' => $dataupload['upload_data']['file_name'],
-                                'created_at' => date('Y-m-d H:i:s')
-                            );
-                        }
-                    }
-                    if (!$this->db->insert_batch('property_images', $image_data)) {
-                        return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
-                    }
-                }
-                $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
-                $vn_id_arr = array_column($result, 'vn_id');
-
-                // Just for Testing
-
-                // return [
-                //     'type' => 'success',
-                //     'text' => 'Property listing done successfully!',
-                //     'virtual_number' => "+1 123123123"
-                // ];
-
-                $virtualNumber = $this->db->select('id')
-                    ->where_not_in('id', $vn_id_arr)
-                    ->get('virtual_numbers')
-                    ->row();
-
-                $virtualNumber = false;
-                $this->load->helper('telnyx_number');
-                if ($virtualNumber) { // Check if there is non-allocated Telnyx number in the table
-                    $this->load->helper('did');
-                    allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
-                    $response['virutal_number'] = $virtualNumber;
-                } else { // Buy a new Telnyx number
-                    // $this->load->library('telnyx');
-
-                    $numberResult = searchNumbersHelper('us', 'NY');
-
-                    if (count($numberResult['result']) > 0) {
-                        $number_e164 = $numberResult['result'][0]['number_e164'];
-
-                        $numberOrders = createNumberOrdersHelper($number_e164);
-
-                        if (is_array($numberOrders)) {
-                            $this->db->insert('virtual_numbers', [
-                                'number' => $number_e164,
-                                'details' => json_encode(myNumbersHelper($number_e164))
-                            ]);
-
-                            $this->load->helper('did');
-
-                            allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
-                            $response['virtual_number'] = $number_e164;
-
-                            \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
-                            \Telnyx\PhoneNumber::Update($number_e164, [
-                                "connection_id" => TEXML_APP_ID,
-                                "messaging_product" => "P2P",
-                                "messaging_profile_id" => MESSAGE_PROFILE_ID
-                            ]);
-
-                            // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
-                        } else {
-                            return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
-                        }
-                    }
-                }
-
-                return [
-                    'type' => 'success',
-                    'text' => 'Property listing done successfully!',
-                    'virtual_number' => $response['virtual_number']
-                ];
-            }
+            $attribute_data[] = [
+                'property_id' => $property_id,
+                'attribute_id' => $attribute,
+                'value' => $value[$i],
+                'created_at' => date('Y-m-d H:i:s')
+            ];
         }
-        return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
-        // }
+
+        if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
+
+            if (!empty($_FILES)) {
+                $this->load->library('upload');
+                $cpt = count($files['userfile']['name']);
+                $path = FCPATH . "/uploads";
+                $config = array();
+                $config['upload_path'] = $path;
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $config['max_size'] = '0';
+                $config['overwrite'] = false;
+                for ($i = 0; $i < $cpt; $i++) {
+                    $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+                    $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+                    $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+                    $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+                    $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+
+                    $this->upload->initialize($config);
+
+                    if (!$this->upload->do_upload()) {
+                        $errors = $this->upload->display_errors();
+                        return ['type' => 'error', 'text' => $errors];
+                    } else {
+                        $dataupload = array('upload_data' => $this->upload->data());
+                        $image_data[] = array(
+                            'property_id' => $property_id,
+                            'path' => $dataupload['upload_data']['file_name'],
+                            'created_at' => date('Y-m-d H:i:s')
+                        );
+                    }
+                }
+                if (!$this->db->insert_batch('property_images', $image_data)) {
+                    return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
+                }
+            }
+            $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
+            $vn_id_arr = array_column($result, 'vn_id');
+
+            // Just for Testing
+
+            // return [
+            //     'type' => 'success',
+            //     'text' => 'Property listing done successfully!',
+            //     'virtual_number' => "+1 123123123"
+            // ];
+
+            $virtualNumber = $this->db->select('id')
+                ->where_not_in('id', $vn_id_arr)
+                ->get('virtual_numbers')
+                ->row();
+
+            $virtualNumber = false;
+            $this->load->helper('telnyx_number');
+            if ($virtualNumber) { // Check if there is non-allocated Telnyx number in the table
+                $this->load->helper('did');
+                allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
+                $response['virutal_number'] = $virtualNumber;
+            } else { // Buy a new Telnyx number
+                // $this->load->library('telnyx');
+
+                $numberResult = searchNumbersHelper('us', 'NY');
+
+                if (count($numberResult['result']) > 0) {
+                    $number_e164 = $numberResult['result'][0]['number_e164'];
+
+                    $numberOrders = createNumberOrdersHelper($number_e164);
+
+                    if (is_array($numberOrders)) {
+                        $this->db->insert('virtual_numbers', [
+                            'number' => $number_e164,
+                            'details' => json_encode(myNumbersHelper($number_e164))
+                        ]);
+
+                        $number_id = $numberOrders['id'];
+
+                        $this->load->helper('did');
+
+                        allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
+                        $response['virtual_number'] = $number_e164;
+
+                        \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
+                        \Telnyx\PhoneNumber::Update($number_e164, [
+                            "connection_id" => TEXML_APP_ID,
+                        ]);
+                        // return assign_messaging_profile($number_e164);
+                        // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
+                    } else {
+                        return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
+                    }
+                }
+            }
+
+            return [
+                'type' => 'success',
+                'text' => 'Property listing done successfully!',
+                'virtual_number' => $response['virtual_number']
+            ];
+        }
+
         return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
     }
 
