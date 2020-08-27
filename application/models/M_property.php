@@ -34,8 +34,6 @@ class M_property extends CI_Model
 
         array_walk_recursive($_POST, 'trim');
 
-        return $_POST;
-
         extract($_POST);
         $available_date = $date;
 
@@ -180,11 +178,11 @@ class M_property extends CI_Model
 
             // Just for Testing
 
-            // return [
-            //     'type' => 'success',
-            //     'text' => 'Property listing done successfully!',
-            //     'virtual_number' => "+1 123123123"
-            // ];
+            return [
+                'type' => 'success',
+                'text' => 'Property listing done successfully!',
+                'virtual_number' => "+1 123123123"
+            ];
 
             $virtualNumber = $this->db->select('id')
                 ->where_not_in('id', $vn_id_arr)
