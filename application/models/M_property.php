@@ -124,7 +124,7 @@ class M_property extends CI_Model
         // }
 
         if (!$this->db->insert('properties', $property_data))
-            return ['type' => 'error', 'text' => $e->getMessage()];
+            return ['type' => 'error', 'text' => 'Error saving data'];
 
         $property_id = $this->db->insert_id();
         foreach ($attribute_id as $key => $attribute) {
@@ -240,8 +240,6 @@ class M_property extends CI_Model
             ];
         }
 
-
-        // }
         return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
     }
 
