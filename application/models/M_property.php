@@ -100,7 +100,7 @@ class M_property extends CI_Model
             'bathrooms' => $value['bathrooms'],
             'florbas' => $property_type == 'house' ? 0 : $value['florbas'],
             'area_other' => $area_id == 'other' ? $value['area_other'] : '',
-            'sleep_number' => strpos($amenitie, 'Sukkah') ? $sleep_number : 0,
+            'sleep_number' => strpos($amenitie, 'Sukkah') ? $sleep_number : 0
             // 'seasonal_price' => isset($seasonal_price) ? $seasonal_price : ''
         ];
 
@@ -175,11 +175,11 @@ class M_property extends CI_Model
 
             // Just for Testing
 
-            return [
-                'type' => 'success',
-                'text' => 'Property listing done successfully!',
-                'virtual_number' => "+1 123123123"
-            ];
+            // return [
+            //     'type' => 'success',
+            //     'text' => 'Property listing done successfully!',
+            //     'virtual_number' => "+1 123123123"
+            // ];
 
             $virtualNumber = $this->db->select('id')
                 ->where_not_in('id', $vn_id_arr)
