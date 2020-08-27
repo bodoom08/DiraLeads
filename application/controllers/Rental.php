@@ -13,8 +13,13 @@ class Rental extends MOBO_Controller
 
 	public function index()
 	{
+		$areas = $this->M_property->getAllAreas();
+		usort($areas, function ($a, $b) {
+			return strcmp($a['title'], $b['title']);
+		});
+		$data['areas'] = $areas;
 
-		$data['areas'] = $this->M_property->getAllAreas();
+
 		$data['attributes'] = $this->M_property->getAllAttributes();
 		$data['packagenames'] = $this->M_property->getCustomPackageNames();
 		$this->load->view('submit-property', $data);

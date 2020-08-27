@@ -1125,7 +1125,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <input type="hidden" value="" id="selectedPrice" name="date_price">
                                             <input type="hidden" value="" id="date" name="date">
                                             <input type="hidden" id="price" value="500" name="price">
-                                            <input type="hidden" id="session" value="" name="rule_data">
+                                            <input type="hidden" id="session" value="" name="seasonal_price[session]">
+                                            <input type="hidden" id="season" value="" name="seasonal_price[season]">
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
                                             <input type="hidden" class="disableDetail" value="[]" />
@@ -1588,7 +1589,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                     </div>
                                     <div class="modal-footer">
                                         <div class="form-group button"><input type="button" class="seasonButton" value="Add season" id="add-season"></div>
-                                        <input type="hidden" id="season" value="" name="season_data">
                                     </div>
                                 </div>
                             </div>

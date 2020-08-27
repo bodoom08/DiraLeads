@@ -1019,7 +1019,9 @@ $this->load->view('common/front_end_layout/top', [
                                                         </div>
                                                     </div>
                                                     <div class="tabing-action">
-                                                        <ul><li class="submitnext"><a id="submitBtn">Finish</a></li></ul>
+                                                        <ul>
+                                                            <li class="submitnext"><a id="submitBtn">Finish</a></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1027,7 +1029,8 @@ $this->load->view('common/front_end_layout/top', [
                                             <input type="hidden" value="" id="selectedPrice" name="date_price">
                                             <input type="hidden" value="" id="date" name="date">
                                             <input type="hidden" id="price" value="500" name="price">
-                                            <input type="hidden" id="session" value="" name="rule_data">
+                                            <input type="hidden" id="session" value="" name="seasonal_price[session]">
+                                            <input type="hidden" id="season" value="" name="seasonal_price[season]">
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
                                             <input type="hidden" name="geolocation" class="geolocation" value='' />
@@ -1040,7 +1043,7 @@ $this->load->view('common/front_end_layout/top', [
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="modal fade modal-event" tabindex="-1" id="manualBook" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
@@ -1446,7 +1449,6 @@ $this->load->view('common/front_end_layout/top', [
                                     </div>
                                     <div class="modal-footer">
                                         <div class="form-group button"><input type="button" class="seasonButton" value="Add season" id="add-season"></div>
-                                        <input type="hidden" id="season" value="" name="season_data">
                                     </div>
                                 </div>
                             </div>
@@ -2470,7 +2472,7 @@ $this->load->view('common/front_end_layout/top', [
             }
         });
 
-        $(document).on('click', '.customCalender', function () {
+        $(document).on('click', '.customCalender', function() {
             if ($('.isAnnual').val() == 'true') return;
             $('.isAnnual').val('true');
             $('.disableDate').val('[]');
