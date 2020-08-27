@@ -686,7 +686,7 @@ $this->load->view('common/front_end_layout/top', [
                                                             <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Neighborhood other*</label>
-                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[neighborhood_other]">
+                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[area_other]">
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -728,21 +728,6 @@ $this->load->view('common/front_end_layout/top', [
                                                                 </div>
                                                                 <input type="hidden" placeholder="Floor Number" class="form-control floor" name="attribute_id[florbas]" value="1">
                                                             </li>
-                                                            <!--   
-                                                                <li class="col-lg-3">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Floor Number</label>
-                                                                        <input type="hidden" name="attribute_id[]" class="floor" value="6">
-                                                                        <input type="number" placeholder="Floor Number" class="form-control floor" id="floor" name="value[]" onkeyup="myFunction()">
-                                                                    </div>
-                                                                </li>
-                                                                <li class="col-lg-3">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleFormControlSelect1">Basement</label>
-                                                                        <input type="hidden" name="attribute_id[]" class="basement" value="8">
-                                                                        <input type="number" placeholder="Basement" class="form-control basement" id="basement" name="value[]" onkeyup="myFunctionb()">
-                                                                    </div>
-                                                                </li> -->
                                                         </ul>
 
                                                         <ul class="row">
@@ -756,7 +741,6 @@ $this->load->view('common/front_end_layout/top', [
 
                                                         <div class="tabing-action">
                                                             <ul>
-                                                                <!-- <li class="closed"><a href="#">Close</a></li> -->
                                                                 <li class="next"><a href="javascript:void(0)">Next</a></li>
                                                             </ul>
                                                         </div>
@@ -840,11 +824,8 @@ $this->load->view('common/front_end_layout/top', [
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
+                                                                    <input type="number" id="sukkahSleep" name="sleep_number" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
                                                                 </div>
-
-                                                                <!-- <input type="number" id="sukkahSleep" placeholder="Sleep *" style="display:none;padding:0px !important;"> -->
-
                                                             </li>
                                                             <li>
                                                                 <h4>Kitchen Amenities</h4>
@@ -892,7 +873,6 @@ $this->load->view('common/front_end_layout/top', [
                                                         </ul>
                                                         <div class="tabing-action">
                                                             <ul>
-                                                                <!-- <li class="closed"><a href="#">Close</a></li> -->
                                                                 <li class="amintNext"><a href="javascript:void(0)">Next</a></li>
                                                             </ul>
                                                         </div>
@@ -927,7 +907,6 @@ $this->load->view('common/front_end_layout/top', [
 
                                                     <div class="tabing-action">
                                                         <ul>
-                                                            <!-- <li class="closed"><a href="#">Close</a></li> -->
                                                             <li class="optNext"><a href="javascript:void(0)">Next</a></li>
                                                         </ul>
                                                     </div>
@@ -972,7 +951,6 @@ $this->load->view('common/front_end_layout/top', [
                                                                                 <label for="monthly">Monthly ($)</label>
                                                                                 <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="Monthly *">
                                                                             </div>
-                                                                            <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
                                                                         </div>
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
@@ -992,7 +970,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <input type="checkbox" class="custom-control-input" name="only_weekend" id="customCheck29">
                                                                                 <label class="custom-control-label" for="customCheck29">Weekend Only</label>
                                                                             </div>
                                                                         </div>
@@ -1004,10 +982,6 @@ $this->load->view('common/front_end_layout/top', [
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- <div class="custom-control custom-checkbox form-group">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
-                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
-                                                                            </div> -->
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
                                                                             <div class="seasonRule">
@@ -1034,8 +1008,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
-                                                                            <div class="rule">
-                                                                            </div>
+                                                                            <div class="rule"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div id='seasonCalendar'></div>
@@ -1046,10 +1019,7 @@ $this->load->view('common/front_end_layout/top', [
                                                         </div>
                                                     </div>
                                                     <div class="tabing-action">
-                                                        <ul>
-                                                            <li class="submitnext"><a id="submitBtn">Finish</a>
-                                                                <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
-                                                        </ul>
+                                                        <ul><li class="submitnext"><a id="submitBtn">Finish</a></li></ul>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1070,53 +1040,7 @@ $this->load->view('common/front_end_layout/top', [
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="modal fade modal-event" tabindex="-1" id="seasonModal" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content event-model">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Add seasonal price</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonTitle">Season title</label>
-                                                <input type="text" name="title" id="seasonTitle" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonStart">Starts at</label>
-                                                <input type="text" name="starts_at" class="startDate" id="seasonStart" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonEnd">Ends at</label>
-                                                <input type="text" name="ends_at" class="startDate" id="seasonEnd" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonPrice">Price</label>
-                                                <input type="number" name="ends_at" class="" id="seasonPrice" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6" style="text-align: center;">
-                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck30">
-                                                <label class="custom-control-label" style="font-size: 16px;" for="customCheck30">Fixed Price</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="add-season">Add season</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
+                        
                         <div class="modal fade modal-event" tabindex="-1" id="manualBook" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
@@ -2305,17 +2229,11 @@ $this->load->view('common/front_end_layout/top', [
 
         $('#submitBtn').click(function() {
             let amenities = [];
-            // let prices = [], private_notes = [], rule_data=[];
             var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 if (item.name == "amenities[]") amenities.push(item.value);
-                // if (item.name == 'price') prices.push(item.value);
-                // if (item.name == 'private_note') private_notes.push(item.value);
-                // if (item.name == 'rule_data') rule_data.push(item.value);
                 return obj;
             }, {});
-
-            console.log(data);
 
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
@@ -2329,6 +2247,7 @@ $this->load->view('common/front_end_layout/top', [
             $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
             $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
             $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
+
             if (data['area_id'] == 'other')
                 $('#propertySpec li label')[3].innerHTML = data['value[]'];
             else $('#propertySpec li')[3].style.display = "none";
@@ -2346,18 +2265,22 @@ $this->load->view('common/front_end_layout/top', [
                 $('#amenitySpec').append(`<li>${amenity}</li>`);
             });
 
+            const weekDays = [
+                "Thursday",
+                "Friday",
+                "Motzei Shabbos",
+                "Sunday",
+                "Monday"
+            ];
+
             $('#datePriceSpec li label')[0].innerHTML = `Daily: $${document.getElementById('days').value}, Weekend: $${document.getElementById('weekend').value}, Weekly: $${document.getElementById('weekly').value}, Monthly: $${document.getElementById('monthly').value}`;
 
-            switch (data['weekend_type']) {
-                case "5":
-                    $('#datePriceSpec li label')[1].innerHTML = "Motzei Shabbos";
-                    break;
-                case "6":
-                    $('#datePriceSpec li label')[1].innerHTML = "Sunday";
-                    break;
-                case "7":
-                    $('#datePriceSpec li label')[1].innerHTML = "Monday";
-                    break;
+            if ($('.isAnnual').val() == 'true') {
+                const weekFrom = parseInt(document.getElementById('weekendFrom').value, 10) - 3;
+                const weekTo = parseInt(document.getElementById('weekendTo').value, 10) - 3;
+                $('#datePriceSpec li label')[1].innerHTML = `${weekDays[weekFrom]} ~ ${weekDays[weekTo]}`;
+            } else {
+                $('#datePriceSpec li')[1].empty();
             }
 
             if ($('#image_preview img').length < 2) {
@@ -2408,7 +2331,6 @@ $this->load->view('common/front_end_layout/top', [
             }
         })
 
-
         var compare = function(filter) {
             return function(a, b) { //closure
                 var a = a[filter],
@@ -2423,7 +2345,6 @@ $this->load->view('common/front_end_layout/top', [
                 }
             };
         };
-
 
         var d = moment().format('YYYY-MM-DD');
 

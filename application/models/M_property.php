@@ -95,7 +95,12 @@ class M_property extends CI_Model
             // 'created_at' => date('Y-m-d H:i:s'),
             'manual_booking' => $manualBooking,
             'blocked_date' => $blockedDate,
-            'is_annual' => $is_annual
+            'is_annual' => $is_annual,
+            'bedrooms'  => $value['bedrooms'],
+            'bathrooms' => $value['bathrooms'],
+            'florbas' => $property_type == 'house' ? 0 : $value['florbas'],
+            'area_other' => $area_id == 'other' ? $value['area_other'] : '',
+            'sleep_number' => strpos($amenitie, 'Sukkah') ? $sleep_number : 0
         ];
 
         if ($is_annual == "true") {
@@ -106,6 +111,7 @@ class M_property extends CI_Model
             $property_data['private_note'] = $private_note['manual'];
             $property_data['weekend_from'] = $weekend_type['from'];
             $property_data['weekend_to'] = $weekend_type['to'];
+            $property_data['only_weekend'] = isset($onlyWeekend) ? "true" : "false";
         } else {
             $property_data['private_note'] = $private_note['sessional'];
         }
@@ -124,26 +130,6 @@ class M_property extends CI_Model
                     'created_at' => date('Y-m-d H:i:s')
                 ];
             }
-
-            /*store seasonal price*/
-
-            // if (empty($date_price)) { 
-
-            //     $sessional = explode('&', $rule_data);
-            //     foreach ($sessional as $key => $valu) {
-            //         $signle = explode('|', $valu);
-            //         $session_data[] = [
-            //             'name' => $signle[0],
-            //             'start_date' => $signle[1],
-            //             'end_date' => $signle[2],
-            //             'days' => $signle[3],
-            //             'price' => $signle[4],
-            //             'property_id' => $property_id
-            //         ];
-            //     }
-            //     $this->db->insert_batch('properties_sessional', $session_data);
-            // }
-
 
             if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
 
@@ -186,11 +172,11 @@ class M_property extends CI_Model
 
                 // Just for Testing
 
-                // return [
-                //     'type' => 'success',
-                //     'text' => 'Property listing done successfully!',
-                //     'virtual_number' => "+1 123123123"
-                // ];
+                return [
+                    'type' => 'success',
+                    'text' => 'Property listing done successfully!',
+                    'virtual_number' => "+1 123123123"
+                ];
 
                 $virtualNumber = $this->db->select('id')
                     ->where_not_in('id', $vn_id_arr)
