@@ -12,31 +12,6 @@
         margin: 0 !important;
     }
 
-    .map-marker {
-        background-color: transparent !important;
-        bottom: -2px;
-    }
-
-    .marker-cluster-small {
-        background-color: transparent !important;
-    }
-
-    .map-marker:before {
-        display: none;
-    }
-
-    .map-marker .icon {
-        border: none !important;
-    }
-
-    .map-marker:after {
-        display: none
-    }
-
-    .map-marker .icon {
-        background-color: transparent !important;
-    }
-
     footer,
     .sub-footer {
         display: none;
@@ -52,27 +27,6 @@
 
     body {
         overflow: hidden;
-    }
-
-    .daterangepicker.show-calendar {
-        width: 604px !important;
-    }
-
-    #norecord p i {
-        font-size: 30px;
-        padding: 7px 12px;
-        color: #84b95c;
-    }
-
-    #norecord p.text-head {
-        font-size: 30px;
-        font-weight: 500;
-    }
-
-    #norecord p.text-details {
-        margin: 0 auto;
-        line-height: 25px;
-        color: #928f8f;
     }
     .search-page {
         margin: 0 !important;
@@ -344,7 +298,7 @@
 </div>
 
 <div class="w-50 d-flex justify-content-between">
-    <div class="pl-2">
+    <div class="pl-4">
         <h5>San Francisco, CA Apartments & Homes For Rent</h5>
         <small>3,3008 rentals available on DiraLeads</small>
     </div>
@@ -476,6 +430,7 @@
         // $('.daterangePicker').daterangepicker();
         $('#example').popover(ops);
     });
+
     var ops1 = {
         'html': true,
         sanitize: false,
@@ -483,10 +438,10 @@
             return $('#content1').html();
         }
     };
-
     $(function() {
         $('#example1').popover(ops1)
     });
+
     var ops2 = {
         'html': true,
         sanitize: false,
@@ -494,7 +449,6 @@
             return $('#content2').html();
         }
     };
-
     $(function() {
         $('#example2').popover(ops2)
     });
@@ -506,10 +460,10 @@
             return $('#content3').html();
         }
     };
-
     $(function() {
         $('#example3').popover(ops3)
     });
+
     var ops4 = {
         'html': true,
         sanitize: false,
@@ -517,6 +471,10 @@
             return $('#content4').html();
         }
     };
+
+    $(function() {
+        $('#example4').popover(ops4)
+    });
 
     var ops5 = {
         'html': true,
@@ -527,13 +485,10 @@
     };
 
     $(function() {
-        $('#example4').popover(ops4)
-    });
-
-    $(function() {
         $('#example5').popover(ops5)
     });
 </script>
+
 <script>
     function initMap() {
         const uluru = { lat: -25.344, lng: 131.036 };
@@ -556,6 +511,5 @@
             $(el).addClass("popover-inactive");
         }
     }
-
 </script>
 @endpush
