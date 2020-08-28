@@ -6,6 +6,12 @@ $this->load->view('common/front_end_layout/top', [
 ?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+
+<style>
+
+</style>
+
+
 <div class="dashboard">
     <div class="container-fluid">
         <div class="row">
@@ -27,7 +33,6 @@ $this->load->view('common/front_end_layout/top', [
                                 <div class="container-fluid">
                                     <div class="inner-content-box">
                                         <div class="row">
-
 
                                             <?php if (empty($my_properties)) { ?>
 
@@ -100,7 +105,10 @@ $this->load->view('common/front_end_layout/top', [
             </div>
         </div>
     </div>
+
     <?php $this->load->view('common/front_end_layout/bottom'); ?>
+
+
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
