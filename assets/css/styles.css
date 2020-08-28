@@ -1280,6 +1280,7 @@ code {
 }
 .explore-search {
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .filter-btn-mobo {
   float: none;
@@ -3284,7 +3285,7 @@ td.fc-more-cell {
 
 .banner-main .banner-text h2 {
   font-family: "Raleway", sans-serif;
-  text-align:justify;
+  text-align: justify;
   color: white;
 }
 
@@ -3298,7 +3299,7 @@ td.fc-more-cell {
   font-size: 24px;
   line-height: 1.2;
   color: white;
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
 
 .split-section {
@@ -3312,18 +3313,18 @@ td.fc-more-cell {
   font-family: "Raleway", sans-serif;
 }
 
-.simplifying-text{
+.simplifying-text {
   margin-top: 10rem;
 }
 
-.diraleads-heimishe-text{
+.diraleads-heimishe-text {
   margin-bottom: 30px;
 }
 
-.service-box ul li{
+.service-box ul li {
   width: 33%;
 }
 
-.service-box ul li a{
+.service-box ul li a {
   height: 100%;
 }
