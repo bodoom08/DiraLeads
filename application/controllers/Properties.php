@@ -19,13 +19,16 @@ class Properties extends MOBO_Controller
     {
         // $data = $this->M_properties->getAllProperties();
         // return 'hi';
-        $data['areas'] = $this->M_properties->getAllAreas();
-        $properties = $this->M_properties->getPropertiesWithAttributes();
-        $data['properties'] = $properties['properties'];
-        $this->paginate($properties['all_properties_count']);
+        // $data['areas'] = $this->M_properties->getAllAreas();
+        // $properties = $this->M_properties->getPropertiesWithAttributes();
+        // $data['properties'] = $properties['properties'];
+        // $this->paginate($properties['all_properties_count']);
 
         // $data['coords'] = $this->M_properties->getPropertyCoords();
 
+        $data = $this->M_properties->getAllProducts();
+
+        // $this->load->view('properties', ["properties" => $data]);
         $this->load->view('properties', $data);
     }
 

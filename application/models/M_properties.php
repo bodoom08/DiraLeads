@@ -3,6 +3,27 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_properties extends CI_Model
 {
 
+    public function getAllProducts() 
+    {
+        $properties = $this->db
+                ->select("properties.id, areas.title, properties.street, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price")
+                ->from("properties")
+                ->where("properties.status = 'active'")
+                ->join('areas', "areas.id = properties.area_id", "left")
+                ->get()
+                ->result_array();
+
+        $streets = array();
+        foreach($properties as $index => $property) {
+            $properties[$index]['images'] = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
+            array_push($streets, isset($property['street']) ? $property['street'] : NULL);
+        }
+        return [
+            "properties" => $properties,
+            "streets"   => implode("|", $streets)
+        ];
+    }
+
     public function getAll()
     {
         extract($this->input->get());

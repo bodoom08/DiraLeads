@@ -128,7 +128,7 @@ $this->load->view('common/layout/top', [
         height: 200px;
         background-repeat: no-repeat;
         background-position: center;
-        background-size: cover;
+        background-size: inherit;
 
         border-radius: 10px;
         border: 2px solid #82828247;
@@ -358,216 +358,26 @@ $this->load->view('common/layout/top', [
 <div class="row search-page">
     <div class="col-lg-6 h-100">
         <div class="w-100 item-list">
+        <?php  if (!isset($properties) || count($properties) == 0) {?>
+            <h5 class="text-center">No Rentals</h5>
+        <?php } else {
+                foreach($properties as $property) {
+        ?>
             <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
+                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'home-2.jpg'; ?>
+                <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path);?>)">
                     <div class="item-badge">
                     </div>
                     <a href="javascript:;" >❤</a>
                 </div>
                 <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
+                    <h5>$<?php echo isset($property['monthly_price']) ? $property['monthly_price'] : 0; ?>/mo</h5>
+                    <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0;?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0;?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0;?> sqft</p>
+                    <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
+                    <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
                 </div>
             </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
-            <div class="item-card">
-                <div class="item-image" style="background-image: url(<?php echo site_url('assets/images/fp2.jpg');?>)">
-                    <div class="item-badge">
-                    </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <h5>$5,900/mo</h5>
-                    <p>🏠 4bd 🎉 2ba ✨ 1,600 sqft</p>
-                    <p>1703 Powell St</p>
-                    <p>Russian Hill, San Francisco, CA</p>
-                </div>
-            </div>
-            
+        <?php } } ?>
         </div>
     </div>
     <div class="col-lg-6 map-region">
@@ -644,15 +454,31 @@ $this->load->view('common/layout/top', [
     };
 
     $(function() {
-        $('#example5').popover(ops5)
+        $('#example5').popover(ops5);
     });
     
     function initMap() {
-        const uluru = { lat: -25.344, lng: 131.036 };
+        const uluru = { lat: 37.0522, lng: -122.2437 };
         const map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 4, center: uluru }
+            document.getElementById('map'), { zoom: 8, center: uluru }
         );
-        marker = new google.maps.Marker({ position: uluru, map });
+
+        var streets ="<?php echo $streets; ?>";
+        streets = streets.split("|");
+
+        geocoder = new google.maps.Geocoder();
+        streets.forEach(async (street) => {
+            if (street) {
+                await geocoder.geocode({ 'address': street}, function(results, status) {
+                    if (status == 'OK') {
+                        var marker = new google.maps.Marker({
+                            map,
+                            position: results[0].geometry.location
+                        });
+                    }
+                });
+            }
+        });
 
         var searchEl = document.getElementById('street_search');
 
@@ -678,4 +504,10 @@ $this->load->view('common/layout/top', [
             $(el).addClass("popover-inactive");
         }
     }
+
+    $(document).ready( function () {
+        
+        // const streets = '<?php echo $streets; ?>';
+        // console.log("Streets: ", streets);
+    })
 </script>
