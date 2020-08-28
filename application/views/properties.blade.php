@@ -133,7 +133,7 @@
                 <h4>Rental Type</h4>
                 <ul class="main-34">
                     <li {{ (isset($_GET['type']) && $_GET['type'] == 'any') || (!isset($_GET['type'])) ? 'class=active' : '' }}>
-                        <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'any'})">
+                        <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'any' || (!isset($_GET['type'])) ? 'active' : '' }}" onclick="filter({name: 'type', value: 'any'})">
                             <i class="fa fa-building-o"></i>
                             Any
                         </button>
@@ -181,10 +181,10 @@
                 <h4>Price</h4>
                 <div class="main-35 input-box-mob">
                     <ul class="main-36">
-                        <li {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'class=active' : '' }}>
+                        <li {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '')  ? 'class=active' : '' }}>
                             <input type="hidden" id="price_min1" value=''>
                             <input type="hidden" id="price_max1" value=''>
-                            <button class="btn propery_any {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'active' : '' }}" onclick="filter({name: 'price', value: '1'})">
+                            <button class="btn propery_any {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') || (!isset($_GET['price_min']) && !isset($_GET['price_max'])) ? 'active' : '' }}" onclick="filter({name: 'price', value: '1'})">
                                 Any
                             </button>
                         </li>
@@ -215,7 +215,7 @@
                 <h4>Bedrooms</h4>
                 <ul class="main-36">
                     <li {{ (isset($_GET['bedroom']) && $_GET['bedroom'] == 'any') || !isset($_GET['bedroom']) ? 'class=active' : '' }}>
-                        <button class="btn propery_any {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: 'any'})">
+                        <button class="btn propery_any {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' || !isset($_GET['bedroom']) ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: 'any'})">
                             Any
                         </button>
                     </li>
@@ -258,7 +258,7 @@
                 <h5 style="text-align: center;">Bathroom</h5>
                 <ul class="main-36">
                     <li {{ (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : '' }}>
-                        <button class="btn propery_any {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: 'any'})">
+                        <button class="btn propery_any {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: 'any'})">
                             Any
                         </button>
                     </li>
