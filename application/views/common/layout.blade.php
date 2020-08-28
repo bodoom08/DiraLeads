@@ -365,21 +365,21 @@
         });
     </script>
     <script>
-        $("#tile-1 .nav-pills a").click(function() {
-            var position = $(this).parent().position();
+        // $("#tile-1 .nav-pills a").click(function() {
+        //     var position = $(this).parent().position();
 
-            var width = $(this).parent().width();
-            $("#tile-1 .sliderrr").css({
-                "left": +position.left,
-                "width": width
-            });
-        });
-        var actWidth = $("#tile-1 .nav-pills").find(".active").parent("li").width();
-        var actPosition = $("#tile-1 .nav-pills .active").position();
-        $("#tile-1 .sliderrr").css({
-            "left": +actPosition.left,
-            "width": actWidth
-        });
+        //     var width = $(this).parent().width();
+        //     $("#tile-1 .sliderrr").css({
+        //         "left": +position.left,
+        //         "width": width
+        //     });
+        // });
+        // var actWidth = $("#tile-1 .nav-pills").find(".active").parent("li").width();
+        // var actPosition = $("#tile-1 .nav-pills .active").position();
+        // $("#tile-1 .sliderrr").css({
+        //     "left": actPosition.left,
+        //     "width": actWidth
+        // });
     </script>
 </body>
 

@@ -2,6 +2,11 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class M_properties extends CI_Model
 {
+    public function getAllProperties() 
+    {
+        $data = $this->db->select("")->where("")->get('properties');
+    }
+
     public function getAll()
     {
         extract($this->input->get());
