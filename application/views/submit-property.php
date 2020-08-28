@@ -4079,8 +4079,7 @@ $this->load->view('common/front_end_layout/top', [
                     $('.fa-spinner').prop('display', 'inline');
                     $('#submitBtn').prop('disabled', 'disabled');
                 },
-                success: function(data) {
-                    var response = JSON.parse(data);
+                success: function(response) {
                     if (response.type == 'success') {
                         $('#propertyConfirmationModal').hide();
                         $('#thumbnailPreview').empty();

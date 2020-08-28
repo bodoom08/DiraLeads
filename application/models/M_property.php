@@ -60,7 +60,7 @@ class M_property extends CI_Model
         //     'text' => 'Property listing done successfully!',
         //     'virtual_number' => "+1 123123123"
         // ];
-        return $_POST;
+        // return $_POST;
 
         array_walk_recursive($_POST, 'trim');
 
