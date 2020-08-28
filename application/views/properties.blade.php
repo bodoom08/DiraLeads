@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap">
+</script>
 <style>
     .filter-btn-mobo {
         margin: 0 !important;
@@ -133,7 +135,7 @@
                 <h4>Rental Type</h4>
                 <ul class="main-34">
                     <li {{ (isset($_GET['type']) && $_GET['type'] == 'any') || (!isset($_GET['type'])) ? 'class=active' : '' }}>
-                        <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'type', value: 'any'})">
+                        <button class="btn {{ isset($_GET['type']) && $_GET['type'] == 'any' || (!isset($_GET['type'])) ? 'active' : '' }}" onclick="filter({name: 'type', value: 'any'})">
                             <i class="fa fa-building-o"></i>
                             Any
                         </button>
@@ -181,10 +183,10 @@
                 <h4>Price</h4>
                 <div class="main-35 input-box-mob">
                     <ul class="main-36">
-                        <li {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'class=active' : '' }}>
+                        <li {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '')  ? 'class=active' : '' }}>
                             <input type="hidden" id="price_min1" value=''>
                             <input type="hidden" id="price_max1" value=''>
-                            <button class="btn propery_any {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') ? 'active' : '' }}" onclick="filter({name: 'price', value: '1'})">
+                            <button class="btn propery_any {{ (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') || (!isset($_GET['price_min']) && !isset($_GET['price_max'])) ? 'active' : '' }}" onclick="filter({name: 'price', value: '1'})">
                                 Any
                             </button>
                         </li>
@@ -215,7 +217,7 @@
                 <h4>Bedrooms</h4>
                 <ul class="main-36">
                     <li {{ (isset($_GET['bedroom']) && $_GET['bedroom'] == 'any') || !isset($_GET['bedroom']) ? 'class=active' : '' }}>
-                        <button class="btn propery_any {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: 'any'})">
+                        <button class="btn propery_any {{ isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' || !isset($_GET['bedroom']) ? 'active' : '' }}" onclick="filter({name: 'bedroom', value: 'any'})">
                             Any
                         </button>
                     </li>
@@ -258,7 +260,7 @@
                 <h5 style="text-align: center;">Bathroom</h5>
                 <ul class="main-36">
                     <li {{ (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : '' }}>
-                        <button class="btn propery_any {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: 'any'})">
+                        <button class="btn propery_any {{ isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : '' }}" onclick="filter({name: 'bathroom', value: 'any'})">
                             Any
                         </button>
                     </li>
@@ -415,8 +417,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&callback=initMap">
-</script>
 <script>
     var ops = {
         'html': true,
@@ -496,6 +496,16 @@
             document.getElementById('map'), { zoom: 4, center: uluru }
         );
         marker = new google.maps.Marker({ position: uluru, map });
+
+        var searchEl = document.getElementById('street_search');
+
+        var autocomplete = new google.maps.places.Autocomplete(searchEl);
+
+        autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            $('#street_search').removeClass('invaild-input');
+        });
     }
     function changeIcon(el) {
         if ($(el).children().hasClass("fa-angle-down")) {
