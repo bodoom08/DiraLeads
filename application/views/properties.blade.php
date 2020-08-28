@@ -7,6 +7,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap">
+</script>
 <style>
     .filter-btn-mobo {
         margin: 0 !important;
@@ -415,8 +417,6 @@
 
 @push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&callback=initMap">
-</script>
 <script>
     var ops = {
         'html': true,
@@ -496,6 +496,16 @@
             document.getElementById('map'), { zoom: 4, center: uluru }
         );
         marker = new google.maps.Marker({ position: uluru, map });
+
+        var searchEl = document.getElementById('street_search');
+
+        var autocomplete = new google.maps.places.Autocomplete(searchEl);
+
+        autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            $('#street_search').removeClass('invaild-input');
+        });
     }
     function changeIcon(el) {
         if ($(el).children().hasClass("fa-angle-down")) {
