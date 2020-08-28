@@ -1026,19 +1026,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="days">Days ($)</label>
-                                                                                <input type="number" id="days" class="datedays" placeholder="Days *">
+                                                                                <input type="number" id="days" value="<?php echo $property_details['days_price'] > 0 ? $property_details['days_price'] : ''; ?>" class="datedays" placeholder="Days *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekend">Weekend ($)</label>
-                                                                                <input type="number" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                                <input type="number" id="weekend" value="<?php echo $property_details['weekend_price'] > 0 ? $property_details['weekend_price'] : ''; ?>" class="weekenddays" placeholder="Weekend *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekly">Weekly ($)</label>
-                                                                                <input type="number" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                                <input type="number" id="weekly" value="<?php echo $property_details['weekly_price'] > 0 ? $property_details['weekly_price'] : ''; ?>" class="weekly" placeholder="Weekly *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="monthly">Monthly ($)</label>
-                                                                                <input type="number" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                                <input type="number" id="monthly" value="<?php echo $property_details['monthly_price'] > 0 ? $property_details['monthly_price'] : ''; ?>" class="monthly" placeholder="Monthly *">
                                                                             </div>
                                                                             <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
                                                                         </div>
@@ -1068,7 +1068,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="annualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
@@ -2379,15 +2379,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
 
             // Assing Property specs to $propertySpec
+            // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
-            $('#propertySpec li label')[2].innerHTML = data['area_id'];
+            $('#propertySpec li label')[2].innerHTML = document.querySelector("#neighborhood option[value='" + data['area_id'] + "']").innerHTML;
+
             $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
             $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
             $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
-            if (data['area_id'] == 'other')
-                $('#propertySpec li label')[3].innerHTML = data['value[]'];
-            else $('#propertySpec li')[3].style.display = "none";
+
+            if (data['area_id'] == 'other') {
+                $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value;
+                $('#propertySpec li')[3].style.display = "none";
+            }
 
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
@@ -2550,6 +2554,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
                 $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
             },
+            eventAfterAllRender: function() {
+                renderCalendarPrice();
+            },
             eventClick: function(event, jsEvent) {
                 // Display the modal and set the values to the event values.
                 if (event.title == 'Blocked') {
@@ -2669,9 +2676,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     // $el.addClass("custom-event");
                     // console.log(eventObj);
                 },
-
+                eventAfterAllRender: function() {
+                    renderSession();
+                },
                 select: function(start, end, jsEvent, view) {
-
 
                     if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
 
@@ -4255,6 +4263,54 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             if (e.target == this) closeDateAction();
             console.log("Dialog CLICKED!", e.target);
         });
+
+
+        // render calendar price when tab is switched
+        $(document).on('click', '.customCalender', function() {
+            renderCalendarPrice();
+        });
+
+        $(document).on('click', '.customSession', function() {
+            renderSession();
+        });
+
+        // set weekend type for annual rentals
+        $('#weekendFrom').val('<?php echo $property_details['weekend_from'] ?>');
+        $('#weekendTo').val('<?php echo $property_details['weekend_to'] ?>');
+
+        var isOnlyWeekend = <?php echo $property_details['only_weekend'] ?>;
+        console.log("isonly Weekend", isOnlyWeekend);
+
+        $('#customCheck29').prop('checked', isOnlyWeekend);
+
+        //set private note for annual rentals
+        var privateNote = "<?php echo $property_details['is_annual'] == 'true' ? $property_details['private_note'] : ''; ?>";
+        $('#annualPrivateNote').val(privateNote);
+
+        // set seasonal pricing data
+        var isAnnual = <?php echo $property_details['is_annual']; ?>;
+        var seasonalPrice = "<?php echo $property_details['seasonal_price']; ?>";
+        if (isAnnual) { // switch tab
+            $('#season').val(seasonalPrice);
+            $('.costomSession').removeClass('active');
+            $('.customCalender').addClass('active');
+        } else {
+            $('#session').val(seasonalPrice);
+            $('.costomSession').addClass('active');
+            $('.customCalender').removeClass('active');
+        }
+
+        //set mannual booking
+        var manualBooking = '<?php echo $property_details['manual_booking']; ?>';
+        $('.disableDetail').val(manualBooking);
+
+        //set block dates
+        var blockdates = '<?php echo $property_details['blocked_date']; ?>';
+        $('.blockDetail').val(blockdates);
+
+        //switch tab
+
+
     });
 
     function closeDateAction() {
@@ -4449,18 +4505,42 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 </script>
 
 <script>
+    //set neighborhood other
+    $('#neighborhood_other_container').css('display', 'none');
+    var neighborhoodOther = '<?php echo $property_details['area_other']; ?>';
+    var neighborhood = <?php echo $property_details['area_id']; ?>;
+
+    console.log(neighborhoodOther);
+    if (neighborhoodOther && neighborhood == 0) {
+        $('#neighborhood').val('other');
+        $('#neighborhood_other').val(neighborhoodOther);
+        $('#neighborhood_other_container').css('display', 'block');
+    }
+
+    // set floor number
     var editData = <?php echo json_encode($floor_num); ?>;
-    console.log(editData);
     $('#floorNumber').val('<?php echo  $floor_num; ?>');
+
+    //set Sukkah
+    var hasSukkah = <?php echo in_array('Sukkah', $amenities); ?>;
+    var sleepNumber = <?php echo $property_details['sleep_number']; ?>;
+    if (hasSukkah) {
+        $('#sukkahSleep').val(sleepNumber);
+        $('#sukkahSleep').css('display', 'block');
+    } else {
+        $('#sukkahSleep').css('display', 'none');
+    }
 </script>
 
 <script>
+    // show image preview
     var editImage = <?php echo json_encode($property_images); ?>;
     editImage.forEach(function(row, index) {
         $('#image_preview').append("<div class='thumbnails_box'><img src='" + '<?php echo site_url('uploads/') ?>' + row.path + "' width='100%' alt='' title='" + row.path + "'><i class='fa fa-window-close remove' onclick=removethis(this);></i></div>");
     });
 </script>
 <script>
+    //if date and availability is clicked
     $(document).ready(function() {
         var date = "<?php echo $_SESSION['forDate'] ?>";
         if (date != '') {

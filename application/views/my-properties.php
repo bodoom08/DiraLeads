@@ -47,27 +47,30 @@ $this->load->view('common/front_end_layout/top', [
                                                     <div class="col-md-4 col-lg-4">
                                                         <div class="item">
                                                             <div class="feat_property">
-                                                                <div class="thumb <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">
+                                                                <div class="thumb <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">
                                                                     <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>">
                                                                     <img class="img-whp" src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo">
                                                                 </div>
 
                                                                 <div class="details">
                                                                     <div class="tc_content">
-                                                                        <h4 class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">For <?php echo ucfirst($value['for']); ?></h4>
-                                                                        <p><span class="flaticon-placeholder <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><i class="fa fa-map-marker" aria-hidden="true"></i></span> <?php echo $value['street'] ?></p>
-                                                                        <ul class="prop_details <?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>">
-                                                                            <li class="list-inline-item"><a href="#"><span> <i class="fa fa-money" aria-hidden="true"></i> Price:</span> $<?php echo $value['price'] ?>/Monthly</a></li>
-                                                                            <li class="list-inline-item"><a href="#"> <span><i class="fa fa-calendar-o" aria-hidden="true"></i>Date:</span> <?php echo $value['available_date'] ?></a></li>
-                                                                        </ul>
+                                                                        <h4 class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">For <?php echo ucfirst($value['for']); ?></h4>
+                                                                        <p><span class="flaticon-placeholder <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><i class="fa fa-map-marker" aria-hidden="true"></i></span> <?php echo $value['street'] ?></p>
+                                                                        <?php if ($value['is_annual'] == 'true') { ?>
+                                                                            <ul class="prop_details <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">
+
+                                                                                <li class="list-inline-item"><a href="#"><span> <i class="fa fa-money" aria-hidden="true"></i> Price:</span><?php echo $value['days_price'] ? 'Daily: $' . $value['days_price'] . ' ' : '' ?><?php echo $value['weekend_price'] ? 'Weekend: $' . $value['weekend_price'] . ' ' : '' ?><?php echo $value['weekly_price'] ? 'Weekly: $' . $value['weekly_price'] . ' ' : '' ?><?php echo $value['monthly_price'] ? 'Monthly: $' . $value['monthly_price'] : '' ?></a></li>
+                                                                                <!-- <li class="list-inline-item"><a href="#"> <span><i class="fa fa-calendar-o" aria-hidden="true"></i>Date:</span> <?php echo $value['available_date'] ?></a></li> -->
+                                                                            </ul>
+                                                                        <?php } ?>
                                                                         <?php if ($value['sold'] != 'true') { ?>
                                                                             <ul class="action-sec">
-                                                                                <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                                                                                <li class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
 
-                                                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] != 'active' ? 'Pause' : 'Resume'); ?></a></li>
+                                                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'inactive' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
 
-                                                                                <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
-                                                                                <li class="<?php echo ($value['status'] == 'active' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="editDate(<?php echo $value['id'] ?>);"> Availability & Pricing</a></li>
+                                                                                <li class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                                                                                <li class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="editDate(<?php echo $value['id'] ?>);"> Availability & Pricing</a></li>
                                                                                 <!--  <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li> -->
                                                                             </ul>
                                                                         <?php } ?>

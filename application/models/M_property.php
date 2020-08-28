@@ -31,6 +31,7 @@ class M_property extends CI_Model
         //     'text' => 'Property listing done successfully!',
         //     'virtual_number' => "+1 123123123"
         // ];
+        // return $_POST;
 
         array_walk_recursive($_POST, 'trim');
 
@@ -99,9 +100,9 @@ class M_property extends CI_Model
             'bedrooms'  => $value['bedrooms'],
             'bathrooms' => $value['bathrooms'],
             'florbas' => $property_type == 'house' ? 0 : $value['florbas'],
-            'area_other' => $area_id == 'other' ? $value['area_other'] : '',
-            'sleep_number' => strpos($amenitie, 'Sukkah') ? $sleep_number : 0
-            // 'seasonal_price' => isset($seasonal_price) ? $seasonal_price : ''
+            'area_other' => $value['area_other'],
+            'sleep_number' => in_array('Sukkah', $amenities) ? $sleep_number : 0,
+            'seasonal_price' => $is_annual == 'true' ? $seasonal_price['season'] : $seasonal_price['session']
         ];
 
         if ($is_annual == "true") {
@@ -112,7 +113,7 @@ class M_property extends CI_Model
             $property_data['private_note'] = $private_note['manual'];
             $property_data['weekend_from'] = $weekend_type['from'];
             $property_data['weekend_to'] = $weekend_type['to'];
-            $property_data['only_weekend'] = isset($onlyWeekend) ? "true" : "false";
+            $property_data['only_weekend'] = isset($only_weekend) ? "true" : "false";
         } else {
             $property_data['private_note'] = $private_note['sessional'];
         }
@@ -219,7 +220,7 @@ class M_property extends CI_Model
                         \Telnyx\PhoneNumber::Update($number_e164, [
                             "connection_id" => TEXML_APP_ID,
                         ]);
-                        // return assign_messaging_profile($number_e164);
+                        assign_messaging_profile($number_e164);
                         // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
                     } else {
                         return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];

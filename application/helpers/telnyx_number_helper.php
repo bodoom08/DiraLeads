@@ -100,7 +100,7 @@ function assign_messaging_profile($number)
 	// https://api.telnyx.com/v2/phone_numbers/{id}/messaging
 
 
-	curl_setopt($curl, CURLOPT_URL, "https://api.telnyx.com/v2/phone_numbers/" . $number . "/messaging");
+	curl_setopt($curl, CURLOPT_URL, "https://api.telnyx.com/v2/phone_numbers/" . preg_replace('/[^0-9]/', '', $number) . "/messaging");
 	curl_setopt($curl, CURLOPT_HTTPHEADER, [
 		"Accept: application/json",
 		"Cache-Control: no-cache",

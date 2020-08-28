@@ -1683,11 +1683,14 @@ $this->load->view('common/front_end_layout/top', [
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label class="font-weight-bold">Date & Price</label>
-                                            <ul id="datePriceSpec">
-                                                <li>Price: &nbsp;<label></label></li>
-                                                <li>Weekend Type: &nbsp;<label></label></li>
-                                            </ul>
+                                            <div>
+                                                <label class="font-weight-bold">Date & Price</label>
+                                                <ul id="datePriceSpec">
+                                                    <li>Price: &nbsp;<label></label></li>
+                                                    <li>Weekend Type: &nbsp;<label></label></li>
+                                                    <li style="display:none;"><label>Weekend only</label></li>
+                                                </ul>
+                                            </div>
 
                                             <label class="font-weight-bold">Virtual Number</label>
                                             <p id="virtualNumber">Getting virtual number...</p>
@@ -2167,12 +2170,14 @@ $this->load->view('common/front_end_layout/top', [
             var weekly = $('#weekly').val();
             var monthly = $('#monthly').val();
 
-            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
-                $('.datedays').addClass('invaild-input');
-                $('.weekenddays').addClass('invaild-input');
-                $('#weekly').addClass('invaild-input');
-                $('#monthly').addClass('invaild-input');
-                return false;
+            if ($('.isAnnual').val() == 'true') {
+                if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+                    $('.datedays').addClass('invaild-input');
+                    $('.weekenddays').addClass('invaild-input');
+                    $('#weekly').addClass('invaild-input');
+                    $('#monthly').addClass('invaild-input');
+                    return false;
+                }
             }
             return true;
         }
@@ -2245,15 +2250,16 @@ $this->load->view('common/front_end_layout/top', [
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
-            $('#propertySpec li label')[2].innerHTML = data['area_id'];
+            $('#propertySpec li label')[2].innerHTML = document.querySelector("#neighborhood option[value='" + data['area_id'] + "']").innerHTML;
+
             $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
             $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
             $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
 
-            if (data['area_id'] == 'other')
-                $('#propertySpec li label')[3].innerHTML = data['value[]'];
-            else $('#propertySpec li')[3].style.display = "none";
-
+            if (data['area_id'] == 'other') {
+                $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value;
+                $('#propertySpec li')[3].style.display = "none";
+            }
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
@@ -2275,14 +2281,25 @@ $this->load->view('common/front_end_layout/top', [
                 "Monday"
             ];
 
-            $('#datePriceSpec li label')[0].innerHTML = `Daily: $${document.getElementById('days').value}, Weekend: $${document.getElementById('weekend').value}, Weekly: $${document.getElementById('weekly').value}, Monthly: $${document.getElementById('monthly').value}`;
+            dailyPrice = document.getElementById('days').value ? `Daily: $${document.getElementById('days').value} ` : '';
+            weekendPrice = document.getElementById('weekend').value ? `Weekend: $${document.getElementById('weekend').value} ` : '';
+            weeklyPrice = document.getElementById('weekly').value ? `'Weekly: $${document.getElementById('weekly').value} ` : '';
+            monthlyPrice = document.getElementById('monthly').value ? `Monthly: $${document.getElementById('monthly').value}  ` : '';
+            $('#datePriceSpec li label')[0].innerHTML = dailyPrice + weekendPrice + weeklyPrice + monthlyPrice;
 
             if ($('.isAnnual').val() == 'true') {
+                $('#datePriceSpec').parent().css('display', 'block');
+                $('#datePriceSpec li:nth-child(2)').css('display', 'block');
                 const weekFrom = parseInt(document.getElementById('weekendFrom').value, 10) - 3;
                 const weekTo = parseInt(document.getElementById('weekendTo').value, 10) - 3;
                 $('#datePriceSpec li label')[1].innerHTML = `${weekDays[weekFrom]} ~ ${weekDays[weekTo]}`;
+                if ($('#customCheck29').is(':checked')) {
+                    $('#datePriceSpec li:nth-child(3)').css('display', 'block');
+                } else {
+                    $('#datePriceSpec li:nth-child(3)').css('display', 'none');
+                }
             } else {
-                $('#datePriceSpec li')[1].empty();
+                $('#datePriceSpec').parent().css('display', 'none');
             }
 
             if ($('#image_preview img').length < 2) {
@@ -3874,9 +3891,9 @@ $this->load->view('common/front_end_layout/top', [
                 var disabledArr = disabledArrs.split('|');
                 for (i = 0; i < disabledArr.length; i++) {
                     var data = disabledArr[i].split(",");
-                    var From = data[0].split('/');
+                    var From = typeof variable === 'undefined' ? '' : data[0].split('/');
 
-                    var To = data[1].split('/');
+                    var To = typeof variable === 'undefined' ? '' : data[1].split('/');
                     var FromDate = new Date(From[2], From[1] - 1, From[0]);
                     var ToDate = new Date(To[2], To[1] - 1, To[0]);
 
