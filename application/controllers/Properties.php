@@ -17,12 +17,12 @@ class Properties extends MOBO_Controller
 
     public function index()
     {
-        $data = $this->M_properties->getAllProperties();
+        // $data = $this->M_properties->getAllProperties();
         // return 'hi';
-        // $data['areas'] = $this->M_properties->getAllAreas();
-        // $properties = $this->M_properties->getPropertiesWithAttributes();
-        // $data['properties'] = $properties['properties'];
-        // $this->paginate($properties['all_properties_count']);
+        $data['areas'] = $this->M_properties->getAllAreas();
+        $properties = $this->M_properties->getPropertiesWithAttributes();
+        $data['properties'] = $properties['properties'];
+        $this->paginate($properties['all_properties_count']);
 
         // $data['coords'] = $this->M_properties->getPropertyCoords();
 

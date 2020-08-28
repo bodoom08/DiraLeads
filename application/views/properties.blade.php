@@ -1,12 +1,17 @@
 @extends('common.layout')
 
 @push('styles')
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/lightslider.css') }}" />
 <link rel="stylesheet" type="text/css" href="assets/properties/css/bootstrap-select.min.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" integrity="sha256-ENFZrbVzylNbgnXx0n3I1g//2WeO47XxoPe0vkp3NC8=" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
 <style>
+    .filter-btn-mobo {
+        margin: 0 !important;
+    }
+
     .map-marker {
         background-color: transparent !important;
         bottom: -2px;
@@ -70,6 +75,7 @@
         color: #928f8f;
     }
     .search-page {
+        margin: 0 !important;
         height: calc(100vh - 300px);
     }
 
@@ -239,7 +245,6 @@
                                 <input type="number" class="form-control" placeholder="No Max" name="max" title="No Max" value="{{ isset($_GET['price_max']) && $_GET['price_max'] != '' ? $_GET['price_max'] : '' }}">
                             </li>
                         </ul>
-
                     </ul>
                     <div class="row">
                         <div class="col-lg-12">
@@ -291,20 +296,6 @@
             </div>
             <div class="clearfix"></div>
         </div>
-
-        <div class="filter-btn-mobo sortby">
-            <button id="example4" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Sort By &nbsp;<i class="fa fa-angle-down"></i> </button>
-            <div id="content4">
-                <h4>Sort By</h4>
-                <ul class="main-33">
-                    <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
-                    <li><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
-                    <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
-                    <li class="active"><button class="btn {{ isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : '' }}" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
-        </div>
         
         <div class="filter-btn-mobo sortby">
             <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> More &nbsp;<i class="fa fa-angle-down"></i> </button>
@@ -345,8 +336,7 @@
                     <div class="clearfix"></div>
                 </ul>
                 <ul class="main-33 more-sec">
-
-                    <li> <button class="btn {{ isset($_GET['more']) && $_GET['more'] == 'Floor' ? 'active' : '' }}" onclick="filter({name: 'more', value: 'Floor'})">Floor</button> </li>
+                    <li><button class="btn {{ isset($_GET['more']) && $_GET['more'] == 'Floor' ? 'active' : '' }}" onclick="filter({name: 'more', value: 'Floor'})">Floor</button> </li>
                 </ul>
             </div>
         </div>
@@ -470,7 +460,79 @@
 @endsection
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&callback=initMap">
+</script>
+<script>
+    var ops = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content').html();
+        }
+    };
+
+    $(function() {
+        // $('.daterangePicker').daterangepicker();
+        $('#example').popover(ops);
+    });
+    var ops1 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content1').html();
+        }
+    };
+
+    $(function() {
+        $('#example1').popover(ops1)
+    });
+    var ops2 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content2').html();
+        }
+    };
+
+    $(function() {
+        $('#example2').popover(ops2)
+    });
+
+    var ops3 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content3').html();
+        }
+    };
+
+    $(function() {
+        $('#example3').popover(ops3)
+    });
+    var ops4 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content4').html();
+        }
+    };
+
+    var ops5 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content5').html();
+        }
+    };
+
+    $(function() {
+        $('#example4').popover(ops4)
+    });
+
+    $(function() {
+        $('#example5').popover(ops5)
+    });
 </script>
 <script>
     function initMap() {
