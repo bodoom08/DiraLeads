@@ -320,50 +320,270 @@ class M_property extends CI_Model
         return $data;
     }
 
+    // function update()
+    // {
+    //     array_walk_recursive($_POST, 'trim');
+    //     extract($this->input->post());
+
+
+    //     $available_date = $date;
+    //     $property = 'short term rent';
+    //     if ($property  && $street && $area_id && $property_type && $price && $available_date && $property_desc) {
+    //         if (empty($attribute_id) || empty($value)) {
+    //             return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
+    //         }
+    //         if (strlen($property_desc) < 60) {
+    //             return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
+    //         }
+    //         // check for available date if property type is short term rent
+    //         if (($property == 'short term rent') && empty($short_term_available_date)) {
+    //             return ['type' => 'error', 'text' => 'Please selct at least one available date for short term rent!'];
+    //         } else if ($property != 'short term rent') {
+    //             $short_term_available_date = '';
+    //         }
+
+    //         if (($property == 'short term rent') && !empty($short_term_available_date)) {
+    //             $arr = explode(',', $short_term_available_date);
+    //             $trimmed_array = array_map('trim', $arr);
+    //             $short_term_available_date = implode(',', $trimmed_array);
+    //         }
+
+    //         // remove the existing files
+    //         $removeFileNameArr = json_decode($removeFileName, true);
+    //         for ($i = 0; $i < sizeof($removeFileNameArr); $i++) {
+    //             $delete_where = [
+    //                 'property_id' => $property_id,
+    //                 'path' => $removeFileNameArr[$i]
+    //             ];
+    //             $this->db->delete('property_images', $delete_where);
+    //         }
+
+
+    //         if ($_FILES) {
+    //             $this->load->library('upload');
+    //             $files = $_FILES;
+    //             $cpt = count($_FILES['userfile']['name']);
+    //             $path = FCPATH . "/tmp_uploads";
+    //             $config = array();
+    //             $config['upload_path'] = $path;
+    //             $config['allowed_types'] = 'jpg|jpeg|png';
+    //             $config['max_size'] = '0';
+    //             $config['overwrite'] = false;
+    //             for ($i = 0; $i < $cpt; $i++) {
+    //                 $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+    //                 $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+    //                 $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+    //                 $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+    //                 $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+
+    //                 $this->upload->initialize($config);
+
+    //                 if (!$this->upload->do_upload()) {
+    //                     $errors = $this->upload->display_errors();
+    //                     return ['type' => 'error', 'text' => $errors];
+    //                 }
+    //             }
+    //         }
+    //         if ($amenities) {
+    //             $amenitie = implode(',', $amenities);
+    //         } else {
+    //             $amenitie = "";
+    //         }
+    //         $property_data = [
+    //             'for' => $property,
+    //             // 'house_number' => $house_no,
+    //             'street' => $street,
+    //             'area_id' => $area_id,
+    //             'type' => $property_type,
+    //             'price' => $price,
+    //             'available_date' => date('Y-m-d', strtotime($available_date)),
+    //             'description' => $property_desc,
+    //             'amenities' => $amenitie,
+    //             'updated_at' => date('Y-m-d H:i:s'),
+    //             // 'contact_type' => $contact_type,
+    //             // 'day_of_the_weak' => $day_arr,
+    //             // 'time_of_day' => $time,
+    //             // 'from_time' => $start_time,
+    //             // 'to_time' => $end_time,                
+    //             'short_term_available_date' => $short_term_available_date
+    //         ];
+    //         if ($this->db->where('id', $property_id)->update('properties', $property_data)) {
+    //             foreach ($attribute_id as $key => $attribute) {
+    //                 $i = array_search($attribute, $attribute_id);
+    //                 if (!$value[$i]) {
+    //                     return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
+    //                 }
+    //                 $attribute_data[] = [
+    //                     'property_id' => $property_id,
+    //                     'attribute_id' => $attribute,
+    //                     'value' => $value[$i],
+    //                     'created_at' => date('Y-m-d H:i:s'),
+    //                     'updated_at' => date('Y-m-d H:i:s')
+    //                 ];
+    //             }
+    //             $this->db->where('property_id', $property_id)->delete('property_attribute_values');
+    //             if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
+    //                 if ($_FILES) {
+    //                     $this->load->library('upload');
+    //                     // $files = $_FILES;
+    //                     $cpt = count($files['userfile']['name']);
+    //                     $path = FCPATH . "/uploads";
+    //                     $config = array();
+    //                     $config['upload_path'] = $path;
+    //                     $config['allowed_types'] = 'jpg|jpeg|png';
+    //                     $config['max_size'] = '0';
+    //                     $config['overwrite'] = false;
+    //                     for ($i = 0; $i < $cpt; $i++) {
+    //                         $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+    //                         $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+    //                         $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+    //                         $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+    //                         $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+
+    //                         $this->upload->initialize($config);
+
+    //                         if (!$this->upload->do_upload()) {
+    //                             $errors = $this->upload->display_errors();
+    //                             return ['type' => 'error', 'text' => $errors];
+    //                         } else {
+    //                             $dataupload = array('upload_data' => $this->upload->data());
+    //                             $image_data[] = array(
+    //                                 'property_id' => $property_id,
+    //                                 'path' => $dataupload['upload_data']['file_name'],
+    //                                 'created_at' => date('Y-m-d H:i:s')
+    //                             );
+    //                         }
+    //                     }
+    //                     if ($this->db->insert_batch('property_images', $image_data)) {
+    //                         return ['type' => 'success', 'text' => 'Property Updated successfully!'];
+    //                     }
+    //                     return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
+    //                 } else {
+    //                     return ['type' => 'success', 'text' => 'Property Updated successfully!'];
+    //                 }
+    //             }
+    //         }
+    //         return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
+    //     }
+    //     return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
+    // }
+
     function update()
     {
+        // return $_POST;
+
         array_walk_recursive($_POST, 'trim');
-        extract($this->input->post());
 
-
+        extract($_POST);
         $available_date = $date;
-        $property = 'short term rent';
-        if ($property  && $street && $area_id && $property_type && $price && $available_date && $property_desc) {
-            if (empty($attribute_id) || empty($value)) {
-                return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
-            }
-            if (strlen($property_desc) < 60) {
-                return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
-            }
-            // check for available date if property type is short term rent
-            if (($property == 'short term rent') && empty($short_term_available_date)) {
-                return ['type' => 'error', 'text' => 'Please selct at least one available date for short term rent!'];
-            } else if ($property != 'short term rent') {
-                $short_term_available_date = '';
-            }
 
-            if (($property == 'short term rent') && !empty($short_term_available_date)) {
-                $arr = explode(',', $short_term_available_date);
-                $trimmed_array = array_map('trim', $arr);
-                $short_term_available_date = implode(',', $trimmed_array);
+        // if ($street && $area_id && $property_type && $price && $available_date && $property_desc) {
+        if (empty($attribute_id) || empty($value)) {
+            return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
+        }
+
+        if (strlen($property_desc) < 60) {
+            return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
+        }
+
+        // Check the property Image before upload
+        if (!empty($_FILES)) {
+            $this->load->library('upload');
+            $files = $_FILES;
+            $cpt = count($_FILES['userfile']['name']);
+            $path = FCPATH . "/tmp_uploads";
+            $config = array();
+            $config['upload_path'] = $path;
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['max_size'] = '0';
+            $config['overwrite'] = false;
+            for ($i = 0; $i < $cpt; $i++) {
+                $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
+                $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
+                $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
+                $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
+                $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
+
+                $this->upload->initialize($config);
+
+                if (!$this->upload->do_upload()) {
+                    $errors = $this->upload->display_errors();
+                    return ['type' => 'error', 'text' => $errors];
+                }
             }
+        }
+        if ($amenities) {
+            $amenitie = implode(',', $amenities);
+        } else {
+            $amenitie = "";
+        }
+        $property_data = [
+            'user_id' => $_SESSION['id'],
+            'for' => 'short term rent',
+            // 'house_number' => $house_no,
+            'amenities' => $amenitie,
+            'street' => $street,
+            'area_id' => $area_id,
+            'type' => $property_type,
+            'price' => $price,
+            'date_price' => $date_price,
+            'available_date' => date('Y-m-d', strtotime($available_date)),
+            'description' => $property_desc,
+            'status' => 'active',
+            'coords'    => isset($geolocation) ? $geolocation : "[]",
+            'created_by' => $_SESSION['id'],
+            // 'created_at' => date('Y-m-d H:i:s'),
+            'manual_booking' => $manualBooking,
+            'blocked_date' => $blockedDate,
+            'is_annual' => $is_annual,
+            'bedrooms'  => $value['bedrooms'],
+            'bathrooms' => $value['bathrooms'],
+            'florbas' => $value['florbas'],
+            'area_other' => $value['area_other'],
+            'sleep_number' => in_array('Sukkah', $amenities) ? $sleep_number : 0,
+            'seasonal_price' => $is_annual == 'true' ? $seasonal_price['season'] : $seasonal_price['session']
+        ];
 
-            // remove the existing files
-            $removeFileNameArr = json_decode($removeFileName, true);
-            for ($i = 0; $i < sizeof($removeFileNameArr); $i++) {
-                $delete_where = [
-                    'property_id' => $property_id,
-                    'path' => $removeFileNameArr[$i]
-                ];
-                $this->db->delete('property_images', $delete_where);
+        if ($is_annual == "true") {
+            $property_data['days_price'] = $prices['days'];
+            $property_data['weekend_price'] = $prices['weekend'];
+            $property_data['weekly_price'] = $prices['weekly'];
+            $property_data['monthly_price'] = $prices['monthly'];
+            $property_data['private_note'] = $private_note['manual'];
+            $property_data['weekend_from'] = $weekend_type['from'];
+            $property_data['weekend_to'] = $weekend_type['to'];
+            $property_data['only_weekend'] = isset($only_weekend) ? "true" : "false";
+        } else {
+            $property_data['private_note'] = $private_note['sessional'];
+        }
+
+        // if (!$this->db->insert('properties', $property_data)) {
+        //     return ['type' => 'error', 'text' => 'Error saving data'];
+        // }
+
+        if (!$this->db->where('id', $property_id)->update('properties', $property_data)) {
+            return ['type' => 'error', 'text' => 'Error updating data'];
+        }
+        foreach ($attribute_id as $key => $attribute) {
+            $i = array_search($attribute, $attribute_id);
+            if (!$value[$i]) {
+                return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
             }
-
-
+            $attribute_data[] = [
+                'property_id' => $property_id,
+                'attribute_id' => $attribute,
+                'value' => $value[$i],
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ];
+        }
+        $this->db->where('property_id', $property_id)->delete('property_attribute_values');
+        if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
             if ($_FILES) {
                 $this->load->library('upload');
-                $files = $_FILES;
-                $cpt = count($_FILES['userfile']['name']);
-                $path = FCPATH . "/tmp_uploads";
+                // $files = $_FILES;
+                $cpt = count($files['userfile']['name']);
+                $path = FCPATH . "/uploads";
                 $config = array();
                 $config['upload_path'] = $path;
                 $config['allowed_types'] = 'jpg|jpeg|png';
@@ -381,91 +601,21 @@ class M_property extends CI_Model
                     if (!$this->upload->do_upload()) {
                         $errors = $this->upload->display_errors();
                         return ['type' => 'error', 'text' => $errors];
-                    }
-                }
-            }
-            if ($amenities) {
-                $amenitie = implode(',', $amenities);
-            } else {
-                $amenitie = "";
-            }
-            $property_data = [
-                'for' => $property,
-                // 'house_number' => $house_no,
-                'street' => $street,
-                'area_id' => $area_id,
-                'type' => $property_type,
-                'price' => $price,
-                'available_date' => date('Y-m-d', strtotime($available_date)),
-                'description' => $property_desc,
-                'amenities' => $amenitie,
-                'updated_at' => date('Y-m-d H:i:s'),
-                // 'contact_type' => $contact_type,
-                // 'day_of_the_weak' => $day_arr,
-                // 'time_of_day' => $time,
-                // 'from_time' => $start_time,
-                // 'to_time' => $end_time,                
-                'short_term_available_date' => $short_term_available_date
-            ];
-            if ($this->db->where('id', $property_id)->update('properties', $property_data)) {
-                foreach ($attribute_id as $key => $attribute) {
-                    $i = array_search($attribute, $attribute_id);
-                    if (!$value[$i]) {
-                        return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
-                    }
-                    $attribute_data[] = [
-                        'property_id' => $property_id,
-                        'attribute_id' => $attribute,
-                        'value' => $value[$i],
-                        'created_at' => date('Y-m-d H:i:s'),
-                        'updated_at' => date('Y-m-d H:i:s')
-                    ];
-                }
-                $this->db->where('property_id', $property_id)->delete('property_attribute_values');
-                if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
-                    if ($_FILES) {
-                        $this->load->library('upload');
-                        // $files = $_FILES;
-                        $cpt = count($files['userfile']['name']);
-                        $path = FCPATH . "/uploads";
-                        $config = array();
-                        $config['upload_path'] = $path;
-                        $config['allowed_types'] = 'jpg|jpeg|png';
-                        $config['max_size'] = '0';
-                        $config['overwrite'] = false;
-                        for ($i = 0; $i < $cpt; $i++) {
-                            $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-                            $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-                            $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-                            $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-                            $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-
-                            $this->upload->initialize($config);
-
-                            if (!$this->upload->do_upload()) {
-                                $errors = $this->upload->display_errors();
-                                return ['type' => 'error', 'text' => $errors];
-                            } else {
-                                $dataupload = array('upload_data' => $this->upload->data());
-                                $image_data[] = array(
-                                    'property_id' => $property_id,
-                                    'path' => $dataupload['upload_data']['file_name'],
-                                    'created_at' => date('Y-m-d H:i:s')
-                                );
-                            }
-                        }
-                        if ($this->db->insert_batch('property_images', $image_data)) {
-                            return ['type' => 'success', 'text' => 'Property Updated successfully!'];
-                        }
-                        return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
                     } else {
-                        return ['type' => 'success', 'text' => 'Property Updated successfully!'];
+                        $dataupload = array('upload_data' => $this->upload->data());
+                        $image_data[] = array(
+                            'property_id' => $property_id,
+                            'path' => $dataupload['upload_data']['file_name'],
+                            'created_at' => date('Y-m-d H:i:s')
+                        );
                     }
                 }
+                if ($this->db->insert_batch('property_images', $image_data)) {
+                    return ['type' => 'success', 'text' => 'Property Updated successfully!'];
+                }
+                return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
             }
-            return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
         }
-        return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
     }
 
     public function change_status()

@@ -695,7 +695,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
                                                                 <div class="form-group">
                                                                     <label for="exampleFormControlSelect1">Neighborhood other*</label>
-                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[neighborhood_other]">
+                                                                    <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[area_other]">
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -890,7 +890,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                                                                                                                                     echo 'checked';
                                                                                                                                                                                 } ?>>
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
+                                                                    <input type="number" name="sleep_number" id="sukkahSleep" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
                                                                 </div>
 
                                                             </li>
@@ -1011,7 +1011,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             </a>
                                                         </li>
 
-                                                        <li role="presentation8" style="width:40%" class="costomSession">
+                                                        <li role="presentation8" style="width:40%" class="customSession">
                                                             <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
                                                                 <p>My Rental is seasonal</p>
                                                             </a>
@@ -1026,41 +1026,40 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="days">Days ($)</label>
-                                                                                <input type="number" id="days" value="<?php echo $property_details['days_price'] > 0 ? $property_details['days_price'] : ''; ?>" class="datedays" placeholder="Days *">
+                                                                                <input type="number" name="prices[days]" id="days" class="datedays" placeholder="Days *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekend">Weekend ($)</label>
-                                                                                <input type="number" id="weekend" value="<?php echo $property_details['weekend_price'] > 0 ? $property_details['weekend_price'] : ''; ?>" class="weekenddays" placeholder="Weekend *">
+                                                                                <input type="number" name="prices[weekend]" id="weekend" class="weekenddays" placeholder="Weekend *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekly">Weekly ($)</label>
-                                                                                <input type="number" id="weekly" value="<?php echo $property_details['weekly_price'] > 0 ? $property_details['weekly_price'] : ''; ?>" class="weekly" placeholder="Weekly *">
+                                                                                <input type="number" name="prices[weekly]" id="weekly" class="weekly" placeholder="Weekly *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="monthly">Monthly ($)</label>
-                                                                                <input type="number" id="monthly" value="<?php echo $property_details['monthly_price'] > 0 ? $property_details['monthly_price'] : ''; ?>" class="monthly" placeholder="Monthly *">
+                                                                                <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="Monthly *">
                                                                             </div>
-                                                                            <!-- <span class="submitPrice" style="font-size: 15px;background: #a27107;padding: 10px 50px;margin: 0 10px 0;border-radius: 30px;color: #fff;border: 0;text-align: center;">Price</span> -->
                                                                         </div>
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
                                                                                 <label for="weekendFrom">Weekend </label>
                                                                                 <label for="weekendFrom"> From</label>
-                                                                                <select class="form-control" name="weekend_type" id="weekendFrom">
+                                                                                <select class="form-control" name="weekend_type[from]" id="weekendFrom">
                                                                                     <option value="3">Thursday</option>
                                                                                     <option value="4">Friday</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group weekend-container">
                                                                                 <label for="weekendTo">Till</label>
-                                                                                <select class="form-control" name="weekend_type" id="weekendTo">
+                                                                                <select class="form-control" name="weekend_type[to]" id="weekendTo">
                                                                                     <option value="5">Motzei Shabbos</option>
                                                                                     <option value="6">Sunday</option>
                                                                                     <option value="7">Monday</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
+                                                                                <input type="checkbox" class="custom-control-input" name="only_weekend" id="customCheck29">
                                                                                 <label class="custom-control-label" for="customCheck29">Weekend Only</label>
                                                                             </div>
                                                                         </div>
@@ -1068,14 +1067,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="annualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
-                                                                        <!-- <div class="custom-control custom-checkbox form-group">
-                                                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck29">
-                                                                                <label class="custom-control-label" for="customCheck29">Only available in Weekend</label>
-                                                                            </div> -->
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
                                                                             <div class="seasonRule">
@@ -1097,13 +1092,12 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
-                                                                            <div class="rule">
-                                                                            </div>
+                                                                            <div class="rule"></div>
                                                                         </div>
                                                                         <div class="form-group">
                                                                             <div id='seasonCalendar'></div>
@@ -1115,8 +1109,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                     </div>
                                                     <div class="tabing-action">
                                                         <ul>
-                                                            <li class="submitnext"><a id="submitBtn">Finish</a>
-                                                                <!-- <li class="submitnext"><a data-toggle="modal" data-target="#exampleModal">Review</a> -->
+                                                            <li class="submitnext"><a id="submitBtn">Finish</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -1129,8 +1122,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             <input type="hidden" id="season" value="" name="seasonal_price[season]">
                                             <input type="hidden" id="allRrentals" value="true" name="allRrentals">
                                             <input type="hidden" class="disableDate" value=''>
-                                            <input type="hidden" class="disableDetail" value="[]" />
-                                            <input type="hidden" class="blockDetail" value="[]" />
+                                            <input type="hidden" name="geolocation" class="geolocation" value='' />
+                                            <input type="hidden" name="is_annual" class="isAnnual" value="true" />
+                                            <input type="hidden" name="manualBooking" class="disableDetail" value="[]" />
+                                            <input type="hidden" name="blockedDate" class="blockDetail" value="[]" />
+                                            <input type="hidden" name="property_id" id="property_id" value="0" />
                                         </div>
                                         </form>
                                     </div>
@@ -1823,14 +1819,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
 
                                         <div class="col-md-6">
-                                            <label class="font-weight-bold">Date & Price</label>
-                                            <ul id="datePriceSpec">
-                                                <li>Price: &nbsp;<label></label></li>
-                                                <li>Weekend Type: &nbsp;<label></label></li>
-                                            </ul>
+                                            <div>
+                                                <label class="font-weight-bold">Date & Price</label>
+                                                <ul id="datePriceSpec">
+                                                    <li>Price: &nbsp;<label></label></li>
+                                                    <li>Weekend Type: &nbsp;<label></label></li>
+                                                    <li style="display:none;"><label>Weekend only</label></li>
+                                                </ul>
+                                            </div>
 
                                             <label class="font-weight-bold">Virtual Number</label>
-                                            <p id="virtualNumber">Getting virtual number...</p>
+                                            <p id="virtualNumber"><?php echo $virtual_number; ?></p>
                                         </div>
                                     </div>
 
@@ -1931,7 +1930,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     $(function() {
         $("#datepicker-1").datepicker();
     });
-    $('#listingForm').on('keyup keypress', function(e) {
+    $('#updateForm').on('keyup keypress', function(e) {
         var keyCode = e.keyCode || e.which;
         if (keyCode === 13) {
             e.preventDefault();
@@ -2361,24 +2360,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         $('#submitBtn').click(function() {
             let amenities = [];
-            // let prices = [], private_notes = [], rule_data=[];
-            var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
+            var data = $('#updateForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
                 if (item.name == "amenities[]") amenities.push(item.value);
-                // if (item.name == 'price') prices.push(item.value);
-                // if (item.name == 'private_note') private_notes.push(item.value);
-                // if (item.name == 'rule_data') rule_data.push(item.value);
                 return obj;
             }, {});
 
-            console.log(data);
+            console.log("data", data);
 
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
                 return false;
             }
 
-            // Assing Property specs to $propertySpec
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
@@ -2392,7 +2386,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value;
                 $('#propertySpec li')[3].style.display = "none";
             }
-
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
@@ -2406,18 +2399,33 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 $('#amenitySpec').append(`<li>${amenity}</li>`);
             });
 
-            $('#datePriceSpec li label')[0].innerHTML = `Daily: $${document.getElementById('days').value}, Weekend: $${document.getElementById('weekend').value}, Weekly: $${document.getElementById('weekly').value}, Monthly: $${document.getElementById('monthly').value}`;
+            const weekDays = [
+                "Thursday",
+                "Friday",
+                "Motzei Shabbos",
+                "Sunday",
+                "Monday"
+            ];
 
-            switch (data['weekend_type']) {
-                case "5":
-                    $('#datePriceSpec li label')[1].innerHTML = "Motzei Shabbos";
-                    break;
-                case "6":
-                    $('#datePriceSpec li label')[1].innerHTML = "Sunday";
-                    break;
-                case "7":
-                    $('#datePriceSpec li label')[1].innerHTML = "Monday";
-                    break;
+            dailyPrice = document.getElementById('days').value ? `Daily: $${document.getElementById('days').value} ` : '';
+            weekendPrice = document.getElementById('weekend').value ? `Weekend: $${document.getElementById('weekend').value} ` : '';
+            weeklyPrice = document.getElementById('weekly').value ? `'Weekly: $${document.getElementById('weekly').value} ` : '';
+            monthlyPrice = document.getElementById('monthly').value ? `Monthly: $${document.getElementById('monthly').value}  ` : '';
+            $('#datePriceSpec li label')[0].innerHTML = dailyPrice + weekendPrice + weeklyPrice + monthlyPrice;
+
+            if ($('.customCalender').hasClass('active')) {
+                $('#datePriceSpec').parent().css('display', 'block');
+                $('#datePriceSpec li:nth-child(2)').css('display', 'block');
+                const weekFrom = parseInt(document.getElementById('weekendFrom').value, 10) - 3;
+                const weekTo = parseInt(document.getElementById('weekendTo').value, 10) - 3;
+                $('#datePriceSpec li label')[1].innerHTML = `${weekDays[weekFrom]} ~ ${weekDays[weekTo]}`;
+                if ($('#customCheck29').is(':checked')) {
+                    $('#datePriceSpec li:nth-child(3)').css('display', 'block');
+                } else {
+                    $('#datePriceSpec li:nth-child(3)').css('display', 'none');
+                }
+            } else {
+                $('#datePriceSpec').parent().css('display', 'none');
             }
 
             if ($('#image_preview img').length < 2) {
@@ -2429,53 +2437,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
 
             $('#propertyConfirmationModal').show();
-
-            $('#listingForm').ajaxSubmit({
-                data: {
-                    'short_term_available_date': function() {
-                        return $('#multi-date-select').multiDatesPicker('value');
-                    }
-                },
-                dataType: 'json',
-                beforeSubmit: function() {
-                    event.preventDefault();
-                    $('.fa-spinner').prop('display', 'inline');
-                    $('#submitBtn').prop('disabled', 'disabled');
-                },
-                success: function(response) {
-                    if (response.type == 'success') {
-                        document.getElementById('virtualNumber').innerHTML = response.virtual_number;
-
-                    } else {
-                        toastr.warning(response.text);
-                        return false;
-                    }
-                }
-            });
-            /*
-                        $('#listingForm').ajaxSubmit({
-                            data: {
-                                'short_term_available_date': function() {
-                                    return $('#multi-date-select').multiDatesPicker('value');
-                                }
-                            },
-                            dataType: 'json',
-                            beforeSubmit: function() {
-                                event.preventDefault();
-                                // console.log($('#multi-date-select').multiDatesPicker('value')); 
-                                $('.fa-spinner').prop('display', 'inline');
-                                $('#submitBtn').prop('disabled', 'disabled');
-                            },
-                            success: function(arg) {
-                                toastr[arg.type](arg.text);
-                                $('.fa-spinner').prop('display', 'block');
-                                $('#submitBtn').removeAttr('disabled');
-                                if (arg.type == 'success') {
-                                    window.location.href = '<?php echo site_url('my_rentals'); ?>';
-                                }
-                            }
-                        });
-                        */
         });
 
         $(document).on('change', '#florbas', function() {
@@ -2930,7 +2891,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
 
         function renderManualBooking() {
-            let disableDetails = JSON.parse($('.disableDetail').val());
+            let disableDetails = $('.disableDetail').val() == "" ? [] : JSON.parse($('.disableDetail').val());
             console.log("DisabledDatails: ", disableDetails)
             disableDetails.forEach(detail => {
                 let startd = new Date(detail.checkInDate);
@@ -2955,7 +2916,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         }
 
         function renderBlockDate() {
-            let blockDetails = JSON.parse($('.blockDetail').val());
+            let blockDetails = $('.blockDetail').val() == "" ? [] : JSON.parse($('.blockDetail').val());
             console.log("BlockDetails: ", blockDetails)
             blockDetails.forEach(detail => {
                 let startd = new Date(moment(detail.checkInDate).format("MM-DD-YYYY"));
@@ -4220,10 +4181,32 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
-            $('#propertyConfirmationModal').hide();
-            $('#thumbnailPreview').empty();
-            $('#amenitySpec').empty();
-            document.location.href = "/my_rentals";
+            $('#updateForm').ajaxSubmit({
+                data: {
+                    'short_term_available_date': function() {
+                        return $('#multi-date-select').multiDatesPicker('value');
+                    }
+                },
+                dataType: 'json',
+                beforeSubmit: function() {
+                    event.preventDefault();
+                    $('.fa-spinner').prop('display', 'inline');
+                    $('#submitBtn').prop('disabled', 'disabled');
+                },
+                success: function(response) {
+                    if (response.type == 'success') {
+                        $('#propertyConfirmationModal').hide();
+                        $('#thumbnailPreview').empty();
+                        $('#amenitySpec').empty();
+                        document.location.href = "/my_rentals";
+
+                    } else {
+                        toastr.warning(response.text);
+                        return false;
+                    }
+                }
+            });
+
         });
 
         $(document).on('click', '#cancelSubmit', function() {
@@ -4268,10 +4251,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         // render calendar price when tab is switched
         $(document).on('click', '.customCalender', function() {
             renderCalendarPrice();
+            if ($('.isAnnual').val() == 'true') return;
+            $('.isAnnual').val('true');
+            $('.disableDate').val('[]');
+            $('.manualBooking').val('[]');
+            $('.blockedDate').val('[]');
         });
 
         $(document).on('click', '.customSession', function() {
             renderSession();
+
+            if ($('.isAnnual').val() == 'true') {
+                $('.isAnnual').val('false');
+                $('.disableDate').val('[]');
+                $('.manualBooking').val('[]');
+                $('.blockedDate').val('[]');
+            }
         });
 
         // set weekend type for annual rentals
@@ -4288,9 +4283,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         $('#annualPrivateNote').val(privateNote);
 
         // set seasonal pricing data
-        var isAnnual = <?php echo $property_details['is_annual']; ?>;
+        var isAnnual = "<?php echo $property_details['is_annual']; ?>";
         var seasonalPrice = "<?php echo $property_details['seasonal_price']; ?>";
-        if (isAnnual) { // switch tab
+        if (isAnnual == "true") { // switch tab
             $('#season').val(seasonalPrice);
             $('.costomSession').removeClass('active');
             $('.customCalender').addClass('active');
@@ -4521,7 +4516,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     //set Sukkah
     var hasSukkah = '<?php $amenities = explode(',', $property_details['amenities']);
                         echo in_array('Sukkah', $amenities); ?>';
-    var sleepNumber = <?php echo $property_details['sleep_number']; ?>;
+    var sleepNumber = '<?php echo $property_details['sleep_number']; ?>';
     if (hasSukkah) {
         $('#sukkahSleep').val(sleepNumber);
         $('#sukkahSleep').css('display', 'block');
@@ -4549,4 +4544,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#content').addClass('active');
         }
     })
+
+    // set property_id
+    var propertyID = <?php echo $property_details['id']; ?>;
+    console.log("virutal_number", propertyID);
+    $('#property_id').val(propertyID);
 </script>

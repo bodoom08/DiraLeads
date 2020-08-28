@@ -2242,7 +2242,7 @@ $this->load->view('common/front_end_layout/top', [
                 if (item.name == "amenities[]") amenities.push(item.value);
                 return obj;
             }, {});
-
+            console.log("data", data);
             if (!checkValidate()) {
                 toastr.warning('Please fill required fields');
                 return false;
@@ -2327,7 +2327,7 @@ $this->load->view('common/front_end_layout/top', [
                         document.getElementById('virtualNumber').innerHTML = "not available";
                     }
                 }
-            })
+            });
             // $.get('/rental/get_virtual_number', function(response, status) {
             //     console.log("get_virtual_number", response);
             //     if (response.type == 'success') {
