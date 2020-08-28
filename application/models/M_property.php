@@ -23,6 +23,35 @@ class M_property extends CI_Model
             ->result();
     }
 
+    function get_virtual_number()
+    {
+        //assing virtual number
+        $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
+        $vn_id_arr = array_column($result, 'vn_id');
+
+        $virtualNumber = $this->db->select('id')
+            ->where_not_in('id', $vn_id_arr)
+            ->get('virtual_numbers')
+            ->row();
+
+        $virtualNumber = false;
+        $this->load->helper('telnyx_number');
+
+        if (!$virtualNumber) { // Buy a new Telnyx number
+            // $this->load->library('telnyx');
+
+            $numberResult = searchNumbersHelper('us', 'NY');
+
+            if (count($numberResult['result']) > 0) {
+                $virtualNumber = $numberResult['result'][0]['number_e164'];
+            } else {
+                return ['type' => 'warning', 'text' => 'No virtual number was found, please contact admin!'];
+            }
+        }
+
+        return ['type' => 'success', 'virtual_number' => $virtualNumber];
+    }
+
     function property_listing()
     {
         // Just for testing
@@ -31,7 +60,7 @@ class M_property extends CI_Model
         //     'text' => 'Property listing done successfully!',
         //     'virtual_number' => "+1 123123123"
         // ];
-        // return $_POST;
+        return $_POST;
 
         array_walk_recursive($_POST, 'trim');
 
@@ -90,7 +119,7 @@ class M_property extends CI_Model
             'date_price' => $date_price,
             'available_date' => date('Y-m-d', strtotime($available_date)),
             'description' => $property_desc,
-            'status' => 'inactive',
+            'status' => 'active',
             'coords'    => isset($geolocation) ? $geolocation : "[]",
             'created_by' => $_SESSION['id'],
             // 'created_at' => date('Y-m-d H:i:s'),
@@ -99,7 +128,7 @@ class M_property extends CI_Model
             'is_annual' => $is_annual,
             'bedrooms'  => $value['bedrooms'],
             'bathrooms' => $value['bathrooms'],
-            'florbas' => $property_type == 'house' ? 0 : $value['florbas'],
+            'florbas' => $value['florbas'],
             'area_other' => $value['area_other'],
             'sleep_number' => in_array('Sukkah', $amenities) ? $sleep_number : 0,
             'seasonal_price' => $is_annual == 'true' ? $seasonal_price['season'] : $seasonal_price['session']
@@ -171,60 +200,50 @@ class M_property extends CI_Model
                     return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
                 }
             }
-            $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
-            $vn_id_arr = array_column($result, 'vn_id');
 
-            // Just for Testing
+            //assing virtual number
+            // $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
+            // $vn_id_arr = array_column($result, 'vn_id');
 
-            // return [
-            //     'type' => 'success',
-            //     'text' => 'Property listing done successfully!',
-            //     'virtual_number' => "+1 123123123"
-            // ];
+            // $virtualNumber = $this->db->select('id')
+            //     ->where_not_in('id', $vn_id_arr)
+            //     ->get('virtual_numbers')
+            //     ->row();
 
-            $virtualNumber = $this->db->select('id')
-                ->where_not_in('id', $vn_id_arr)
+            $vn = $this->db->select('*')
+                ->where('number', $virtual_number)
                 ->get('virtual_numbers')
                 ->row();
 
-            $virtualNumber = false;
+            $vn = false;
             $this->load->helper('telnyx_number');
-            if ($virtualNumber) { // Check if there is non-allocated Telnyx number in the table
+            if ($vn) { // Check if there is non-allocated Telnyx number in the table
                 $this->load->helper('did');
-                allocate_did($property_id, $virtualNumber->id, 'Auto Re-assign', 'DID re-allocation');
-                $response['virutal_number'] = $virtualNumber;
+                allocate_did($property_id, $vn->id, 'Auto Re-assign', 'DID re-allocation');
             } else { // Buy a new Telnyx number
-                // $this->load->library('telnyx');
+                $numberOrders = createNumberOrdersHelper($virtual_number);
 
-                $numberResult = searchNumbersHelper('us', 'NY');
+                if (is_array($numberOrders)) {
+                    $this->db->insert('virtual_numbers', [
+                        'number' => $virtual_number,
+                        'details' => json_encode(myNumbersHelper($virtual_number))
+                    ]);
 
-                if (count($numberResult['result']) > 0) {
-                    $number_e164 = $numberResult['result'][0]['number_e164'];
+                    $number_id = $numberOrders['id'];
 
-                    $numberOrders = createNumberOrdersHelper($number_e164);
+                    $this->load->helper('did');
 
-                    if (is_array($numberOrders)) {
-                        $this->db->insert('virtual_numbers', [
-                            'number' => $number_e164,
-                            'details' => json_encode(myNumbersHelper($number_e164))
-                        ]);
+                    allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
+                    $response['virtual_number'] = $virtual_number;
 
-                        $number_id = $numberOrders['id'];
-
-                        $this->load->helper('did');
-
-                        allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
-                        $response['virtual_number'] = $number_e164;
-
-                        \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
-                        \Telnyx\PhoneNumber::Update($number_e164, [
-                            "connection_id" => TEXML_APP_ID,
-                        ]);
-                        assign_messaging_profile($number_e164);
-                        // \Telnyx\PhoneNumber::Update($number_e164, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
-                    } else {
-                        return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
-                    }
+                    \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
+                    \Telnyx\PhoneNumber::Update($virtual_number, [
+                        "connection_id" => TEXML_APP_ID,
+                    ]);
+                    assign_messaging_profile($virtual_number);
+                    // \Telnyx\PhoneNumber::Update($virtual_number, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
+                } else {
+                    return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
                 }
             }
 

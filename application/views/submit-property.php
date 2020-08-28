@@ -1037,6 +1037,7 @@ $this->load->view('common/front_end_layout/top', [
                                             <input type="hidden" name="is_annual" class="isAnnual" value="true" />
                                             <input type="hidden" name="manualBooking" class="disableDetail" value="[]" />
                                             <input type="hidden" name="blockedDate" class="blockDetail" value="[]" />
+                                            <input type="hidden" name="virtual_number" id="virutalNumber" class="blockDetail" value="" />
                                         </div>
                                         </form>
                                     </div>
@@ -2312,27 +2313,32 @@ $this->load->view('common/front_end_layout/top', [
 
             $('#propertyConfirmationModal').show();
 
-            $('#listingForm').ajaxSubmit({
-                data: {
-                    'short_term_available_date': function() {
-                        return $('#multi-date-select').multiDatesPicker('value');
-                    }
-                },
-                dataType: 'json',
-                beforeSubmit: function() {
-                    event.preventDefault();
-                    $('.fa-spinner').prop('display', 'inline');
-                    $('#submitBtn').prop('disabled', 'disabled');
-                },
-                success: function(response) {
+            $.ajax({
+                url: '/rental/get_virtual_number',
+                method: 'GET',
+                success: function(data) {
+                    var response = JSON.parse(data);
+                    console.log("get_virtual_number", typeof response);
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
+                        $('#virutalNumber').val(response.virtual_number);
                     } else {
                         toastr.warning(response.text);
-                        return false;
+                        document.getElementById('virtualNumber').innerHTML = "not available";
                     }
                 }
-            });
+            })
+            // $.get('/rental/get_virtual_number', function(response, status) {
+            //     console.log("get_virtual_number", response);
+            //     if (response.type == 'success') {
+            //         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
+            //         $('#virutalNumber').val(response.virtual_number);
+            //     } else {
+            //         toastr.warning(response.text);
+            //         document.getElementById('virtualNumber').innerHTML = "not available";
+            //     }
+            // });
+
         });
 
         $(document).on('change', '#florbas', function() {
@@ -4061,10 +4067,33 @@ $this->load->view('common/front_end_layout/top', [
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
-            $('#propertyConfirmationModal').hide();
-            $('#thumbnailPreview').empty();
-            $('#amenitySpec').empty();
-            document.location.href = "/my_rentals";
+            $('#listingForm').ajaxSubmit({
+                data: {
+                    'short_term_available_date': function() {
+                        return $('#multi-date-select').multiDatesPicker('value');
+                    }
+                },
+                dataType: 'json',
+                beforeSubmit: function() {
+                    event.preventDefault();
+                    $('.fa-spinner').prop('display', 'inline');
+                    $('#submitBtn').prop('disabled', 'disabled');
+                },
+                success: function(data) {
+                    var response = JSON.parse(data);
+                    if (response.type == 'success') {
+                        $('#propertyConfirmationModal').hide();
+                        $('#thumbnailPreview').empty();
+                        $('#amenitySpec').empty();
+
+                        document.location.href = "/my_rentals";
+                    } else {
+                        toastr.warning(response.text);
+                        return false;
+                    }
+                }
+            });
+
         });
 
         $(document).on('click', '#cancelSubmit', function() {

@@ -30,6 +30,11 @@ class Rental extends MOBO_Controller
 		exit(json_encode($this->M_property->property_listing()));
 	}
 
+	public function get_virtual_number()
+	{
+		exit(json_encode($this->M_property->get_virtual_number()));
+	}
+
 	public function short_term_date_range_search()
 	{
 		$from = new DateTime('2020-03-01');

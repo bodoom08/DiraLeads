@@ -4307,10 +4307,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         //set block dates
         var blockdates = '<?php echo $property_details['blocked_date']; ?>';
         $('.blockDetail').val(blockdates);
-
-        //switch tab
-
-
     });
 
     function closeDateAction() {
@@ -4518,11 +4514,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     }
 
     // set floor number
-    var editData = <?php echo json_encode($floor_num); ?>;
-    $('#floorNumber').val('<?php echo  $floor_num; ?>');
+    var floorNumber = <?php echo $property_details['florbas']; ?>;
+    console.log("floor Number", floorNumber);
+    $('#floorNumber').val(floorNumber);
 
     //set Sukkah
-    var hasSukkah = <?php echo in_array('Sukkah', $amenities); ?>;
+    var hasSukkah = '<?php $amenities = explode(',', $property_details['amenities']);
+                        echo in_array('Sukkah', $amenities); ?>';
     var sleepNumber = <?php echo $property_details['sleep_number']; ?>;
     if (hasSukkah) {
         $('#sukkahSleep').val(sleepNumber);
