@@ -70,12 +70,12 @@ $this->load->view('common/layout/top', [
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <!-- <input type="checkbox" class="custom-control-input" id="customCheck1"> -->
-                                <!-- <label class="custom-control-label" for="customCheck1">Accept Terms & Conditions <i style="cursor: pointer;" class="fa fa-external-link" onclick="window.open('/terms')"></i></label> -->
-                                <ul class="terms-privacy">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label terms-privacy" for="customCheck1">Accept <a href="/terms" target="_blank">Terms & Conditions</a> & <a href="/privacy" target="_blank">Privacy Policy</a></label>
+                                <!-- <ul class="terms-privacy">
                                     <li><a href="/terms" target="_blank">Terms & Conditions</a></li>
                                     <li><a href="/privacy" target="_blank">Privacy Policy</a></li>
-                                </ul>
+                                </ul> -->
                             </div>
                         </div>
                         <div class="form-group mb-0">
@@ -121,15 +121,15 @@ $this->load->view('common/layout/top', [
     // $('#country').select2();
     $('#registerForm').ajaxForm({
         dataType: 'json',
-        // beforeSubmit: function() {
-        //     event.preventDefault();
-        //     if (!$('#customCheck1').is(':checked')) {
-        //         toastr.warning('Accept Terms & Conditions');
-        //         return false;
-        //     } else {
-        //         $('#register_submit').prop('disabled', 'disabled');
-        //     }
-        // },
+        beforeSubmit: function() {
+            event.preventDefault();
+            if (!$('#customCheck1').is(':checked')) {
+                toastr.warning('Accept Terms & Conditions');
+                return false;
+            } else {
+                $('#register_submit').prop('disabled', 'disabled');
+            }
+        },
         success: function(arg) {
             toastr[arg.type](arg.text);
             $('#register_submit').removeAttr('disabled');
@@ -155,11 +155,10 @@ $this->load->view('common/layout/top', [
 
 <style>
     .terms-privacy {
-        text-align: left;
+        line-height: 2;
     }
 
     .terms-privacy a {
         text-decoration: underline;
-        margin-bottom: 1rem;
     }
 </style>
