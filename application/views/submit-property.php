@@ -1777,10 +1777,14 @@ $this->load->view('common/front_end_layout/top', [
         var input = document.getElementById('geoLocation');
 
         var autocomplete = new google.maps.places.Autocomplete(input);
-        // Set initial restrict to the greater list of countries.
-        // autocomplete.setComponentRestrictions({
-        //     'country': ['us', 'ca', 'il', 'fr', 'uk', 'be', 'ch', 'at', 'au', 'za', 'ar']
-        // });
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            const place = autocomplete.getPlace();
+            const geolocation = [];
+            geolocation.push(place.geometry.location.lat());
+            geolocation.push(place.geometry.location.lng());
+
+            $('.geolocation').val(JSON.stringify(geolocation));
+        });
 
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
@@ -2043,15 +2047,6 @@ $this->load->view('common/front_end_layout/top', [
         }
         $('.next').click(function() {
             // var valid = validateFirstTab();
-            if ($('.geolocation').val() == '') {
-                fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${$('#geoLocation').val()}&key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A`)
-                    .then(response => response.json())
-                    .then(data => {
-                        $('.geolocation').val(JSON.stringify(data.results[0].geometry.location));
-                    }).catch(err => {
-                        console.log("Error: ", err);
-                    });
-            }
             if (!validateFirstTab()) {
                 toastr.warning('Please fill the required fields');
                 return false;
@@ -2236,6 +2231,9 @@ $this->load->view('common/front_end_layout/top', [
         }
 
         $('#submitBtn').click(function() {
+            if (document.getElementById('submitBtn').className == 'disabled') return ;
+
+            document.getElementById('submitBtn').className = 'disabled';
             let amenities = [];
             var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -2326,6 +2324,7 @@ $this->load->view('common/front_end_layout/top', [
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
                     }
+                    document.getElementById('submitBtn').className = '';
                 }
             });
             // $.get('/rental/get_virtual_number', function(response, status) {
@@ -4067,6 +4066,9 @@ $this->load->view('common/front_end_layout/top', [
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
+            if (document.getElementById('confirmSubmit').className.includes('disabled'))
+                return ;
+            document.getElementById('confirmSubmit').className += " disabled";
             $('#listingForm').ajaxSubmit({
                 data: {
                     'short_term_available_date': function() {
