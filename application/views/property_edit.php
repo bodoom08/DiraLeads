@@ -1026,21 +1026,22 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="days">Days ($)</label>
-                                                                                <input type="number" name="prices[days]" id="days" class="datedays" placeholder="Days *">
+                                                                                <input type="number" name="prices[days]" id="days" value="<?php echo $property_details['days_price'] > 0 ? $property_details['days_price'] : ''; ?>" class="datedays" placeholder="Days *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekend">Weekend ($)</label>
-                                                                                <input type="number" name="prices[weekend]" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                                <input type="number" name="prices[weekend]" id="weekend" value="<?php echo $property_details['weekend_price']  > 0 ? $property_details['weekend_price'] : ''; ?>" class="weekenddays" placeholder="Weekend *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="weekly">Weekly ($)</label>
-                                                                                <input type="number" name="prices[weekly]" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                                <input type="number" name="prices[weekly]" id="weekly" value="<?php echo $property_details['weekly_price']  > 0 ? $property_details['weekly_price'] : ''; ?>" class="weekly" placeholder="Weekly *">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
                                                                                 <label for="monthly">Monthly ($)</label>
-                                                                                <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                                <input type="number" name="prices[monthly]" id="monthly" value="<?php echo $property_details['monthly_price']  > 0 ? $property_details['monthly_price'] : ''; ?>" class="monthly" placeholder="Monthly *">
                                                                             </div>
                                                                         </div>
+
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
                                                                                 <label for="weekendFrom">Weekend </label>
@@ -2376,15 +2377,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             // Assing Property specs to $propertySpec
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
-            $('#propertySpec li label')[2].innerHTML = document.querySelector("#neighborhood option[value='" + data['area_id'] + "']").innerHTML;
 
+            $('#propertySpec li')[3].style.display = "none";
             $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
             $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
             $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
 
             if (data['area_id'] == 'other') {
-                $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value;
-                $('#propertySpec li')[3].style.display = "none";
+                $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value
+            } else {
+                $('#propertySpec li label')[2].innerHTML = document.querySelector("#neighborhood option[value='" + data['area_id'] + "']").innerHTML;
             }
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview

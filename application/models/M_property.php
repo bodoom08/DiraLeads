@@ -615,6 +615,7 @@ class M_property extends CI_Model
                 }
                 return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
             }
+            return ['type' => 'success', 'text' => 'Property Updated successfully!'];
         }
     }
 
