@@ -8,15 +8,17 @@ $this->load->view('common/layout/top', [
 <link href="https://cdn.jsdelivr.net/npm/select2@4.0.12/dist/css/select2.min.css" rel="stylesheet" />
 <link rel="stylesheet" href="https://www.jqueryscript.net/demo/Country-Calling-Code-Picker-jQuery-Ccpicker/css/jquery.ccpicker.css">
 <style>
-    .select2-container--default .select2-selection--single{
-        height:45px;
+    .select2-container--default .select2-selection--single {
+        height: 45px;
     }
+
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         color: #444;
         line-height: 43px;
     }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {    
-        top: 9px;   
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 9px;
     }
 </style>
 <div class="contact-section overview-bgi">
@@ -42,13 +44,17 @@ $this->load->view('common/layout/top', [
                         <div class="form-group country-code">
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <label for="">Country Code<code>*</code></label><br/>
+                                    <label for="">Country Code<code>*</code></label><br />
                                     <input type="text" id="country" name="country" class="phone-field" style="border: 0;opacity: 0;visibility: hidden;">
                                     <!-- <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;"> -->
-                                        <!-- <option value="">Select Country Code</option> -->
-                                        <?php //foreach($countries as $country) { ?>
-                                            <!-- <option value="<?php //echo '+'.$country->phonecode; ?>"><?php //echo $country->nicename.'(+'.$country->phonecode.')'; ?></option> -->
-                                        <?php //} ?>
+                                    <!-- <option value="">Select Country Code</option> -->
+                                    <?php //foreach($countries as $country) { 
+                                    ?>
+                                    <!-- <option value="<?php //echo '+'.$country->phonecode; 
+                                                        ?>"><?php //echo $country->nicename.'(+'.$country->phonecode.')'; 
+                                                            ?></option> -->
+                                    <?php //} 
+                                    ?>
                                     <!-- </select> -->
                                 </div>
                                 <div class="col-lg-8">
@@ -64,8 +70,12 @@ $this->load->view('common/layout/top', [
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                <label class="custom-control-label" for="customCheck1">Accept Terms & Conditions <i style="cursor: pointer;" class="fa fa-external-link" onclick="window.open('/terms')"></i></label>
+                                <!-- <input type="checkbox" class="custom-control-input" id="customCheck1"> -->
+                                <!-- <label class="custom-control-label" for="customCheck1">Accept Terms & Conditions <i style="cursor: pointer;" class="fa fa-external-link" onclick="window.open('/terms')"></i></label> -->
+                                <ul class="terms-privacy">
+                                    <li><a href="/terms" target="_blank">Terms & Conditions</a></li>
+                                    <li><a href="/privacy" target="_blank">Privacy Policy</a></li>
+                                </ul>
                             </div>
                         </div>
                         <div class="form-group mb-0">
@@ -100,10 +110,10 @@ $this->load->view('common/layout/top', [
 <script>
     $(function() {
         $("#country").CcPicker({
-            "countryCode":"us",
-            dataUrl:"<?php echo site_url('register/country_json'); ?>"
+            "countryCode": "us",
+            dataUrl: "<?php echo site_url('register/country_json'); ?>"
         });
-        $("#country").on("countrySelect", function(e, i){
+        $("#country").on("countrySelect", function(e, i) {
             // alert(i.countryName + " " + i.phoneCode);
         });
     });
@@ -111,29 +121,29 @@ $this->load->view('common/layout/top', [
     // $('#country').select2();
     $('#registerForm').ajaxForm({
         dataType: 'json',
-        beforeSubmit: function() {
-            event.preventDefault();
-            if(!$('#customCheck1').is(':checked')) {
-                toastr.warning('Accept Terms & Conditions');
-                return false;
-            } else {
-                $('#register_submit').prop('disabled', 'disabled');
-            }
-        },
+        // beforeSubmit: function() {
+        //     event.preventDefault();
+        //     if (!$('#customCheck1').is(':checked')) {
+        //         toastr.warning('Accept Terms & Conditions');
+        //         return false;
+        //     } else {
+        //         $('#register_submit').prop('disabled', 'disabled');
+        //     }
+        // },
         success: function(arg) {
             toastr[arg.type](arg.text);
             $('#register_submit').removeAttr('disabled');
             if (arg.type == 'success') {
-                window.location.href = "<?php echo site_url(''. isset($_GET['continue']) ? 'login?continue='.urlencode($_GET['continue']) : 'login') ?>"
+                window.location.href = "<?php echo site_url('' . isset($_GET['continue']) ? 'login?continue=' . urlencode($_GET['continue']) : 'login') ?>"
             }
-            if(arg.type== 'warning') {
+            if (arg.type == 'warning') {
                 $('.infoarea').html('');
                 $('.infoarea').html(`<code>${arg.text}</code>`);
             }
-            if(arg.type== 'info') {
+            if (arg.type == 'info') {
                 setTimeout(() => {
                     email = $('input[name="email"]').val();
-                    window.location.href = "<?php echo site_url('/') ?>register/verify/?email="+email;
+                    window.location.href = "<?php echo site_url('/') ?>register/verify/?email=" + email;
                 }, 3000);
             }
         },
@@ -141,4 +151,15 @@ $this->load->view('common/layout/top', [
             $('#register_submit').removeAttr('disabled');
         }
     });
-</script> 
+</script>
+
+<style>
+    .terms-privacy {
+        text-align: left;
+    }
+
+    .terms-privacy a {
+        text-decoration: underline;
+        margin-bottom: 1rem;
+    }
+</style>
