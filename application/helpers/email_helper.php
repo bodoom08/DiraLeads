@@ -32,6 +32,8 @@ function send_email($to, $subject, $body)
 
     $status = $ci->email->send();
 
+    $error = null;
+
     if (!$status) {
         $error = $ci->email->print_debugger();
     }

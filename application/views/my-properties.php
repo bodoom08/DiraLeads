@@ -61,6 +61,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                     <div class="tc_content">
                                                                         <h4 class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">For <?php echo ucfirst($value['for']); ?></h4>
                                                                         <p><span class="flaticon-placeholder <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><i class="fa fa-map-marker" aria-hidden="true"></i></span> <?php echo $value['street'] ?></p>
+                                                                        <!-- <p><span class="flaticon-placeholder <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><i class="fa fa-phone" aria-hidden="true"></i></span> <?php echo $value['number'] ?></p> -->
                                                                         <?php if ($value['is_annual'] == 'true') { ?>
                                                                             <ul class="prop_details <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">
 
@@ -68,6 +69,11 @@ $this->load->view('common/front_end_layout/top', [
                                                                                 <!-- <li class="list-inline-item"><a href="#"> <span><i class="fa fa-calendar-o" aria-hidden="true"></i>Date:</span> <?php echo $value['available_date'] ?></a></li> -->
                                                                             </ul>
                                                                         <?php } ?>
+                                                                        <ul class="prop_details <?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>">
+
+                                                                            <li class="list-inline-item"><a href="#"><span> <i class="fa fa-phone" aria-hidden="true"></i></span><?php echo $value['number']; ?></a></li>
+
+                                                                        </ul>
                                                                         <?php if ($value['sold'] != 'true') { ?>
                                                                             <ul class="action-sec">
                                                                                 <li class="<?php echo ($value['status'] == 'inactive' ? 'resume_prop' : ''); ?>"><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>

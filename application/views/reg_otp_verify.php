@@ -20,7 +20,9 @@ $this->load->view('common/layout/top', [
                             <code>Please enter OTP sent to <b><span id="verifyEmailID"><?php echo urldecode($_GET['email']); ?></span></b></code>
                         </div>
                         <div class="form-group">
-                            <input type="number" maxlength="6" name="reg_verify_otp" value="<?php if($_GET['otp']){ echo $_GET['otp']; } ?>" class="input-text" placeholder="Verification OTP">
+                            <input type="number" maxlength="6" name="reg_verify_otp" value="<?php if (isset($_GET['otp'])) {
+                                                                                                echo $_GET['otp'];
+                                                                                            } ?>" class="input-text" placeholder="Verification OTP">
                         </div>
                         <div class="checkbox">
                             <a href="login" class="link-not-important pull-right"><i class="fa fa-sign-in"></i> Login</a>
@@ -51,14 +53,17 @@ $this->load->view('common/layout/top', [
 <script>
     $('#regVerifyForm').ajaxForm({
         dataType: 'json',
-        beforeSubmit:  function(formData, jqForm, options) {
-            formData.push({ name: 'email', value: '<?php echo urldecode($_GET['email']); ?>' });
+        beforeSubmit: function(formData, jqForm, options) {
+            formData.push({
+                name: 'email',
+                value: '<?php echo urldecode($_GET['email']); ?>'
+            });
         },
         success: function(arg) {
             toastr[arg.type](arg.text);
-            if(arg.type == 'success') {
+            if (arg.type == 'success') {
                 setTimeout(() => {
-                    window.location.href= '<?php echo site_url('profile') ?>';
+                    window.location.href = '<?php echo site_url('profile') ?>';
                 }, 2000);
             }
         }
@@ -71,9 +76,9 @@ $this->load->view('common/layout/top', [
             method: 'POST',
             data: {
                 email: '<?php echo urldecode($_GET['email']); ?>',
-                <?php echo $this->security->get_csrf_token_name(); ?> : '<?php echo $this->security->get_csrf_hash(); ?>'
+                <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
             },
-            success: function(arg){
+            success: function(arg) {
                 // console.log(data)
                 arg = JSON.parse(arg);
                 toastr[arg.type](arg.text);
