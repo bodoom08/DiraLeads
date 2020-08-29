@@ -27,8 +27,6 @@ class Properties extends MOBO_Controller
         // $data['coords'] = $this->M_properties->getPropertyCoords();
 
         $data = $this->M_properties->getAllProducts();
-
-        // $this->load->view('properties', ["properties" => $data]);
         $this->load->view('properties', $data);
     }
 

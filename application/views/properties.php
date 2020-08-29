@@ -57,7 +57,10 @@ $this->load->view('common/layout/top', [
     #content1,
     #content2,
     #content3,
-    #content4 {
+    #content4,
+    #content5,
+    #content6
+     {
         display: none;
     }
 
@@ -215,35 +218,6 @@ $this->load->view('common/layout/top', [
         <div class="filter-btn-mobo">
             <button id="example2" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Price &nbsp;<i class="fa fa-angle-down"></i></button>
             <div id="content2">
-
-                <h4>Price</h4>
-                <div class="main-35 input-box-mob">
-                    <ul class="main-36">
-                        <li <?php echo (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '')  ? 'class=active' : '' ;?>>
-                            <input type="hidden" id="price_min1" value=''>
-                            <input type="hidden" id="price_max1" value=''>
-                            <button class="btn propery_any <?php echo (isset($_GET['price_min']) && isset($_GET['price_max'])) && ($_GET['price_min'] == '' && $_GET['price_max'] == '') || (!isset($_GET['price_min']) && !isset($_GET['price_max'])) ? 'active' : '' ;?>" onclick="filter({name: 'price', value: '1'})">
-                                Any
-                            </button>
-                        </li>
-                        <ul class="p-sec-n">
-                            <li>
-                                <input type="number" class="form-control" placeholder="No Min" name="min" title="No Min" value="<?php echo isset($_GET['price_min']) && $_GET['price_min'] != '' ? $_GET['price_min'] : '' ;?>">
-                            </li>
-                            <li class="middle-s">
-                                to
-                            </li>
-                            <li>
-                                <input type="number" class="form-control" placeholder="No Max" name="max" title="No Max" value="<?php echo isset($_GET['price_max']) && $_GET['price_max'] != '' ? $_GET['price_max'] : '' ;?>">
-                            </li>
-                        </ul>
-                    </ul>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="btn-md button-theme btn-block" name="pricefilter_button">Filter</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -288,11 +262,12 @@ $this->load->view('common/layout/top', [
             </div>
             <div class="clearfix"></div>
         </div>
-        
+     
+
         <div class="filter-btn-mobo sortby">
-            <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> More &nbsp;<i class="fa fa-angle-down"></i> </button>
+            <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bathroom &nbsp;<i class="fa fa-angle-down"></i> </button>
             <div id="content5">
-                <h4>More</h4>
+                <h4>Bathroom</h4>
                 <h5 style="text-align: center;">Bathroom</h5>
                 <ul class="main-36">
                     <li <?php echo (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : '' ;?>>
@@ -326,9 +301,6 @@ $this->load->view('common/layout/top', [
                         </button>
                     </li>
                     <div class="clearfix"></div>
-                </ul>
-                <ul class="main-33 more-sec">
-                    <li><button class="btn <?php echo isset($_GET['more']) && $_GET['more'] == 'Floor' ? 'active' : '' ;?>" onclick="filter({name: 'more', value: 'Floor'})">Floor</button> </li>
                 </ul>
             </div>
         </div>
@@ -371,7 +343,7 @@ $this->load->view('common/layout/top', [
                     <a href="javascript:;" >❤</a>
                 </div>
                 <div class="item-desc">
-                    <h5>$<?php echo isset($property['monthly_price']) ? $property['monthly_price'] : 0; ?>/mo</h5>
+                    <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5>
                     <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0;?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0;?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0;?> sqft</p>
                     <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
                     <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
@@ -385,6 +357,19 @@ $this->load->view('common/layout/top', [
     </div>
 </div>
 
+<input type="hidden" id="filter_type" value="<?php echo isset($_GET['type']) ? $_GET['type'] : 'any'; ?>" />
+<input type="hidden" id="filter_price" value="<?php echo isset($_GET['price']) ? $_GET['price'] : 'any'; ?>"/>
+<input type="hidden" id="filter_bedroom" value="<?php echo isset($_GET['bedroom']) ? $_GET['bedroom'] : 'any'; ?>" />
+<input type="hidden" id="filter_bathroom" value="<?php echo isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any'; ?>" />
+<input type="hidden" id="filter_more" value="<?php echo isset($_GET['more']) ? $_GET['more'] : 'any'; ?>" />
+<input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="<?php echo site_url('/assets/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo site_url('/assets/js/bootstrap.js'); ?>"></script>
+<script src="<?php echo site_url('assets/properties/js/bootstrap-select.min.js'); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
 <script>
     var ops = {
@@ -407,6 +392,7 @@ $this->load->view('common/layout/top', [
             return $('#content1').html();
         }
     };
+
     $(function() {
         $('#example1').popover(ops1)
     });
@@ -415,9 +401,32 @@ $this->load->view('common/layout/top', [
         'html': true,
         sanitize: false,
         content: function() {
-            return $('#content2').html();
+            // return $('#content2').html();
+            return `
+                <h4>Price</h4>
+                <div class="main-35 input-box-mob">
+                    <ul class="main-36">
+                        <li <?php echo !isset($_GET['price']) || $_GET['price'] == 'any' || $_GET['price'] == '0|0' ? 'class=active' : ''; ?>>
+                            <button class="btn propery_any <?php echo !isset($_GET['price']) || $_GET['price'] == 'any' || $_GET['price'] == '0|0' ? 'class=active' : ''; ?>" onclick="filter({name: 'price', value: '0|0'})">
+                                Any
+                            </button>
+                        </li>
+                        <ul class="p-sec-n">
+                            <li><input type="number" class="form-control" id="price_min" placeholder="No Min" name="min" title="No Min" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[0] : '0';?>" onkeydown="setPrice(this, event, 'min')"></li>
+                            <li class="middle-s">to</li>
+                            <li><input type="number" class="form-control" id="price_max" placeholder="No Max" name="max" title="No Max" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[1] : '0';?>" onkeydown="setPrice(this, event, 'max')"></li>
+                        </ul>
+                    </ul>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <button class="btn-md button-theme btn-block" name="pricefilter_button" onclick="setPriceFilter()">Filter</button>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
     };
+
     $(function() {
         $('#example2').popover(ops2)
     });
@@ -429,6 +438,7 @@ $this->load->view('common/layout/top', [
             return $('#content3').html();
         }
     };
+
     $(function() {
         $('#example3').popover(ops3)
     });
@@ -464,12 +474,14 @@ $this->load->view('common/layout/top', [
         );
 
         var streets ="<?php echo $streets; ?>";
-        streets = streets.split("|");
+        if (streets == "") streets = [];
+        else streets = streets.split("|");
+        console.log("Streets: ", streets);
 
         geocoder = new google.maps.Geocoder();
         streets.forEach(async (street) => {
             if (street) {
-                await geocoder.geocode({ 'address': street}, function(results, status) {
+                await geocoder.geocode({'address': street}, function(results, status) {
                     if (status == 'OK') {
                         var marker = new google.maps.Marker({
                             map,
@@ -490,6 +502,7 @@ $this->load->view('common/layout/top', [
             $('#street_search').removeClass('invaild-input');
         });
     }
+
     function changeIcon(el) {
         if ($(el).children().hasClass("fa-angle-down")) {
             $(el).children().removeClass("fa-angle-down");
@@ -505,9 +518,48 @@ $this->load->view('common/layout/top', [
         }
     }
 
-    $(document).ready( function () {
-        
-        // const streets = '<?php echo $streets; ?>';
-        // console.log("Streets: ", streets);
-    })
+    function setPrice(element, event, option) {
+        if (event.keyCode == 13) {
+            let filterPrice = [0, 0];
+            if (document.getElementById('filter_price').value != 'any')
+                filterPrice = document.getElementById('filter_price').value.split('|');
+            
+            if (option == 'min') {
+                filterPrice[0] = element.value;
+            } else {
+                filterPrice[1] = element.value;
+            }
+            filterPrice = filterPrice.join('|');
+
+            filter({ name: 'price', value: filterPrice });
+        }
+    }   
+
+    function setPriceFilter() {
+        const minPrice = document.getElementById('price_min').value == '' ? 0 : document.getElementById('price_min').value;
+        const maxPrice = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
+
+        document.getElementById('filter_price').value = `${minPrice}|${maxPrice}`;
+
+        filter({ name: 'price', value: `${minPrice}|${maxPrice}`});
+    }
+
+    function filter(option) {
+
+        console.log("Option: ", option.value);
+
+        document.getElementById(`filter_${option.name}`).value = option.value;
+
+        const filterType = document.getElementById('filter_type').value;
+        const filterPrice = document.getElementById('filter_price').value;
+        const filterBed = document.getElementById('filter_bedroom').value;
+        const filterBath = document.getElementById('filter_bathroom').value;
+        const filterMore = document.getElementById('filter_more').value;
+        const filterSort = document.getElementById('filter_sort_by').value;
+        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}`;
+
+        console.log("Location: ", location);
+        document.location.href = location;
+    }
+
 </script>
