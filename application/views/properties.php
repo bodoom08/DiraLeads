@@ -467,8 +467,7 @@ $this->load->view('common/layout/top', [
         $('#example5').popover(ops5);
     });
     
-    function initMap() {
-        const uluru = { lat: 37.0522, lng: -122.2437 };
+    function initMap(uluru = { lat: 37.0522, lng: -122.2437 }) {
         const map = new google.maps.Map(
             document.getElementById('map'), { zoom: 8, center: uluru }
         );
@@ -476,7 +475,6 @@ $this->load->view('common/layout/top', [
         var streets ="<?php echo $streets; ?>";
         if (streets == "") streets = [];
         else streets = streets.split("|");
-        console.log("Streets: ", streets);
 
         geocoder = new google.maps.Geocoder();
         streets.forEach(async (street) => {
