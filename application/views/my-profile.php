@@ -43,16 +43,16 @@ $this->load->view('common/front_end_layout/top', [
 
                                                 <div class="row">
 
-                                                    <div class="col-lg-4 col-md-4">
+                                                    <!-- <div class="col-lg-4 col-md-4">
                                                         <div class="form-group name">
                                                             <label>First Name</label>
                                                             <input type="text" name="fname" class="form-control" placeholder="Enter First Name" value="<?php echo $userinfo->first_name; ?>" disabled>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
                                                     <div class="col-lg-4 col-md-4">
                                                         <div class="form-group name">
-                                                            <label>Surname</label>
-                                                            <input type="text" name="sname" class="form-control" placeholder="Enter Surname" value="<?php echo $userinfo->last_name; ?>" disabled>
+                                                            <label>Name</label>
+                                                            <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-4 col-md-4">
@@ -88,11 +88,11 @@ $this->load->view('common/front_end_layout/top', [
 
                                                         <div class="form-group number">
                                                             <label>Address</label>
-                                                            <input type="text" class="form-control" placeholder="Address" name="address" value="<?php echo $userinfo->address ?>" autocomplete="off" disabled>
+                                                            <input type="text" class="form-control" placeholder="Address" name="address" value="<?php echo isset($userinfo->address) ? $userinfo->address : '' ?>" autocomplete="off" disabled>
                                                         </div>
                                                     </div>
                                                     <?php
-                                                    if ($userinfo->language) {
+                                                    if (isset($userinfo->language)) {
                                                         $languag = explode(',', $userinfo->language);
                                                     } ?>
 
@@ -196,16 +196,16 @@ $this->load->view('common/front_end_layout/top', [
                                                                 </div>
                                                                 <div class="col-lg-12 col-md-12">
                                                                     <div class="row">
-                                                                        <div class="col-lg-6 col-md-6">
+                                                                        <!-- <div class="col-lg-6 col-md-6">
                                                                             <div class="form-group name">
                                                                                 <label>First Name</label>
                                                                                 <input type="text" name="fname" class="form-control" placeholder="Enter First Name" value="<?php echo $userinfo->first_name; ?>">
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="col-lg-6 col-md-6">
                                                                             <div class="form-group name">
-                                                                                <label>Surname</label>
-                                                                                <input type="text" name="sname" class="form-control" placeholder="Enter Surname" value="<?php echo $userinfo->last_name; ?>">
+                                                                                <label>Name</label>
+                                                                                <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>">
                                                                             </div>
                                                                         </div>
                                                                         <div class="col-lg-6 col-md-6">
@@ -219,11 +219,11 @@ $this->load->view('common/front_end_layout/top', [
 
                                                                             <div class="form-group number">
                                                                                 <label>Address</label>
-                                                                                <input type="text" class="form-control" id="geoLocation" placeholder="Address" name="address" value="<?php echo $userinfo->address ?>" autocomplete="off">
+                                                                                <input type="text" class="form-control" id="geoLocation" placeholder="Address" name="address" value="<?php echo isset($userinfo->address) ? $userinfo->address : '' ?>" autocomplete="off">
                                                                             </div>
                                                                         </div>
                                                                         <?php
-                                                                        if ($userinfo->language) {
+                                                                        if (isset($userinfo->language)) {
                                                                             $languag = explode(',', $userinfo->language);
                                                                         } ?>
 
@@ -458,7 +458,7 @@ $this->load->view('common/front_end_layout/top', [
     });
 
     $(function() {
-        var popup = "<?php echo $_SESSION['popup'] ?>";
+        var popup = "<?php echo isset($_SESSION['popup']) ? $_SESSION['popup']  : '' ?>";
         // alert(popup);
         if (popup != '') {
             $('.updateP').trigger('click');
