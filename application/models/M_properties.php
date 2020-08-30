@@ -11,7 +11,11 @@ class M_properties extends CI_Model
         $bathroom = isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any';
         $sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any';
         $price = isset($_GET['price']) ? $_GET['price'] : 'any';
-        $query = 'select properties.id, areas.title, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active"';
+        $street = isset($_GET['street']) ? $_GET['street'] : 'any';
+        $location = isset($_GET['location']) ? $_GET['location'] : 'any';
+
+
+        $query = 'select properties.id, areas.title, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active"';
         if ($type != "any") {
             $query .= ' AND `properties`.`type` = "'.$type.'"';
         }
@@ -24,6 +28,9 @@ class M_properties extends CI_Model
         if ($price != "any" && $price != "0|0") {
             $price = explode("|", $price);
             $query .= ' AND `properties`.`price` >= '.$price[0] . ' AND `properties`.`price` <= '.$price[1];
+        }
+        if ($street != "any") {
+            $query .= ' AND `properties`.`street` = "'.$street.'" OR `properties`.`coords` = "'.$location.'"';
         }
         if ($sort_by != "any") {
             switch($sort_by) {
@@ -57,12 +64,36 @@ class M_properties extends CI_Model
         $streets = array();
         foreach($properties as $index => $property) {
             $properties[$index]['images'] = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
-            array_push($streets, isset($property['street']) ? $property['street'] : NULL);
+            
+            if (isset($property['coords']) && $property['coords'] != '[""]') {
+                $coord = json_decode($property['coords']);
+                if (is_array($coord)) {
+                    $coord = [
+                        "lat" => doubleval($coord[0]),
+                        "lng" => doubleval($coord[1])
+                    ];
+                } else if (is_object($coord)) {
+                    $coord = [
+                        "lat" => doubleval($coord->lat),
+                        "lng" => doubleval($coord->lng)
+                    ];
+                }
+                array_push($streets, [
+                    "location" => $coord,
+                    "property" => $property
+                ]);
+            }
         }
 
+        // echo json_encode([
+        //    "properties" => $properties,
+        //    "streets"   => $streets
+        // ]);
+        // exit;
+            
         return [
             "properties" => $properties,
-            "streets"   => implode("|", $streets)
+            "streets"   => json_encode($streets)
         ];
     }
 
