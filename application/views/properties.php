@@ -158,6 +158,14 @@ $this->load->view('common/layout/top', [
         margin: 0.1rem;
         padding: 0.1rem;
     }
+
+    #item-detail-dialog {
+        position: fixed;
+        z-index: 100;
+        width: 290px;
+        height: 320px;
+        display: none;
+    }
 </style>
 
 <div class="explore-search">
@@ -309,8 +317,8 @@ $this->load->view('common/layout/top', [
 
 <div class="w-50 d-flex justify-content-between title-bar">
     <div class="pl-4">
-        <h5>San Francisco, CA Apartments & Homes For Rent</h5>
-        <small>3,3008 rentals available on DiraLeads</small>
+        <h5><?php echo isset($_GET['street']) && $_GET['street'] != 'any' ? $_GET['street'] : 'All';?></h5>
+        <small><?php echo isset($properties) ? count($properties) : 0?> rentals available on DiraLeads</small>
     </div>
     <div class="filter-btn-mobo sortby">
         <button id="example4" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Sort By &nbsp;<i class="fa fa-angle-down"></i> </button>
@@ -358,12 +366,28 @@ $this->load->view('common/layout/top', [
     </div>
 </div>
 
+<div class="item-card" id="item-detail-dialog">
+    <div class="item-image">
+        <div class="item-badge">
+        </div>
+        <a href="javascript:;" >❤</a>
+    </div>
+    <div class="item-desc">
+        <p class="font-weight-bold"></p>
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+</div>
+
 <input type="hidden" id="filter_type" value="<?php echo isset($_GET['type']) ? $_GET['type'] : 'any'; ?>" />
 <input type="hidden" id="filter_price" value="<?php echo isset($_GET['price']) ? $_GET['price'] : 'any'; ?>"/>
 <input type="hidden" id="filter_bedroom" value="<?php echo isset($_GET['bedroom']) ? $_GET['bedroom'] : 'any'; ?>" />
 <input type="hidden" id="filter_bathroom" value="<?php echo isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any'; ?>" />
 <input type="hidden" id="filter_more" value="<?php echo isset($_GET['more']) ? $_GET['more'] : 'any'; ?>" />
 <input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
+<input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any';?>" />
+<input type="hidden" id="filter_location" value="<?php echo isset($_GET['location']) ? $_GET['location'] : 'any' ?>" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap.min.js'); ?>"></script>
@@ -473,32 +497,42 @@ $this->load->view('common/layout/top', [
             document.getElementById('map'), { zoom: 8, center: uluru }
         );
 
-        var streets ="<?php echo $streets; ?>";
-        if (streets == "") streets = [];
-        else streets = streets.split("|");
-
+        let streets = `<?php echo $streets; ?>`;
+        console.log("streets:", streets);
+        streets = JSON.parse(streets);
+        
         geocoder = new google.maps.Geocoder();
-        streets.forEach(async (street) => {
-            if (street) {
-                await geocoder.geocode({'address': street}, function(results, status) {
-                    if (status == 'OK') {
-                        var marker = new google.maps.Marker({
-                            map,
-                            position: results[0].geometry.location
-                        });
-                    }
-                });
-            }
+        streets.forEach((street) => {
+            var marker = new google.maps.Marker({
+                map,
+                position: street.location
+            });
+            marker.addListener('mouseover', function (event) {
+                document.getElementById('item-detail-dialog').style = `display: block; top: ${event.ub.clientY}px; left: ${event.ub.clientX}px;`;
+                $('#item-detail-dialog .item-desc p')[0].innerHTML = `$${street.property.days_price || 0}/day, $${street.property.weekly_price || 0}/week`;
+                console.log("Mouse Over: ", event);
+            });
+
+            marker.addListener('mouseout', function () {
+                document.getElementById('item-detail-dialog').style = "display: none;";
+            });
         });
+        
 
         var searchEl = document.getElementById('street_search');
-
         var autocomplete = new google.maps.places.Autocomplete(searchEl);
-
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            const place = autocomplete.getPlace();
+            const geolocation = [];
+            geolocation.push(place.geometry.location.lat());
+            geolocation.push(place.geometry.location.lng());
+            console.log("Geolocation: ", geolocation);
+            console.log("Place: ", searchEl.value);
+            document.getElementById('filter_location').value = JSON.stringify(geolocation);
             $('#street_search').removeClass('invaild-input');
+            filter({ name: 'street', value: searchEl.value});
         });
     }
 
@@ -555,7 +589,9 @@ $this->load->view('common/layout/top', [
         const filterBath = document.getElementById('filter_bathroom').value;
         const filterMore = document.getElementById('filter_more').value;
         const filterSort = document.getElementById('filter_sort_by').value;
-        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}`;
+        const filterStreet = document.getElementById('filter_street').value;
+        const filterLocation = document.getElementById('filter_location').value;
+        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}`;
 
         console.log("Location: ", location);
         document.location.href = location;
