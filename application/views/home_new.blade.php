@@ -22,15 +22,11 @@ if (isset($livedata)) {
             <div class="col-lg-12 col-12">
                 <div class="tabbing-sec" id="tile-1">
                     <div class="heading-sec">
-                        <!-- <p>The DiraLeads Advantage</p> -->
                         <h2>The DiraLeads Advantage</h2>
-                        <!-- <div class="home-icon">
-                            <img src="assets/images/home.png">
-                        </div> -->
                     </div>
                     <ul class="nav nav-pills mb-3" id="ser-tab" role="tablist">
-                        <div class="sliderrr"></div>
-                        <li class="nav-item">
+                        <!-- <div class="sliderrr"></div> -->
+                        <li class="nav-item active">
                             <a class="nav-link active" id="ser-home-tab" data-toggle="pill" href="#ser-home" role="tab" aria-controls="ser-home" aria-selected="true">RENTERS</a>
                         </li>
                         <li class="nav-item">
@@ -598,11 +594,33 @@ if (isset($livedata)) {
             $('#contact_message').addClass('invalid-input');
         }
     });
+
+    $('#ser-home-tab').click(function () {
+        $('#ser-tab .nav-item')[0].className = "nav-item active";
+        $('#ser-tab .nav-item')[1].className = "nav-item";
+    });
+
+    $('#ser-profile-tab').click(function () {
+        $('#ser-tab .nav-item')[0].className = "nav-item";
+        $('#ser-tab .nav-item')[1].className = "nav-item active";
+    });
 </script>
 
 <style>
     .invalid-input {
         border: 1px solid red !important;
+    }
+    #ser-tab {
+        padding: 0;
+    }
+    #ser-tab .nav-item {
+        background: transparent;
+        color: #a27107;
+        border-radius: 30px;
+    }
+    #ser-tab .nav-item.active {
+        background: #a27107;
+        color: white;
     }
 </style>
 @endpush
