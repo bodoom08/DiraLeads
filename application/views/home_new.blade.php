@@ -115,6 +115,7 @@ if (isset($livedata)) {
 <div class="split-section diraleads-heimishe-text">
     <p><b>DiraLeads:</b> Forever changing the landscape of the heimishe short-term rentals industry</p>
 </div>
+<!--- 
 <div class="property-sec">
     <div class="container">
         <div class="row">
@@ -155,6 +156,8 @@ if (isset($livedata)) {
     </div>
 </div>
 </div>
+
+        -->
 
 
 
