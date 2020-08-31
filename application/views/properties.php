@@ -176,6 +176,7 @@ $this->load->view('common/layout/top', [
     @media only screen and (max-width: 768px) {
         .search-page .map-region {
             position: relative;
+            margin-top: 2rem;
         }
 
         .search-page {
@@ -184,7 +185,13 @@ $this->load->view('common/layout/top', [
 
         .title-bar {
             width: 90% !important;
-            margin: 5rem auto 0px;
+            margin: .5rem auto 0px;
+            position: static;
+        }
+
+        .explore-search {
+            position: static;
+            padding: 100px 0 0px;
         }
     }
 </style>
