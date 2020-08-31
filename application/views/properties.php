@@ -344,7 +344,7 @@ $this->load->view('common/layout/top', [
                 foreach($properties as $property) {
         ?>
             <div class="item-card">
-                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'home-2.jpg'; ?>
+                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'; ?>
                 <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path);?>)">
                     <div class="item-badge">
                     </div>
@@ -492,11 +492,12 @@ $this->load->view('common/layout/top', [
         $('#example5').popover(ops5);
     });
     
-    function initMap(uluru = { lat: 37.0522, lng: -122.2437 }) {
+    function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
         const map = new google.maps.Map(
             document.getElementById('map'), { zoom: 8, center: uluru }
         );
 
+        const resourceUrl = `<?php echo site_url('uploads/'); ?>`;
         let streets = `<?php echo $streets; ?>`;
         console.log("streets:", streets);
         streets = JSON.parse(streets);
@@ -508,9 +509,17 @@ $this->load->view('common/layout/top', [
                 position: street.location
             });
             marker.addListener('mouseover', function (event) {
+
                 document.getElementById('item-detail-dialog').style = `display: block; top: ${event.ub.clientY}px; left: ${event.ub.clientX}px;`;
+                if (street.property.images && street.property.images.length > 0) {
+                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}${street.property.images[0].path})`);
+                } else {
+                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}diraleads-logo.svg)`);
+                }
                 $('#item-detail-dialog .item-desc p')[0].innerHTML = `$${street.property.days_price || 0}/day, $${street.property.weekly_price || 0}/week`;
-                console.log("Mouse Over: ", event);
+                $('#item-detail-dialog .item-desc p')[1].innerHTML = `🏠 ${street.property.bedrooms || 0}bd 🎉 ${street.property.bathrooms}ba ✨ ${street.property.florbas}sqft`;
+                $('#item-detail-dialog .item-desc p')[2].innerHTML = `${street.property.title || ''}`;
+                $('#item-detail-dialog .item-desc p')[3].innerHTML = `${street.property.street || ''}`;
             });
 
             marker.addListener('mouseout', function () {

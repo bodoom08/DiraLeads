@@ -63,26 +63,30 @@ class M_properties extends CI_Model
 
         $streets = array();
         foreach($properties as $index => $property) {
-            $properties[$index]['images'] = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
+            $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
+            $properties[$index]['images'] = $images;
             
             if (isset($property['coords']) && $property['coords'] != '[""]') {
                 $coord = json_decode($property['coords']);
                 if (is_array($coord)) {
                     $coord = [
-                        "lat" => doubleval($coord[0]),
-                        "lng" => doubleval($coord[1])
+                        "lat" => round(doubleval($coord[0]), 5),
+                        "lng" => round(doubleval($coord[1]), 5)
                     ];
                 } else if (is_object($coord)) {
                     $coord = [
-                        "lat" => doubleval($coord->lat),
-                        "lng" => doubleval($coord->lng)
+                        "lat" => round(doubleval($coord->lat), 5),
+                        "lng" => round(doubleval($coord->lng), 5)
                     ];
                 }
+                $property['coords'] = "";
+                $property['images'] = $images;
                 array_push($streets, [
                     "location" => $coord,
                     "property" => $property
                 ]);
             }
+            $properties[$index]['coords'] = "";
         }
 
         // echo json_encode([
