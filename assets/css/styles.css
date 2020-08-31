@@ -276,7 +276,7 @@ ul li {
 .service-box ul li .content-sec {
   border: 2px solid #281b3f;
   margin: 0 15px;
-  padding: 40px 20px;
+  padding: 40px 20px 0px;
   border-radius: 30px;
   position: relative;
   transition: 0.5s ease-in-out;
@@ -285,11 +285,11 @@ ul li {
 .service-box ul li .content-sec h3 {
   color: #281b3f;
   margin: 20px 0 10px;
-  font-size: 21px;
+  font-size: 18px;
   font-weight: 700;
 }
 .service-box ul li .content-sec p {
-  font-size: 16px;
+  font-size: 14px;
   color: #010101;
   line-height: 28px;
 }

@@ -25,6 +25,7 @@ function array_sort_by_column(&$arr, $col, $dir = SORT_DESC)
     }
     array_multisort($sort_col, $dir, $arr);
 }
-function gen_otp() {
+function gen_otp()
+{
     return substr(str_shuffle('123456789011'), 3, 6);
 }
