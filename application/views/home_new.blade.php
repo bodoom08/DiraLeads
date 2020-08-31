@@ -131,11 +131,11 @@ if (isset($livedata)) {
         <div class="row" id="counter">
             <?php $count = 0; ?>
             @foreach($propertiea_counts as $key=>$value)
-            <?php
-            if ($count > 7) {
-                break;
-            }
-            ?>
+            <!-- <?php
+                    if ($count > 7) {
+                        break;
+                    }
+                    ?> -->
             <div class="col-lg-3 col-md-3 col-12">
                 <a href="{{ 'properties/lists?area='.$key }}" target="blank">
                     <div class="rent-num">
@@ -595,12 +595,12 @@ if (isset($livedata)) {
         }
     });
 
-    $('#ser-home-tab').click(function () {
+    $('#ser-home-tab').click(function() {
         $('#ser-tab .nav-item')[0].className = "nav-item active";
         $('#ser-tab .nav-item')[1].className = "nav-item";
     });
 
-    $('#ser-profile-tab').click(function () {
+    $('#ser-profile-tab').click(function() {
         $('#ser-tab .nav-item')[0].className = "nav-item";
         $('#ser-tab .nav-item')[1].className = "nav-item active";
     });
@@ -610,14 +610,17 @@ if (isset($livedata)) {
     .invalid-input {
         border: 1px solid red !important;
     }
+
     #ser-tab {
         padding: 0;
     }
+
     #ser-tab .nav-item {
         background: transparent;
         color: #a27107;
         border-radius: 30px;
     }
+
     #ser-tab .nav-item.active {
         background: #a27107;
         color: white;
