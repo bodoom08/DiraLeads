@@ -58,7 +58,7 @@ $this->load->view('common/layout/top', [
                                     <!-- </select> -->
                                 </div>
                                 <div class="col-lg-8">
-                                    <input type="number" name="mobile" class="input-text" placeholder="Mobile Number">
+                                    <input type="number" id="mobile_number" name="mobile" class="input-text" placeholder="Mobile Number">
                                 </div>
                             </div>
                         </div>
@@ -123,8 +123,17 @@ $this->load->view('common/layout/top', [
         dataType: 'json',
         beforeSubmit: function() {
             event.preventDefault();
+            var valid = true;
             if (!$('#customCheck1').is(':checked')) {
                 toastr.warning('Accept Terms & Conditions');
+                valid = false;
+            }
+            if ($('#mobile_number').val().length < 8) {
+                toastr.warning('Mobile number should be at least 8 digits');
+                valid = false;
+            }
+
+            if (!valid) {
                 return false;
             } else {
                 $('#register_submit').prop('disabled', 'disabled');
@@ -160,5 +169,9 @@ $this->load->view('common/layout/top', [
 
     .terms-privacy a {
         text-decoration: underline;
+    }
+
+    .invalid-input {
+        border: 1px solid red !important;
     }
 </style>

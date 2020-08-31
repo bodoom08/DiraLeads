@@ -21,50 +21,66 @@ class Register extends CI_Controller
 		exit(json_encode($this->M_register->user_register()));
 	}
 
-	function verify() {
+	function verify()
+	{
 		// print_r($_GET);
 		extract($_GET);
-		if(!$email) {
+		if (!$email) {
 			redirect('login');
 		}
 		// Check if the email id is still now not verified
 		$rslts = $this->db
-						->where('email', $email)
-						->where('subscribe_verify', 'inactive')
-						->count_all_results('users');
-		if($rslts == 0) {
+			->where('email', $email)
+			->where('subscribe_verify', 'inactive')
+			->count_all_results('users');
+		if ($rslts == 0) {
 			redirect('login');
 		}
 		$this->load->view('reg_otp_verify');
 	}
 
-	function verify_otp() {
+	function verify_otp()
+	{
 		extract($_POST);
-		if($email) {
+		if ($email) {
 			exit(json_encode($this->M_register->verify_otp()));
 		}
 		exit(json_encode(['type' => 'error', 'text' => 'Oops! Server error occured.']));
 	}
 
-	function resend_verify_otp() {
+	function resend_verify_otp()
+	{
 		extract($_POST);
-		if($email) {
+		if ($email) {
 			exit(json_encode($this->M_register->resend_verify_otp()));
 		}
 		exit(json_encode(['type' => 'error', 'text' => 'Oops! Server error occured.']));
 	}
 
-	function country_json() {
+	function country_json()
+	{
 		// $email = 'mobotics.aniruddha@gmail.com';
 		// $userinfo = $this->db->where('email', $email)->get('users')->row();
 		// die(json_encode($userinfo));
 		// Fecth the county code
+		$priory_countries = ['US', 'GB', 'IL', 'BE'];
+		$pr_country =  $this->db
+			->select('nicename as  countryName, iso as code, phonecode as phoneCode')
+			// ->where('is_active', 1)
+			->where_in('iso', $priory_countries)
+			->order_by('countryName', 'DESC')
+			->get('country')
+			->result_array();
+
 		$country =  $this->db
-					->select('nicename as  countryName, iso as code, phonecode as phoneCode')
-					->where('is_active', 1)
-					->order_by('countryName', 'DESC')
-					->get('country')
-					->result_array();
+			->select('nicename as  countryName, iso as code, phonecode as phoneCode')
+			// ->where('is_active', 1)
+			->where_not_in('iso', $priory_countries)
+			// ->order_by('countryName', 'DESC')
+			->get('country')
+			->result_array();
+
+		$result = array_merge($pr_country, $country);
 		// $result = json_encode($country, true);
 		// $select = [
 		// 	'countryName' => 'Select',
@@ -73,6 +89,6 @@ class Register extends CI_Controller
 		// ];
 		// $country = array_merge([$select], $country);
 		// print_r($country);
-		die(json_encode($country));
+		die(json_encode($result));
 	}
 }

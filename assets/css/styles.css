@@ -277,7 +277,7 @@ ul li {
   border: 2px solid #281b3f;
   margin: 0 15px;
   padding: 40px 20px;
-  border-radius: 50px 0px;
+  border-radius: 30px;
   position: relative;
   transition: 0.5s ease-in-out;
   height: 100%;
@@ -304,7 +304,7 @@ ul li {
   height: 93%;
   background: transparent;
   border: 2px solid #fff;
-  border-radius: 50px 0px;
+  border-radius: 30px;
   left: 0;
   top: 10px;
   right: 0;
@@ -1408,7 +1408,8 @@ code {
   height: 460px;
 }
 .explore-content-box.new .details .prop_details li span {
-  display: block;
+  /* display: block; */
+  margin-right: 0.5rem;
   color: #a27107;
 }
 dl.dropdown dt a {
