@@ -3143,16 +3143,12 @@ label.custom-control-label {
   }
 
   .optNext {
-      padding-bottom: 1rem !important;
+    padding-bottom: 1rem !important;
   }
   .service-tb ul li a {
-    width:100;
+    width: 100;
   }
- 
-  
 }
-
-
 
 a#submitBtn {
   font-size: 15px;
@@ -3960,8 +3956,7 @@ img {
 /*
 @media only screen and (max-width: 600px) {
   */
-@media only screen and (max-width: 768px) {
-  /* For Mobile */
+@media only screen and (max-width: 600px) {
   .banner-main .carousel-indicators {
     margin-bottom: 0;
   }
@@ -3977,6 +3972,43 @@ img {
   .banner-main .banner-text .secondary-text {
     font-size: 13px !important;
   }
+}
+@media only screen and (max-width: 768px) and (min-width: 601px) {
+  .banner-main .carousel-indicators {
+    margin-bottom: 0;
+  }
+  .banner-main .banner-text {
+    padding: 16px;
+  }
+  .banner-main .banner-text p {
+    margin-bottom: 10px !important;
+  }
+  .banner-main .banner-text .primary-text {
+    font-size: 28px !important;
+  }
+  .banner-main .banner-text .secondary-text {
+    font-size: 15px !important;
+  }
+}
+@media only screen and (max-width: 1000px) and (min-width: 769px) {
+  .banner-main .carousel-indicators {
+    margin-bottom: 0;
+  }
+  .banner-main .banner-text {
+    padding: 22px;
+  }
+  .banner-main .banner-text p {
+    margin-bottom: 10px !important;
+  }
+  .banner-main .banner-text .primary-text {
+    font-size: 35px !important;
+  }
+  .banner-main .banner-text .secondary-text {
+    font-size: 28px !important;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  /* For Mobile */
 
   .search-main {
     position: unset;
