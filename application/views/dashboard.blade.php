@@ -1,17 +1,20 @@
 @extends('common.panel')
 
 @section('content')
-<?php
+
+ <?php
 $attrs = [
-    'name' => 'modify_package_form',
+    'name'=> 'modify_package_form',
     'method' => 'POST'
 ];
 echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
 ?>
-<input type="hidden" id="csrfToken" name="package_table_id">
-<input type="hidden" name="action">
 
+    <input type="hidden" id="csrfToken" name="package_table_id">
+    <input type="hidden" name="action">
 </form>
+
+
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="ui-item bg-success">
@@ -66,7 +69,9 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
         </div>
     </div>
 </div>
+
 <div class="dn-items row"></div>
+
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="dash-title-new">
@@ -76,6 +81,7 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
     <div class="col-md-12 col-lg-12">
         <div class="item-table">
             <table class="table">
+
                 <?php if (empty($my_properties)) { ?>
                     <div class="col-lg-12 text-center mt-5 dashboard_fav">
                         <p><i class="fa fa-search" aria-hidden="true"></i></p>
@@ -115,9 +121,15 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
                                             <ul>
                                                 <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
 
-                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
 
-                                                <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                            <td><i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo $value['available_date'] ?></td>
+                            <td>
+                                <div class="service-tb">
+                                <?php if($value['sold'] != 'true') { ?>
+                                    <ul>
+                                        <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                                        <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
+                                                        <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
                                                 <!-- <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li> -->
                                                 <li><a href="javascript:(0);" onclick="edit_pricing(<?php echo $value['id'] ?>);"><i class="fa fa-calendar" aria-hidden="true"></i> Pricing & availability</a></li>
                                             </ul>

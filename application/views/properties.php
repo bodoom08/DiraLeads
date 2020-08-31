@@ -276,11 +276,10 @@ $this->load->view('common/layout/top', [
         </div>
 
 
-        <div class="filter-btn-mobo sortby">
+        <div class="filter-btn-mobo">
             <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bathroom &nbsp;<i class="fa fa-angle-down"></i> </button>
             <div id="content5">
                 <h4>Bathroom</h4>
-                <h5 style="text-align: center;">Bathroom</h5>
                 <ul class="main-36">
                     <li <?php echo (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : ''; ?>>
                         <button class="btn propery_any <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: 'any'})">
@@ -313,6 +312,25 @@ $this->load->view('common/layout/top', [
                         </button>
                     </li>
                     <div class="clearfix"></div>
+                </ul>
+            </div>
+        </div>
+
+        <div class="filter-btn-mobo">
+            <button id="example6" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this)">
+                Area &nbsp;<i class="fa fa-angle-down"></i>
+            </button>
+            <div id="content6">
+                <h4>Area</h4>
+                <ul class="main-33">
+                    <li <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'class=active' : '';?>>
+                        <button class="btn propery_any <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'active' : '';?>" onclick="filter({name: 'area', value: 'any' })">Any</button>
+                    </li>
+                    <?php if (isset($areas)) {?>
+                        <?php foreach($areas as $index => $area) { ?>
+                            <li><button class="btn <?php echo isset($_GET['area']) && $_GET['area'] == $area['title'] ? 'active' : '';?>" onclick="filter({ name: 'area', value: `<?php echo $area['title']; ?>`})"><?php echo $area['title']; ?></button></li>
+                        <?php } ?>
+                    <?php } ?>
                 </ul>
             </div>
         </div>
@@ -393,6 +411,7 @@ $this->load->view('common/layout/top', [
 <input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
 <input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any'; ?>" />
 <input type="hidden" id="filter_location" value="<?php echo isset($_GET['location']) ? $_GET['location'] : 'any' ?>" />
+<input type="hidden" id="filter_area" value="<?php echo isset($_GET['area']) ? $_GET['area'] : 'any';?>" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap.min.js'); ?>"></script>
@@ -497,11 +516,21 @@ $this->load->view('common/layout/top', [
         $('#example5').popover(ops5);
     });
 
-    function initMap(uluru = {
-        lat: 31.0461,
-        lng: 34.8516
-    }) {
-        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL; ?>`;
+    var ops6 = {
+        'html': true,
+        sanitize: false,
+        content: function() {
+            return $('#content6').html();
+        }
+    };
+
+    $(function() {
+        $('#example6').popover(ops6);
+    });
+    
+    function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
+        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL;?>`;
+
         if (center && center != 'any') {
             center = {
                 lat: JSON.parse(center)[0],
@@ -640,8 +669,9 @@ $this->load->view('common/layout/top', [
         const filterSort = document.getElementById('filter_sort_by').value;
         const filterStreet = document.getElementById('filter_street').value;
         const filterLocation = document.getElementById('filter_location').value;
+        const filterArea = document.getElementById('filter_area').value;
 
-        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}`;
+        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}&area=${filterArea}`;
 
         console.log("Location: ", location);
         document.location.href = location;
