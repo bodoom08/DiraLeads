@@ -968,4 +968,5 @@ if (strpos($for, 'short term rent') !== false) {
         });
     });
 </script>
+
 @endpush

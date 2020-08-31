@@ -777,9 +777,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                 </div>
                                             </div>
                                             <?php
-                                            if ($property_details['amenities']) {
-                                                $amenities = explode(',', $property_details['amenities']);
-                                            } ?>
+                                            $amenities = isset($property_details['amenities']) ? explode(',', $property_details['amenities']) : [];
+                                            ?>
                                             <div role="tabpanel" class="tab-pane" id="strategy">
                                                 <div class="design-process-content">
                                                     <div class="tabbbing-one two">

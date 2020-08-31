@@ -104,7 +104,7 @@
 						<li>Browse neighborhoods, tour rentals, and dream a little</li>
 						<li>Email or call to book that perfect getaway rental</li>
 					</ul>
-					<a href="#" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
+					<a href="/register" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
 				</div>
 			</div>
 			<div class="col-lg-4">
@@ -190,7 +190,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 text-center"><a class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a></div>
+			<div class="col-lg-12 text-center"><a class="create-account-btn" href="/register">Create My Account <img src="assets/images/plus.png" alt=""></a></div>
 		</div>
 	</div>
 </div>
