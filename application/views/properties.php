@@ -172,7 +172,7 @@ $this->load->view('common/layout/top', [
     <div class="inner-search px-4">
         <div class="find-search-box">
             <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value="<?php echo isset($_GET['street']) ? $_GET['street'] : '' ;?>">
-            <span><a href="javascript:void()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
+            <span><a href="javascript:search()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
         </div>
 
         <div class="filter-btn-mobo">
@@ -344,7 +344,7 @@ $this->load->view('common/layout/top', [
                 foreach($properties as $property) {
         ?>
             <div class="item-card">
-                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'home-2.jpg'; ?>
+                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'; ?>
                 <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path);?>)">
                     <div class="item-badge">
                     </div>
@@ -492,13 +492,22 @@ $this->load->view('common/layout/top', [
         $('#example5').popover(ops5);
     });
     
-    function initMap(uluru = { lat: 37.0522, lng: -122.2437 }) {
+    function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
+        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL;?>`;
+        if (center && center != 'any') {
+            center = {
+                lat: JSON.parse(center)[0],
+                lng: JSON.parse(center)[1]
+            }
+        } else {
+            center = {...uluru};
+        }
         const map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 8, center: uluru }
+            document.getElementById('map'), { zoom: 8, center }
         );
 
+        const resourceUrl = `<?php echo site_url('uploads/'); ?>`;
         let streets = `<?php echo $streets; ?>`;
-        console.log("streets:", streets);
         streets = JSON.parse(streets);
         
         geocoder = new google.maps.Geocoder();
@@ -508,16 +517,23 @@ $this->load->view('common/layout/top', [
                 position: street.location
             });
             marker.addListener('mouseover', function (event) {
+
                 document.getElementById('item-detail-dialog').style = `display: block; top: ${event.ub.clientY}px; left: ${event.ub.clientX}px;`;
+                if (street.property.images && street.property.images.length > 0) {
+                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}${street.property.images[0].path})`);
+                } else {
+                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}diraleads-logo.svg)`);
+                }
                 $('#item-detail-dialog .item-desc p')[0].innerHTML = `$${street.property.days_price || 0}/day, $${street.property.weekly_price || 0}/week`;
-                console.log("Mouse Over: ", event);
+                $('#item-detail-dialog .item-desc p')[1].innerHTML = `🏠 ${street.property.bedrooms || 0}bd 🎉 ${street.property.bathrooms}ba ✨ ${street.property.florbas}sqft`;
+                $('#item-detail-dialog .item-desc p')[2].innerHTML = `${street.property.title || ''}`;
+                $('#item-detail-dialog .item-desc p')[3].innerHTML = `${street.property.street || ''}`;
             });
 
             marker.addListener('mouseout', function () {
                 document.getElementById('item-detail-dialog').style = "display: none;";
             });
         });
-        
 
         var searchEl = document.getElementById('street_search');
         var autocomplete = new google.maps.places.Autocomplete(searchEl);
@@ -528,11 +544,13 @@ $this->load->view('common/layout/top', [
             const geolocation = [];
             geolocation.push(place.geometry.location.lat());
             geolocation.push(place.geometry.location.lng());
-            console.log("Geolocation: ", geolocation);
-            console.log("Place: ", searchEl.value);
+            
             document.getElementById('filter_location').value = JSON.stringify(geolocation);
+            document.getElementById('filter_street').value = searchEl.value;
+
+            filter({ name: 'street', value: searchEl.value });
+
             $('#street_search').removeClass('invaild-input');
-            filter({ name: 'street', value: searchEl.value});
         });
     }
 
@@ -583,6 +601,15 @@ $this->load->view('common/layout/top', [
 
         document.getElementById(`filter_${option.name}`).value = option.value;
 
+        search();
+    }
+
+    function search() {
+        if (document.getElementById('street_search').value == '') {
+            document.getElementById('filter_street').value = 'any';
+            document.getElementById('filter_location').value = 'any';
+        }
+        
         const filterType = document.getElementById('filter_type').value;
         const filterPrice = document.getElementById('filter_price').value;
         const filterBed = document.getElementById('filter_bedroom').value;
@@ -591,6 +618,7 @@ $this->load->view('common/layout/top', [
         const filterSort = document.getElementById('filter_sort_by').value;
         const filterStreet = document.getElementById('filter_street').value;
         const filterLocation = document.getElementById('filter_location').value;
+
         const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}`;
 
         console.log("Location: ", location);
