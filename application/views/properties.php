@@ -86,6 +86,8 @@ $this->load->view('common/layout/top', [
         height: 100%;
     }
 
+
+
     .view-product {
         max-height: 100%;
         overflow: hidden;
@@ -169,6 +171,12 @@ $this->load->view('common/layout/top', [
         width: 290px;
         height: 320px;
         display: none;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .search-page .map-region {
+            position: relative;
+        }
     }
 </style>
 
@@ -323,12 +331,12 @@ $this->load->view('common/layout/top', [
             <div id="content6">
                 <h4>Area</h4>
                 <ul class="main-33">
-                    <li <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'class=active' : '';?>>
-                        <button class="btn propery_any <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'active' : '';?>" onclick="filter({name: 'area', value: 'any' })">Any</button>
+                    <li <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'class=active' : ''; ?>>
+                        <button class="btn propery_any <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'active' : ''; ?>" onclick="filter({name: 'area', value: 'any' })">Any</button>
                     </li>
-                    <?php if (isset($areas)) {?>
-                        <?php foreach($areas as $index => $area) { ?>
-                            <li><button class="btn <?php echo isset($_GET['area']) && $_GET['area'] == $area['title'] ? 'active' : '';?>" onclick="filter({ name: 'area', value: `<?php echo $area['title']; ?>`})"><?php echo $area['title']; ?></button></li>
+                    <?php if (isset($areas)) { ?>
+                        <?php foreach ($areas as $index => $area) { ?>
+                            <li><button class="btn <?php echo isset($_GET['area']) && $_GET['area'] == $area['title'] ? 'active' : ''; ?>" onclick="filter({ name: 'area', value: `<?php echo $area['title']; ?>`})"><?php echo $area['title']; ?></button></li>
                         <?php } ?>
                     <?php } ?>
                 </ul>
@@ -358,6 +366,9 @@ $this->load->view('common/layout/top', [
 </div>
 
 <div class="row search-page">
+    <div class="col-lg-6 map-region">
+        <div id="map"></div>
+    </div>
     <div class="col-lg-6 h-100">
         <div class="w-100 item-list">
             <?php if (!isset($properties) || count($properties) == 0) { ?>
@@ -375,7 +386,7 @@ $this->load->view('common/layout/top', [
                         <div class="item-desc">
                             <!-- <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5> -->
                             <p class="font-weight-bold">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0; ?>/day, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0; ?>/week</p>
-                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0; ?> sqft</p>
+                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0; ?> floor</p>
                             <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
                             <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
                         </div>
@@ -383,9 +394,6 @@ $this->load->view('common/layout/top', [
             <?php }
             } ?>
         </div>
-    </div>
-    <div class="col-lg-6 map-region">
-        <div id="map"></div>
     </div>
 </div>
 
@@ -411,7 +419,7 @@ $this->load->view('common/layout/top', [
 <input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
 <input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any'; ?>" />
 <input type="hidden" id="filter_location" value="<?php echo isset($_GET['location']) ? $_GET['location'] : 'any' ?>" />
-<input type="hidden" id="filter_area" value="<?php echo isset($_GET['area']) ? $_GET['area'] : 'any';?>" />
+<input type="hidden" id="filter_area" value="<?php echo isset($_GET['area']) ? $_GET['area'] : 'any'; ?>" />
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="<?php echo site_url('/assets/js/bootstrap.min.js'); ?>"></script>
@@ -527,9 +535,12 @@ $this->load->view('common/layout/top', [
     $(function() {
         $('#example6').popover(ops6);
     });
-    
-    function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
-        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL;?>`;
+
+    function initMap(uluru = {
+        lat: 31.0461,
+        lng: 34.8516
+    }) {
+        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL; ?>`;
 
         if (center && center != 'any') {
             center = {

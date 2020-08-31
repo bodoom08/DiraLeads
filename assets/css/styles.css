@@ -1680,6 +1680,7 @@ ul.amnity li h4 {
   font-size: 14px;
   color: #484848;
   line-height: 1.2;
+  margin-right: 1rem;
 }
 .feat_property .details .tc_content .prop_details li:last-child {
   margin-right: 0;
@@ -2036,12 +2037,12 @@ div#Properties-popup .carousel-item img {
   margin: 10px;
 }
 .img-sec-tb img {
-  width: 50px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   padding: 2px;
   background: #fff;
   border: 1px solid #ddd;
-  height: 50px;
   object-fit: cover;
 }
 .rent-tb ul li h5 {
@@ -3135,7 +3136,23 @@ label.custom-control-label {
   .middle {
     padding: 50px 0 10px;
   }
+
+  /*Ben */
+  .upload-pictures {
+    padding-top: 1rem !important;
+  }
+
+  .optNext {
+      padding-bottom: 1rem !important;
+  }
+  .service-tb ul li a {
+    width:100;
+  }
+ 
+  
 }
+
+
 
 a#submitBtn {
   font-size: 15px;

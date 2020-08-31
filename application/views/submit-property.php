@@ -122,6 +122,7 @@ $this->load->view('common/front_end_layout/top', [
     }
 
     /* Modal Content */
+
     .modal-content {
         background-color: #fefefe;
         margin: auto;
@@ -129,6 +130,20 @@ $this->load->view('common/front_end_layout/top', [
         border: 1px solid #888;
         width: 40% !important;
         position: relative;
+    }
+
+    @media only screen and (max-width: 767px) {
+        .modal-content {
+            width: 90% !important;
+        }
+
+        .customerCalendar {
+            width: 100% !important;
+        }
+
+        .customerSession {
+            width: 100% !important;
+        }
     }
 
     .event-model {
@@ -425,6 +440,8 @@ $this->load->view('common/front_end_layout/top', [
         border: 0;
         text-align: center;
     }
+
+    @media only screen and (max-width: 767px) {}
 
     .price-container {
         display: flex;
@@ -916,13 +933,13 @@ $this->load->view('common/front_end_layout/top', [
                                             <div role="tabpanel" class="tab-pane" id="content">
                                                 <div class="design-process-content">
                                                     <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
-                                                        <li role="presentation9" class="customCalender active mr-3" style="width:40%">
+                                                        <li role="presentation9" class="customCalender active mr-3">
                                                             <a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab">
                                                                 <p>My Rental is available all year round</p>
                                                             </a>
                                                         </li>
 
-                                                        <li role="presentation8" style="width:40%" class="customSession">
+                                                        <li role="presentation8" class="customSession">
                                                             <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
                                                                 <p>My Rental is seasonal</p>
                                                             </a>
@@ -1707,7 +1724,7 @@ $this->load->view('common/front_end_layout/top', [
         var input = document.getElementById('geoLocation');
 
         var autocomplete = new google.maps.places.Autocomplete(input);
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
             const place = autocomplete.getPlace();
             const geolocation = [];
             geolocation.push(place.geometry.location.lat());
@@ -2161,7 +2178,7 @@ $this->load->view('common/front_end_layout/top', [
         }
 
         $('#submitBtn').click(function() {
-            if (document.getElementById('submitBtn').className == 'disabled') return ;
+            if (document.getElementById('submitBtn').className == 'disabled') return;
 
             document.getElementById('submitBtn').className = 'disabled';
             let amenities = [];
@@ -3997,7 +4014,7 @@ $this->load->view('common/front_end_layout/top', [
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
             if (document.getElementById('confirmSubmit').className.includes('disabled'))
-                return ;
+                return;
             document.getElementById('confirmSubmit').className += " disabled";
             $('#listingForm').ajaxSubmit({
                 data: {
