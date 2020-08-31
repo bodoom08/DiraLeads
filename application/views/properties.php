@@ -86,11 +86,7 @@ $this->load->view('common/layout/top', [
         height: 100%;
     }
 
-    @media only screen and (max-width: 768px) {
-        .search-page .map-region {
-            position: relative;
-        }
-    }
+
 
     .view-product {
         max-height: 100%;
@@ -175,6 +171,12 @@ $this->load->view('common/layout/top', [
         width: 290px;
         height: 320px;
         display: none;
+    }
+
+    @media only screen and (max-width: 768px) {
+        .search-page .map-region {
+            position: relative;
+        }
     }
 </style>
 
