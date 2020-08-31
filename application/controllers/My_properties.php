@@ -55,16 +55,16 @@ class My_properties extends CI_Controller
         if (!$_POST) {
             redirect('my_properties');
         }
-        if($_POST['forDate']){
-           $_SESSION['forDate'] = $_POST['forDate'];
-        }else{
-             $_SESSION['forDate'] = '';
+        if (isset($_POST['forDate'])) {
+            $_SESSION['forDate'] = $_POST['forDate'];
+        } else {
+            $_SESSION['forDate'] = '';
         }
         // echo $_SESSION['forDate'];die();
         $data['attributes'] = $this->M_property->getAllAttributes();
         $data['areas'] = $this->M_property->getAllAreas();
         $data['property'] = $this->M_property->edit();
-		$data['packagenames'] = $this->M_property->getCustomPackageNames();
+        $data['packagenames'] = $this->M_property->getCustomPackageNames();
         // echo '<pre>';
         // print_r($data);die;
         $this->load->view('property_edit', $data);
@@ -84,8 +84,9 @@ class My_properties extends CI_Controller
     {
         exit(json_encode($this->M_property->delete()));
     }
-    
-    public function mark_sold() {
+
+    public function mark_sold()
+    {
         exit(json_encode($this->M_property->mark_sold()));
     }
 }

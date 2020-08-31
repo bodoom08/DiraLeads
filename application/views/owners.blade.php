@@ -104,7 +104,7 @@
 						<p>Know that we have a proven record with over 350 rentals listed to date, and over 2,197 satisfied DiraLeads fans singing our praises..</p>
 					</li>
 				</ul>
-				<a href="#" class="create-account-btn">List My Rental <img src="assets/images/plus.png" alt=""></a>
+				<a href="/my_rentals" class="create-account-btn">List My Rental <img src="assets/images/plus.png" alt=""></a>
 			</div>
 		</div>
 

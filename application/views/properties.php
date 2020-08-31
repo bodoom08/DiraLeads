@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 
 $this->load->view('common/layout/top', [
-    'title' => 'Properties'
+    'title' => 'View Rentals'
 ]);
 ?>
 <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"> -->
@@ -59,8 +59,7 @@ $this->load->view('common/layout/top', [
     #content3,
     #content4,
     #content5,
-    #content6
-     {
+    #content6 {
         display: none;
     }
 
@@ -82,6 +81,7 @@ $this->load->view('common/layout/top', [
         height: calc(100vh - 300px);
         right: 0;
     }
+
     .map-region #map {
         height: 100%;
     }
@@ -109,12 +109,13 @@ $this->load->view('common/layout/top', [
         border-radius: 5px;
         background: white;
     }
+
     .item-card:nth-child(3n) {
         /*  */
     }
 
     .item-card:hover {
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transform: scale(1.05);
         transition: all 0.5s ease;
 
@@ -142,15 +143,18 @@ $this->load->view('common/layout/top', [
         padding-top: 0.1rem;
         padding-right: 0.5rem;
     }
+
     .item-image a {
         color: red !important;
         font-size: 22px;
     }
+
     .item-image .item-badge {
         display: inline-block;
         font-size: 12px;
         padding: 0.1rem;
     }
+
     .item-image .item-badge span {
         border-radius: 5px;
         color: white;
@@ -171,7 +175,7 @@ $this->load->view('common/layout/top', [
 <div class="explore-search">
     <div class="inner-search px-4">
         <div class="find-search-box">
-            <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value="<?php echo isset($_GET['street']) ? $_GET['street'] : '' ;?>">
+            <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value="<?php echo isset($_GET['street']) ? $_GET['street'] : ''; ?>">
             <span><a href="javascript:search()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
         </div>
 
@@ -181,38 +185,38 @@ $this->load->view('common/layout/top', [
             <div id="content">
                 <h4>Rental Type</h4>
                 <ul class="main-34">
-                    <li <?php echo (isset($_GET['type']) && $_GET['type'] == 'any') || (!isset($_GET['type'])) ? 'class=active' : '' ;?>>
+                    <li <?php echo (isset($_GET['type']) && $_GET['type'] == 'any') || (!isset($_GET['type'])) ? 'class=active' : ''; ?>>
                         <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'any' || (!isset($_GET['type'])) ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'any'})">
                             <i class="fa fa-building-o"></i>
                             Any
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'active' : '' ;?>" onclick="filter({name: 'type', value: 'house'})">
+                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'house'})">
                             <i class="fa fa-home"></i>
                             House
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'active' : '' ;?>" onclick="filter({name: 'type', value: 'apartment'})">
+                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'apartment'})">
                             <i class="fa fa-building-o"></i>
                             Apartments
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'active' : '' ;?>" onclick="filter({name: 'type', value: 'duplex'})">
+                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'duplex'})">
                             <i class="fa fa-building-o"></i>
                             Duplex
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'active' : '' ;?>" onclick="filter({name: 'type', value: 'villa'})">
+                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'villa'})">
                             <i class="fa fa-home"></i>
                             Villa
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'active' : '' ;?>" onclick="filter({name: 'type', value: 'basement'})">
+                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'basement'})">
                             <i class="fa fa-home"></i>
                             Basement
                         </button>
@@ -234,33 +238,33 @@ $this->load->view('common/layout/top', [
             <div id="content3">
                 <h4>Bedrooms</h4>
                 <ul class="main-36">
-                    <li <?php echo (isset($_GET['bedroom']) && $_GET['bedroom'] == 'any') || !isset($_GET['bedroom']) ? 'class=active' : '' ;?>>
-                        <button class="btn propery_any <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' || !isset($_GET['bedroom']) ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: 'any'})">
+                    <li <?php echo (isset($_GET['bedroom']) && $_GET['bedroom'] == 'any') || !isset($_GET['bedroom']) ? 'class=active' : ''; ?>>
+                        <button class="btn propery_any <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' || !isset($_GET['bedroom']) ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: 'any'})">
                             Any
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: '1'})">
+                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '1'})">
                             1+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: '2'})">
+                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '2'})">
                             2+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: '3'})">
+                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '3'})">
                             3+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: '4'})">
+                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '4'})">
                             4+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'active' : '' ;?>" onclick="filter({name: 'bedroom', value: '5'})">
+                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '5'})">
                             5+
                         </button>
                     </li>
@@ -270,40 +274,40 @@ $this->load->view('common/layout/top', [
             </div>
             <div class="clearfix"></div>
         </div>
-     
+
 
         <div class="filter-btn-mobo">
             <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bathroom &nbsp;<i class="fa fa-angle-down"></i> </button>
             <div id="content5">
                 <h4>Bathroom</h4>
                 <ul class="main-36">
-                    <li <?php echo (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : '' ;?>>
-                        <button class="btn propery_any <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: 'any'})">
+                    <li <?php echo (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : ''; ?>>
+                        <button class="btn propery_any <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: 'any'})">
                             Any
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: '1'})">
+                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '1'})">
                             1+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: '2'})">
+                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '2'})">
                             2+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: '3'})">
+                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '3'})">
                             3+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: '4'})">
+                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '4'})">
                             4+
                         </button>
                     </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'class=active' : '' ;?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'active' : '' ;?>" onclick="filter({name: 'bathroom', value: '5'})">
+                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'class=active' : ''; ?>>
+                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '5'})">
                             5+
                         </button>
                     </li>
@@ -335,48 +339,49 @@ $this->load->view('common/layout/top', [
 
 <div class="w-50 d-flex justify-content-between title-bar">
     <div class="pl-4">
-        <h5><?php echo isset($_GET['street']) && $_GET['street'] != 'any' ? $_GET['street'] : 'All';?></h5>
-        <small><?php echo isset($properties) ? count($properties) : 0?> rentals available on DiraLeads</small>
+        <h5><?php echo isset($_GET['street']) && $_GET['street'] != 'any' ? $_GET['street'] : 'All'; ?></h5>
+        <small><?php echo isset($properties) ? count($properties) : 0 ?> rentals available on DiraLeads</small>
     </div>
     <div class="filter-btn-mobo sortby">
         <button id="example4" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Sort By &nbsp;<i class="fa fa-angle-down"></i> </button>
         <div id="content4">
             <h4>Sort By</h4>
             <ul class="main-33">
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : '' ;?>" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
-                <li><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : '' ;?>" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : '' ;?>" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : '' ;?>" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
+                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
+                <li><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
+                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
+                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
                 <div class="clearfix"></div>
             </ul>
-        </div>  
+        </div>
     </div>
 </div>
 
 <div class="row search-page">
     <div class="col-lg-6 h-100">
         <div class="w-100 item-list">
-        <?php  if (!isset($properties) || count($properties) == 0) {?>
-            <h5 class="text-center">No Rentals</h5>
-        <?php } else {
-                foreach($properties as $property) {
-        ?>
-            <div class="item-card">
-                <?php  $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'; ?>
-                <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path);?>)">
-                    <div class="item-badge">
+            <?php if (!isset($properties) || count($properties) == 0) { ?>
+                <h5 class="text-center">No Rentals</h5>
+                <?php } else {
+                foreach ($properties as $property) {
+                ?>
+                    <div class="item-card">
+                        <?php $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'; ?>
+                        <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path); ?>)">
+                            <div class="item-badge">
+                            </div>
+                            <a href="javascript:;">❤</a>
+                        </div>
+                        <div class="item-desc">
+                            <!-- <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5> -->
+                            <p class="font-weight-bold">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0; ?>/day, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0; ?>/week</p>
+                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0; ?> sqft</p>
+                            <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
+                            <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
+                        </div>
                     </div>
-                    <a href="javascript:;" >❤</a>
-                </div>
-                <div class="item-desc">
-                    <!-- <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5> -->
-                    <p class="font-weight-bold">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0; ?>/day, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0; ?>/week</p>
-                    <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0;?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0;?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0;?> sqft</p>
-                    <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
-                    <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
-                </div>
-            </div>
-        <?php } } ?>
+            <?php }
+            } ?>
         </div>
     </div>
     <div class="col-lg-6 map-region">
@@ -388,7 +393,7 @@ $this->load->view('common/layout/top', [
     <div class="item-image">
         <div class="item-badge">
         </div>
-        <a href="javascript:;" >❤</a>
+        <a href="javascript:;">❤</a>
     </div>
     <div class="item-desc">
         <p class="font-weight-bold"></p>
@@ -399,12 +404,12 @@ $this->load->view('common/layout/top', [
 </div>
 
 <input type="hidden" id="filter_type" value="<?php echo isset($_GET['type']) ? $_GET['type'] : 'any'; ?>" />
-<input type="hidden" id="filter_price" value="<?php echo isset($_GET['price']) ? $_GET['price'] : 'any'; ?>"/>
+<input type="hidden" id="filter_price" value="<?php echo isset($_GET['price']) ? $_GET['price'] : 'any'; ?>" />
 <input type="hidden" id="filter_bedroom" value="<?php echo isset($_GET['bedroom']) ? $_GET['bedroom'] : 'any'; ?>" />
 <input type="hidden" id="filter_bathroom" value="<?php echo isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any'; ?>" />
 <input type="hidden" id="filter_more" value="<?php echo isset($_GET['more']) ? $_GET['more'] : 'any'; ?>" />
 <input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
-<input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any';?>" />
+<input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any'; ?>" />
 <input type="hidden" id="filter_location" value="<?php echo isset($_GET['location']) ? $_GET['location'] : 'any' ?>" />
 <input type="hidden" id="filter_area" value="<?php echo isset($_GET['area']) ? $_GET['area'] : 'any';?>" />
 
@@ -456,9 +461,9 @@ $this->load->view('common/layout/top', [
                             </button>
                         </li>
                         <ul class="p-sec-n">
-                            <li><input type="number" class="form-control" id="price_min" placeholder="No Min" name="min" title="No Min" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[0] : '0';?>" onkeydown="setPrice(this, event, 'min')"></li>
+                            <li><input type="number" class="form-control" id="price_min" placeholder="No Min" name="min" title="No Min" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[0] : '0'; ?>" onkeydown="setPrice(this, event, 'min')"></li>
                             <li class="middle-s">to</li>
-                            <li><input type="number" class="form-control" id="price_max" placeholder="No Max" name="max" title="No Max" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[1] : '0';?>" onkeydown="setPrice(this, event, 'max')"></li>
+                            <li><input type="number" class="form-control" id="price_max" placeholder="No Max" name="max" title="No Max" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[1] : '0'; ?>" onkeydown="setPrice(this, event, 'max')"></li>
                         </ul>
                     </ul>
                     <div class="row">
@@ -525,29 +530,35 @@ $this->load->view('common/layout/top', [
     
     function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
         var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL;?>`;
+
         if (center && center != 'any') {
             center = {
                 lat: JSON.parse(center)[0],
                 lng: JSON.parse(center)[1]
             }
         } else {
-            center = {...uluru};
+            center = {
+                ...uluru
+            };
         }
         const map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 8, center }
+            document.getElementById('map'), {
+                zoom: 8,
+                center
+            }
         );
 
         const resourceUrl = `<?php echo site_url('uploads/'); ?>`;
         let streets = `<?php echo $streets; ?>`;
         streets = JSON.parse(streets);
-        
+
         geocoder = new google.maps.Geocoder();
         streets.forEach((street) => {
             var marker = new google.maps.Marker({
                 map,
                 position: street.location
             });
-            marker.addListener('mouseover', function (event) {
+            marker.addListener('mouseover', function(event) {
 
                 document.getElementById('item-detail-dialog').style = `display: block; top: ${event.ub.clientY}px; left: ${event.ub.clientX}px;`;
                 if (street.property.images && street.property.images.length > 0) {
@@ -561,7 +572,7 @@ $this->load->view('common/layout/top', [
                 $('#item-detail-dialog .item-desc p')[3].innerHTML = `${street.property.street || ''}`;
             });
 
-            marker.addListener('mouseout', function () {
+            marker.addListener('mouseout', function() {
                 document.getElementById('item-detail-dialog').style = "display: none;";
             });
         });
@@ -575,11 +586,14 @@ $this->load->view('common/layout/top', [
             const geolocation = [];
             geolocation.push(place.geometry.location.lat());
             geolocation.push(place.geometry.location.lng());
-            
+
             document.getElementById('filter_location').value = JSON.stringify(geolocation);
             document.getElementById('filter_street').value = searchEl.value;
 
-            filter({ name: 'street', value: searchEl.value });
+            filter({
+                name: 'street',
+                value: searchEl.value
+            });
 
             $('#street_search').removeClass('invaild-input');
         });
@@ -605,7 +619,7 @@ $this->load->view('common/layout/top', [
             let filterPrice = [0, 0];
             if (document.getElementById('filter_price').value != 'any')
                 filterPrice = document.getElementById('filter_price').value.split('|');
-            
+
             if (option == 'min') {
                 filterPrice[0] = element.value;
             } else {
@@ -613,9 +627,12 @@ $this->load->view('common/layout/top', [
             }
             filterPrice = filterPrice.join('|');
 
-            filter({ name: 'price', value: filterPrice });
+            filter({
+                name: 'price',
+                value: filterPrice
+            });
         }
-    }   
+    }
 
     function setPriceFilter() {
         const minPrice = document.getElementById('price_min').value == '' ? 0 : document.getElementById('price_min').value;
@@ -623,7 +640,10 @@ $this->load->view('common/layout/top', [
 
         document.getElementById('filter_price').value = `${minPrice}|${maxPrice}`;
 
-        filter({ name: 'price', value: `${minPrice}|${maxPrice}`});
+        filter({
+            name: 'price',
+            value: `${minPrice}|${maxPrice}`
+        });
     }
 
     function filter(option) {
@@ -640,7 +660,7 @@ $this->load->view('common/layout/top', [
             document.getElementById('filter_street').value = 'any';
             document.getElementById('filter_location').value = 'any';
         }
-        
+
         const filterType = document.getElementById('filter_type').value;
         const filterPrice = document.getElementById('filter_price').value;
         const filterBed = document.getElementById('filter_bedroom').value;
@@ -656,5 +676,4 @@ $this->load->view('common/layout/top', [
         console.log("Location: ", location);
         document.location.href = location;
     }
-
 </script>
