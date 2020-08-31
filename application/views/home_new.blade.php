@@ -189,7 +189,6 @@ if (isset($livedata)) {
                     <ul>
                         @endif
 
-
                         @if($i == '1' || $i == '4')
                         <li><a href="{{ 'properties/lists?area='.$key }}" target="blank">
                                 <div class="gallery-sec">

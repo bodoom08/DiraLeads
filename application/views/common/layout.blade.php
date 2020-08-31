@@ -43,17 +43,6 @@
                     @php
                     $header_menu = get_menu('main');
                     @endphp
-                    <!--      @foreach ($header_menu as $menu)
-                            @if ($menu['parent_menu_id'] == 0)    
-                            <li class="nav-item {{ $menu['url'] == current_url() ? 'active' : '' }}">
-                            @if($menu['title'] == 'Properties')
-                                 <a href="{{ site_url($menu['url'])}}?for=short%20term%20rent" class="nav-link">{{ $menu['title'] }}</a>
-                            @else
-                                <a href="{{ site_url($menu['url']) }}" class="nav-link">{{ $menu['title'] }}</a>
-                            @endif
-                            </li>
-                            @endif
-                            @endforeach -->
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -64,9 +53,6 @@
                             <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">THE OWNER'S PERCH</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="/about">Why DiraLeads</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
                     </li>
@@ -142,9 +128,9 @@
             </a>
         </div>
         <div class="banner-text">
-            <h2 class="primary-text">The Jewish short-term rental marketplace</h2>
-            <h2 class="secondary-text">Connecting renters with property owners for short-term stays in</h2>
-            <h2 class="secondary-text">heimishe neighborhoods worldwide</h2>
+            <p class="primary-text">The Jewish short-term rental marketplace</p>
+            <p class="secondary-text">Connecting renters with property owners for short-term stays in</p>
+            <p class="secondary-text">heimishe neighborhoods worldwide</p>
         </div>
 
         <div class="search-main">
@@ -199,7 +185,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> 
+
+
     </div>
 
 
