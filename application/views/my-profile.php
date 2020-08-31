@@ -223,9 +223,8 @@ $this->load->view('common/front_end_layout/top', [
                                                                             </div>
                                                                         </div>
                                                                         <?php
-                                                                        if (isset($userinfo->language)) {
-                                                                            $languag = explode(',', $userinfo->language);
-                                                                        } ?>
+                                                                        $languag = isset($userinfo->language) ? explode(',', $userinfo->language) : [];
+                                                                        ?>
 
                                                                         <input type="hidden" class="form-control" placeholder="Phone" name="mobile" value="<?php echo $_SESSION['mobile'] ?>">
 
