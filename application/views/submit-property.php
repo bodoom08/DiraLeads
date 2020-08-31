@@ -1162,6 +1162,7 @@ $this->load->view('common/front_end_layout/top', [
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
                                     <div class="modal-header">
+                                        <h4 class="modal-title">Block this date</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <div class="modal-body">
@@ -1195,6 +1196,7 @@ $this->load->view('common/front_end_layout/top', [
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
                                     <div class="modal-header">
+                                        <h4 class="modal-title">Block this date</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                     </div>
                                     <div class="modal-body">
