@@ -13,7 +13,7 @@ class M_properties extends CI_Model
         $price = isset($_GET['price']) ? $_GET['price'] : 'any';
         $street = isset($_GET['street']) ? $_GET['street'] : 'any';
         $location = isset($_GET['location']) ? $_GET['location'] : 'any';
-
+        $area = isset($_GET['area']) ? $_GET['area'] : 'any';
 
         $query = 'select properties.id, areas.title, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active"';
         if ($type != "any") {
@@ -32,6 +32,9 @@ class M_properties extends CI_Model
         if ($street != "any") {
             $query .= ' AND `properties`.`street` = "'.$street.'" OR `properties`.`coords` = "'.$location.'"';
         }
+        if ($area != "any") {
+            $query .= ' AND `areas`.`title` = "'.$area.'"';
+        }
         if ($sort_by != "any") {
             switch($sort_by) {
                 case 'high-low':
@@ -48,16 +51,6 @@ class M_properties extends CI_Model
                     break;
             }
         }
-
-        /*
-        $properties = $this->db
-                ->select("properties.id, areas.title, properties.street, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price")
-                ->from("properties")
-                ->where("properties.status = 'active'")
-                ->join('areas', "areas.id = properties.area_id", "left")
-                ->get()
-                ->result_array();
-        */
         
         $properties = $this->db->query($query)->result_array();
 

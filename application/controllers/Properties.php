@@ -7,6 +7,7 @@ class Properties extends MOBO_Controller
     {
         parent::__construct();
         $this->load->model('M_properties');
+        $this->load->model('M_page');
         $this->load->library('session');
     }
 
@@ -18,6 +19,7 @@ class Properties extends MOBO_Controller
     public function index()
     {
         $data = $this->M_properties->getAllProducts();
+        $data['areas'] = $this->M_page->get_areas();
         $this->load->view('properties', $data);
     }
 

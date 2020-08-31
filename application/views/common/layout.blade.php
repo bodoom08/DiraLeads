@@ -152,16 +152,11 @@
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                         <div class="search-box">
-                            <!-- <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                                            <li class="nav-item">
-                                                Find your perfect rental
-                                            </li>
-                                        </ul> -->
                             <ul>
                                 <li>
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Area</label>
-                                        <select class="form-control areaSelect" id="exampleFormControlSelect1">
+                                        <label for="filter_area">Area</label>
+                                        <select class="form-control areaSelect" id="filter_area">
                                             @if ( isset($areas))
                                             <option value="any">Any</option>
                                             @foreach ($areas as $area)
@@ -175,14 +170,14 @@
                                 </li>
                                 <li style="width:36%">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Dates</label>
-                                        <input type="text" class="form-control dateRangePicker" name="daterange" readonly>
+                                        <label for="filter_date">Dates</label>
+                                        <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
 
                                     </div>
                                 </li>
                                 <li style="width:15%">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Bedrooms</label>
+                                        <label for="bedroom">Bedrooms</label>
                                         <div class="max-min">
                                             <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
                                         </div>
@@ -190,14 +185,14 @@
                                 </li>
                                 <li style="width:15%">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Price</label>
+                                        <label for="price_max">Price</label>
                                         <div class="max-min">
                                             <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
                                         </div>
                                     </div>
                                 </li>
                                 <li>
-                                    <a class="areaFilter">LOCATE MY DREAM RENTAL</a>
+                                    <a class="areaFilter" href="javascript:search();">LOCATE MY DREAM RENTAL</a>
                                 </li>
                             </ul>
                         </div>
@@ -380,6 +375,13 @@
         //     "left": actPosition.left,
         //     "width": actWidth
         // });
+        function search() {
+            const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
+            const bedroom = document.getElementById('bedroom').value == '' ? 'any' : document.getElementById('bedroom').value;
+            const price = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
+
+            document.location.href = `/properties?type=any&bedroom=${bedroom}&bathroom=any&more=any&sort_by=any&price=0|${price}&street=any&location=any&area=${areaId}`;
+        }
     </script>
 </body>
 

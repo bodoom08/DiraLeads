@@ -2,16 +2,16 @@
 
 @section('content')
  <?php
-            $attrs = [
-                'name'=> 'modify_package_form',
-                'method' => 'POST'
-            ];
-            echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
-            ?>
-                <input type="hidden" id="csrfToken" name="package_table_id">
-                <input type="hidden" name="action">
-                
-            </form>
+$attrs = [
+    'name'=> 'modify_package_form',
+    'method' => 'POST'
+];
+echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
+?>
+    <input type="hidden" id="csrfToken" name="package_table_id">
+    <input type="hidden" name="action">
+</form>
+
 <div class="row">
     <div class="col-lg-3 col-md-3 col-sm-6">
         <div class="ui-item bg-success">
@@ -66,7 +66,9 @@
         </div>
     </div>
 </div>
-    <div class="dn-items row"></div>
+
+<div class="dn-items row"></div>
+
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="dash-title-new">
@@ -74,59 +76,58 @@
         </div>
     </div>
     <div class="col-md-12 col-lg-12">
-    <div class="item-table">
-                        <table class="table">
-                                    <?php if (empty($my_properties)) { ?>
-                                   <div class="col-lg-12 text-center mt-5 dashboard_fav">
-                      <p><i class="fa fa-search" aria-hidden="true"></i></p>
-                      <h5 class="text-head">No rentals listed</h5>
-                     <p>List your Rental <a href="/rental">Here</a></p>
-                  </div> 
-                                    <?php } else { ?>
-                                        <style>
-                                            .soldout {
-                                                opacity: 0.5;
-                                            }
-                                        </style>
-                                        <?php foreach ($my_properties as $key => $value) : ?>
-                                        <?php if($key < 4){?>
-                                            <tr class="<?php echo ($value['sold'] == 'true') ? 'soldout' : ''; ?> ">
-                                                <td style="width: 150px">
-                                                 <div class="img-sec-tb">
-                                                    <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>">
-                                                     <img class="img-whp" src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo">
-                                                </td>
-                                                <td>
-                                                <div class="rent-tb">
-                                                <ul>
-                                                <li><h5>For <?php echo ucfirst($value['for']); ?></h5></li>
-                                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $value['street'] ?></li>
-                                                <li>$<?php echo $value['price'] ?>/Monthly</li>
-                                                </ul>
-                                                </div>
-                                                </td>
+        <div class="item-table">
+            <table class="table">
+            <?php if (empty($my_properties)) { ?>
+                <div class="col-lg-12 text-center mt-5 dashboard_fav">
+                    <p><i class="fa fa-search" aria-hidden="true"></i></p>
+                    <h5 class="text-head">No rentals listed</h5>
+                    <p>List your Rental <a href="/rental">Here</a></p>
+                </div> 
+            <?php } else { ?>
+                <style>
+                    .soldout {
+                        opacity: 0.5;
+                    }
+                </style>
+                <?php foreach ($my_properties as $key => $value) : ?>
+                    <?php if($key < 4) { ?>
+                        <tr class="<?php echo ($value['sold'] == 'true') ? 'soldout' : ''; ?> ">
+                            <td style="width: 150px">
+                                <div class="img-sec-tb">
+                                    <input type="hidden" name="user_property_id" value="<?php echo $value['id'] ?>" />
+                                    <img class="img-whp" src="<?php echo ($value['images'] == '') ? 'assets/img/empty_property_image.jpg' : base_url('uploads/') . $value['images'] ?>" alt="listing-photo" />
+                                </div>
+                            </td>
+                            <td>
+                                <div class="rent-tb">
+                                    <ul>
+                                        <li><h5>For <?php echo ucfirst($value['for']); ?></h5></li>
+                                        <li><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $value['street'] ?></li>
+                                        <li>$<?php echo $value['price'] ?>/Monthly</li>
+                                    </ul>
+                                </div>
+                            </td>
 
-                                                <td><i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo $value['available_date'] ?></td>
-                                                <td>
-                                                <div class="service-tb">
-                                                <?php if($value['sold'] != 'true') { ?>
-                                                <ul>
-                                                <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                            <td><i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo $value['available_date'] ?></td>
+                            <td>
+                                <div class="service-tb">
+                                <?php if($value['sold'] != 'true') { ?>
+                                    <ul>
+                                        <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
+                                        <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
+                                        <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                                        <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li>
+                                    </ul>
+                                <?php } ?>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php } endforeach; ?>
+                <?php } ?>
+            </table>
 
-                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
-
-                                                <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
-                                                <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li>
-                                                </ul>
-                                                <?php } ?>
-                                                </div>
-                                                </td>
-                                            </tr>
-                                        <?php } endforeach; ?>
-                                    <?php } ?>
-                                </tbody>
-                            </table>
-             <?php if (!empty($my_properties)) { ?>
+            <?php if (!empty($my_properties)) { ?>
             <div class="tabl-btn-sec">
                 <a href="/my_rentals">View All</a>
             </div>
