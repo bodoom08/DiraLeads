@@ -13,11 +13,11 @@ class Login extends MOBO_Controller
 	{
 		if (isset($_SESSION['id'])) {
 			extract($_GET);
-            if(isset($continue))
-              header('Location: '.$continue);
-            else {
-			  redirect('dashboard');
-            }
+			if (isset($continue))
+				header('Location: ' . $continue);
+			else {
+				redirect('dashboard');
+			}
 		} else {
 			$this->load->view('login');
 		}
@@ -27,23 +27,23 @@ class Login extends MOBO_Controller
 	{
 		if (isset($_SESSION['id'])) {
 			extract($_GET);
-            if(isset($continue))
-              header('Location: '.$continue);
-            else {
-			  redirect('dashboard');
-            }
+			if (isset($continue))
+				header('Location: ' . $continue);
+			else {
+				redirect('dashboard');
+			}
 		} else {
 			$this->load->view('login-user');
 		}
 	}
-	
+
 	public function forgot()
 	{
 		if (isset($_SESSION['id'])) {
 			redirect('dashboard');
 		} else {
-			if($this->input->is_ajax_request()) {
-                exit(json_encode($this->M_login->forgot()));
+			if ($this->input->is_ajax_request()) {
+				exit(json_encode($this->M_login->forgot()));
 			} else {
 				$this->load->view('forgot_password');
 			}
@@ -54,19 +54,20 @@ class Login extends MOBO_Controller
 	{
 		exit(json_encode($this->M_login->validate()));
 	}
-	
+
 	function validate_user()
 	{
 		$data = $this->M_login->validate_user();
-		if(array_key_exists('login_info', $data)) {
+		if (array_key_exists('login_info', $data)) {
 			$this->session->set_flashdata('login_info', json_encode($data));
 		}
 		exit(json_encode($this->M_login->validate_user()));
 	}
 
-	function otp_verify() {
+	function otp_verify()
+	{
 		ini_set('display_errors', 1);
-		if(empty($this->session->flashdata('login_info')))
+		if (empty($this->session->flashdata('login_info')))
 			redirect('login/user');
 
 		$encode_record_info = $this->session->flashdata('login_info');
@@ -77,10 +78,11 @@ class Login extends MOBO_Controller
 		$this->load->view('login-otp', compact('encode_record_info', 'decode_record_info'));
 	}
 
-	function resend_otp() {
+	function resend_otp()
+	{
 		ini_set('display_errors', 1);
 		extract($_POST);
-		
+
 		$decode_record_info = json_decode($encode_record_info);
 		$decode_record_info->login_info = json_decode($decode_record_info->login_info);
 		$response = send_otp($decode_record_info->login_info->mobile);
@@ -88,11 +90,12 @@ class Login extends MOBO_Controller
 		// 	die(json_encode(['type' => 'error', 'text' => $response->message]));
 		// }
 		// else {
-			die(json_encode(['type' => 'success', 'text' => 'Otp Sent to registerd mobile number, and valid for 3 minutes']));
+		die(json_encode(['type' => 'success', 'text' => 'Otp Sent to registerd mobile number, and valid for 3 minutes']));
 		// }
 	}
 
-	function validate_otp() {
+	function validate_otp()
+	{
 		extract($_POST);
 		ini_set('display_errors', 1);
 
@@ -100,23 +103,21 @@ class Login extends MOBO_Controller
 		$decode_record_info->login_info = json_decode($decode_record_info->login_info);
 		$mobile = $decode_record_info->login_info->mobile;
 		$result = $this->db->where('mobile', $mobile)
-						->order_by('id', 'desc')
-						->limit(1)
-						->get('otp')
-						->row();
-		if($result->otp == $otp) {
-			if($continue && $continue != '') {
+			->order_by('id', 'desc')
+			->limit(1)
+			->get('otp')
+			->row();
+		if ($result->otp == $otp) {
+			if ($continue && $continue != '') {
 				$ref = $continue;
-			}
-			else {
+			} else {
 				$ref = site_url('/');
 			}
 			$decode_record_info = json_decode($encode_record_info, true);
 			$decode_record_info['login_info'] = json_decode($decode_record_info['login_info'], true);
 			$this->session->set_userdata($decode_record_info['login_info']);
 			die(json_encode(['type' => 'success', 'text' => 'OTP validated.', 'ref' => $ref]));
-		}
-		else {
+		} else {
 			die(json_encode(['type' => 'error', 'text' => 'OTP mismatched.']));
 		}
 	}
@@ -132,25 +133,24 @@ class Login extends MOBO_Controller
 		$this->session->sess_destroy();
 		$this->M_login->reset($token);
 	}
-    
-    function test() {
+
+	function test()
+	{
 		$this->load->helper('url');
-        $token = urlencode(base64_encode(strtotime('30 minutes') . ':' . bin2hex(random_bytes(16))));
-        
-		
-		
+		$token = urlencode(base64_encode(strtotime('30 minutes') . ':' . bin2hex(random_bytes(16))));
+
+
+
 		$this->load->helper('email');
 
-            send_email(
-                'subhojit.mobotics@gmail.com',
-                'Diraleads Password Reset',
-                $this->load->view(
-                    'emails/reset_password',
-                    ['href' => site_url('login/reset/' . $token)],
-                    true
-                )
-			);
-			
-			
-    }
+		send_email(
+			'subhojit.mobotics@gmail.com',
+			'Diraleads Password Reset',
+			$this->load->view(
+				'emails/reset_password',
+				['href' => site_url('login/reset/' . $token)],
+				true
+			)
+		);
+	}
 }

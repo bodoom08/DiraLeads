@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="footer">
-                    <span>Don't have an account? <a href="{{ site_url(''.isset($_GET['continue']) ? 'register?continue='.urlencode($_GET['continue']) : 'register') }}">Register here</a></span>
+                        <span>Don't have an account? <a href="{{ site_url(''.isset($_GET['continue']) ? 'register?continue='.urlencode($_GET['continue']) : 'register') }}">Register here</a></span>
                     </div>
                 </div>
 
@@ -48,13 +48,15 @@
 
 @push('scripts')
 <script>
-    $ref = '<?php echo isset($_GET['continue']) ? $_GET['continue'] : ''; ?>';
-    if($ref == '')
-        $ref = '<?php echo isset($_GET['ref']) ? $_GET['ref'] : '/'; ?>';
+    var ref = "<?php echo isset($_GET['ref']) ? $_GET['ref'] : ''; ?>";
+    console.log("ref", ref);
+    // $ref = '<?php echo isset($_GET['continue']) ? $_GET['continue'] : ''; ?>';
+    // if ($ref == '')
+    //     $ref = '<?php echo isset($_GET['ref']) ? $_GET['ref'] : '/'; ?>';
 
-     $('#loginForm').ajaxForm({
+    $('#loginForm').ajaxForm({
         data: {
-            ref: $ref
+            ref: ref
         },
         dataType: 'json',
         beforeSubmit: function() {
@@ -63,14 +65,14 @@
         },
         success: function(arg) {
             toastr[arg.type](arg.text);
-            if(arg.type== 'warning') {
+            if (arg.type == 'warning') {
                 $('.infoarea').html('');
                 $('.infoarea').html(`<code>${arg.text}</code>`);
             }
             if (arg.type == 'success') {
-                // console.log(arg.href);
+                console.log(arg.ref);
                 $('#login_submit').removeAttr('disabled');
-                window.location.href = '/dashboard';
+                window.location.href = arg.ref;
             }
         }
     });
