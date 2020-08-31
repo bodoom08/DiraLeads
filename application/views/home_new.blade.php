@@ -131,11 +131,11 @@ if (isset($livedata)) {
         <div class="row" id="counter">
             <?php $count = 0; ?>
             @foreach($propertiea_counts as $key=>$value)
-            <!-- <?php
-                    if ($count > 7) {
-                        break;
-                    }
-                    ?> -->
+            <?php
+            if ($count > 7) {
+                break;
+            }
+            ?>
             <div class="col-lg-3 col-md-3 col-12">
                 <a href="{{ 'properties/lists?area='.$key }}" target="blank">
                     <div class="rent-num">
