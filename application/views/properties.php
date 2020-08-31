@@ -86,6 +86,12 @@ $this->load->view('common/layout/top', [
         height: 100%;
     }
 
+    @media only screen and (max-width: 768px) {
+        .search-page .map-region {
+            position: relative;
+        }
+    }
+
     .view-product {
         max-height: 100%;
         overflow: hidden;
@@ -358,6 +364,9 @@ $this->load->view('common/layout/top', [
 </div>
 
 <div class="row search-page">
+    <div class="col-lg-6 map-region">
+        <div id="map"></div>
+    </div>
     <div class="col-lg-6 h-100">
         <div class="w-100 item-list">
             <?php if (!isset($properties) || count($properties) == 0) { ?>
@@ -383,9 +392,6 @@ $this->load->view('common/layout/top', [
             <?php }
             } ?>
         </div>
-    </div>
-    <div class="col-lg-6 map-region">
-        <div id="map"></div>
     </div>
 </div>
 
