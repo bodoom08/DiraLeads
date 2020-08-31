@@ -2475,60 +2475,29 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         var d = moment().format('YYYY-MM-DD');
 
-        $('#calendar').fullCalendar({
-            header: {
-                left: 'prev,next today',
-                center: 'title',
-                right: 'month'
-                // right: 'month,agendaWeek'
-            },
-            defaultDate: d,
-            defaultView: 'month',
-            editable: false,
-            selectable: true,
-            fixedWeekCount: false,
-            timeZone: 'local',
-            events: {
-                url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-                cache: true
-            },
-            select: function(start, end, jsEvent, view) {
+        renderFirstCalendar();
 
+        function renderFirstCalendar() {
+            console.log("render first calendar");
+            $('#calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                    // right: 'month,agendaWeek'
+                },
+                defaultDate: d,
+                defaultView: 'month',
+                editable: false,
+                selectable: true,
+                fixedWeekCount: false,
+                timeZone: 'local',
+                events: {
+                    url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
+                    cache: true
+                },
+                select: function(start, end, jsEvent, view) {
 
-                if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
-
-                    $('#date-action ul')[0].style = "display: none";
-                    $('#date-action ul')[1].style = "display: block";
-                    $('#date-action ul')[2].style = "display: none";
-                } else if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.unavailable-background').length > 0) {
-                    $('#date-action ul')[0].style = "display: none";
-                    $('#date-action ul')[1].style = "display: none";
-                    $('#date-action ul')[2].style = "display: block";
-                } else {
-                    $('#date-action ul')[0].style = "display: block";
-                    $('#date-action ul')[1].style = "display: none";
-                    $('#date-action ul')[2].style = "display: none";
-                }
-
-                const dialogEl = document.getElementById('date-action-dialog');
-                const dateEl = document.getElementById('date-action');
-                dialogEl.style.display = "block";
-                dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
-
-                $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
-            },
-            eventAfterAllRender: function() {
-                renderCalendarPrice();
-            },
-            eventClick: function(event, jsEvent) {
-                // Display the modal and set the values to the event values.
-                if (event.title == 'Blocked') {
-                    $('#blockModal').modal('show');
-                    $('#blockModal').find('#titleblock').val(event.title);
-                    $('#blockModal').find('#starts-atblock').val(event.start);
-                    $('#blockModal').find('#ends-atblock').val(event.end);
-                    $('#blockModal').find('.eventClose').text('Delete');
-                } else {
 
                     if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
 
@@ -2550,58 +2519,94 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     dialogEl.style.display = "block";
                     dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
 
-                    $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
+                    $('#date-action .date label').html(moment(start).format('YYYY-MM-DD'));
+                },
+                eventAfterAllRender: function() {
+                    renderCalendarPrice();
+                    console.log("calendar is rendered");
+                },
+                eventClick: function(event, jsEvent) {
+                    // Display the modal and set the values to the event values.
+                    if (event.title == 'Blocked') {
+                        $('#blockModal').modal('show');
+                        $('#blockModal').find('#titleblock').val(event.title);
+                        $('#blockModal').find('#starts-atblock').val(event.start);
+                        $('#blockModal').find('#ends-atblock').val(event.end);
+                        $('#blockModal').find('.eventClose').text('Delete');
+                    } else {
 
-                    $(".fc-day-grid-event").attr("href", 'javascript:void');
-                    var start = convert(moment(event.start._i).format());
-                    var end = convert(moment(end).format());
-                    var a = start.split("-");
+                        if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
+
+                            $('#date-action ul')[0].style = "display: none";
+                            $('#date-action ul')[1].style = "display: block";
+                            $('#date-action ul')[2].style = "display: none";
+                        } else if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.unavailable-background').length > 0) {
+                            $('#date-action ul')[0].style = "display: none";
+                            $('#date-action ul')[1].style = "display: none";
+                            $('#date-action ul')[2].style = "display: block";
+                        } else {
+                            $('#date-action ul')[0].style = "display: block";
+                            $('#date-action ul')[1].style = "display: none";
+                            $('#date-action ul')[2].style = "display: none";
+                        }
+
+                        const dialogEl = document.getElementById('date-action-dialog');
+                        const dateEl = document.getElementById('date-action');
+                        dialogEl.style.display = "block";
+                        dateEl.style = `display: block; position: absolute !important; top: ${jsEvent.pageY - 30}px !important; left: ${jsEvent.pageX}px !important; z-index: 130;`;
+
+                        $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
+
+                        $(".fc-day-grid-event").attr("href", 'javascript:void');
+                        var start = convert(moment(event.start._i).format());
+                        var end = convert(moment(end).format());
+                        var a = start.split("-");
+                    }
+                    $(".eventClose").click(function() {
+                        var startDate = new Date(convert(event.start));
+                        var endDate = new Date(convert(event.end));
+                        var disableDate = $('.disableDate').val();
+                        var y = disableDate.split('|');
+                        var removeItem = converts(event.start) + ',' + converts(event.end);
+                        y = $.grep(y, function(value) {
+                            return value != removeItem;
+                        });
+                        var seval = y.join('|');
+                        var price = event.description
+                        $('.disableDate').val(seval);
+                        var selectedPrice = $('#selectedPrice').val();
+                        var x = selectedPrice.split(',&');
+
+                        var between = [];
+                        while (startDate <= endDate) {
+                            between.push(new Date(startDate));
+                            startDate.setDate(startDate.getDate() + 1);
+                        }
+                        var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
+                        var i;
+                        var str;
+                        var itemId = 0;
+                        for (i = 1; i < between.length; i++) {
+                            eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
+                        }
+                        var removeItems = eachdate;
+                        x = $.grep(x, function(values) {
+                            return values != removeItems;
+                        });
+                        var updatedValu = x.join('|');
+                        $('#selectedPrice').val(updatedValu);
+
+                        $('#manualBook').find('input').val('');
+                        $('#blockModal').find('input').val('');
+                        $('#blockModal').find('.eventClose').text('Close');
+                        $('#manualBook').find('.eventClose').text('Close');
+                        // $('#calendar').fullCalendar('removeEvents', event._id);
+                    });
                 }
-                $(".eventClose").click(function() {
-                    var startDate = new Date(convert(event.start));
-                    var endDate = new Date(convert(event.end));
-                    var disableDate = $('.disableDate').val();
-                    var y = disableDate.split('|');
-                    var removeItem = converts(event.start) + ',' + converts(event.end);
-                    y = $.grep(y, function(value) {
-                        return value != removeItem;
-                    });
-                    var seval = y.join('|');
-                    var price = event.description
-                    $('.disableDate').val(seval);
-                    var selectedPrice = $('#selectedPrice').val();
-                    var x = selectedPrice.split(',&');
+            });
+        }
 
-                    var between = [];
-                    while (startDate <= endDate) {
-                        between.push(new Date(startDate));
-                        startDate.setDate(startDate.getDate() + 1);
-                    }
-                    var eachdate = $('.fc-widget-content[data-date="' + convert(between[0]) + '"]').text() + '|' + convert(between[0]) + ',';
-                    var i;
-                    var str;
-                    var itemId = 0;
-                    for (i = 1; i < between.length; i++) {
-                        eachdate += $('.fc-widget-content[data-date="' + convert(between[i]) + '"]').text() + '|' + convert(between[i]) + ',';
-                    }
-                    var removeItems = eachdate;
-                    x = $.grep(x, function(values) {
-                        return values != removeItems;
-                    });
-                    var updatedValu = x.join('|');
-                    $('#selectedPrice').val(updatedValu);
-
-                    $('#manualBook').find('input').val('');
-                    $('#blockModal').find('input').val('');
-                    $('#blockModal').find('.eventClose').text('Close');
-                    $('#manualBook').find('.eventClose').text('Close');
-                    // $('#calendar').fullCalendar('removeEvents', event._id);
-                });
-            }
-        });
-
-        $(document).on('click', '.costomSession', function() {
-
+        function renderSecondCalendar() {
             $('#seasonCalendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
@@ -2706,6 +2711,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             });
             //clear calendar and cards
             $('.fc-bg td').html('');
+        }
+
+        $(document).on('click', '.costomSession', function() {
+            renderSecondCalendar();
+
         });
 
         function renderCalendarPrice() {
@@ -3495,8 +3505,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         });
 
-        $('#datePrice').click(function() {
-
+        function timeOutForCalendar() {
             setTimeout(function() {
                 $('.fc-month-button').trigger('click');
                 $(".fc-event").removeAttr("href");
@@ -3504,7 +3513,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             setTimeout(function() {
                 $(".fc-day-grid-event").attr("href", 'javascript:void');
             }, 1000);
+        }
+        $('#datePrice').click(function() {
 
+            timeOutForCalendar();
         });
         $('.fc-next-button').click(function() {
             setTimeout(function() {
@@ -4304,6 +4316,23 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         //set block dates
         var blockdates = '<?php echo $property_details['blocked_date']; ?>';
         $('.blockDetail').val(blockdates);
+
+        //if date and availability is clicked
+
+        var date = "<?php echo $_SESSION['forDate'] ?>";
+        if (date != '') {
+
+            // renderFirstCalendar();
+
+            $('.more-icon-preocess li:first').removeClass('active');
+
+            $('#discover').removeClass('active');
+            $('.more-icon-preocess li:nth-child(4)').addClass('active');
+            $('#content').addClass('active');
+            timeOutForCalendar();
+
+        }
+
     });
 
     function closeDateAction() {
@@ -4535,18 +4564,6 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     });
 </script>
 <script>
-    //if date and availability is clicked
-    $(document).ready(function() {
-        var date = "<?php echo $_SESSION['forDate'] ?>";
-        if (date != '') {
-            $('.more-icon-preocess li:first').removeClass('active');
-
-            $('#discover').removeClass('active');
-            $('.more-icon-preocess li:nth-child(4)').addClass('active');
-            $('#content').addClass('active');
-        }
-    })
-
     // set property_id
     var propertyID = <?php echo $property_details['id']; ?>;
     console.log("virutal_number", propertyID);
