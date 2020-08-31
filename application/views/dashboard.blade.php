@@ -2,16 +2,16 @@
 
 @section('content')
 
- <?php
+<?php
 $attrs = [
-    'name'=> 'modify_package_form',
+    'name' => 'modify_package_form',
     'method' => 'POST'
 ];
 echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
 ?>
 
-    <input type="hidden" id="csrfToken" name="package_table_id">
-    <input type="hidden" name="action">
+<input type="hidden" id="csrfToken" name="package_table_id">
+<input type="hidden" name="action">
 </form>
 
 
@@ -120,16 +120,8 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
                                         <?php if ($value['sold'] != 'true') { ?>
                                             <ul>
                                                 <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
-
-
-                            <td><i class="fa fa-calendar-o" aria-hidden="true"></i> <?php echo $value['available_date'] ?></td>
-                            <td>
-                                <div class="service-tb">
-                                <?php if($value['sold'] != 'true') { ?>
-                                    <ul>
-                                        <li><a href="javascript:(0);" onclick="edit(<?php echo $value['id'] ?>);"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</a></li>
-                                        <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
-                                                        <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
+                                                <li><a href="javascript:(0);" onclick="change_status(<?php echo $value['id'] ?>);"><i class="fa <?php echo ($value['status'] == 'active' ? 'fa-eye-slash' : 'fa-eye'); ?>" aria-hidden="true"></i> <?php echo ($value['status'] == 'active' ? 'Pause' : 'Resume'); ?></a></li>
+                                                <li><a href="javascript:(0);" onclick="del(<?php echo $value['id'] ?>);"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</a></li>
                                                 <!-- <li><a href="javascript:(0);" onclick="soldout(<?php echo $value['id'] ?>);"><i class="fa fa-ban" aria-hidden="true"></i> Sold Out</a></li> -->
                                                 <li><a href="javascript:(0);" onclick="edit_pricing(<?php echo $value['id'] ?>);"><i class="fa fa-calendar" aria-hidden="true"></i> Pricing & availability</a></li>
                                             </ul>
