@@ -1168,11 +1168,11 @@ $this->load->view('common/front_end_layout/top', [
                                         <input type="hidden" name="titleblock" id="titleblock" value="Blocked" />
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="starts-at">Check-In date*</label>
+                                                <label for="starts-at">Block from(date)</label>
                                                 <input type="text" name="starts_atblock" class="startDate" id="starts-atblock" />
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="ends-at">Check-out date*</label>
+                                                <label for="ends-at">Through(date)</label>
                                                 <input type="text" name="ends_atblock" class="startDate" id="ends-atblock" />
                                             </div>
                                         </div>
@@ -1260,7 +1260,7 @@ $this->load->view('common/front_end_layout/top', [
                                 <div class="modal-body ">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label for="fname">Season name</label>
+                                            <label for="fname">Season title</label>
                                             <input type="text" style="width: 100%;" id="fname" name="session" />
                                         </div>
                                     </div>
@@ -1276,7 +1276,7 @@ $this->load->view('common/front_end_layout/top', [
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="seasonRate">Seasnal rates</label>
+                                            <label for="seasonRate">Seaspnal Rates</label>
                                             <select class="form-control" name="weekend_type" id="seasonRate">
                                                 <option value="daily">Daily</option>
                                                 <option value="fixed">Fixed</option>
@@ -1291,25 +1291,24 @@ $this->load->view('common/front_end_layout/top', [
                                     <div id="seasonDailyPrice">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="sDayPrice">Days ($)</label>
+                                                <label for="sDayPrice">Price per day ($)</label>
                                                 <input type="number" style="width: 100%;" id="sDayPrice" class="datedays" placeholder="Days *">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="sWeekendPrice">Weekend ($)</label>
+                                                <label for="sWeekendPrice">Price per weekend ($)</label>
                                                 <input type="number" style="width: 100%;" id="sWeekendPrice" class="weekenddays" placeholder="Weekend *">
                                             </div>
                                         </div>
                                         <div class="row" id="dailySeasonalPrice">
                                             <div class="col-sm-6">
-                                                <label for="sWeekendFrom">Weekend </label>
-                                                <label for="sWeekendFrom"> From</label>
+                                                <label for="sWeekendFrom">Weekend begins </label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendFrom">
                                                     <option value="3">Thursday</option>
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="sWeekendTo">Till</label>
+                                                <label for="sWeekendTo">Weekend ends</label>
                                                 <select class="form-control" name="weekend_type" id="sWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
                                                     <option value="6">Sunday</option>
@@ -1317,56 +1316,13 @@ $this->load->view('common/front_end_layout/top', [
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row" style="text-align: center;">
+                                        <div class="row pl-5">
                                             <div class="col-sm-12">
                                                 <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck31">
-                                                <label class="custom-control-label" for="customCheck31">Only available in Weekend</label>
+                                                <label class="custom-control-label" for="customCheck31">Only available on weekends</label>
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- <li class="row modal-row">
-                                            <div class="form-group">
-                                                <label for="lname">Check in days:</label><br>
-                                                <div class="custom-control custom-checkbox" style="padding-left:0px;">
-                                                    <input type="checkbox" class="custom-control-input" name="amenities[]" value="any day" id="anyCheck">
-                                                    <label class="custom-control-label" for="anyCheck">any day</label>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="row modal-row">
-                                            <div class="form-group custom-group">
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sun" id="customSun">
-                                                    <label class="custom-control-label" for="customSun">Sun</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Mon" id="customMon">
-                                                    <label class="custom-control-label" for="customMon">Mon</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Tue" id="customTue">
-                                                    <label class="custom-control-label" for="customTue">Tue</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Wed" id="customWed">
-                                                    <label class="custom-control-label" for="customWed">Wed</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Thur" id="customThu">
-                                                    <label class="custom-control-label" for="customThu">Thur</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Fri" id="customFri">
-                                                    <label class="custom-control-label" for="customFri">Fri</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input dayCheck" name="amenities[]" value="Sat" id="customSat">
-                                                    <label class="custom-control-label" for="customSat">Sat</label>
-                                                </div>
-                                            </div>
-                                        </li> -->
-
                                     <div class="modal-footer">
                                         <div class="form-group button"><input type="button" class="seasonButton" value="Save rule" id="saveRule"></div>
                                     </div>
@@ -1386,23 +1342,23 @@ $this->load->view('common/front_end_layout/top', [
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <label for="seasonTitle">Season title</label>
-                                            <input type="text" style="width: 100%;" id="seasonTitle" name="session" />
+                                            <input type="text" style="width: 100%;" id="seasonTitle" name="session" placeholder="Yom Tov/Summer/Other" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="seasonStart">Season start at*</label>
+                                            <label for="seasonStart">Check-in Date*</label>
                                             <input type="text" style="width: 100%;" id="seasonStart" class="startDate" name="startDate" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="seasonEnd">Season end at*</label>
+                                            <label for="seasonEnd">Check-out Date*</label>
                                             <input type="text" style="width: 100%;" id="seasonEnd" class="startDate" name="endDate" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="fseasonRate">Seasnal rates</label>
-                                            <select class="form-control" name="weekend_type" id="fseasonRate">
+                                            <label for="fseasonRate">Seasonal Rates</label>
+                                            <select class="form-control" name="weekend_type" id="fseasonRate" placeholder="Daily Rates/Fixed Rates">
                                                 <option value="daily">Daily</option>
                                                 <option value="fixed">Fixed</option>
                                             </select>
@@ -1415,25 +1371,24 @@ $this->load->view('common/front_end_layout/top', [
                                     <div id="fseasonDailyPrice">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fsDayPrice">Days ($)</label>
+                                                <label for="fsDayPrice">Price per day ($)</label>
                                                 <input type="number" style="width: 100%;" id="fsDayPrice" class="datedays" placeholder="Days *">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="fsWeekendPrice">Weekend ($)</label>
+                                                <label for="fsWeekendPrice">Price per weekend ($)</label>
                                                 <input type="number" style="width: 100%;" id="fsWeekendPrice" class="weekenddays" placeholder="Weekend *">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fsWeekendFrom">Weekend </label>
-                                                <label for="fsWeekendFrom"> From</label>
+                                                <label for="fsWeekendFrom">Weekend begins</label>
                                                 <select class="form-control" name="weekend_type" id="fsWeekendFrom">
                                                     <option value="3">Thursday</option>
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="fsWeekendTo">Till</label>
+                                                <label for="fsWeekendTo">Weekend ends</label>
                                                 <select class="form-control" name="weekend_type" id="fsWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
                                                     <option value="6">Sunday</option>
@@ -1441,11 +1396,9 @@ $this->load->view('common/front_end_layout/top', [
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row" style="text-align: center;">
-                                            <div class="col-sm-12">
-                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck32">
-                                                <label class="custom-control-label" for="customCheck32">Only available in Weekend</label>
-                                            </div>
+                                        <div class="row pl-5">
+                                            <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck32">
+                                            <label class="custom-control-label" for="customCheck32">Only available on weekends</label>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -1471,49 +1424,44 @@ $this->load->view('common/front_end_layout/top', [
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="fEditSeasonStart">Seasn start at*</label>
+                                            <label for="fEditSeasonStart">Check-in Date*</label>
                                             <input type="text" style="width: 100%;" id="fEditSeasonStart" class="startDate" name="startDate" />
                                         </div>
                                         <div class="col-sm-6">
-                                            <label for="fEditSeasonEnd">Season end at*</label>
+                                            <label for="fEditSeasonEnd">Check-out Date*</label>
                                             <input type="text" style="width: 100%;" id="fEditSeasonEnd" class="startDate" name="endDate" />
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="fEditSeasonRate">Seasnal rates</label>
+                                            <label for="fEditSeasonRate">Seasonal Rates</label>
                                             <select class="form-control" name="weekend_type" id="fEditSeasonRate">
                                                 <option value="daily">Daily</option>
                                                 <option value="fixed">Fixed</option>
                                             </select>
                                         </div>
-                                        <div class="col-sm-6" id="fEditSeasonFixedPrice" style="display:none;">
-                                            <label for="fEditfixedSeasonalPrice">Season price ($)*</label>
-                                            <input type="number" style="width: 100%;" id="fEditfixedSeasonalPrice" class="weekenddays" />
-                                        </div>
                                     </div>
                                     <div id="fEditSeasonDailyPrice">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fEditSDayPrice">Days ($)</label>
+                                                <label for="fEditSDayPrice">Price per day ($)</label>
                                                 <input type="number" style="width: 100%;" id="fEditSDayPrice" class="datedays" placeholder="Days *">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="fEditSWeekendPrice">Weekend ($)</label>
+                                                <label for="fEditSWeekendPrice">Price per weekend ($)</label>
                                                 <input type="number" style="width: 100%;" id="fEditSWeekendPrice" class="weekenddays" placeholder="Weekend *">
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fEditSWeekendFrom">Weekend </label>
-                                                <label for="fEditSWeekendFrom"> From</label>
+                                                <label for="fEditSWeekendFrom">Weekend begins </label>
                                                 <select class="form-control" name="weekend_type" id="fEditSWeekendFrom">
                                                     <option value="3">Thursday</option>
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="fEditSWeekendTo">Till</label>
+                                                <label for="fEditSWeekendTo">Weekend ends</label>
                                                 <select class="form-control" name="weekend_type" id="fEditSWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
                                                     <option value="6">Sunday</option>
@@ -1521,10 +1469,10 @@ $this->load->view('common/front_end_layout/top', [
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="row" style="text-align: center;">
+                                        <div class="row pl-5">
                                             <div class="col-sm-12">
                                                 <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck33">
-                                                <label class="custom-control-label" for="customCheck33">Only available in Weekend</label>
+                                                <label class="custom-control-label" for="customCheck33">Only available on weekends</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1570,7 +1518,7 @@ $this->load->view('common/front_end_layout/top', [
                                 <div class="modal-body">
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <label for="editSeasonName">Season name</label>
+                                            <label for="editSeasonName">Season title</label>
                                             <input type="text" style="width: 100%;" id="editSeasonName" name="session" />
                                         </div>
                                     </div>
@@ -1586,7 +1534,7 @@ $this->load->view('common/front_end_layout/top', [
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="editSeasonRate">Seasnal rates</label>
+                                            <label for="editSeasonRate">Seasonal rates</label>
                                             <select class="form-control" name="weekend_type" id="editSeasonRate">
                                                 <option value="daily">Daily</option>
                                                 <option value="fixed">Fixed</option>
@@ -1600,25 +1548,24 @@ $this->load->view('common/front_end_layout/top', [
                                     <div id="editSeasonDailyPrice">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="sEditDayPrice">Days ($)</label>
+                                                <label for="sEditDayPrice">Price per day ($)</label>
                                                 <input type="number" style="width: 100%;" id="sEditDayPrice" class="datedays" placeholder="Days *">
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="sEditWeekendPrice">Weekend ($)</label>
+                                                <label for="sEditWeekendPrice">Price per weekend ($)</label>
                                                 <input type="number" style="width: 100%;" id="sEditWeekendPrice" class="weekenddays" placeholder="Weekend *">
                                             </div>
                                         </div>
                                         <div class="row" id="eidtDailySeasonalPrice">
                                             <div class="col-sm-6">
-                                                <label for="sEditWeekendFrom">Weekend </label>
-                                                <label for="sEditWeekendFrom"> From</label>
+                                                <label for="sEditWeekendFrom">Weekend begins </label>
                                                 <select class="form-control" name="weekend_type" id="sEditWeekendFrom">
                                                     <option value="3">Thursday</option>
                                                     <option value="4">Friday</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label for="sEditWeekendTo">Till</label>
+                                                <label for="sEditWeekendTo">Weekend ends</label>
                                                 <select class="form-control" name="weekend_type" id="sEditWeekendTo">
                                                     <option value="5">Motzei Shabbos</option>
                                                     <option value="6">Sunday</option>
@@ -1629,7 +1576,7 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="row" style="text-align: center;">
                                             <div class="col-sm-12">
                                                 <input type="checkbox" class="custom-control-input" name="onlyWeekend" value="Only available in Weekend" id="customCheck32">
-                                                <label class="custom-control-label" for="customCheck32">Only available in Weekend</label>
+                                                <label class="custom-control-label" for="customCheck32">Only available on weekends</label>
                                             </div>
                                         </div>
                                     </div>
@@ -1670,9 +1617,7 @@ $this->load->view('common/front_end_layout/top', [
                                             <input type="hidden" id="ctrlThumbIndex" value="0" />
                                             <span class="control-thumbnail control-thumbnail-left" id="ctrlThumbLeft"></span>
                                             <span class="control-thumbnail control-thumbnail-right" id="ctrlThumbRight"></span>
-
-                                            <div class="d-flex justify-content-center" id="thumbnailPreview">
-                                            </div>
+                                            <div class="d-flex justify-content-center" id="thumbnailPreview"></div>
                                         </div>
                                     </div>
 
@@ -1697,7 +1642,6 @@ $this->load->view('common/front_end_layout/top', [
                                             <p id="virtualNumber">Getting virtual number...</p>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div class="modal-footer">
@@ -1713,21 +1657,6 @@ $this->load->view('common/front_end_layout/top', [
                     </div>
                 </div>
             </div>
-
-            <!-- <div class="date-actions" id="date-action" style="display: none;">
-                <div class="date">
-                    <label>${start}</label>
-                    <a class="float-right mr-3" href="javascript:closeDateAction();">X</a>
-                </div>
-                <ul>
-                    <li><a href="javascript:openManualBooking();" id="MainNavHelp">Add a manual Booking</a></li>
-                    <li><a href="javascript:openBlockDate();" id="MainNa">Block this date</a></li>
-                </ul>
-                <ul>
-                    <li><a href="javascript:editManualBooking();">Edit a manual Booking</a></li>
-                    <li><a href="javascript:removeManualBooking();">Remove a manual Booking</a></li>
-                </ul>
-            </div> -->
 
             <div class="date-action-dialog" id="date-action-dialog">
                 <div class="date-action" id="date-action">
@@ -1750,7 +1679,6 @@ $this->load->view('common/front_end_layout/top', [
                 </div>
             </div>
 
-            <!-- </div> -->
             <p class="sub-banner-2 text-center">© Copyright <?php echo date('Y'); ?>. All rights reserved</p>
         </div>
     </div>
