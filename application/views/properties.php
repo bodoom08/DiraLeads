@@ -172,7 +172,7 @@ $this->load->view('common/layout/top', [
     <div class="inner-search px-4">
         <div class="find-search-box">
             <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value="<?php echo isset($_GET['street']) ? $_GET['street'] : '' ;?>">
-            <span><a href="javascript:void()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
+            <span><a href="javascript:search()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
         </div>
 
         <div class="filter-btn-mobo">
@@ -493,13 +493,21 @@ $this->load->view('common/layout/top', [
     });
     
     function initMap(uluru = { lat: 31.0461, lng: 34.8516 }) {
+        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL;?>`;
+        if (center && center != 'any') {
+            center = {
+                lat: JSON.parse(center)[0],
+                lng: JSON.parse(center)[1]
+            }
+        } else {
+            center = {...uluru};
+        }
         const map = new google.maps.Map(
-            document.getElementById('map'), { zoom: 8, center: uluru }
+            document.getElementById('map'), { zoom: 8, center }
         );
 
         const resourceUrl = `<?php echo site_url('uploads/'); ?>`;
         let streets = `<?php echo $streets; ?>`;
-        console.log("streets:", streets);
         streets = JSON.parse(streets);
         
         geocoder = new google.maps.Geocoder();
@@ -526,7 +534,6 @@ $this->load->view('common/layout/top', [
                 document.getElementById('item-detail-dialog').style = "display: none;";
             });
         });
-        
 
         var searchEl = document.getElementById('street_search');
         var autocomplete = new google.maps.places.Autocomplete(searchEl);
@@ -537,11 +544,13 @@ $this->load->view('common/layout/top', [
             const geolocation = [];
             geolocation.push(place.geometry.location.lat());
             geolocation.push(place.geometry.location.lng());
-            console.log("Geolocation: ", geolocation);
-            console.log("Place: ", searchEl.value);
+            
             document.getElementById('filter_location').value = JSON.stringify(geolocation);
+            document.getElementById('filter_street').value = searchEl.value;
+
+            filter({ name: 'street', value: searchEl.value });
+
             $('#street_search').removeClass('invaild-input');
-            filter({ name: 'street', value: searchEl.value});
         });
     }
 
@@ -592,6 +601,15 @@ $this->load->view('common/layout/top', [
 
         document.getElementById(`filter_${option.name}`).value = option.value;
 
+        search();
+    }
+
+    function search() {
+        if (document.getElementById('street_search').value == '') {
+            document.getElementById('filter_street').value = 'any';
+            document.getElementById('filter_location').value = 'any';
+        }
+        
         const filterType = document.getElementById('filter_type').value;
         const filterPrice = document.getElementById('filter_price').value;
         const filterBed = document.getElementById('filter_bedroom').value;
@@ -600,6 +618,7 @@ $this->load->view('common/layout/top', [
         const filterSort = document.getElementById('filter_sort_by').value;
         const filterStreet = document.getElementById('filter_street').value;
         const filterLocation = document.getElementById('filter_location').value;
+
         const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}`;
 
         console.log("Location: ", location);
