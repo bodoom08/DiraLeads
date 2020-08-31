@@ -177,6 +177,15 @@ $this->load->view('common/layout/top', [
         .search-page .map-region {
             position: relative;
         }
+
+        .search-page {
+            top: 370px;
+        }
+
+        .title-bar {
+            width: 90% !important;
+            margin: 5rem auto 0px;
+        }
     }
 </style>
 
@@ -386,7 +395,7 @@ $this->load->view('common/layout/top', [
                         <div class="item-desc">
                             <!-- <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5> -->
                             <p class="font-weight-bold">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0; ?>/day, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0; ?>/week</p>
-                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba ✨ <?php echo isset($property['florbas']) ? $property['florbas'] : 0; ?> floor</p>
+                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba</p>
                             <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
                             <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
                         </div>
