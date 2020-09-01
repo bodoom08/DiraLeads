@@ -111,7 +111,7 @@ html{scroll-behavior:smooth}
 .footer-menu ul li:before{content:'';position:absolute;background:url(../images/home.png) no-repeat;width:25px;height:25px;background-size:contain;left:0}
 .footer-link p{color:#000;font-size:16px;margin:20px 0 0;padding:0 60px 0 0}
 .copy-right p, .copy-right a {color: #000;text-align: center;margin: 30px 0 0px;border-top: 1px solid #ddd;padding: 20px 0 0;}
-.get-started{background:url(../images/get-start.png) no-repeat;background-size:cover;padding:50px 0;text-align:center;height:450px;display:flex;align-items:center;justify-content:center}
+.get-started{background:url(../images/get-start.webp) no-repeat;background-size:cover;padding:50px 0;text-align:center;height:450px;display:flex;align-items:center;justify-content:center}
 .sec h2{font-size:42px;color:#fff;text-transform:uppercase;font-weight:700;margin:0 0 20px}
 .sec p{color:#fff;font-size:21px;width:60%;margin:0 auto}
 .contact-sec{padding: 100px 30px 100px;}
