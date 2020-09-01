@@ -45,9 +45,9 @@
                             <a class="dropdown-item" href="/owners">THE OWNER'S PERCH</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
-                    </li>
+                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
