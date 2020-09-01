@@ -134,20 +134,20 @@
             <p class="secondary-text text-center">heimishe neighborhoods worldwide</p>
         </div>
 
-        <div class="search-bar">
+        <!-- <div class="search-bar">
             <ul>
                 <li>
-                    <a href="javascript:;"><img src="{{ site_url('assets/images/search.png') }}" />&nbsp;Select your Area&nbsp;<i class="fa fa-angle-down"></i></a>
+                    <img src="{{ site_url('assets/images/search.png') }}" />&nbsp;Select your Area&nbsp;<i class="fa fa-angle-down"></i>
                 </li>
-                <li><a href="javascript:;">24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </a></li>
-                <li><a href="javascript:;">24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </a></li>
-                <li><a href="javascript:;">Bedrooms&nbsp;<i class="fa fa-angle-down"></i></a> </li>
-                <li><a href="javascrpt:;">Price&nbsp;<i class="fa fa-angle-down"></i></a> </li>
+                <li>24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </li>
+                <li>24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </li>
+                <li>Bedrooms&nbsp;<i class="fa fa-angle-down"></i> </li>
+                <li>Price&nbsp;<i class="fa fa-angle-down"></i> </li>
                 <li class="justify-content-end"><button class="btn btn-primary">Locate My Dream Rental</button></li>
             </ul>
-        </div>
+        </div> -->
 
-        <div class="search-main" style="display: none;">
+        <div class="search-main" >
             <div class="tabbing-sec">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
