@@ -233,7 +233,7 @@
                         <h3>News & Update </h3>
                         <form id="subscribe-email-form" class="form-inline" action="#" method="GET">
                             <input type="text" class="form-control mb-sm-0" id="email-subscribe" placeholder="Email Address">
-                            <button type="submit" name="email-subscribe-button" class="btn"><img src="{{ site_url() }}assets/images/email.png"></button>
+                            <button type="submit" name="email-subscribe-button" class="btn"><img src="{{ site_url('assets/images/email.png') }}"></button>
                         </form>
                     </div>
                 </div>
@@ -249,7 +249,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
-    <!--<script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js'></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js'></script>
@@ -258,16 +257,11 @@
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
                 var site = "<?php echo site_url() ?>";
-                // var rent = $("input[name='customRadioInline1']:checked").val();
                 var areaSelect = $('.areaSelect').find(":selected").val();
                 var dateRange = $('.dateRangePicker').val().split('-');
                 var from = dateRange[0];
-                // var fromDate = from.split("/").join("-");
                 var to = dateRange[1];
-
                 var price_max = $('#price_max').val();
-
-                // var toDate = to.split("/").join("-");
                 var toDate = moment(to).format("YYYY-DD-MM");
                 var fromDate = moment(from).format("YYYY-DD-MM");
                 var bedroom = $('#bedroom').val();
@@ -310,17 +304,12 @@
                     console.log('complete');
                 }
             });
-
-
             // toastr.success('Success messages');
-
         });
     </script>
-    <script src="/assets/js/app.js"></script>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-
-    <script src="/assets/js/bootstrap.min.js"></script>
-    <script src="/assets/js/bootstrap.js"></script>
+    <script src="{{ site_url('/assets/js/app.js') }}"></script>
+    <script src="{{ site_url('/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ site_url('/assets/js/bootstrap.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
     <script>
         $(document).ready(function() {
@@ -349,21 +338,6 @@
         });
     </script>
     <script>
-        // $("#tile-1 .nav-pills a").click(function() {
-        //     var position = $(this).parent().position();
-
-        //     var width = $(this).parent().width();
-        //     $("#tile-1 .sliderrr").css({
-        //         "left": +position.left,
-        //         "width": width
-        //     });
-        // });
-        // var actWidth = $("#tile-1 .nav-pills").find(".active").parent("li").width();
-        // var actPosition = $("#tile-1 .nav-pills .active").position();
-        // $("#tile-1 .sliderrr").css({
-        //     "left": actPosition.left,
-        //     "width": actWidth
-        // });
         function search() {
             const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
             const bedroom = document.getElementById('bedroom').value == '' ? 'any' : document.getElementById('bedroom').value;
@@ -373,5 +347,4 @@
         }
     </script>
 </body>
-
 </html>
