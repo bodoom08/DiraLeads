@@ -3351,13 +3351,16 @@ td.fc-more-cell {
 
 /*========My Css=======*/
 img {
-  max-width: 100%;
+  /* max-width: 100%; */
 }
 .innerbanner {
   margin: 0px;
   padding: 0px;
   width: 100%;
   position: relative;
+}
+.carousel-inner {
+  height: 550px;
 }
 .innerbanner-caption {
   position: absolute;
@@ -4094,5 +4097,9 @@ img {
 
   .service-box ul li a {
     padding: 10px;
+  }
+
+  .carousel-inner {
+    height: 300px;
   }
 }
