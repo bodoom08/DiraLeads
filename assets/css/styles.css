@@ -145,7 +145,7 @@ ul li {
   flex-wrap: wrap;
 }
 .search-box ul li {
-  width: 22%;
+  /* width: 22%; */
   margin: 10px 15px 0;
 }
 .search-box ul li a {
@@ -558,17 +558,21 @@ ul.amnity .custom-control.custom-checkbox {
   color: #a27107;
   right: 10px;
 }
+.search-main {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+}
 .search-main .tabbing-sec .search-box ul li {
-  width: 22%;
-  margin: 10px 10px 0 0;
+  /* width: 22%; */
+  margin: 0;
+  padding: 10px 10px 0 0;
 }
 .search-main .tabbing-sec {
-  max-width: 615px;
+  /* max-width: 615px; */
   padding: 15px;
   border-radius: 20px;
   position: relative;
-  left: -6%;
-  float: left;
 }
 .action-sec a:hover {
   background: #281b3f;
@@ -585,7 +589,7 @@ div#content5 {
   padding: 0;
 }
 .search-main .tabbing-sec .search-box ul li:last-child {
-  width: 50%;
+  /* width: 50%; */
 }
 .search-main .tabbing-sec .search-box ul li .form-group label,
 .checkbox label {
@@ -2866,7 +2870,7 @@ label.custom-control-label {
     top: 20px;
   }
   .search-box ul li {
-    width: 46%;
+    /* width: 46%; */
   }
   .my-header ul li a {
     line-height: 34px;
@@ -3288,7 +3292,7 @@ td.fc-more-cell {
 /*Ben*/
 .banner-main .banner-text {
   position: absolute;
-  top: 5%;
+  top: 5px;
   padding: 40px;
 
   /* display: flex;

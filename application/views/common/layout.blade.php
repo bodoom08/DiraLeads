@@ -134,20 +134,7 @@
             <p class="secondary-text text-center">heimishe neighborhoods worldwide</p>
         </div>
 
-        <!-- <div class="search-bar">
-            <ul>
-                <li>
-                    <img src="{{ site_url('assets/images/search.png') }}" />&nbsp;Select your Area&nbsp;<i class="fa fa-angle-down"></i>
-                </li>
-                <li>24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </li>
-                <li>24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </li>
-                <li>Bedrooms&nbsp;<i class="fa fa-angle-down"></i> </li>
-                <li>Price&nbsp;<i class="fa fa-angle-down"></i> </li>
-                <li class="justify-content-end"><button class="btn btn-primary">Locate My Dream Rental</button></li>
-            </ul>
-        </div> -->
-
-        <div class="search-main" >
+        <div class="search-main">
             <div class="tabbing-sec">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -168,14 +155,14 @@
                                         </select>
                                     </div>
                                 </li>
-                                <li style="width:36%">
+                                <li>
                                     <div class="form-group">
                                         <label for="filter_date">Dates</label>
                                         <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
 
                                     </div>
                                 </li>
-                                <li style="width:15%">
+                                <li>
                                     <div class="form-group">
                                         <label for="bedroom">Bedrooms</label>
                                         <div class="max-min">
@@ -183,7 +170,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li style="width:15%">
+                                <li>
                                     <div class="form-group">
                                         <label for="price_max">Price</label>
                                         <div class="max-min">
