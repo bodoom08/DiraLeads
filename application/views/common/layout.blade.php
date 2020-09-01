@@ -113,10 +113,10 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="assets/images/slide1.png" class="" alt="...">
+                    <img src="assets/images/slide1.webp" class="" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/images/slide2.png" class="" alt="...">
+                    <img src="assets/images/slide2.webp" class="" alt="...">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
