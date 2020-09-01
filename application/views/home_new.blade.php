@@ -157,7 +157,7 @@ if (isset($livedata)) {
 </div>
 </div>
 
-        -->
+-->
 
 
 
@@ -180,14 +180,18 @@ if (isset($livedata)) {
 
             @php $i = 0;
             $j=0;
-            $count = count($propertiea_counts)@endphp
+            $count = count($propertiea_counts)
+            @endphp
+
             @foreach($propertiea_counts as $key=>$value)
 
             @php
             $i++;
             $j++;
             @endphp
-            @if($j < 13) @if($i=='1' ) <div class="slide">
+
+            @if($j < 13) @if($i == '1' ) 
+            <div class="slide">
                 <div class="mason-sec">
                     <ul>
                         @endif
@@ -205,6 +209,7 @@ if (isset($livedata)) {
                             </a>
                         </li>
                         @endif
+
                         @if($i == '2')
                         <li class="mason-sec">
                             @endif
@@ -616,16 +621,37 @@ if (isset($livedata)) {
     #ser-tab {
         padding: 0;
     }
+    ul.nav.nav-pills {
+        background: transparent !important;
+        display: flex;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
 
     #ser-tab .nav-item {
-        background: transparent;
+        background: #f1f1f1;
         color: #a27107;
-        border-radius: 30px;
+    }
+
+    #ser-tab .nav-item:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    #ser-tab .nav-item:first-child {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
     }
 
     #ser-tab .nav-item.active {
         background: #a27107;
         color: white;
     }
+
 </style>
 @endpush
