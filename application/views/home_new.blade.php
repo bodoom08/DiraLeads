@@ -134,7 +134,7 @@ if (isset($livedata)) {
             @foreach($propertiea_counts as $key=>$value)
             <?php
             if ($count > 7) {
-                break;
+                // break;
             }
             ?>
             <div class="col-lg-3 col-md-3 col-12">
@@ -195,7 +195,7 @@ if (isset($livedata)) {
                         @if($i == '1' || $i == '4')
                         <li><a href="{{ 'properties/lists?area='.$key }}" target="blank">
                                 <div class="gallery-sec">
-                                    <img src="assets/images/gal1.png">
+                                    <img src="assets/images/gal1.webp">
                                     <div class="hovr-content">
                                         <h3>{{$key}}</h3>
                                         <!--  <p>{{$value}} Porperties</p> -->
@@ -214,7 +214,7 @@ if (isset($livedata)) {
 
                             <div class="slide"><a href="{{ 'properties/lists?area='.$key }}" target="blank">
                                     <div class="gallery-sec">
-                                        <img src="assets/images/gal2.png">
+                                        <img src="assets/images/gal2.webp">
                                         <div class="hovr-content">
                                             <h3>{{$key}}</h3>
                                             <!--  <p>{{$value}} Porperties</p> -->
