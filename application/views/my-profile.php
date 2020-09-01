@@ -49,15 +49,15 @@ $this->load->view('common/front_end_layout/top', [
                                                             <input type="text" name="fname" class="form-control" placeholder="Enter First Name" value="<?php echo $userinfo->first_name; ?>" disabled>
                                                         </div>
                                                     </div> -->
-                                                    <div class="col-lg-4 col-md-4">
+                                                    <!-- <div class="col-lg-4 col-md-4">
                                                         <div class="form-group name">
-                                                            <label>Name</label>
+                                                            <label>Second Name</label>
                                                             <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>" disabled>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-4 col-md-4">
+                                                    </div> -->
+                                                    <div class="col-lg-6 col-md-6">
                                                         <div class="form-group name">
-                                                            <label>Display Name</label>
+                                                            <label>Name</label>
                                                             <input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php echo $_SESSION['name']; ?>" disabled>
                                                         </div>
                                                     </div>
@@ -202,15 +202,15 @@ $this->load->view('common/front_end_layout/top', [
                                                                                 <input type="text" name="fname" class="form-control" placeholder="Enter First Name" value="<?php echo $userinfo->first_name; ?>">
                                                                             </div>
                                                                         </div> -->
+                                                                        <!-- <div class="col-lg-6 col-md-6">
+                                                                            <div class="form-group name">
+                                                                                <label>Second Name</label>
+                                                                                <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>">
+                                                                            </div>
+                                                                        </div> -->
                                                                         <div class="col-lg-6 col-md-6">
                                                                             <div class="form-group name">
                                                                                 <label>Name</label>
-                                                                                <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-lg-6 col-md-6">
-                                                                            <div class="form-group name">
-                                                                                <label>Display Name</label>
                                                                                 <input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php echo $_SESSION['name']; ?>">
                                                                             </div>
                                                                         </div>
