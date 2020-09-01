@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/mystyles.css') }}">
     <style>
         /** Muhammad */
         .btn-create-account {
@@ -112,10 +113,10 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="assets/images/slide1.png" class="" alt="...">
+                    <img src="assets/images/slide1.webp" class="" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="assets/images/slide2.png" class="" alt="...">
+                    <img src="assets/images/slide2.webp" class="" alt="...">
                 </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -127,10 +128,10 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="banner-text">
-            <p class="primary-text">The Jewish short-term rental marketplace</p>
-            <p class="secondary-text">Connecting renters with property owners for short-term stays in</p>
-            <p class="secondary-text">heimishe neighborhoods worldwide</p>
+        <div class="banner-text w-100">
+            <p class="primary-text text-center">The Jewish short-term rental marketplace</p>
+            <p class="secondary-text text-center">Connecting renters with property owners for short-term stays in</p>
+            <p class="secondary-text text-center">heimishe neighborhoods worldwide</p>
         </div>
 
         <div class="search-main">
@@ -154,14 +155,14 @@
                                         </select>
                                     </div>
                                 </li>
-                                <li style="width:36%">
+                                <li>
                                     <div class="form-group">
                                         <label for="filter_date">Dates</label>
                                         <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
 
                                     </div>
                                 </li>
-                                <li style="width:15%">
+                                <li>
                                     <div class="form-group">
                                         <label for="bedroom">Bedrooms</label>
                                         <div class="max-min">
@@ -169,7 +170,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li style="width:15%">
+                                <li>
                                     <div class="form-group">
                                         <label for="price_max">Price</label>
                                         <div class="max-min">
