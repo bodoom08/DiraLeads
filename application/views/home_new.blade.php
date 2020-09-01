@@ -159,10 +159,6 @@ if (isset($livedata)) {
 
 -->
 
-
-
-
-
 <div class="place-sec">
     <div class="container-fluid">
         <div class="row">

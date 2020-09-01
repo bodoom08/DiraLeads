@@ -1,0 +1,35 @@
+.search-bar {
+  position: absolute;
+  top: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.search-bar ul {
+  display: flex;
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+}
+
+.search-bar ul li {
+  padding: 0.5rem;
+  border-left: 2px solid #887326;
+  min-width: 200px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-bar ul li:first-child,
+.search-bar ul li:last-child {
+  border: none;
+}
+
+.search-bar ul li i {
+  float: right;
+  color: #887326;
+}

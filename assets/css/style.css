@@ -1404,15 +1404,12 @@ header.sticky-header .offcanvas-navbar a {
 /** Search start **/
 .search-main {
   width: 100%;
-  /* padding: 70px 0 100px 0px; */
   background-size: 100% 100%;
   display: flex;
   justify-content: flex-end;
   z-index: 99;
   position: absolute;
   top: 20rem;
-  /* position: relative; */
-  /* min-height: 520px; */
 }
 .search-main .form-group .bootstrap-select,
 .search-main .form-horizontal .bootstrap-select,

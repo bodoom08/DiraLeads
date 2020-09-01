@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/styles.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/mystyles.css') }}">
     <style>
         /** Muhammad */
         .btn-create-account {
@@ -127,13 +128,26 @@
                 <span class="sr-only">Next</span>
             </a>
         </div>
-        <div class="banner-text">
-            <p class="primary-text">The Jewish short-term rental marketplace</p>
-            <p class="secondary-text">Connecting renters with property owners for short-term stays in</p>
-            <p class="secondary-text">heimishe neighborhoods worldwide</p>
+        <div class="banner-text w-100">
+            <p class="primary-text text-center">The Jewish short-term rental marketplace</p>
+            <p class="secondary-text text-center">Connecting renters with property owners for short-term stays in</p>
+            <p class="secondary-text text-center">heimishe neighborhoods worldwide</p>
         </div>
 
-        <div class="search-main">
+        <div class="search-bar">
+            <ul>
+                <li>
+                    <a href="javascript:;"><img src="{{ site_url('assets/images/search.png') }}" />&nbsp;Select your Area&nbsp;<i class="fa fa-angle-down"></i></a>
+                </li>
+                <li><a href="javascript:;">24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </a></li>
+                <li><a href="javascript:;">24 August 2020&nbsp;<i class="fa fa-angle-down"></i> </a></li>
+                <li><a href="javascript:;">Bedrooms&nbsp;<i class="fa fa-angle-down"></i></a> </li>
+                <li><a href="javascrpt:;">Price&nbsp;<i class="fa fa-angle-down"></i></a> </li>
+                <li class="justify-content-end"><button class="btn btn-primary">Locate My Dream Rental</button></li>
+            </ul>
+        </div>
+
+        <div class="search-main" style="display: none;">
             <div class="tabbing-sec">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">

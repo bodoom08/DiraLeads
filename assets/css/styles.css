@@ -215,6 +215,7 @@ ul li {
 }
 .banner-main .carousel-indicators {
   bottom: 10px;
+  display: none;
 }
 .service-sec .tabbing-sec {
   /* box-shadow: none;
@@ -3287,7 +3288,7 @@ td.fc-more-cell {
 /*Ben*/
 .banner-main .banner-text {
   position: absolute;
-  top: 0;
+  top: 5%;
   padding: 40px;
 
   /* display: flex;
