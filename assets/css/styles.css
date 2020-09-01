@@ -3341,6 +3341,7 @@ td.fc-more-cell {
 
 .service-box ul li a {
   height: 100%;
+  width: 100%;
 }
 
 /*========My Css=======*/
@@ -3955,8 +3956,27 @@ img {
 */
 /*
 @media only screen and (max-width: 600px) {
-  */
-@media only screen and (max-width: 600px) {
+*/
+@media only screen and (max-width: 399px) {
+  .banner-main .banner-text {
+    padding: 10px;
+  }
+  .banner-main .banner-text p {
+    margin-bottom: 5px !important;
+  }
+  .banner-main .banner-text .primary-text {
+    font-size: 13px !important;
+  }
+  .banner-main .banner-text .secondary-text {
+    font-size: 9px !important;
+  }
+  ol.carousel-indicators {
+    bottom: 0 !important;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 600px) and (min-width: 400px) {
   .banner-main .carousel-indicators {
     margin-bottom: 0;
   }
@@ -3973,7 +3993,7 @@ img {
     font-size: 13px !important;
   }
 }
-@media only screen and (max-width: 768px) and (min-width: 601px) {
+@media only screen and (max-width: 768px) and (min-width: 600px) {
   .banner-main .carousel-indicators {
     margin-bottom: 0;
   }
@@ -4046,8 +4066,8 @@ img {
     margin-top: 1rem;
     padding: 0;
   }
-  .service-sec ul.nav-pills {
-    width: 60%;
+  .service-box > ul {
+    flex-direction: column !important;
   }
   .service-box ul li {
     width: unset !important;
@@ -4059,14 +4079,15 @@ img {
   .contact-sec button#send-message {
     width: 100%;
   }
-  .customer-logos.slider.slick-initialized.slick-slider {
+  .place-sec {
     display: none;
   }
 
   .place-sec ul li.mason-sec {
     width: 100%;
   }
-  .place-sec ul li.mason-sec img {
-    /* height: 233px; */
+
+  .service-box ul li a {
+    padding: 10px;
   }
 }
