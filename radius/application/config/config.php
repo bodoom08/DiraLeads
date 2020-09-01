@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://diraleads.tk/radius/';
+$config['base_url'] = 'https://diraleads.com/radius/';
 
 /*
 |--------------------------------------------------------------------------
@@ -456,7 +456,7 @@ $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array(
     'radius/.+',
     'api/.+',
-    'subscription/manage_subscribed_package_custom', 
+    'subscription/manage_subscribed_package_custom',
     'subscription/manage_package_area_info',
     'pricing/pay_package',
     'properties/viewDetails'
