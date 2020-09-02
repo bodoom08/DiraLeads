@@ -188,7 +188,9 @@ class M_users extends CI_Model
         array_walk_recursive($_POST, 'trim');
         extract($this->input->post());
 
-        if ($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
+        $email = isset($email) ? $email : '';
+
+        if ($email && $this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
             return ['type' => 'warning', 'text' => 'Email or mobile no already exist!'];
         }
 
