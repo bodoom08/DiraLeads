@@ -20,7 +20,7 @@ class M_users extends CI_Model
             if (empty($attribute_id) || empty($value)) {
                 return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
             }
-            
+
             $property_data = [
                 'user_id' => $_SESSION['id'],
                 'for' => $property,
@@ -96,8 +96,8 @@ class M_users extends CI_Model
                                 ]);
 
                                 $this->load->helper('did');
-                        
-                                allocate_did($property_id, $this->db->insert_id(), 'Agent Resolve', 'DID allocation resolved by agent '. $_SESSION['name']);
+
+                                allocate_did($property_id, $this->db->insert_id(), 'Agent Resolve', 'DID allocation resolved by agent ' . $_SESSION['name']);
                             } else {
                                 return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
                             }
@@ -135,7 +135,7 @@ class M_users extends CI_Model
         $this->db->join('virtual_numbers b', 'b.id = a.vn_id', 'left');
         $this->db->join('users c', 'c.id = a.user_id');
         $this->db->where('c.email', $email);
-        
+
         $properties = $this->db->get()->result_array();
 
         return $properties;
@@ -158,7 +158,7 @@ class M_users extends CI_Model
         $this->db->join('properties c', 'c.user_id = a.id', 'left');
         $this->db->group_by('a.id');
 
-        $query['recordsTotal'] = $this->db->query('SELECT count(*) as total FROM ('. $this->db->get_compiled_select() .') as tbl')->row()->total;
+        $query['recordsTotal'] = $this->db->query('SELECT count(*) as total FROM (' . $this->db->get_compiled_select() . ') as tbl')->row()->total;
 
         if ($search['value']) {
             $this->db->group_start();
@@ -177,7 +177,7 @@ class M_users extends CI_Model
         }
         $query['data'] = $this->db->get()->result_array();
         $query['draw'] = $draw;
-        $query['recordsFiltered'] = $this->db->query('SELECT count(*) as total FROM ('. $this->db->get_compiled_select() .') as tbl')->row()->total;
+        $query['recordsFiltered'] = $this->db->query('SELECT count(*) as total FROM (' . $this->db->get_compiled_select() . ') as tbl')->row()->total;
         $this->db->flush_cache();
         unset($query['select']);
         return $query;
@@ -188,10 +188,10 @@ class M_users extends CI_Model
         array_walk_recursive($_POST, 'trim');
         extract($this->input->post());
 
-        if($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
+        if ($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
             return ['type' => 'warning', 'text' => 'Email or mobile no already exist!'];
         }
-        
+
         if ($name && $email && $mobile) {
             $token = bin2hex(random_bytes(16));
 
@@ -216,50 +216,51 @@ class M_users extends CI_Model
                     true
                 )
             );
-            
+
             return ['type' => 'success', 'text' => 'Email sent for verification!'];
         }
         return ['type' => 'error', 'text' => 'Please Filled Out all mandatory fields!'];
     }
-    
-    
+
+
     public function save_user()
     {
         array_walk_recursive($_POST, 'trim');
         extract($this->input->post());
-        
-        if($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('users') > 0) {
+
+        $email = isset($email) ? $email : '';
+
+        if ($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('users') > 0) {
             return ['type' => 'warning', 'text' => 'Email or mobile no already exist!'];
         }
-        if(empty($email) || empty($mobile) || empty($name) || empty($country)) {
+        if (empty($mobile) || empty($name) || empty($country)) {
             return ['type' => 'warning', 'text' => 'All fields are mandatory.'];
         }
-        if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return ['type' => 'warning', 'text' => 'Invalid Email ID!'];
-        }
-        if(!preg_match('/^[0-9]+$/', $mobile)) {
+        // if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        //     return ['type' => 'warning', 'text' => 'Invalid Email ID!'];
+        // }
+        if (!preg_match('/^[0-9]+$/', $mobile)) {
             return ['type' => 'warning', 'text' => 'Invalid Mobile Number!'];
-        }
-        else if(strlen($mobile) < 10) {
+        } else if (strlen($mobile) < 10) {
             return ['type' => 'warning', 'text' => 'Mobile number should be 10 digits minimum!'];
         }
-        
-        if ($name && $email && $mobile && $country) {
+
+        if ($name && $mobile && $country) {
             $token = bin2hex(random_bytes(16));
-            
+
             $this->db->insert('users', [
-                              'name' => $name,
-                              'email' => $email,
-                              'country_code' => $country,
-                              'mobile' => $mobile,
-                              'created_by' => $_SESSION['id'],
-                              'token' => $token
-                              ]);
-            
+                'name' => $name,
+                'email' => $email,
+                'country_code' => $country,
+                'mobile' => $mobile,
+                'created_by' => $_SESSION['id'],
+                'token' => $token
+            ]);
+
             $token = urlencode(base64_encode('users:' . $token));
-            
+
             $this->load->helper('email');
-            
+
             // send_email(
             //            $email,
             //            'Diraleads User Verification',
@@ -270,7 +271,7 @@ class M_users extends CI_Model
             //                              )
             //            );
             user_reg_email($email, 'Diraleads User Verification', 'https://diraleads.tk/verify/email/' . $token);
-            
+
             return ['type' => 'success', 'text' => 'Email sent for verification!'];
         }
         return ['type' => 'error', 'text' => 'Please Filled Out all mandatory fields!'];
@@ -308,14 +309,16 @@ class M_users extends CI_Model
     {
         array_walk_recursive($_POST, 'trim');
         extract($this->input->post());
-        if ($id && $name && $email && $mobile && $country_ed) {
-            if(($_SESSION['user_type'] == 'admin') || ($_SESSION['user_type'] == 'agent')) {
+
+        $email = isset($email) ? $email : '';
+        if ($id && $name && $mobile && $country_ed) {
+            if (($_SESSION['user_type'] == 'admin') || ($_SESSION['user_type'] == 'agent')) {
                 // Check the duplicate entry for the email
                 $unique_email = $this->db
-                                    ->where('email', $email)
-                                    ->where('id !=', $id)
-                                    ->count_all_results('users');
-                if($unique_email > 0) {
+                    ->where('email', $email)
+                    ->where('id !=', $id)
+                    ->count_all_results('users');
+                if ($unique_email > 0) {
                     return ['type' => 'error', 'text' => 'Email id already taken'];
                 }
                 $this->db->where('id', $id)->update('users', [
@@ -325,8 +328,7 @@ class M_users extends CI_Model
                     'country_code' => $country_ed,
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
-            }
-            else {
+            } else {
                 $this->db->where('id', $id)->update('users', [
                     'name' => $name,
                     // 'email' => $email,
@@ -334,45 +336,46 @@ class M_users extends CI_Model
                     'updated_at' => date('Y-m-d H:i:s')
                 ]);
             }
-            
+
             return ['type' => 'success', 'text' => 'User info successfully updated!'];
         }
         return ['type' => 'error', 'text' => 'Please Filled Out all mandatory field!'];
     }
 
-    public function verifyUser() {
+    public function verifyUser()
+    {
         extract($_POST);
-        if($userid && $password && $cnf_password) {
-            if($password !== $cnf_password) {
+        if ($userid && $password && $cnf_password) {
+            if ($password !== $cnf_password) {
                 die(json_encode(['type' => 'error', 'text' => 'Password Mismatched!']));
             }
             $this->db->set('password', sha1($password));
             $this->db->where('id', $userid);
             $this->db->update('users');
             die(json_encode(['type' => 'success', 'text' => 'User Verified!']));
-        }
-        else {
+        } else {
             die(json_encode(['type' => 'error', 'text' => 'All fileds are mandatory!']));
         }
     }
 
-    public function resendVerifyEmail() {
+    public function resendVerifyEmail()
+    {
         extract($_POST);
         $token = bin2hex(random_bytes(16));
-        
+
         $this->db->where('id', $users_id);
         $this->db->update('users', [
-                            'token' => $token
-                        ]);
-        
+            'token' => $token
+        ]);
+
         // Get the user details
         $user_info = $this->db
-                            ->where('id', $users_id)
-                            ->get('users')
-                            ->row();
-        $token = urlencode(base64_encode('users:' . $token));        
+            ->where('id', $users_id)
+            ->get('users')
+            ->row();
+        $token = urlencode(base64_encode('users:' . $token));
         $this->load->helper('email');
-        
+
         // send_email(
         //            $email,
         //            'Diraleads User Verification',
@@ -383,9 +386,8 @@ class M_users extends CI_Model
         //                              )
         //            );
         user_reg_email($user_info->email, 'Diraleads User Verification', 'https://diraleads.tk/verify/email/' . $token);
-        
+
         return ['type' => 'success', 'text' => 'Email sent for verification!'];
-        
     }
 
     // public function del()

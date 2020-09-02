@@ -31,28 +31,28 @@ $this->load->view('common/top', [
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="users-table" class="table small table-striped dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3" class="text-center">Property Stats</th>
-                                        <th colspan="4" class="text-center">Personal Information</th>
-                                        <th rowspan="2" class="text-center">Actions</th>
-                                    </tr>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>Packages</th>
-                                        <th>Calls</th>
-                                        <th>Posts</th>
+                                <table id="users-table" class="table small table-striped dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="text-center">Property Stats</th>
+                                            <th colspan="4" class="text-center">Personal Information</th>
+                                            <th rowspan="2" class="text-center">Actions</th>
+                                        </tr>
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>Packages</th>
+                                            <th>Calls</th>
+                                            <th>Posts</th>
 
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -76,18 +76,18 @@ $this->load->view('common/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required/>
+                    <input type="text" class="form-control" id="name" name="name" required />
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required/>
+                    <input type="email" class="form-control" id="email" name="email" />
                 </div>
                 <div class="form-group">
                     <label for="country" class="col-form-label">Country Code</label>
                     <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;">
                         <option value="">Select Country Code</option>
-                        <?php foreach($countries as $country) { ?>
-                            <option value="<?php echo '+'.$country->phonecode; ?>"><?php echo $country->nicename.'(+'.$country->phonecode.')'; ?></option>
+                        <?php foreach ($countries as $country) { ?>
+                            <option value="<?php echo '+' . $country->phonecode; ?>"><?php echo $country->nicename . '(+' . $country->phonecode . ')'; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -118,18 +118,18 @@ $this->load->view('common/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required/>
+                    <input type="text" class="form-control" id="name" name="name" required />
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required/>
+                    <input type="email" class="form-control" id="email" name="email" />
                 </div>
                 <div class="form-group">
                     <label for="country" class="col-form-label">Country Code</label>
                     <select name="country_ed" class="form-control input-select" id="country_ed" style="width: 100% !important;height:45px !important;">
                         <option value="">Select Country Code</option>
-                        <?php foreach($countries as $country) { ?>
-                            <option value="<?php echo '+'.$country->phonecode; ?>"><?php echo $country->nicename.'(+'.$country->phonecode.')'; ?></option>
+                        <?php foreach ($countries as $country) { ?>
+                            <option value="<?php echo '+' . $country->phonecode; ?>"><?php echo $country->nicename . '(+' . $country->phonecode . ')'; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -161,11 +161,11 @@ $this->load->view('common/top', [
                 <div class="form-group">
                     <input type="hidden" name="userid">
                     <label for="name" class="col-form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password" required/>
+                    <input type="password" class="form-control" id="password" name="password" required />
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-form-label">Confirm Password</label>
-                    <input type="password" class="form-control" id="cnf_password" name="cnf_password" required/>
+                    <input type="password" class="form-control" id="cnf_password" name="cnf_password" required />
                 </div>
             </div>
             <div class="modal-footer">
@@ -290,6 +290,7 @@ $this->load->view('common/top', [
     }
 
     var userid = '';
+
     function verifyUser(id) {
         userid = id;
         $('input[name="userid"]').val(id);
