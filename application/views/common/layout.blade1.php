@@ -187,7 +187,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 col-md-12">
-                    <p class="copy">© Copyright 2019. All rights reserved <a href="/">{{ CFG_TITLE }}</a></p>
+                    <p class="copy">© Copyright 2020. All rights reserved <a href="/">{{ CFG_TITLE }}</a></p>
                 </div>
             </div>
         </div>

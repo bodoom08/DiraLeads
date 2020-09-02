@@ -1,5 +1,5 @@
 <?php
-$CI =& get_instance();
+$CI = &get_instance();
 ?>
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
@@ -19,14 +19,14 @@ $this->load->view('common/top', [
             </div>
             <?php
             $attrs = [
-                'name'=> 'modify_package_form',
+                'name' => 'modify_package_form',
                 'method' => 'POST'
             ];
             echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
             ?>
-                <input type="hidden" name="package_table_id">
-                <input type="hidden" name="action">
-                
+            <input type="hidden" name="package_table_id">
+            <input type="hidden" name="action">
+
             </form>
             <form action="<?php echo site_url('subscription/manage_package_area_info'); ?>" name="modify_package_area_info_form" method="POST">
                 <input type="hidden" name="package_table_id">
@@ -37,28 +37,28 @@ $this->load->view('common/top', [
                     <div class="dashboard-content">
                         <div class="dashboard-list">
                             <div class="row">
-                             <div class="col-md-12">
-                                <div class="pull-left">
-                                    <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
+                                <div class="col-md-12">
+                                    <div class="pull-left">
+                                        <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
+                                    </div>
+                                    <div class="pull-right mt-3 mb-3">
+                                        <span class="btn btn-primary" onclick='window.location.href="/radius/pricing/custom_pricing"'><i class="fa fa-box"></i>+ Subscribed package</span>
+                                        <span class="btn btn-primary" onclick="table_refresh();"><i class="fa fa-refresh"></i> Refresh</span>
+                                    </div>
                                 </div>
-                                <div class="pull-right mt-3 mb-3">
-                                    <span class="btn btn-primary" onclick='window.location.href="/radius/pricing/custom_pricing"'><i class="fa fa-box"></i>+ Subscribed package</span>
-                                    <span class="btn btn-primary" onclick="table_refresh();"><i class="fa fa-refresh"></i> Refresh</span>
-                                </div>
-                             </div>
-                             <div class="col-md-4">
-                             <div class="pull-right">
-                                    <!-- <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#addModal">+ Add Preference</button> -->
-                                </div>
+                                <div class="col-md-4">
+                                    <div class="pull-right">
+                                        <!-- <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#addModal">+ Add Preference</button> -->
+                                    </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <hr/>
+                            <hr />
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
                                     <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
                                         <thead>
-                                            <tr>                                                
+                                            <tr>
                                                 <th>Package Name</th>
                                                 <th>User Info</th>
                                                 <th>Validity (days)</th>
@@ -76,7 +76,7 @@ $this->load->view('common/top', [
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@ $this->load->view('common/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title"/>
+                    <input type="text" class="form-control" id="title" name="title" />
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -249,9 +249,10 @@ $this->load->view('common/top', [
         // $('input[name="action"]').val('modify');
         // $('form[name="modify_package_form"]').submit();
     }
+
     function renew($id, $user_id) {
-        
-        
+
+
         var form = document.createElement("form");
         form.setAttribute("method", "post");
         form.setAttribute("action", "<?php echo site_url('pricing/manage_subscribed_package_custom'); ?>");

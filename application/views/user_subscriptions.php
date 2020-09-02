@@ -16,14 +16,14 @@ $this->load->view('common/front_end_layout/top', [
             </div>
             <?php
             $attrs = [
-                'name'=> 'modify_package_form',
+                'name' => 'modify_package_form',
                 'method' => 'POST'
             ];
             echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
             ?>
-                <input type="hidden" name="package_table_id">
-                <input type="hidden" name="action">
-                
+            <input type="hidden" name="package_table_id">
+            <input type="hidden" name="action">
+
             </form>
             <form action="<?php echo site_url('subscription/manage_package_area_info'); ?>" name="modify_package_area_info_form" method="POST">
                 <input type="hidden" name="package_table_id">
@@ -34,16 +34,16 @@ $this->load->view('common/front_end_layout/top', [
                     <div class="dashboard-content">
                         <div class="dashboard-list">
                             <div class="row">
-                             <div class="col-md-12 subs-sec">
-                             <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
-								<a href="<?php echo site_url('/pricing/pricing_pref');?>">Subscribe</a>
-                             </div>
+                                <div class="col-md-12 subs-sec">
+                                    <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
+                                    <a href="<?php echo site_url('/pricing/pricing_pref'); ?>">Subscribe</a>
+                                </div>
                             </div>
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
                                     <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
                                         <thead>
-                                            <tr>                                                
+                                            <tr>
                                                 <th>Name</th>
                                                 <th>Validity (days)</th>
                                                 <th>No Of Area</th>
@@ -60,7 +60,7 @@ $this->load->view('common/front_end_layout/top', [
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -80,7 +80,7 @@ $this->load->view('common/front_end_layout/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title"/>
+                    <input type="text" class="form-control" id="title" name="title" />
                 </div>
                 <div class="form-group">
                     <div class="row">
@@ -180,6 +180,7 @@ $this->load->view('common/front_end_layout/top', [
         $('input[name="action"]').val('modify');
         $('form[name="modify_package_form"]').submit();
     }
+
     function renew($id) {
         $('input[name="package_table_id"]').val($id);
         $('input[name="action"]').val('renew');

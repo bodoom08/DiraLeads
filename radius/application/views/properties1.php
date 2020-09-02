@@ -20,12 +20,12 @@ $this->load->view('common/top', [
                                 <div class="col-md-12">
                                     <div class="pull-left">
                                         <h5><?php
-                                            if(constant('IS_AGENT')) {
+                                            if (constant('IS_AGENT')) {
                                                 echo 'Properties (Pending listing)';
                                             } else {
                                                 echo 'Records';
                                             }
-                                        ?></h5>
+                                            ?></h5>
                                     </div>
                                     <div class="pull-right mb-3">
                                         <span class="btn btn-primary" onclick="table_refresh();"><i class="fa fa-refresh"></i> Refresh</span>
@@ -33,26 +33,26 @@ $this->load->view('common/top', [
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="property-table" class="table table-btn table-sm small table-striped nowrap dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Owner</th>
-                                        <th>For</th>
-                                        <th>Property Type</th>
-                                        <th>Area</th>
-                                        <th>Price</th>
-                                        <th>Available Date</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                <table id="property-table" class="table table-btn table-sm small table-striped nowrap dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Owner</th>
+                                            <th>For</th>
+                                            <th>Property Type</th>
+                                            <th>Area</th>
+                                            <th>Price</th>
+                                            <th>Available Date</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>

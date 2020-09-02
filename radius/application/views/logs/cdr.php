@@ -26,23 +26,23 @@ $this->load->view('common/top', [
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="cdr" class="table small table-striped table-compact dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Date</th>
-                                        <th>Source</th>
-                                        <th>Destination</th>
-                                        <th>Duration</th>
-                                        <th>Disposition</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                <table id="cdr" class="table small table-striped table-compact dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Source</th>
+                                            <th>Destination</th>
+                                            <th>Duration</th>
+                                            <th>Disposition</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>

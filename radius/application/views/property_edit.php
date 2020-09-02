@@ -18,9 +18,9 @@ $this->load->view('common/top', [
             <div class="col-lg-10 col-md-12 col-sm-12 col-pad">
                 <div class="content-area5">
                     <div class="dashboard-content">
-                    <div class="dashboard-list">
+                        <div class="dashboard-list">
                             <?php extract($property); ?>
-                            <h3 class="heading">Property Details - <span style="font-size: 13px;"><?php echo 'ID: '.$property_details['id'].', '. $property_user_details['name'].', Email: '.$property_user_details['email']; ?></span></h3>
+                            <h3 class="heading">Property Details - <span style="font-size: 13px;"><?php echo 'ID: ' . $property_details['id'] . ', ' . $property_user_details['name'] . ', Email: ' . $property_user_details['email']; ?></span></h3>
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="row">
                                     <div class="col-lg-12 col-md-12">
@@ -86,14 +86,15 @@ $this->load->view('common/top', [
                                                             <div class="col-md-6 d-none" id="multi-date">
                                                                 <div class="form-group">
                                                                     <code><small>
-                                                                       <b>Available For</b>
-                                                                       </small></code>
+                                                                            <b>Available For</b>
+                                                                        </small></code>
                                                                     <span id="multi-date-select" />
                                                                 </div>
                                                             </div>
                                                             <!-- <div class="col-md-4">
                                                                 <div class="form-group">
-                                                                    <input type="text" placeholder="Date Available" class="form-control datepicker" name="available_date" id="available_date" value="<?php //echo $property_details['available_date'] ?>" required>
+                                                                    <input type="text" placeholder="Date Available" class="form-control datepicker" name="available_date" id="available_date" value="<?php //echo $property_details['available_date'] 
+                                                                                                                                                                                                        ?>" required>
                                                                     <code><small>
                                                                             <a id="available" href="javascript:(0);" onclick="available_status_change(this);"> Available Now</a>
                                                                         </small></code>
@@ -166,17 +167,17 @@ $this->load->view('common/top', [
                                                     <div class="col-md-12">
                                                         <h4 class="inner-title mb-3 " style="padding-left: 0px;">How People can Contact me ?</h4>
                                                         <?php
-                                                            $contact_type_arr = explode(',', $property_details['contact_type']);
-                                                            $day_of_the_weak_arr = explode(',', $property_details['day_of_the_weak']);
+                                                        $contact_type_arr = explode(',', $property_details['contact_type']);
+                                                        $day_of_the_weak_arr = explode(',', $property_details['day_of_the_weak']);
                                                         ?>
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="phone" name="phone" value="on" <?php echo in_array('phone', $contact_type_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="phone" name="phone" value="on" <?php echo in_array('phone', $contact_type_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="phone">Phone</label>
                                                         </div>
 
                                                         <!-- Default inline 2-->
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="email" name="email" value="on" <?php echo in_array('email', $contact_type_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="email" name="email" value="on" <?php echo in_array('email', $contact_type_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="email">Email</label>
                                                         </div>
                                                     </div>
@@ -185,37 +186,37 @@ $this->load->view('common/top', [
                                                     <div class="col-md-12">
                                                         <h4 class="inner-title mb-3 " style="padding-left: 0px;">Day of Week</h4>
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="sunday" name="sunday" value="on" <?php echo in_array('sunday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="sunday" name="sunday" value="on" <?php echo in_array('sunday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="sunday">Sunday</label>
                                                         </div>
 
                                                         <!-- Default inline 2-->
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="monday" name="monday" value="on" <?php echo in_array('monday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="monday" name="monday" value="on" <?php echo in_array('monday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="monday">Monday</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="tuesday" name="tuesday" value="on" <?php echo in_array('tuesday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="tuesday" name="tuesday" value="on" <?php echo in_array('tuesday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="tuesday">Tuesday</label>
                                                         </div>
 
                                                         <!-- Default inline 2-->
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="wednesday" name="wednesday" value="on" <?php echo in_array('wednesday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="wednesday" name="wednesday" value="on" <?php echo in_array('wednesday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="wednesday">Wednesday</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="thursday" name="thursday" value="on" <?php echo in_array('thursday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="thursday" name="thursday" value="on" <?php echo in_array('thursday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="thursday">Thursday</label>
                                                         </div>
 
                                                         <!-- Default inline 2-->
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="friday" name="friday" value="on" <?php echo in_array('friday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="friday" name="friday" value="on" <?php echo in_array('friday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="friday">Friday</label>
                                                         </div>
                                                         <div class="custom-control custom-checkbox custom-control-inline">
-                                                            <input type="checkbox" class="custom-control-input" id="saturday" name="saturday" value="on" <?php echo in_array('saturday', $day_of_the_weak_arr) ? 'checked' : '';?>>
+                                                            <input type="checkbox" class="custom-control-input" id="saturday" name="saturday" value="on" <?php echo in_array('saturday', $day_of_the_weak_arr) ? 'checked' : ''; ?>>
                                                             <label class="custom-control-label" for="saturday">Saturday</label>
                                                         </div>
                                                     </div>
@@ -228,7 +229,7 @@ $this->load->view('common/top', [
                                                                 <select name="time" class="form-control custom-select" required onchange="customTimeSet(this);">
                                                                     <option value="">Select Time</option>
                                                                     <option value="24" <?php echo ($property_details['time_of_day'] == '24') ? 'selected' : ''; ?>>24 Hrs</option>
-                                                                    <option value="custom" <?php echo ($property_details['time_of_day'] == 'custom') ? 'selected' : ''; ?> >Custom Time</option>
+                                                                    <option value="custom" <?php echo ($property_details['time_of_day'] == 'custom') ? 'selected' : ''; ?>>Custom Time</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -236,7 +237,7 @@ $this->load->view('common/top', [
                                                             <div class="form-group" id="custom_div" style="display: none;">
                                                                 <div class="row">
                                                                     <div class="col-md-6">
-                                                                        <input type="time" class="form-control" placeholder="Start Time" name="start_time" value="<?php echo (!empty($property_details['from_time'])) ? date("H:i", strtotime($property_details['from_time'])) : ''; ?>">                                                                        
+                                                                        <input type="time" class="form-control" placeholder="Start Time" name="start_time" value="<?php echo (!empty($property_details['from_time'])) ? date("H:i", strtotime($property_details['from_time'])) : ''; ?>">
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <input type="time" class="form-control" placeholder="End Time" name="end_time" value="<?php echo (!empty($property_details['to_time'])) ? date("H:i", strtotime($property_details['to_time'])) : ''; ?>">
@@ -260,7 +261,7 @@ $this->load->view('common/top', [
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -276,8 +277,8 @@ $this->load->view('common/top', [
 <script>
     $('#updateForm').ajaxForm({
         data: {
-            'short_term_available_date' : function() {
-                return $('#multi-date-select').multiDatesPicker('value');    
+            'short_term_available_date': function() {
+                return $('#multi-date-select').multiDatesPicker('value');
             }
         },
         dataType: 'json',
@@ -370,25 +371,24 @@ $this->load->view('common/top', [
 
         $('input[name="property"]').on('change', function() {
             property_val = $(this).val();
-            if(property_val == 'short term rent') {
+            if (property_val == 'short term rent') {
                 $('#multi-date').removeClass('d-none');
-            }
-            else {
+            } else {
                 $('#multi-date').addClass('d-none');
             }
         });
         $('input[name="property"]').each(function(i, item) {
-            if($(item).prop('checked') == true) {
+            if ($(item).prop('checked') == true) {
                 $(this).trigger('change');
-            }            
-        }); 
+            }
+        });
 
         $datearr = '<?php echo $property['property_details']['short_term_available_date']; ?>';
         $datearr = $datearr.split(',');
         $datearr.map(function(v, i) {
             $datearr[i] = $.trim(v);
         });
-        if($datearr.length > 1) {
+        if ($datearr.length > 1) {
             $datelist = $datearr.slice(1, $datearr.length);
             $('#multi-date-select').multiDatesPicker('value', $datelist.join(', '));
         }
@@ -404,7 +404,7 @@ $this->load->view('common/top', [
 <script>
     function preview_image() {
         var total_file = document.getElementById("upload_file").files.length;
-        for (var i = 0; i < total_file; i++) {            
+        for (var i = 0; i < total_file; i++) {
             $('#image_preview').append("<div class='thumbnails_box mb_30 col-lg-2 col-md-4 col-6'><img src='" + URL.createObjectURL(event.target.files[i]) + "' width='100%' alt='' title='" + event.target.files[i].name + "'><i class='fa fa-window-close remove' onclick='removethis(this);'></i></div>");
         }
     }
@@ -438,8 +438,8 @@ $this->load->view('common/top', [
 </script>
 
 <script>
-    function customTimeSet(elem){
-        if($(elem).val() == 'custom'){
+    function customTimeSet(elem) {
+        if ($(elem).val() == 'custom') {
             $('#custom_div').show();
         } else {
             $('#custom_div').hide();

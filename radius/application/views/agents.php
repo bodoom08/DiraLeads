@@ -30,31 +30,31 @@ $this->load->view('common/top', [
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="agents-table" class="table small table-striped dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th colspan="3" class="text-center">Property Stats</th>
-                                        <th colspan="4" class="text-center">Personal Information</th>
-                                        <th rowspan="2" class="text-center">Actions</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Approval</th>
-                                        <th>Entries</th>
-                                        <th>DID Resolved</th>
+                                <table id="agents-table" class="table small table-striped dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="text-center">Property Stats</th>
+                                            <th colspan="4" class="text-center">Personal Information</th>
+                                            <th rowspan="2" class="text-center">Actions</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Approval</th>
+                                            <th>Entries</th>
+                                            <th>DID Resolved</th>
 
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Mobile</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Mobile</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -74,11 +74,11 @@ $this->load->view('common/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required/>
+                    <input type="text" class="form-control" id="name" name="name" required />
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required/>
+                    <input type="email" class="form-control" id="email" name="email" required />
                 </div>
                 <div class="form-group">
                     <label for="mobile" class="col-form-label">Mobile</label>
@@ -107,11 +107,11 @@ $this->load->view('common/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Name</label>
-                    <input type="text" class="form-control" id="name" name="name" required/>
+                    <input type="text" class="form-control" id="name" name="name" required />
                 </div>
                 <div class="form-group">
                     <label for="email" class="col-form-label">Email</label>
-                    <input type="email" class="form-control" id="email" name="email" required/>
+                    <input type="email" class="form-control" id="email" name="email" required />
                 </div>
                 <div class="form-group">
                     <label for="mobile" class="col-form-label">Mobile</label>
