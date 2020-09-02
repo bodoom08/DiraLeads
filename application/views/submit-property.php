@@ -1646,8 +1646,8 @@ $this->load->view('common/front_end_layout/top', [
                                             <ul class="pl-2" id="propertySpec">
                                                 <li>Type: &nbsp;<label></label></li>
                                                 <li>Address: &nbsp;<label></label></li>
-                                                <li>NeighborHood: &nbsp;<label></label></li>
-                                                <li>NeighborHood Other: &nbsp;<label></label></li>
+                                                <li>Neighborhood: &nbsp;<label></label></li>
+                                                <li>Neighborhood Other: &nbsp;<label></label></li>
                                                 <li>Bedrooms: &nbsp;<label></label></li>
                                                 <li>Bathrooms: &nbsp;<label></label></li>
                                                 <li>Floor Number: &nbsp;<label></label></li>
