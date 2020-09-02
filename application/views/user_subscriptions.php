@@ -36,7 +36,6 @@ $this->load->view('common/front_end_layout/top', [
                             <div class="row">
                                 <div class="col-md-12 subs-sec">
                                     <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
-                                    <a href="<?php echo site_url('/pricing/pricing_pref'); ?>">Subscribe</a>
                                 </div>
                             </div>
                             <div class="dashboard-message contact-2 bdr clearfix">

@@ -41,8 +41,8 @@
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/renters">THE RENTER'S VIEW</a>
-                            <a class="dropdown-item" href="/owners">THE OWNER'S PERCH</a>
+                            <a class="dropdown-item" href="/renters">The Renter's View</a>
+                            <a class="dropdown-item" href="/owners">The Owner's Perch</a>
                         </div>
                     </li>
                     <!-- <li class="nav-item">
