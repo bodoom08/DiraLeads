@@ -8,13 +8,13 @@
 	<link rel="icon" href="{{ site_url('assets/favicon.svg')}}" sizes="any" type="image/svg+xml">
     <link rel="icon" href="{{ site_url('assets/favicon.png')}}" type="image/png"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/vendor/bootstrap/css/bootstrap.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/vendor/animate/animate.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/animate/animate.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/vendor/select2/select2.min.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/select2/select2.min.css')}}">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/main.css')}}">
@@ -94,17 +94,17 @@
 		$('.seconds').val(date.getSeconds());
 	</script>
 <!--===============================================================================================-->	
-	<script src="{{ site_url('assets/maintenance/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/vendor/bootstrap/js/popper.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/popper.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/vendor/select2/select2.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/select2/select2.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/vendor/countdowntime/moment.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/vendor/countdowntime/moment-timezone.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/vendor/countdowntime/moment-timezone-with-data.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/vendor/countdowntime/countdowntime.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone-with-data.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/countdowntime.js')}}"></script>
 	<script>
 		$('.cd100').countdown100({
 			endtimeYear: 2020,
@@ -117,7 +117,7 @@
 		});
 	</script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/vendor/tilt/tilt.jquery.min.js')}}"></script>
+	<script src="{{ site_url('assets/maintenance/plugins/tilt/tilt.jquery.min.js')}}"></script>
 	<script >
 		$('.js-tilt').tilt({
 			scale: 1.1
