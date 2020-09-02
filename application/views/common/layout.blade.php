@@ -126,10 +126,10 @@
         </div>
 
         <div class="search-main">
-            <div class="tabbing-sec">
+            <div class="tabbing-sec p-0 border-0">
                 <div class="tab-content" id="pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="search-box">
+                        <div class="search-box" style="padding: 5px 20px;">
                             <ul>
                                 <li>
                                     <div class="form-group">
@@ -169,7 +169,7 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
+                                <li class="d-flex justify-content-center align-items-center p-0">
                                     <a class="areaFilter" href="javascript:search();">LOCATE MY DREAM RENTAL</a>
                                 </li>
                             </ul>
