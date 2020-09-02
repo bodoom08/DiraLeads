@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>The Renters View</h1>
+					<h1>The Renter's View</h1>
 				</div>
 			</div>
 		</div>
@@ -90,7 +90,7 @@
 					<h2>Enter DiraLeads</h2>
 					<p>The only FREE hospitality and short-term marketplace that services exclusively Jewish neighborhoods. We connect heimishe short-term renters with heimishe property owners across the globe.</p>
 					<p>With a filtering option that lets you choose the details both big and small - from neighborhoods to number of beds, from price range to dates of availability - your short-term getaway planning is now hassle-free.</p>
-					<p>In less time than it takes to find the smallest suitcase with the biggest capacity, you can browse the neighborhoods we service,, input your required dates, and tour the always-current listings of available rentals.</p>
+					<p>In less time than it takes to find the smallest suitcase with the biggest capacity, you can browse the neighborhoods we service, input your required dates, and tour the always-current listings of available rentals.</p>
 					<h6>Enjoy your planning as much as your stay!</h6>
 				</div>
 			</div>

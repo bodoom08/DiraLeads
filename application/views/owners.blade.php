@@ -9,7 +9,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
-					<h1>The Owners Perch</h1>
+					<h1>The Owner's Perch</h1>
 				</div>
 			</div>
 		</div>
@@ -29,7 +29,7 @@
 				<div class="bannerbottom-content">
 					<ul>
 						<li>You're the proud owner of a beautiful property - somewhere in the heart and hub of a bustling heimishe neighborhood.</li>
-						<li>You have a well-kept piece of valuuable real estate, and your neighbor (who needed to put up his new couple) suggested that you rent it out.</li>
+						<li>You have a well-kept piece of valuable real estate, and your neighbor (who needed to put up his new couple) suggested that you rent it out.</li>
 						<li>You have unused, empty space, and it's finally occurred to you that you wouldn't mind putting it to good, profitable use.</li>
 					</ul>
 				</div>
@@ -97,7 +97,7 @@
 					</li>
 					<li>
 						<h4>List in privacy</h4>
-						<p>All listings are assigned a virtual email and phone number, and all calls/emails are routed through our sophisticated system. This way, potential renters never get the opportunity to badger or harass you</p>
+						<p>All listings are assigned a virtual email and phone number, and all calls/emails are routed through our sophisticated system. This way, potential renters never get the opportunity to badger or harass you.</p>
 					</li>
 					<li>
 						<h4>List with confidence</h4>
@@ -124,13 +124,15 @@
 				<div class="property-content">
 					<h4>List your property on DiraLeads today!</h4>
 					<h5>Our simple, hassle-free process</h5>
-					<p>Sign up to DiraLeads and create your account List your rental, asking price, and preferred contact method RELAX!</p>
+					<p>1. Sign up to DiraLeads and create your account</p>
+					<p>2. List your rental, asking price, and preferred contact method</p>
+					<p>3. RELAX!</p>
 					<ul>
 						<li>We do the marketing to heimishe renters worldwide</li>
 						<li>We send your rental to our daily email subscribers</li>
 						<li>We deal with all general website inquiries... and YOU get to collect the rent.</li>
 					</ul>
-					<a href="#" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
+					<a href="/register" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
 				</div>
 			</div>
 		</div>
@@ -160,7 +162,7 @@
 						<div class="promise-box-icon">
 							<img src="assets/images/promise03.png" alt="">
 						</div>
-						<h5>Complete control of<br>yourrental throughout</h5>
+						<h5>Complete control of<br>your rental throughout</h5>
 					</div>
 				</div>
 			</div>
@@ -212,7 +214,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-lg-12 text-center"><a class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a></div>
+			<div class="col-lg-12 text-center"><a href="/register" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a></div>
 		</div>
 	</div>
 </div>
