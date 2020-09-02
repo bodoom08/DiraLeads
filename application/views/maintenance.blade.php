@@ -16,7 +16,7 @@
 
 @section('content')
 <!--  -->
-<div class="position-relative w-100 h-100">
+<div class="position-relative w-100">
 	<!-- <div class="bg-diraleads">
 		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
 	</div> -->
