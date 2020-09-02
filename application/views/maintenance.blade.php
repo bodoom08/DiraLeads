@@ -23,21 +23,24 @@
 <body>
 	
 	<!--  -->
+	<!--
 	<div class="simpleslide100">
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg01.jpg');"></div>
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg02.jpg');"></div>
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg03.jpg');"></div>
+		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg04.webp');"></div>
+	</div>
+	-->
+	<div class="bg-diraleads">
+		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
 	</div>
 
 	<div class="size1 overlay1">
 		<!--  -->
 		<div class="size1 flex-col-c-m p-l-15 p-r-15 p-t-50 p-b-50">
 			<h3 class="l1-txt1 txt-center p-b-25">
-				Coming Soon
+			We are stocking on rentals
 			</h3>
 
 			<p class="m2-txt1 txt-center p-b-48">
-				Our website is under construction, follow us for update now!
+				You will be able to browse for your rental in
 			</p>
 
 			<div class="flex-w flex-c-m cd100 p-b-33">
@@ -61,9 +64,9 @@
 					<span class="s2-txt1">Seconds</span>
 				</div>
 			</div>
-
+<!--
 			<form class="w-full flex-w flex-c-m validate-form">
-
+ 
 				<div class="wrap-input100 validate-input where1" data-validate = "Valid email is required: ex@abc.xyz">
 					<input class="input100 placeholder0 s2-txt2" type="text" name="email" placeholder="Enter Email Address">
 					<span class="focus-input100"></span>
@@ -73,7 +76,9 @@
 				<button class="flex-c-m size3 s2-txt3 how-btn1 trans-04 where1">
 					Subscribe
 				</button>
+
 			</form>
+-->
 		</div>
 	</div>
 
@@ -83,6 +88,10 @@
 <!--===============================================================================================-->
 	<script>
 		const date = new Date("");
+		$('.days').val(date.getDate());
+		$('.hours').val(date.getHours());
+		$('.minutes').val(date.getMinutes());
+		$('.seconds').val(date.getSeconds());
 	</script>
 <!--===============================================================================================-->	
 	<script src="{{ site_url('assets/maintenance/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
@@ -99,8 +108,8 @@
 	<script>
 		$('.cd100').countdown100({
 			endtimeYear: 2020,
-			endtimeMonth: 10,
-			endtimeDate: 1,
+			endtimeMonth: 9,
+			endtimeDate: 8,
 			endtimeHours: 0,
 			endtimeMinutes: 0,
 			endtimeSeconds: 0,
