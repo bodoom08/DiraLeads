@@ -2312,14 +2312,13 @@ $this->load->view('common/top', [
             $('#propertySpec li label')[0].innerHTML = data['property_type'];
             $('#propertySpec li label')[1].innerHTML = data['street'];
             $('#propertySpec li label')[2].innerHTML = document.querySelector("#neighborhood option[value='" + data['area_id'] + "']").innerHTML;
-
+            $('#propertySpec li')[3].style.display = "none";
             $('#propertySpec li label')[4].innerHTML = document.getElementById('bedrooms').value;
             $('#propertySpec li label')[5].innerHTML = document.getElementById('bathrooms').value;
             $('#propertySpec li label')[6].innerHTML = document.getElementById('floorNumber').value;
 
             if (data['area_id'] == 'other') {
                 $('#propertySpec li label')[2].innerHTML = document.getElementById('neighborhood_other').value;
-                $('#propertySpec li')[3].style.display = "none";
             }
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
