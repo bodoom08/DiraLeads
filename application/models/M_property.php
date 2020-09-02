@@ -283,11 +283,14 @@ class M_property extends CI_Model
             ->where_in('b.property_id', array_column($properties, 'id'))
             ->get('property_attribute_values b,property_attributes a')
             ->result_array();
-        $images = $this->db
+        $images_query = $this->db
             ->select('property_id, path')
             ->group_by('property_id')
-            ->get('property_images')
-            ->result_array();
+            ->get('property_images');
+        $images = array();
+        if ($images_query !== FALSE && $images_query->num_rows() > 0) {
+            $images = $images_query->result_array();
+        }
         $images = array_column($images, 'path', 'property_id');
         array_walk($properties, function (&$property) use ($attributes, $images) {
             $property['images'] = (!empty($images[$property['id']])) ? $images[$property['id']] : '';
