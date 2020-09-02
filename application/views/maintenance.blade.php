@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<title>{{ CFG_TITLE }}</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-<!--===============================================================================================-->	
-	<link rel="icon" href="{{ site_url('assets/favicon.svg')}}" sizes="any" type="image/svg+xml">
-    <link rel="icon" href="{{ site_url('assets/favicon.png')}}" type="image/png"/>
+@extends('common.layout')
+@push('styles')
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
@@ -19,20 +12,16 @@
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/util.css')}}">
 	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/main.css')}}">
 <!--===============================================================================================-->
-</head>
-<body>
-	
-	<!--  -->
-	<!--
-	<div class="simpleslide100">
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg04.webp');"></div>
-	</div>
-	-->
-	<div class="bg-diraleads">
-		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
-	</div>
+@endpush
 
-	<div class="size1 overlay1">
+@section('content')
+<!--  -->
+<div class="position-relative w-100 h-100">
+	<!-- <div class="bg-diraleads">
+		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
+	</div> -->
+
+<div class="size1 overlay1 bg-img1" style="background-image: url({{ site_url('assets/maintenance/images/bg04.webp') }})">
 		<!--  -->
 		<div class="size1 flex-col-c-m p-l-15 p-r-15 p-t-50 p-b-50">
 			<h3 class="l1-txt1 txt-center p-b-25">
@@ -64,67 +53,51 @@
 					<span class="s2-txt1">Seconds</span>
 				</div>
 			</div>
-<!--
-			<form class="w-full flex-w flex-c-m validate-form">
- 
-				<div class="wrap-input100 validate-input where1" data-validate = "Valid email is required: ex@abc.xyz">
-					<input class="input100 placeholder0 s2-txt2" type="text" name="email" placeholder="Enter Email Address">
-					<span class="focus-input100"></span>
-				</div>
-				
-				
-				<button class="flex-c-m size3 s2-txt3 how-btn1 trans-04 where1">
-					Subscribe
-				</button>
-
-			</form>
--->
 		</div>
 	</div>
+</div>
+@endsection
 
 
-
-
+@push('scripts')
 <!--===============================================================================================-->
-	<script>
-		const date = new Date("");
-		$('.days').val(date.getDate());
-		$('.hours').val(date.getHours());
-		$('.minutes').val(date.getMinutes());
-		$('.seconds').val(date.getSeconds());
-	</script>
+<script>
+	const date = new Date("");
+	$('.days').val(date.getDate());
+	$('.hours').val(date.getHours());
+	$('.minutes').val(date.getMinutes());
+	$('.seconds').val(date.getSeconds());
+</script>
 <!--===============================================================================================-->	
-	<script src="{{ site_url('assets/maintenance/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/popper.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/popper.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/bootstrap.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/plugins/select2/select2.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/select2/select2.min.js')}}"></script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone-with-data.min.js')}}"></script>
-	<script src="{{ site_url('assets/maintenance/plugins/countdowntime/countdowntime.js')}}"></script>
-	<script>
-		$('.cd100').countdown100({
-			endtimeYear: 2020,
-			endtimeMonth: 9,
-			endtimeDate: 8,
-			endtimeHours: 0,
-			endtimeMinutes: 0,
-			endtimeSeconds: 0,
-			timeZone: ""
-		});
-	</script>
+<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/countdowntime/moment-timezone-with-data.min.js')}}"></script>
+<script src="{{ site_url('assets/maintenance/plugins/countdowntime/countdowntime.js')}}"></script>
+<script>
+	$('.cd100').countdown100({
+		endtimeYear: 2020,
+		endtimeMonth: 9,
+		endtimeDate: 8,
+		endtimeHours: 0,
+		endtimeMinutes: 0,
+		endtimeSeconds: 0,
+		timeZone: ""
+	});
+</script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/plugins/tilt/tilt.jquery.min.js')}}"></script>
-	<script >
-		$('.js-tilt').tilt({
-			scale: 1.1
-		})
-	</script>
+<script src="{{ site_url('assets/maintenance/plugins/tilt/tilt.jquery.min.js')}}"></script>
+<script >
+	$('.js-tilt').tilt({
+		scale: 1.1
+	})
+</script>
 <!--===============================================================================================-->
-	<script src="{{ site_url('assets/maintenance/js/main.js')}}"></script>
-
-</body>
-</html>
+<script src="{{ site_url('assets/maintenance/js/main.js')}}"></script>
+@endpush
