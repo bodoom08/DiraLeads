@@ -53,8 +53,8 @@ class Favourites extends CI_Controller
            if(count($favorites) == 0){
             $res = '<div class="col-lg-12 text-center mt-5 dashboard_fav">
                       <p><i class="fa fa-search" aria-hidden="true"></i></p>
-                      <h5 class="text-head">No rentals marked as Favorite</h5>
-                      <p>Add rentals to Your Favorites by clicking on</p> <p>the rentals Favorite icon.</p>
+                      <h5 class="text-head">No rentals marked as "Favorites"</h5>
+                      <p>Add any property to your list of “Favorites” by clicking on the rental’s ♡ icon</p>
                       </p>
                   </div>';
             die($res);
