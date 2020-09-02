@@ -10,6 +10,8 @@ $this->load->view('common/front_end_layout/top', [
 <link rel="stylesheet" href="//unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
 <link rel="stylesheet" href="<?php echo site_url('assets/css/jquery-ui.multidatespicker.css') ?>">
 <link href="<?php echo site_url('assets/css/fullcalendar.css') ?>" rel="stylesheet" />
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
 
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
@@ -551,6 +553,26 @@ $this->load->view('common/front_end_layout/top', [
         padding: 2px 6px;
         font-size: 14px;
         cursor: pointer;
+    }
+
+    .overlay {
+        /* display: flex; */
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0, 0.5);
+        font-size: 5rem;
+        color: white;
+    }
+
+    .overlay i {
+        margin-top: 40%;
     }
 
     /**
@@ -1661,6 +1683,10 @@ $this->load->view('common/front_end_layout/top', [
                                             <p id="virtualNumber">Getting virtual number...</p>
                                         </div>
                                     </div>
+
+                                    <div class="fa-3x overlay" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                    </div>
                                 </div>
 
                                 <div class="modal-footer">
@@ -2255,6 +2281,8 @@ $this->load->view('common/front_end_layout/top', [
                 document.getElementById('ctrlThumbRight').style = "display: block;";
             }
 
+            $('#propertyConfirmationModal div.overlay').css('display', 'none');
+
             $('#propertyConfirmationModal').show();
 
             $.ajax({
@@ -2273,17 +2301,6 @@ $this->load->view('common/front_end_layout/top', [
                     document.getElementById('submitBtn').className = '';
                 }
             });
-            // $.get('/rental/get_virtual_number', function(response, status) {
-            //     console.log("get_virtual_number", response);
-            //     if (response.type == 'success') {
-            //         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
-            //         $('#virutalNumber').val(response.virtual_number);
-            //     } else {
-            //         toastr.warning(response.text);
-            //         document.getElementById('virtualNumber').innerHTML = "not available";
-            //     }
-            // });
-
         });
 
         $(document).on('change', '#florbas', function() {
@@ -4015,6 +4032,8 @@ $this->load->view('common/front_end_layout/top', [
             if (document.getElementById('confirmSubmit').className.includes('disabled'))
                 return;
             document.getElementById('confirmSubmit').className += " disabled";
+
+            $('#propertyConfirmationModal div.overlay').css('display', 'block');
             $('#listingForm').ajaxSubmit({
                 data: {
                     'short_term_available_date': function() {
