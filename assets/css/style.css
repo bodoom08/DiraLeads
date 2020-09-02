@@ -1409,7 +1409,7 @@ header.sticky-header .offcanvas-navbar a {
   justify-content: flex-end;
   z-index: 99;
   position: absolute;
-  top: 20rem;
+  top: 30rem;
 }
 .search-main .form-group .bootstrap-select,
 .search-main .form-horizontal .bootstrap-select,

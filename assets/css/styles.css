@@ -3359,9 +3359,6 @@ img {
   width: 100%;
   position: relative;
 }
-.carousel-inner {
-  height: 550px;
-}
 .innerbanner-caption {
   position: absolute;
   left: 0px;
@@ -3990,6 +3987,7 @@ img {
   }
   .banner-main .banner-text {
     padding: 18px;
+    top: 10%;
   }
   .banner-main .banner-text p {
     margin-bottom: 5px !important;
@@ -4007,6 +4005,7 @@ img {
   }
   .banner-main .banner-text {
     padding: 16px;
+    top: 10%;
   }
   .banner-main .banner-text p {
     margin-bottom: 10px !important;
@@ -4024,15 +4023,16 @@ img {
   }
   .banner-main .banner-text {
     padding: 22px;
+    top:10%;
   }
   .banner-main .banner-text p {
     margin-bottom: 10px !important;
   }
   .banner-main .banner-text .primary-text {
-    font-size: 35px !important;
+    font-size: 28px !important;
   }
   .banner-main .banner-text .secondary-text {
-    font-size: 28px !important;
+    font-size: 18px !important;
   }
 }
 @media only screen and (max-width: 1000px) {
@@ -4101,5 +4101,11 @@ img {
 
   .carousel-inner {
     height: 300px;
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  .banner-text {
+    top: 20% !important;
   }
 }
