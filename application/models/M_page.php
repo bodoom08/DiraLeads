@@ -54,7 +54,7 @@ class M_page extends CI_Model
         $this->db->from('areas');
         $this->db->join('properties', 'properties.area_id = areas.id');
         // $this->db->where('vn_id is  NOT NULL');
-        $this->db->where('for', 'short term rent');
+        // $this->db->where('for', 'short term rent');
         $query = $this->db->get();
         $data = $query->result_array();
         foreach ($data as $key => $d) {
