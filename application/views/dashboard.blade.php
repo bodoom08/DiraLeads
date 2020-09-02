@@ -75,7 +75,7 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
 <div class="row">
     <div class="col-lg-12 col-md-12">
         <div class="dash-title-new">
-            <h4>My Property List</h4>
+            <h4>My Rentals/Property List</h4>
         </div>
     </div>
     <div class="col-md-12 col-lg-12">
