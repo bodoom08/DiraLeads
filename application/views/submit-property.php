@@ -669,14 +669,14 @@ $this->load->view('common/front_end_layout/top', [
                                             <li role="presentation3">
                                                 <a href="#optimization" aria-controls="optimization" role="tab" data-toggle="tab">
                                                     <i class="fa fa-picture-o" aria-hidden="true"></i>
-                                                    <p>Upload Picture</p>
+                                                    <p>Upload Pictures</p>
                                                 </a>
                                             </li>
 
                                             <li role="presentation4" id="datePrice">
                                                 <a href="#content" aria-controls="content" role="tab" data-toggle="tab">
                                                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                                                    <p>Dates & Price</p>
+                                                    <p>Dates & Prices</p>
                                                 </a>
                                             </li>
                                         </ul>
