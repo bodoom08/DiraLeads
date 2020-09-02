@@ -361,8 +361,8 @@ if (isset($livedata)) {
 
 <script type="text/javascript">
     var a = 0;
+    /*
     $(window).scroll(function() {
-
         var oTop = $('#counter').offset().top - window.innerHeight;
         if (a == 0 && $(window).scrollTop() > oTop) {
             $('.counter-value').each(function() {
@@ -392,6 +392,7 @@ if (isset($livedata)) {
         }
 
     });
+    */
 
     $slug = '<?php echo $slug; ?>';
     scrollto = false;
@@ -502,39 +503,11 @@ if (isset($livedata)) {
                             // $('html, body').animate({scrollTop: $('#frmerror').scrollTop()});
                         } else {
                             $('#frmerror').html('').hide();
-                            // $('#frmsuccess').html(arg.error).show();
                             $('input, textarea').val('');
-                            // $('html, body').animate({scrollTop: 0});
                         }
 
                         $(button).text(normal).attr('disabled', false);
 
-                        // if (arg.property.coords) {
-                        //     initMap(JSON.parse(arg.property.coords));
-                        // } else {
-                        //     initMap();
-                        // }
-                        // $('#email').html(arg.property.email);
-                        // $('#mobile').html(arg.property.mobile);
-                        // $('#description').html(arg.property.description);
-                        // $('#address').html(arg.property.house_number + ', ' + arg.property.street);
-                        // $('#contact span').text(arg.property.contact_number);
-                        // $('#contact').attr('href', `tel:${arg.property.contact_number}`);
-
-                        // var attributes = '';
-                        // $.each(arg.property_attributes, function(i, row) {
-                        //     attributes += '<li><img src="' + row.icon + '"> ' + row.value + ' ' + row.text + '</li>';
-                        // });
-                        // $('#conditions').html(attributes);
-                        // var images = '';
-                        // $.each(arg.property_images, function(i, row) {
-                        //     images += '<li data-thumb="<?php //echo site_url('uploads/') 
-                                                            ?>' +
-                        //         row.path + '"><img src="<?php //echo site_url('uploads/') 
-                                                            ?>' + row.path + '" /></li>';
-                        // });
-                        // $('#image-gallery').html(images);
-                        // $("#myModal").modal();
                     }
                 });
 
