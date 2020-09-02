@@ -9,7 +9,7 @@ function send_email($to, $subject, $body)
     // $config['useragent'] = CFG_TITLE;
     // $config['mailtype'] = 'html';
     //$to = 'mobotics.aniruddha@gmail.com';
-    $from = 'info@diraleads.tk';
+    $from = 'info@diraleads.com';
 
     $config = array(
         'protocol' => 'smtp',
