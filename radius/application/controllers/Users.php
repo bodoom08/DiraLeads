@@ -1,24 +1,27 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+
 defined('BASEPATH') or exit('No direct script access allowed');
 require APPPATH . 'core/MOBO_User.php';
 class Users extends MOBO_User
 {
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
-        if(!isset($_SESSION['id']))
+        if (!isset($_SESSION['id']))
             redirect(site_url('/'));
-            
+
         $this->only(['agent', 'admin']);
         $this->load->model('M_users');
     }
     public function index()
     {
-        if(isset($_GET['email'])) {
+        if (isset($_GET['email'])) {
             $user = $this->M_users->getUser($_GET['email']);
             $properties = $this->M_users->getUserProperties($_GET['email']);
 
-            if(!$user) {
+            if (!$user) {
                 redirect('users');
             }
 
@@ -31,23 +34,23 @@ class Users extends MOBO_User
 
     public function property_add()
     {
-        if($this->input->is_ajax_request()) {
+        if ($this->input->is_ajax_request()) {
             exit(json_encode($this->M_users->property_add()));
         }
-        if(isset($_GET['email'])) {
+        if (isset($_GET['email'])) {
             $data['user'] = $this->M_users->getUser($_GET['email']);
         }
-        
-        if(!$data['user']) {
+
+        if (!$data['user']) {
             redirect('users');
         }
 
         $data['areas'] = $this->M_users->getAllAreas();
         $data['attributes'] = $this->M_users->getAllAttributes();
-        
+
         $this->load->view('user_add_property', $data);
     }
-    
+
     public function json()
     {
         $data = $this->M_users->getdata();
@@ -59,8 +62,8 @@ class Users extends MOBO_User
                 } else {
                     $status = '<span class="badge badge-danger" style="font-size: unset;">Inactive</span>';
                 }
-                
-                if(is_null($row['password'])) {
+
+                if (is_null($row['password'])) {
                     $status = '<span class="badge badge-warning" style="font-size: unset;"><i class="fa fa-envelope-o"></i> Not Verified!</span>';
                 }
 
@@ -73,7 +76,7 @@ class Users extends MOBO_User
                     $actions .= '<button type="button" class="btn btn-outline-success" title="Active/Inactive" onclick="changeStatus(\'' . $row['id'] . '\')">Active</button>';
                 }
 
-                if(is_null($row['password'])) {
+                if (is_null($row['password'])) {
                     $actions .= '<button type="button" class="btn btn-outline-info" title="Verify User" onclick="verifyUser(\'' . $row['id'] . '\')">Verify</button>';
                     $actions .= '<button type="button" class="btn btn-outline-info" title="Resend Verify Email" onclick="resendVerify(\'' . $row['id'] . '\')">Resend Verify Email</button>';
                 }
@@ -100,22 +103,22 @@ class Users extends MOBO_User
 
         exit(json_encode($data));
     }
-    
+
     public function add()
     {
         exit(json_encode($this->M_users->save()));
     }
-    
+
     public function add_user()
     {
         exit(json_encode($this->M_users->save_user()));
     }
-    
+
     public function update()
     {
         exit(json_encode($this->M_users->update()));
     }
-    
+
     public function edit()
     {
         exit(json_encode($this->M_users->edit()));
@@ -126,11 +129,13 @@ class Users extends MOBO_User
         exit(json_encode($this->M_users->changeStatus()));
     }
 
-    function verify() {
-        exit(json_encode($this->M_users->verifyUser()));        
+    function verify()
+    {
+        exit(json_encode($this->M_users->verifyUser()));
     }
 
-    function resendVerifyEmail() {
-        exit(json_encode($this->M_users->resendVerifyEmail()));        
+    function resendVerifyEmail()
+    {
+        exit(json_encode($this->M_users->resendVerifyEmail()));
     }
 }

@@ -88,3 +88,13 @@ defined('RADIUS')      or define('RADIUS', 'DiraLeads');
 //  Telnyx Credentials
 define('TEL_API_TOKEN', 'rgzYekljThirucLyvKhPoQ');
 define('TEL_API_USER', 'info@diraleads.com');
+
+// Telnyx SMS credentials
+define('TELNYX_SENDER_ID', 'Diraleads');
+define('TELNYX_PROFILE_SECRET', 'u5slTZzvtPpKFbvjXCafmzkB');
+define('TELNYX_API_KEY', 'KEY0172C7DEBB7656A6FBC502006CFBF578_SVQ6BWutub2w69NfMZQoMh');
+define('TEXML_APP_ID', '1439158368349456180');
+define('MESSAGE_PROFILE_ID', '7996bcfc-ea1a-418f-9bb7-d64ca119a5da');
+
+// Google Maps API Key
+define('API_KEY', 'AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A');
