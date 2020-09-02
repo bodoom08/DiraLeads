@@ -3,8 +3,10 @@
 
 <head>
     <title>{{ CFG_TITLE }}</title>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
+
     <link rel="icon" href="assets/favicon.svg" sizes="any" type="image/svg+xml">
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css' />
@@ -19,17 +21,6 @@
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/styles.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/mystyles.css') }}">
-    <style>
-        /** Muhammad */
-        .btn-create-account {
-            border: none;
-            background-color: #a27107;
-            color: white;
-            border-radius: 60px;
-            height: 50px;
-            padding: 0 40px;
-        }
-    </style>
 </head>
 
 <body class="@if ( isset($slug)){{$slug}}@endif">
@@ -67,7 +58,7 @@
                     @if (!isset($_SESSION['id']))
                     <li class="nav-item login">
                         <a class="nav-link" href="{{ site_url('login') }}">
-                            <img src="{{ site_url() }}assets/images/login.png"> Login / Signup
+                            <img src="{{ site_url('assets/images/login.png') }}"> Login / Signup
 
                         </a>
                     </li>
@@ -82,7 +73,7 @@
                 <ul class="navbar-nav offcanvas-navbar position-relative">
                     <div class="dropdown btns">
                         <a class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ site_url() }}/assets/img/avatar/user.png" width="20" alt="avatar">
+                            <img src="{{ site_url('/assets/img/avatar/user.png') }}" width="20" alt="avatar">
                             Hi, {{ explode(' ', $_SESSION['name'])[0] }}
                         </a>
                         <div class="dropdown-menu">
@@ -187,10 +178,7 @@
                 </div>
             </div>
         </div>
-
-
     </div>
-
 
     @endif
 
@@ -252,7 +240,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/scrollup/2.4.1/jquery.scrollUp.min.js'></script>
+
     @stack('scripts')
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>   
+    <script src="{{ site_url('/assets/js/bootstrap.min.js') }}"></script>
+    <script src="{{ site_url('/assets/js/app.js') }}"></script>
+    
+                    
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
@@ -270,11 +265,11 @@
             })
         })
 
-
         // Email Subscribe
         $('#subscribe-email-form').submit(function(e) {
             e.preventDefault();
         });
+
         $('button[name="email-subscribe-button"]').click(function() {
             $('#subscribe-email-form').submit(function(e) {
                 e.preventDefault();
@@ -288,7 +283,6 @@
                     email: $('#email-subscribe').val(),
                     <?php $CI = &get_instance();
                     echo $CI->security->get_csrf_token_name(); ?>: '<?php echo $CI->security->get_csrf_hash(); ?>'
-
                 },
                 success: function(data) {
                     console.log(data)
@@ -298,7 +292,6 @@
                         toastr.success(data.message);
                 },
                 error: function() {
-
                 },
                 complete: function() {
                     console.log('complete');
@@ -307,10 +300,7 @@
             // toastr.success('Success messages');
         });
     </script>
-    <script src="{{ site_url('/assets/js/app.js') }}"></script>
-    <script src="{{ site_url('/assets/js/bootstrap.min.js') }}"></script>
-    <script src="{{ site_url('/assets/js/bootstrap.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
+
     <script>
         $(document).ready(function() {
             setTimeout(function() {
@@ -337,6 +327,7 @@
             }, 1000);
         });
     </script>
+
     <script>
         function search() {
             const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
