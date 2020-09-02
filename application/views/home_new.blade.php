@@ -76,7 +76,7 @@ if (isset($livedata)) {
                                     <li>
                                         <a href="javascript:void(0);">
                                             <div class="content-sec">
-                                                <img src="assets/images/icon1.png">
+                                                <img src="{{ site_url('assets/images/icon1.png')}}">
                                                 <h3>SIMPLIFIED PROCESS</h3>
                                                 <p>The hassle-free way of getting your apartment in front of thousands of potential renters</p>
                                                 <br />
@@ -86,7 +86,7 @@ if (isset($livedata)) {
                                     <li>
                                         <a href="javascript:void(0);">
                                             <div class="content-sec">
-                                                <img src="assets/images/icon2.png">
+                                                <img src="{{ site_url('assets/images/icon2.png')}}">
                                                 <h3>Personalized Service</h3>
                                                 <p>The ability to decide on the availability of your rental and exactly how and when renters contact you</p>
                                             </div>
@@ -95,7 +95,7 @@ if (isset($livedata)) {
                                     <li>
                                         <a href="javascript:void(0);">
                                             <div class="content-sec">
-                                                <img src="assets/images/icon3.png">
+                                                <img src="{{ site_url('assets/images/icon3.png')}}">
                                                 <h3>HEIMISHE RENTERS</h3>
                                                 <p>The patronage of like-minded community members who appreciate and respect your values</p>
                                             </div>
@@ -167,7 +167,7 @@ if (isset($livedata)) {
                     <p>Curious to learn more about the amenities and attractions of the heimishe areas we service?</p>
                     <h2>Explore the neighborhood</h2>
                     <div class="home-icon">
-                        <img src="assets/images/home.png">
+                        <img src="{{ site_url('assets/images/home.png')}}">
                     </div>
                 </div>
             </div>
@@ -193,13 +193,13 @@ if (isset($livedata)) {
                         @endif
 
                         @if($i == '1' || $i == '4')
-                        <li><a href="{{ 'properties/lists?area='.$key }}" target="blank">
+                        <li><a href="{{ '/properties?area='.$key }}" target="blank">
                                 <div class="gallery-sec">
-                                    <img src="assets/images/gal1.webp">
+                                    <img src="{{ site_url('assets/images/gal1.webp')}}">
                                     <div class="hovr-content">
                                         <h3>{{$key}}</h3>
                                         <!--  <p>{{$value}} Porperties</p> -->
-                                        <img src="assets/images/search.png">
+                                        <img src="{{ site_url('assets/images/search.png')}}">
                                     </div>
                                 </div>
                             </a>
@@ -212,13 +212,13 @@ if (isset($livedata)) {
 
                             @if($i == '2' || $i == '3')
 
-                            <div class="slide"><a href="{{ 'properties/lists?area='.$key }}" target="blank">
+                            <div class="slide"><a href="{{ '/properties?area='.$key }}" target="blank">
                                     <div class="gallery-sec">
-                                        <img src="assets/images/gal2.webp">
+                                        <img src="{{ site_url('assets/images/gal2.webp')}}">
                                         <div class="hovr-content">
                                             <h3>{{$key}}</h3>
                                             <!--  <p>{{$value}} Porperties</p> -->
-                                            <img src="assets/images/search.png">
+                                            <img src="{{ site_url('assets/images/search.png')}}">
                                         </div>
                                     </div>
                                 </a>
@@ -351,13 +351,55 @@ if (isset($livedata)) {
 @endsection
 
 @push('scripts')
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
+<style>
+    .invalid-input {
+        border: 1px solid red !important;
+    }
+
+    #ser-tab {
+        padding: 0;
+    }
+    ul.nav.nav-pills {
+        background: transparent !important;
+        display: flex;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #ser-tab .nav-item {
+        background: #f1f1f1;
+        color: #a27107;
+    }
+
+    #ser-tab .nav-item:last-child {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+    }
+
+    #ser-tab .nav-item:first-child {
+        border-top-left-radius: 30px;
+        border-bottom-left-radius: 30px;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    #ser-tab .nav-item.active {
+        background: #a27107;
+        color: white;
+    }
+
+</style>
+
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+<script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
 <script type="text/javascript">
     var a = 0;
@@ -396,10 +438,6 @@ if (isset($livedata)) {
 
     $slug = '<?php echo $slug; ?>';
     scrollto = false;
-    // console.log($slug);
-    // $('body').on('click', '#send-message', function(){
-    //     alert('ani');
-    // });
 
     $(function() {
         no_of_sale = '<?php echo $no_of_sale; ?>';
@@ -582,45 +620,4 @@ if (isset($livedata)) {
     });
 </script>
 
-<style>
-    .invalid-input {
-        border: 1px solid red !important;
-    }
-
-    #ser-tab {
-        padding: 0;
-    }
-    ul.nav.nav-pills {
-        background: transparent !important;
-        display: flex;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    #ser-tab .nav-item {
-        background: #f1f1f1;
-        color: #a27107;
-    }
-
-    #ser-tab .nav-item:last-child {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: 30px;
-        border-bottom-right-radius: 30px;
-    }
-
-    #ser-tab .nav-item:first-child {
-        border-top-left-radius: 30px;
-        border-bottom-left-radius: 30px;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
-
-    #ser-tab .nav-item.active {
-        background: #a27107;
-        color: white;
-    }
-
-</style>
 @endpush
