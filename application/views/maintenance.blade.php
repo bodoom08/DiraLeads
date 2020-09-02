@@ -23,10 +23,13 @@
 <body>
 	
 	<!--  -->
+	<!--
 	<div class="simpleslide100">
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg01.jpg');"></div>
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg02.jpg');"></div>
-		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg03.jpg');"></div>
+		<div class="simpleslide100-item bg-img1" style="background-image: url('/assets/maintenance/images/bg04.webp');"></div>
+	</div>
+	-->
+	<div class="bg-diraleads">
+		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
 	</div>
 
 	<div class="size1 overlay1">
@@ -83,6 +86,10 @@
 <!--===============================================================================================-->
 	<script>
 		const date = new Date("");
+		$('.days').val(date.getDate());
+		$('.hours').val(date.getHours());
+		$('.minutes').val(date.getMinutes());
+		$('.seconds').val(date.getSeconds());
 	</script>
 <!--===============================================================================================-->	
 	<script src="{{ site_url('assets/maintenance/vendor/jquery/jquery-3.2.1.min.js')}}"></script>

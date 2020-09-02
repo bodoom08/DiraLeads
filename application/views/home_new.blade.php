@@ -340,7 +340,6 @@ if (isset($livedata)) {
                                     <button type="submit" id="send-message" name="send-message">Send</button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
