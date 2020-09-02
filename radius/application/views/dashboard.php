@@ -57,7 +57,7 @@ $this->load->view('common/top', [
                             <div class="col-lg-3 col-md-3 col-sm-6">
                                 <div class="ui-item bg-warning">
                                     <div class="left">
-<h4><?php echo sizeof($no_of_properties); ?></h4>
+                                        <h4><?php echo sizeof($no_of_properties); ?></h4>
                                         <p>Listed Properties</p>
                                     </div>
                                     <div class="right">
@@ -349,7 +349,7 @@ $this->load->view('common/top', [
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>

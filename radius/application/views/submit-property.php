@@ -567,6 +567,26 @@ $this->load->view('common/top', [
         cursor: pointer;
     }
 
+    .overlay {
+        /* display: flex; */
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0, 0.5);
+        font-size: 5rem;
+        color: white;
+    }
+
+    .overlay i {
+        margin-top: 40%;
+    }
+
     /**
     Muhammad Theme
 */
@@ -1684,6 +1704,10 @@ $this->load->view('common/top', [
                                         <p id="virtualNumber">Getting virtual number...</p>
                                     </div>
                                 </div>
+
+                                <div class="fa-3x overlay" style="display: none;">
+                                    <i class="fa fa-spinner fa-spin"></i>
+                                </div>
                             </div>
 
                             <div class="modal-footer">
@@ -1720,7 +1744,7 @@ $this->load->view('common/top', [
                 </ul>
             </div>
         </div>
-        <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+        <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
     </div>
 </div>
 </div>
@@ -2369,18 +2393,23 @@ $this->load->view('common/top', [
                 document.getElementById('ctrlThumbLeft').style = "display: block;";
                 document.getElementById('ctrlThumbRight').style = "display: block;";
             }
+            $('#propertyConfirmationModal div.overlay').css('display', 'none');
 
             $('#propertyConfirmationModal').show();
 
             $.ajax({
                 url: 'property/get_virtual_number',
                 method: 'GET',
+                beforeSend: function() {
+                    $('#confirmSubmit').prop('disabled', 'true');
+                },
                 success: function(data) {
                     var response = JSON.parse(data);
                     console.log("get_virtual_number", typeof response);
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
                         $('#virutalNumber').val(response.virtual_number);
+                        $('#confirmSubmit').removeAttr('disabled');
                     } else {
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
@@ -4130,6 +4159,8 @@ $this->load->view('common/top', [
             if (document.getElementById('confirmSubmit').className.includes('disabled'))
                 return;
             document.getElementById('confirmSubmit').className += " disabled";
+
+            $('#propertyConfirmationModal div.overlay').css('display', 'block');
             $('#listingForm').ajaxSubmit({
                 data: {
                     'short_term_available_date': function() {
@@ -4140,14 +4171,14 @@ $this->load->view('common/top', [
                 beforeSubmit: function() {
                     event.preventDefault();
                     $('.fa-spinner').prop('display', 'inline');
-                    $('#submitBtn').prop('disabled', 'disabled');
+                    $('#confirmSubmit').prop('disabled', true);
                 },
                 success: function(response) {
                     if (response.type == 'success') {
                         $('#propertyConfirmationModal').hide();
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
-
+                        $('#confirmSubmit').removeAttr('disabled');
                         window.location.href = '<?php echo site_url('property'); ?>';
                     } else {
                         toastr.warning(response.text);

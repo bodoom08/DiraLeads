@@ -29,27 +29,27 @@ $this->load->view('common/top', [
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="package-table" class="table small table-sm table-striped table-bordered dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Package Name</th>
-                                        <th>For</th>
-                                        <th>Price</th>
-                                        <th>Validity</th>
-                                        <th>Description</th>
-                                        <th>No Of Location Select</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                        
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                                <table id="package-table" class="table small table-sm table-striped table-bordered dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Package Name</th>
+                                            <th>For</th>
+                                            <th>Price</th>
+                                            <th>Validity</th>
+                                            <th>Description</th>
+                                            <th>No Of Location Select</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -75,8 +75,8 @@ $this->load->view('common/top', [
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="name" class="col-form-label">
-                               
-                            </label>                            
+
+                            </label>
                             <input type="text" class="form-control" id="name" name="name" />
                         </div>
                         <div class="form-group">
@@ -105,19 +105,19 @@ $this->load->view('common/top', [
                         </div>
                         <div class="form-group">
                             <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="phone_alert" name="phone_alert" value="on" >
+                                <input type="checkbox" class="custom-control-input" id="phone_alert" name="phone_alert" value="on">
                                 <label class="custom-control-label" for="phone_alert">Phone</label>
                             </div>
 
                             <!-- Default inline 2-->
                             <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="email_alert" name="email_alert" value="on" >
+                                <input type="checkbox" class="custom-control-input" id="email_alert" name="email_alert" value="on">
                                 <label class="custom-control-label" for="email_alert">Email</label>
                             </div>
 
                             <!-- Default inline 2-->
                             <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="fax_alert" name="fax_alert" value="on" >
+                                <input type="checkbox" class="custom-control-input" id="fax_alert" name="fax_alert" value="on">
                                 <label class="custom-control-label" for="fax_alert">Fax</label>
                             </div>
                         </div>
@@ -195,23 +195,23 @@ $this->load->view('common/top', [
                     id: id,
                     <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
                 },
-                success: function(arg) {                    
+                success: function(arg) {
                     // var values = arg.for.split(",");
                     // $("#for").find('[value="' + values.join('"], [value="') + '"]').prop("checked", true);
                     $('input[name="email_alert"], input[name="phone_alert"], input[name="fax_alert"]').prop('checked', false);
                     $.each(arg, function(i, row) {
                         var elem = $('#updateForm [name="' + i + '"]');
                         elem.val(row);
-                        if((i == "email_alert") && row == "true")
+                        if ((i == "email_alert") && row == "true")
                             $('input[name="email_alert"]').prop('checked', true);
-                            
 
-                        if((i == "phone_alert") && row == "true")
+
+                        if ((i == "phone_alert") && row == "true")
                             $('input[name="phone_alert"]').prop('checked', true);
 
-                        if((i == "fax_alert") && row == "true")
+                        if ((i == "fax_alert") && row == "true")
                             $('input[name="fax_alert"]').prop('checked', true);
-                            
+
                     });
                     $('#for').html(arg.for.substr(0, 1).toUpperCase() + arg.for.substr(1));
                     $('#editModal').modal('show');
@@ -246,10 +246,10 @@ $this->load->view('common/top', [
         DT.ajax.reload();
     }
 
-    $('.numeric').keypress(function (e) {
+    $('.numeric').keypress(function(e) {
         if (String.fromCharCode(e.keyCode).match(/[^0-9]/g)) return false;
     });
-    $('.numeric_not_zero').keypress(function (e) {
+    $('.numeric_not_zero').keypress(function(e) {
         if (String.fromCharCode(e.keyCode).match(/[^1-9]/g)) return false;
     });
 </script>

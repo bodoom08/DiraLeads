@@ -19,17 +19,17 @@ $this->load->view('common/front_end_layout/top', [
                     <div class="dashboard-content">
                         <div class="dashboard-list">
                             <div class="row">
-                             <div class="col-md-8">
-                             <h3 class="heading" style="border-bottom:0px;"> My Preferences</h3>
-                             </div>
-                             <div class="col-md-4">
-                             <div class="pull-right">
-                                    <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#addModal">+ Add Preference</button>
+                                <div class="col-md-8">
+                                    <h3 class="heading" style="border-bottom:0px;"> My Preferences</h3>
                                 </div>
+                                <div class="col-md-4">
+                                    <div class="pull-right">
+                                        <button type="button" class="btn btn-primary m-2" data-toggle="modal" data-target="#addModal">+ Add Preference</button>
+                                    </div>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
-                            <hr/>
+                            <hr />
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
                                     <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
@@ -49,7 +49,7 @@ $this->load->view('common/front_end_layout/top', [
                             </div>
                         </div>
                     </div>
-                    <p class="sub-banner-2 text-center">© Copyright 2019. All rights reserved</p>
+                    <p class="sub-banner-2 text-center">© Copyright 2020. All rights reserved</p>
                 </div>
             </div>
         </div>
@@ -69,7 +69,7 @@ $this->load->view('common/front_end_layout/top', [
             <div class="modal-body">
                 <div class="form-group">
                     <label for="name" class="col-form-label">Title</label>
-                    <input type="text" class="form-control" id="title" name="title"/>
+                    <input type="text" class="form-control" id="title" name="title" />
                 </div>
                 <div class="form-group">
                     <div class="row">
