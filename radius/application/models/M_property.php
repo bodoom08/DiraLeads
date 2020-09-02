@@ -1,5 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+require_once(APPPATH . 'third_party/vendor/telnyx/telnyx-php/init.php');
+
 class M_property extends CI_Model
 {
     public function getdata()
@@ -472,6 +474,7 @@ class M_property extends CI_Model
         } else {
             $property_data['private_note'] = $private_note['sessional'];
         }
+
 
         if (!$this->db->insert('properties', $property_data))
             return ['type' => 'error', 'text' => 'Error saving data'];

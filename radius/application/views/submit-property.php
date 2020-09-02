@@ -4148,7 +4148,7 @@ $this->load->view('common/top', [
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
 
-                        document.location.href = "/my_rentals";
+                        window.location.href = '<?php echo site_url('property'); ?>';
                     } else {
                         toastr.warning(response.text);
                         return false;
