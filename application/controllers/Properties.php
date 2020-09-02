@@ -11,10 +11,12 @@ class Properties extends MOBO_Controller
         $this->load->library('session');
     }
 
+    //*
     public function index()
     {
         $this->load->view('maintenance');
     }
+    /**/
 
     /*
     public function index()
@@ -23,7 +25,7 @@ class Properties extends MOBO_Controller
         $data['areas'] = $this->M_page->get_areas();
         $this->load->view('properties', $data);
     }
-    */
+    /**/
 
     public function getAllImages()
     {
