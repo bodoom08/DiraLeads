@@ -186,8 +186,7 @@ if (isset($livedata)) {
             $j++;
             @endphp
 
-            @if($j < 13) @if($i == '1' ) 
-            <div class="slide">
+            @if($j < 13) @if($i=='1' ) <div class="slide">
                 <div class="mason-sec">
                     <ul>
                         @endif
@@ -290,8 +289,8 @@ if (isset($livedata)) {
                     <div class="info-sec">
                         <p>Have a question? Need help finding the perfect rental? We’re eager to help!</p>
                         <div class="details">
-                            <p><span>📱 Phone</span>718-313-4643</p>
-                            <p><span>📧 Email</span>rentals@Diraleads.com</p>
+                            <p><span>📱 Phone</span><a href="callto:7183134643">718-313-4643</a></p>
+                            <p><span>📧 Email</span><a href="mailto: rentals@Diraleads.com">rentals@Diraleads.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -360,6 +359,7 @@ if (isset($livedata)) {
     #ser-tab {
         padding: 0;
     }
+
     ul.nav.nav-pills {
         background: transparent !important;
         display: flex;
@@ -391,7 +391,6 @@ if (isset($livedata)) {
         background: #a27107;
         color: white;
     }
-
 </style>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
