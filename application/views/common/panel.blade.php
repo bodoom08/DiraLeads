@@ -129,8 +129,7 @@
                             </ul>
                             <h4>Subscription</h4>
                             <ul>
-                                <li><a href="{{ site_url('subscription/user') }}"><i class="flaticon-financial"></i>My
-                                        Subcription</a></li>
+                                <li><a href="{{ site_url('subscription/user') }}"><i class="flaticon-financial"></i>My Email Preferences</a></li>
                                 {{-- <li><a href="preferences"><i class="flaticon-heart"></i>My Preferences</a></li> --}}
                                 <!-- <li><a href="{{ site_url('pricing/custom_pricing') }}"><i class="flaticon-financial"></i>Subscribe
                                             New Plan</a></li> -->

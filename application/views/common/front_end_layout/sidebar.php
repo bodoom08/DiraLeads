@@ -12,7 +12,7 @@
     <h4>Subscription</h4>
     <ul>
         <!-- <li><a href="<?php echo site_url('subscription'); ?>"><i class="flaticon-financial"></i>My Subscribtions</a></li> -->
-        <li class="<?php if(uri_string() == 'subscription/user') {echo "active";} ?>"><a href="<?php echo site_url('subscription/user'); ?>"><i class="flaticon-financial"></i>My Subscribtions</a></li>
+        <li class="<?php if(uri_string() == 'subscription/user') {echo "active";} ?>"><a href="<?php echo site_url('subscription/user'); ?>"><i class="flaticon-financial"></i>My Email Preferences</a></li>
         <!-- <li><a href="preferences"><i class="fa fa-gear"></i>My Preferences</a></li> -->
         <!-- <li><a href="preferences"><i class="flaticon-heart"></i>My Favorites</a></li> -->
         <!-- <li ><a href="<?php echo site_url('pricing/custom_pricing'); ?>"><i class="flaticon-financial"></i>Subscribe For A New Plan</a></li> -->
