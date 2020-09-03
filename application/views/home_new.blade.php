@@ -540,6 +540,7 @@ if (isset($livedata)) {
                         } else {
                             $('#frmerror').html('').hide();
                             $('input, textarea').val('');
+                            toastr.success('Your message was sent successfully!');
                         }
 
                         $(button).text(normal).attr('disabled', false);
