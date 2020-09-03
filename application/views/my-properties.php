@@ -27,7 +27,8 @@ $this->load->view('common/front_end_layout/top', [
 
                             <div class="col-md-12 subs-sec">
                                 <h3 class="heading" style="border-bottom:0px;"> My Rentals</h3>
-                                <a href="<?php echo site_url('/rental'); ?>">Add New Rental</a>
+                                <a class="new-rental-button" href="<?php echo site_url('/rental'); ?>">Add New Rental</a>
+                                <a class="new-rental-plus" href="<?php echo site_url('/rental'); ?>">+</a>
                             </div>
                             <div class="explore-content-box new">
                                 <div class="container-fluid">
