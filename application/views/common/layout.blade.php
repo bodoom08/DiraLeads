@@ -219,7 +219,8 @@
                                 @php $menu['url'] = '/'; @endphp
                                 @endif
 
-                                <a href="{{ $menu['url'] }}">{{ ucfirst(strtolower($menu['title']))}}</a>
+                                <a href="{{ $menu['url'] }}">{{ $menu['title']}}</a>
+                                <!-- <a href="{{ $menu['url'] }}">{{ ucfirst(strtolower($menu['title']))}}</a> -->
                             </li>
                             @endforeach
                         </ul>
