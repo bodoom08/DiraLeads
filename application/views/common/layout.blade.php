@@ -21,6 +21,19 @@
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/styles.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/responsive.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ site_url('assets/css/mystyles.css') }}">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-148732850-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-148732850-1');
+    </script>
 </head>
 
 <body class="@if ( isset($slug)){{$slug}}@endif">
