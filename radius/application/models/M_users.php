@@ -190,11 +190,11 @@ class M_users extends CI_Model
 
         $email = isset($email) ? $email : '';
 
-        if ($email && $this->db->where('email', $email)->count_all_results('agents') > 0 || !$email && $this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
+        if ($this->db->where('email', $email)->or_where('mobile', $mobile)->count_all_results('agents') > 0) {
             return ['type' => 'warning', 'text' => 'Email or mobile no already exist!'];
         }
 
-        if ($name && $mobile) {
+        if ($name && $email && $mobile) {
             $token = bin2hex(random_bytes(16));
 
             $this->db->insert('agents', [
