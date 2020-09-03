@@ -1067,7 +1067,7 @@ $this->load->view('common/top', [
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
+                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add seasonal price rule...</a>
                                                                             <div class="rule"></div>
                                                                         </div>
                                                                         <div class="form-group">
