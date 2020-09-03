@@ -394,7 +394,7 @@ if (isset($livedata)) {
 </style>
 
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
-<script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script>
+<!-- <script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script> -->
 <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>

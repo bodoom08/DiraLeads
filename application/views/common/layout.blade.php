@@ -240,11 +240,11 @@
 
     @stack('scripts')
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.js"></script>
     <script src="{{ site_url('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ site_url('/assets/js/app.js') }}"></script>
-    
-                    
+
+
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
@@ -288,8 +288,7 @@
                     else
                         toastr.success(data.message);
                 },
-                error: function() {
-                },
+                error: function() {},
                 complete: function() {
                     console.log('complete');
                 }
@@ -335,4 +334,5 @@
         }
     </script>
 </body>
+
 </html>

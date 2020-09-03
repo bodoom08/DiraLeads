@@ -18,7 +18,7 @@ if (isset($livedata)) {
 @endsection
 
 @push('scripts')
-<script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script>
+<!-- <script src="http://demo.tinywall.net/numscroller/numscroller-1.0.js"></script> -->
 <script type="text/javascript">
     $slug = '<?php echo $slug; ?>';
     scrollto = false;
