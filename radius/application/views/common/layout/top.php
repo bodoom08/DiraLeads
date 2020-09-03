@@ -7,7 +7,7 @@
 <html lang="en">
 
 <head>
-    <title><?php echo html_escape($title); ?> | <?php echo html_escape(RADIUS); ?></title>
+    <title><?php echo isset($title) && html_escape($title) != 'Home' ? html_escape($title) . ' | ' . html_escape(RADIUS) : html_escape(RADIUS); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
     <?php $this->load->view('common/styles'); ?>

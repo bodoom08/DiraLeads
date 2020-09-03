@@ -19,7 +19,8 @@ class Login extends MOBO_Controller
 				redirect('dashboard');
 			}
 		} else {
-			$this->load->view('login');
+			$data['title'] = 'Login';
+			$this->load->view('login', $data);
 		}
 	}
 
@@ -33,7 +34,8 @@ class Login extends MOBO_Controller
 				redirect('dashboard');
 			}
 		} else {
-			$this->load->view('login-user');
+			$data['title'] = 'Login';
+			$this->load->view('login-user', $data);
 		}
 	}
 
