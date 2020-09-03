@@ -954,7 +954,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                             <div role="tabpanel" class="tab-pane" id="content">
                                                 <div class="design-process-content">
-                                                    <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
+                                                    <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist" >
                                                         <li role="presentation9" class="customCalender active mr-3">
                                                             <a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab">
                                                                 <p>My Rental is available all year round</p>

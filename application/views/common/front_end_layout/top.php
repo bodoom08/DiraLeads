@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <?php $this->load->view('common/styles'); ?>
-    <link rel="stylesheet" type="text/css" href="assets/css/styles.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
 </head>
 
 <body>
