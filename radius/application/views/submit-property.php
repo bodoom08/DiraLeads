@@ -720,9 +720,9 @@ $this->load->view('common/top', [
                                                                             <?php
                                                                             extract($_GET);
                                                                             if (isset($userid_for)) { ?>
-                                                                                <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>" <?php echo ($value['id'] == $userid_for) ? 'selected' : ''; ?>><?php echo $value['name'] ?></option>
+                                                                                <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>" <?php echo ($value['id'] == $userid_for) ? 'selected' : ''; ?>><?php echo $value['id'] ?></option>
                                                                             <?php } else { ?>
-                                                                                <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $value['name'] ?></option>
+                                                                                <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>"><?php echo $value['id'] ?></option>
                                                                             <?php } ?>
                                                                         <?php endforeach; ?>
                                                                     </select>
