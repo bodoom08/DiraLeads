@@ -2343,7 +2343,12 @@ ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon:after {
   background: none;
 }
 ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon li {
+  margin: 0 !important;
+  width: 50%;
   padding-left: 0px;
+}
+ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon li p {
+  text-align: center;
 }
 .process-model li.customCalender::after,
 .process-model li.costomSession::after {
@@ -2956,9 +2961,12 @@ label.custom-control-label {
   .process-model {
     margin: 5px auto 5px;
   }
-  .design-process-content ul.nav-tabs.process-model li.active a p {
+  .design-process-content ul.nav-tabs.process-model li {
+    margin: 0 !important;
+  }
+  .design-process-content ul.nav-tabs.process-model li a p {
     padding-left: 4px;
-    font-size: 7px;
+    font-size: 10px;
   }
   .dashboard-message {
     padding: 10px;
@@ -4125,5 +4133,12 @@ img {
   }
   .subs-sec a.new-rental-plus {
     display: block;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  ul.nav.nav-tabs.process-model.more-icon-preocess.calender_icon li {
+    width: 100% !important;
+    margin: 10px 0 !important;
   }
 }
