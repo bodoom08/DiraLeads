@@ -1,7 +1,6 @@
 @extends('common.layout')
 
 @section('content')
-
 <!-- Banner Section -->
 <div class="innerbanner">
 	<img src="assets/images/owners-banner.jpg" alt="Banner" class="fullimg">

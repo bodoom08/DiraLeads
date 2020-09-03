@@ -61,7 +61,8 @@ class Dashboard extends CI_Controller
             $no_of_sold_property        = $no_of_sold_property->nos;
             $bookmarked                 = $bookmarked->nos;
             $no_of_views                = $no_of_views;
-            $this->load->view('dashboard', compact('active_listing', 'subscribed_for_packages', 'no_of_sold_property', 'bookmarked', 'no_of_views', 'my_properties'));
+            $title = 'Dashboard';
+            $this->load->view('dashboard', compact('active_listing', 'subscribed_for_packages', 'no_of_sold_property', 'bookmarked', 'no_of_views', 'my_properties', 'title'));
             // }
         } else {
             redirect('login');

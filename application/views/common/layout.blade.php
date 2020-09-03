@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>{{ CFG_TITLE }}</title>
+    <title><?php echo html_escape($title) != 'Home' ? html_escape($title).' | '.html_escape(CFG_TITLE) : html_escape(CFG_TITLE); ?></title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
