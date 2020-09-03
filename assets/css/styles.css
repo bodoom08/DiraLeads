@@ -2136,6 +2136,13 @@ div#Properties-popup .carousel-item img {
   color: #a27107;
   font-weight: 600;
 }
+.subs-sec a.new-rental-button {
+  display: block;
+}
+.subs-sec a.new-rental-plus {
+  display: none;
+}
+
 .navbar-nav.offcanvas-navbar .dropdown-menu {
   left: -10px;
   font-size: 14px;
@@ -3939,6 +3946,8 @@ img {
   margin-top: 100px;
 }
 
+
+
 /* For desktop */
 /*
 @media only screen and (max-width: 768px) {
@@ -4107,5 +4116,14 @@ img {
 @media only screen and (min-width: 1001px) {
   .banner-text {
     top: 20% !important;
+  }
+}
+
+@media only screen and (max-width: 404px) {
+  .subs-sec a.new-rental-button {
+    display: none;
+  }
+  .subs-sec a.new-rental-plus {
+    display: block;
   }
 }
