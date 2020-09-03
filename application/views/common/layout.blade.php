@@ -131,7 +131,7 @@
         </div>
         <div class="banner-text w-100">
             <p class="primary-text text-center">The Jewish short-term rental marketplace</p>
-            <p class="secondary-text text-center">Connecting renters with property owners for short-term stays in</p>
+            <p class="secondary-text text-center">Connecting renters with property owners for brief stays in</p>
             <p class="secondary-text text-center">heimishe neighborhoods worldwide</p>
         </div>
 
