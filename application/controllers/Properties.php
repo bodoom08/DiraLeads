@@ -14,7 +14,8 @@ class Properties extends MOBO_Controller
     //*
     public function index()
     {
-        $this->load->view('maintenance');
+        $data['title'] = 'Properties';
+        $this->load->view('maintenance', $data);
     }
     /**/
 
@@ -46,7 +47,7 @@ class Properties extends MOBO_Controller
             ->set_content_type('application/json')
             ->set_output(json_encode($this->M_properties->getAllDevlopment()));
     }
-    
+
 
     public function map()
     {

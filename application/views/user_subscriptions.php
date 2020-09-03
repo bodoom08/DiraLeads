@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
 $this->load->view('common/front_end_layout/top', [
-    'title' => 'My Subscriptions'
+    'title' => 'Email Preferences'
 ]);
 ?>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" />
