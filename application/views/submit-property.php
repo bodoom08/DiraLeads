@@ -1673,7 +1673,7 @@ $this->load->view('common/front_end_layout/top', [
                                             <div>
                                                 <label class="font-weight-bold">Date & Price</label>
                                                 <ul id="datePriceSpec">
-                                                    <li>Price: &nbsp;<label></label></li>
+                                                    <li><label></label></li>
                                                     <li>Weekend Type: &nbsp;<label></label></li>
                                                     <li style="display:none;"><label>Weekend only</label></li>
                                                 </ul>
@@ -2254,7 +2254,7 @@ $this->load->view('common/front_end_layout/top', [
 
             dailyPrice = document.getElementById('days').value ? `Daily: $${document.getElementById('days').value} ` : '';
             weekendPrice = document.getElementById('weekend').value ? `Weekend: $${document.getElementById('weekend').value} ` : '';
-            weeklyPrice = document.getElementById('weekly').value ? `'Weekly: $${document.getElementById('weekly').value} ` : '';
+            weeklyPrice = document.getElementById('weekly').value ? `Weekly: $${document.getElementById('weekly').value} ` : '';
             monthlyPrice = document.getElementById('monthly').value ? `Monthly: $${document.getElementById('monthly').value}  ` : '';
             $('#datePriceSpec li label')[0].innerHTML = dailyPrice + weekendPrice + weeklyPrice + monthlyPrice;
 
