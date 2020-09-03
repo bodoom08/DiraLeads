@@ -258,7 +258,6 @@
     <script src="{{ site_url('/assets/js/bootstrap.min.js') }}"></script>
     <script src="{{ site_url('/assets/js/app.js') }}"></script>
 
-
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {

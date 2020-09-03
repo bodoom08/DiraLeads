@@ -17,11 +17,8 @@
 @section('content')
 <!--  -->
 <div class="position-relative w-100">
-	<!-- <div class="bg-diraleads">
-		<img src="{{ site_url('assets/maintenance/images/bg04.webp')}}" />
-	</div> -->
 
-<div class="size1 overlay1 bg-img1" style="background-image: url({{ site_url('assets/maintenance/images/bg04.webp') }})">
+	<div class="size1 overlay1 bg-img1" style="background-image: url({{ site_url('assets/maintenance/images/bg04.webp') }})">
 		<!--  -->
 		<div class="size1 flex-col-c-m p-l-15 p-r-15 p-t-50 p-b-50">
 			<h3 class="l1-txt1 txt-center p-b-25">
