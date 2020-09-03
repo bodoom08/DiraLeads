@@ -1317,7 +1317,7 @@ $this->load->view('common/front_end_layout/top', [
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <label for="seasonRate">Seaspnal Rates</label>
+                                            <label for="seasonRate">Seasonal Rates</label>
                                             <select class="form-control" name="weekend_type" id="seasonRate">
                                                 <option value="daily">Daily</option>
                                                 <option value="fixed">Fixed</option>
