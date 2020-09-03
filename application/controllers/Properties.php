@@ -14,7 +14,7 @@ class Properties extends MOBO_Controller
     //*
     public function index()
     {
-        $data['title'] = 'Properties';
+        $data['title'] = 'Rentals';
         $this->load->view('maintenance', $data);
     }
     /**/
