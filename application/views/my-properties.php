@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
 $this->load->view('common/front_end_layout/top', [
-    'title' => 'My Properties'
+    'title' => 'My Rentals'
 ]);
 ?>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
