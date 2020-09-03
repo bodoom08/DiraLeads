@@ -23,19 +23,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-
-                    <!--      @foreach ($header_menu as $menu)
-                            @if ($menu['parent_menu_id'] == 0)    
-                            <li class="nav-item {{ $menu['url'] == current_url() ? 'active' : '' }}">
-                            @if($menu['title'] == 'Properties')
-                                 <a href="{{ site_url($menu['url'])}}?for=short%20term%20rent" class="nav-link">{{ $menu['title'] }}</a>
-                            @else
-                                <a href="{{ site_url($menu['url']) }}" class="nav-link">{{ $menu['title'] }}</a>
-                            @endif
-                            </li>
-                            @endif
-                            @endforeach -->
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
@@ -45,9 +32,6 @@
                             <a class="dropdown-item" href="/owners">The Owner's Perch</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>

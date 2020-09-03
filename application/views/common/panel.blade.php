@@ -101,9 +101,7 @@
                         <div class="dashboard-inner">
                             <h4>Main</h4>
                             <ul>
-                                <li class="<?php if (site_url('dashboard') == site_url('dashboard')) {
-                                                echo "active";
-                                            } ?>"><a href="{{ site_url('dashboard') }}"><i class="flaticon-dashboard"></i> Dashboard</a></li>
+                                <li class="active"><a href="{{ site_url('dashboard') }}"><i class="flaticon-dashboard"></i> Dashboard</a></li>
                                 <li class=""><a href="<?php echo site_url('favourites'); ?>"><i class="flaticon-heart"></i> Favourites</a></li>
                             </ul>
 
@@ -168,9 +166,7 @@
                     <div class="popup-slider-text">
                         <div class="inner-slider-text">
                             <div class="content-text contentText">
-
                             </div>
-
 
                             <div class="content-text">
                                 <h5>Property Details</h5>
