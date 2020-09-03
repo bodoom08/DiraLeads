@@ -37,17 +37,6 @@
                     @php
                     $header_menu = get_menu('main');
                     @endphp
-                    <!--      @foreach ($header_menu as $menu)
-                            @if ($menu['parent_menu_id'] == 0)    
-                            <li class="nav-item {{ $menu['url'] == current_url() ? 'active' : '' }}">
-                            @if($menu['title'] == 'Properties')
-                                 <a href="{{ site_url($menu['url'])}}?for=short%20term%20rent" class="nav-link">{{ $menu['title'] }}</a>
-                            @else
-                                <a href="{{ site_url($menu['url']) }}" class="nav-link">{{ $menu['title'] }}</a>
-                            @endif
-                            </li>
-                            @endif
-                            @endforeach -->
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,9 +47,6 @@
                             <a class="dropdown-item" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's Perch</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
@@ -120,19 +106,23 @@
                                             } ?>"><a href="{{ site_url('dashboard') }}"><i class="flaticon-dashboard"></i> Dashboard</a></li>
                                 <li class=""><a href="<?php echo site_url('favourites'); ?>"><i class="flaticon-heart"></i> Favourites</a></li>
                             </ul>
+
                             <h4>Property</h4>
                             <ul>
-                                <li><a href="{{ site_url('my_rentals') }}"><i class="flaticon-apartment-1"></i>My
-                                        Rentals</a></li>
-                                <!-- <li><a href="{{ site_url('property') }}"><i class="flaticon-plus"></i>Submit
-                                            Property</a></li> -->
+                                <li><a href="{{ site_url('my_rentals') }}"><i class="flaticon-apartment-1"></i>My Rentals</a></li>
                             </ul>
+
                             <h4>Subscription</h4>
                             <ul>
-                                <li><a href="{{ site_url('subscription/user') }}"><i class="flaticon-financial"></i>My Email Preferences</a></li>
+                                <li>
+                                    <a href="{{ site_url('subscription/user') }}">
+                                        <div class="d-flex justify-content-between">
+                                            <i class="flaticon-financial"></i>
+                                            <div class="text-left d-flex align-items-center" style="width: calc(100% - 50px);">My Email Preferences</div>
+                                        </div>
+                                    </a>
+                                </li>
                                 {{-- <li><a href="preferences"><i class="flaticon-heart"></i>My Preferences</a></li> --}}
-                                <!-- <li><a href="{{ site_url('pricing/custom_pricing') }}"><i class="flaticon-financial"></i>Subscribe
-                                            New Plan</a></li> -->
                             </ul>
                             <h4>Account</h4>
                             <ul>

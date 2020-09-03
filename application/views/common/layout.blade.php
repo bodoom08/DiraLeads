@@ -45,9 +45,6 @@
                             <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">The Owner's Perch</a>
                         </div>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
-                    </li> -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
