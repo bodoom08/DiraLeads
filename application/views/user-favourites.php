@@ -35,7 +35,7 @@ $this->load->view('common/front_end_layout/top', [
                         <div class="dashboard-list">
                             <div class="row">
                              <div class="col-md-8">
-                             <h3 class="heading" style="border-bottom:0px;"> User Favourites</h3>
+                             <h3 class="heading" style="border-bottom:0px;"> User Favorites</h3>
                              </div>
                              <div class="col-md-4">
                              <div class="pull-right">

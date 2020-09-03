@@ -102,7 +102,7 @@
                             <h4>Main</h4>
                             <ul>
                                 <li class="active"><a href="{{ site_url('dashboard') }}"><i class="flaticon-dashboard"></i> Dashboard</a></li>
-                                <li class=""><a href="<?php echo site_url('favourites'); ?>"><i class="flaticon-heart"></i> Favourites</a></li>
+                                <li class=""><a href="<?php echo site_url('favourites'); ?>"><i class="flaticon-heart"></i> Favorites</a></li>
                             </ul>
 
                             <h4>Property</h4>
