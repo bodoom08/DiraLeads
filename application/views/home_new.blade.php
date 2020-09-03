@@ -262,7 +262,7 @@ if (isset($livedata)) {
             <div class="col-lg-12 col-md-12 col-12">
                 <div class="button-sec">
                     @if(isset($_SESSION['id']))
-                    @php $href = site_url('/pricing/pricing_pref');@endphp
+                    @php $href = site_url('/subscription/user');@endphp
                     @else
                     @php $href = site_url('/login');@endphp
                     @endif
