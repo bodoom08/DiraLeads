@@ -1,4 +1,4 @@
-<div class="dashboard-inner">
+<div class="dashboard-inner"  style="font-family: Poppins,sans-serif;">
     <h4>Main</h4>
     <ul>
         <li class=""><a href="<?php echo site_url('dashboard'); ?>"><i class="flaticon-dashboard"></i> Dashboard</a></li>
@@ -6,7 +6,7 @@
     </ul>
     <h4>Property</h4>
     <ul>
-        <li class="<?php if(uri_string() == 'my_properties') {echo "active";} ?>"><a href="<?php echo site_url('my_rentals'); ?>"><i class="flaticon-apartment-1"></i>My Rentals</a></li>
+        <li class="<?php if(uri_string() == 'my_rentals') {echo "active";} ?>"><a href="<?php echo site_url('my_rentals'); ?>"><i class="flaticon-apartment-1"></i>My Rentals</a></li>
         <!-- <li class="<?php if(uri_string() == 'property') {echo "active";}  ?>"><a href="<?php echo site_url('property'); ?>"><i class="flaticon-plus"></i>Submit New Property</a></li> -->
     </ul>
     <h4>Subscription</h4>

@@ -42,38 +42,12 @@ $this->load->view('common/front_end_layout/top', [
 
 
                                                 <div class="row">
-
-                                                    <!-- <div class="col-lg-4 col-md-4">
-                                                        <div class="form-group name">
-                                                            <label>First Name</label>
-                                                            <input type="text" name="fname" class="form-control" placeholder="Enter First Name" value="<?php echo $userinfo->first_name; ?>" disabled>
-                                                        </div>
-                                                    </div> -->
-                                                    <!-- <div class="col-lg-4 col-md-4">
-                                                        <div class="form-group name">
-                                                            <label>Second Name</label>
-                                                            <input type="text" name="sname" class="form-control" placeholder="Enter Name" value="<?php echo $userinfo->name; ?>" disabled>
-                                                        </div>
-                                                    </div> -->
                                                     <div class="col-lg-6 col-md-6">
                                                         <div class="form-group name">
                                                             <label>Name</label>
                                                             <input type="text" name="name" class="form-control" placeholder="Enter Name" value="<?php echo $_SESSION['name']; ?>" disabled>
                                                         </div>
                                                     </div>
-                                                    <!--  <div class="col-lg-6 col-md-6">
-                                                    <div class="form-group name">
-                                                           
-                                                                <label>Country Code</label>
-                                                                <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;" disabled>
-                                                                    <option value="">Select Country Code</option>
-                                                                    <?php foreach ($countries as $country) { ?>
-                                                                        <option value="<?php echo '+' . $country->phonecode; ?>" <?php echo ($userinfo->country_code == '+' . $country->phonecode) ? 'selected' : ''; ?>><?php echo $country->nicename . '(+' . $country->phonecode . ')'; ?></option>
-                                                                    <?php } ?>
-                                                                </select>
-                                                           
-                                                    </div>
-                                                </div> -->
                                                     <div class="col-lg-6 col-md-6">
                                                         <label>Phone Number</label>
                                                         <input type="text" class="form-control" placeholder="Phone" name="mobile" value="<?php echo $userinfo->country_code . ' ' . $_SESSION['mobile'] ?>" disabled>
