@@ -16,7 +16,7 @@
             <a href="<?php echo site_url('subscription/user'); ?>">
                 <div class="d-flex justify-content-between">
                     <i class="flaticon-financial"></i>
-                    <div class="text-left d-flex align-items-center" style="width: calc(100% - 50px);">My Email Preferences</div>
+                    <div class="text-left d-flex align-items-center" style="width: calc(100% - 65px);">My Email Preferences</div>
                 </div>
             </a>
         </li>
