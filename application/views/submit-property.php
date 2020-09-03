@@ -148,6 +148,12 @@ $this->load->view('common/front_end_layout/top', [
         }
     }
 
+    @media only screen and (min-width: 768px) and (max-width: 1000px) {
+        .modal-content {
+            width: 90% !important;
+        }
+    }
+
     .event-model {
         width: 100% !important;
     }
