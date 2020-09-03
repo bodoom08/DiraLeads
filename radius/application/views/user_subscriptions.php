@@ -160,7 +160,10 @@ $this->load->view('common/top', [
         window.DT = $('#preferences-table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: "<?php echo site_url('subscription/json'); ?>"
+            ajax: "<?php echo site_url('subscription/json'); ?>",
+            language: {
+                emptyTable: "Coming Soon ..."
+            }
         });
     });
 
