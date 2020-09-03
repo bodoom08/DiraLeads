@@ -35,26 +35,27 @@ $this->load->view('common/front_end_layout/top', [
                         <div class="dashboard-list">
                             <div class="row">
                                 <div class="col-md-12 subs-sec">
-                                    <h3 class="heading" style="border-bottom:0px;"> My Subscriptions</h3>
+                                    <h3 class="heading" style="border-bottom:0px;"> My Email Preferences</h3>
                                 </div>
                             </div>
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
-                                    <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
+                                    <!-- <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>Name</th>
                                                 <th>Validity (days)</th>
                                                 <th>No Of Area</th>
-                                                <!-- <th>Price($)</th> -->
-                                                <th>Start Date</th>
-                                                <th>End Date</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        </tbody>
-                                    </table>
+                                                
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                    </table> -->
+                                    <p class="coming-soon">Coming Soon ...</p>
                                 </div>
                             </div>
                         </div>
@@ -189,3 +190,11 @@ $this->load->view('common/front_end_layout/top', [
         $('form[name="modify_package_form"]').submit();
     }
 </script>
+<style>
+    .coming-soon {
+        text-align: center;
+        margin-top: 20%;
+        font-size: 1.5rem;
+        line-height: 2;
+    }
+</style>

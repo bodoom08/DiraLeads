@@ -56,7 +56,7 @@ $this->load->view('common/top', [
                             <hr />
                             <div class="dashboard-message contact-2 bdr clearfix">
                                 <div class="table-responsive">
-                                    <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
+                                    <!-- <table id="preferences-table" class="table small table-striped dt-responsive" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>Package Name</th>
@@ -71,7 +71,8 @@ $this->load->view('common/top', [
                                         </thead>
                                         <tbody>
                                         </tbody>
-                                    </table>
+                                    </table> -->
+                                    <p class="coming-soon">Coming Soon ...</p>
                                 </div>
                             </div>
                         </div>
@@ -299,3 +300,11 @@ $this->load->view('common/top', [
         DT.ajax.reload();
     }
 </script>
+<style>
+    .coming-soon {
+        text-align: center;
+        margin-top: 20%;
+        font-size: 1.5rem;
+        line-height: 2;
+    }
+</style>
