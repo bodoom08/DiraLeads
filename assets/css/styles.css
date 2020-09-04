@@ -571,9 +571,6 @@ div#content5 {
   /* margin: 0 !important; */
   padding: 0;
 }
-.search-main .tabbing-sec .search-box ul li:last-child {
-  /* width: 50%; */
-}
 .search-main .tabbing-sec .search-box ul li .form-group label,
 .checkbox label {
   font-weight: 600;
@@ -2856,9 +2853,6 @@ label.custom-control-label {
   .gallery-sec:before {
     top: 20px;
   }
-  .search-box ul li {
-    /* width: 46%; */
-  }
   .my-header ul li a {
     line-height: 34px;
   }
@@ -3340,9 +3334,6 @@ td.fc-more-cell {
 }
 
 /*========My Css=======*/
-img {
-  /* max-width: 100%; */
-}
 .innerbanner {
   margin: 0px;
   padding: 0px;
