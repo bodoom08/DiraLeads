@@ -24,6 +24,39 @@ $header_menu = get_menu('main');
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/styles.min.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/responsive.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            setVisibleNavBar();
+
+            $(window).resize(function () {
+                setVisibleNavBar();
+            });
+        });
+
+        function setVisibleNavBar() {
+            
+            if ($(document).width() < 1200) {
+                    document.getElementById('about-diraleads-mobile').style = "display: block;";
+                    document.getElementById('about-diraleads-web').style = "display: none;";
+                } else {
+                    document.getElementById('about-diraleads-web').style = "display: block;";
+                    document.getElementById('about-diraleads-mobile').style = "display: none;";
+                    document.getElementById('about-diraleads-owner').style = "display: none;";
+                    document.getElementById('about-diraleads-renter').style = "display: none;";
+                }
+        }
+
+        function showAboutOptions() {
+            if ( document.getElementById('about-diraleads-owner').style.display == 'block') {
+                document.getElementById('about-diraleads-owner').style = "display: none;";
+                document.getElementById('about-diraleads-renter').style = "display: none;";
+            } else {
+                document.getElementById('about-diraleads-owner').style = "display: block;";
+                document.getElementById('about-diraleads-renter').style = "display: block;";
+            }
+        }
+
+    </script>
 </head>
 
 <body>
@@ -50,15 +83,28 @@ $header_menu = get_menu('main');
                             } ?>
                         <?php
                         } ?>-->
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/renters" style="font-family:'Raleway', sans-serif;">The Renter's View</a>
-                            <a class="dropdown-item" href="/owners" style="font-family:'Raleway', sans-serif;">The Owner's Perch</a>
+                            <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
+                            <a class="dropdown-item" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's Perch</a>
                         </div>
                     </li>
+                    <!-- Mobile View -->
+                    <li class="nav-item" id="about-diraleads-mobile">
+                        <a href="javascript:showAboutOptions()">
+                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-renter" style="display: none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-owner" style="display:none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Owner's View</a>
+                    </li>
+                    <!--  -->
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="javascript:void(0);">Tour Neighborhoods</a>
                     </li> -->
@@ -69,10 +115,9 @@ $header_menu = get_menu('main');
                         <a class="nav-link" href="property">List Your Rental</a>
                     </li>
                     <?php if (empty($_SESSION['id'])) { ?>
-                        <li class="nav-item login">
+                        <li class="nav-item">
                             <a class="nav-link" href="<?php echo site_url('login') ?>">
                                 <img src="<?php echo site_url('assets/images/login.png'); ?>"> Login / Signup
-
                             </a>
                         </li>
 

@@ -88,4 +88,8 @@ class Test extends CI_Controller
     public function mark_sold() {
         exit(json_encode($this->M_property->mark_sold()));
     }
+
+    public function test(){
+        $this->load->view('test');
+    }
 }

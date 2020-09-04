@@ -9,6 +9,39 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <?php $this->load->view('common/styles'); ?>
     <link rel="stylesheet" type="text/css" href="assets/css/styles.min.css">
+    <script>
+        $(document).ready(function () {
+            setVisibleNavBar();
+
+            $(window).resize(function () {
+                setVisibleNavBar();
+            });
+        });
+
+        function setVisibleNavBar() {
+            
+            if ($(document).width() < 1200) {
+                    document.getElementById('about-diraleads-mobile').style = "display: block;";
+                    document.getElementById('about-diraleads-web').style = "display: none;";
+                } else {
+                    document.getElementById('about-diraleads-web').style = "display: block;";
+                    document.getElementById('about-diraleads-mobile').style = "display: none;";
+                    document.getElementById('about-diraleads-owner').style = "display: none;";
+                    document.getElementById('about-diraleads-renter').style = "display: none;";
+                }
+        }
+
+        function showAboutOptions() {
+            if ( document.getElementById('about-diraleads-owner').style.display == 'block') {
+                document.getElementById('about-diraleads-owner').style = "display: none;";
+                document.getElementById('about-diraleads-renter').style = "display: none;";
+            } else {
+                document.getElementById('about-diraleads-owner').style = "display: block;";
+                document.getElementById('about-diraleads-renter').style = "display: block;";
+            }
+        }
+
+    </script>
 </head>
 
 <body>
@@ -23,15 +56,28 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/renters">The Renter's View</a>
-                            <a class="dropdown-item" href="/owners">The Owner's Perch</a>
+                            <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
+                            <a class="dropdown-item" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's Perch</a>
                         </div>
                     </li>
+                    <!-- Mobile View -->
+                    <li class="nav-item" id="about-diraleads-mobile">
+                        <a href="javascript:showAboutOptions()">
+                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-renter" style="display: none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-owner" style="display:none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Owner's View</a>
+                    </li>
+                    <!--  -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
