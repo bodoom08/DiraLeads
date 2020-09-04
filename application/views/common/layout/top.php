@@ -101,7 +101,7 @@ $header_menu = get_menu('main');
                         <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
                     </li>
                     <li class="nav-item" id="about-diraleads-owner" style="display:none">
-                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Owner's View</a>
+                        <a class="nav-link" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's View</a>
                     </li>
                     <!--  -->
                     <!-- <li class="nav-item">

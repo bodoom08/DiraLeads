@@ -40,7 +40,7 @@
 
                     <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Why DiraLeads 
+                            Why DiraLeads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
@@ -50,14 +50,14 @@
                     <!-- Mobile View -->
                     <li class="nav-item" id="about-diraleads-mobile" style="display: none;">
                         <a class="dropdown-toggle" href="javascript:showAboutOptions()">
-                        Why DiraLeads 
+                            Why DiraLeads
                         </a>
                     </li>
                     <li class="nav-item" id="about-diraleads-renter" style="display: none">
                         <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
                     </li>
                     <li class="nav-item" id="about-diraleads-owner" style="display:none">
-                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Owner's View</a>
+                        <a class="nav-link" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's View</a>
                     </li>
                     <!--  -->
                     <li class="nav-item">
@@ -103,10 +103,10 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav offcanvas-navbar position-relative" id="user-menu-mobile" style="display: none;">
-                        <a class="dropdown-toggle" href="javascript:showUserOptions()">
-                            <img src="{{ site_url() }}/assets/img/avatar/user.png" width="20" alt="avatar">
-                            Hi, {{ explode(' ', $_SESSION['name'])[0] }}
-                        </a>
+                    <a class="dropdown-toggle" href="javascript:showUserOptions()">
+                        <img src="{{ site_url() }}/assets/img/avatar/user.png" width="20" alt="avatar">
+                        Hi, {{ explode(' ', $_SESSION['name'])[0] }}
+                    </a>
                 </ul>
                 <li class="nav-item" id="user-menu-dashboard" style="display:none">
                     <a class="nav-link" href="<?php echo site_url('dashboard'); ?>" style="font-family: Raleway, sans-serif;">Dashboard</a>
@@ -326,37 +326,37 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             setVisibleNavBar();
 
-            $(window).resize(function () {
+            $(window).resize(function() {
                 setVisibleNavBar();
             });
         });
 
         function setVisibleNavBar() {
-            
+
             if ($(document).width() < 1200) {
-                    document.getElementById('about-diraleads-mobile').style = "display: block;";
-                    document.getElementById('about-diraleads-web').style = "display: none;";
-                    document.getElementById('user-menu-mobile').style = "display: block;";
-                    document.getElementById('user-menu-web').style = "display: none;";
-                } else {
-                    document.getElementById('about-diraleads-web').style = "display: block;";
-                    document.getElementById('about-diraleads-mobile').style = "display: none;";
-                    document.getElementById('user-menu-mobile').style = "display: none;";
-                    document.getElementById('user-menu-web').style = "display: block;";
-                    document.getElementById('about-diraleads-owner').style = "display: none;";
-                    document.getElementById('about-diraleads-renter').style = "display: none;";
-                    document.getElementById('user-menu-dashboard').style = 'display: none;';
-                    document.getElementById('user-menu-rental').style = 'display: none;';
-                    document.getElementById('user-menu-profile').style = 'display: none;';
-                    document.getElementById('user-menu-logout').style = 'display: none;';
-                }
+                document.getElementById('about-diraleads-mobile').style = "display: block;";
+                document.getElementById('about-diraleads-web').style = "display: none;";
+                document.getElementById('user-menu-mobile').style = "display: block;";
+                document.getElementById('user-menu-web').style = "display: none;";
+            } else {
+                document.getElementById('about-diraleads-web').style = "display: block;";
+                document.getElementById('about-diraleads-mobile').style = "display: none;";
+                document.getElementById('user-menu-mobile').style = "display: none;";
+                document.getElementById('user-menu-web').style = "display: block;";
+                document.getElementById('about-diraleads-owner').style = "display: none;";
+                document.getElementById('about-diraleads-renter').style = "display: none;";
+                document.getElementById('user-menu-dashboard').style = 'display: none;';
+                document.getElementById('user-menu-rental').style = 'display: none;';
+                document.getElementById('user-menu-profile').style = 'display: none;';
+                document.getElementById('user-menu-logout').style = 'display: none;';
+            }
         }
 
         function showAboutOptions() {
-            if ( document.getElementById('about-diraleads-owner').style.display == 'block') {
+            if (document.getElementById('about-diraleads-owner').style.display == 'block') {
                 document.getElementById('about-diraleads-owner').style = "display: none;";
                 document.getElementById('about-diraleads-renter').style = "display: none;";
             } else {
@@ -378,7 +378,6 @@
                 document.getElementById('user-menu-logout').style = 'display: block';
             }
         }
-
     </script>
 </body>
 

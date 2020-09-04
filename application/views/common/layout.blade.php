@@ -68,7 +68,7 @@
                         <a class="nav-link" href="/renters">The Renter's View</a>
                     </li>
                     <li class="nav-item" id="about-diraleads-owner" style="display:none">
-                        <a class="nav-link" href="/renters">The Owner's View</a>
+                        <a class="nav-link" href="/owners">The Owner's View</a>
                     </li>
                     <!--  -->
                     <li class="nav-item">
