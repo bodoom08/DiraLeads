@@ -869,7 +869,7 @@ $this->load->view('common/front_end_layout/top', [
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSleep" name="sleep_number" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
+                                                                    <input type="number" id="sukkahSleep" name="sleep_number" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;width: 50%;">
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -960,7 +960,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                             <div role="tabpanel" class="tab-pane" id="content">
                                                 <div class="design-process-content">
-                                                    <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist" >
+                                                    <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
                                                         <li role="presentation9" class="customCalender active mr-3">
                                                             <a href="#sessional" aria-controls="sessional" role="tab" data-toggle="tab">
                                                                 <p>My Rental is available all year round</p>
