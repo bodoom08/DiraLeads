@@ -51,7 +51,7 @@
 
                     <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            Why DiraLeads 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
@@ -59,9 +59,9 @@
                         </div>
                     </li>
                     <!-- Mobile View -->
-                    <li class="nav-item" id="about-diraleads-mobile">
-                        <a href="javascript:showAboutOptions()">
-                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    <li class="nav-item" id="about-diraleads-mobile" style="display: none;">
+                        <a class="dropdown-toggle" href="javascript:showAboutOptions()">
+                        Why DiraLeads 
                         </a>
                     </li>
                     <li class="nav-item" id="about-diraleads-renter" style="display: none">
