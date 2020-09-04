@@ -38,6 +38,7 @@ class Page extends MOBO_Controller
 			$data['propertiea_counts'] = array_count_values($this->M_page->propertiesCount());
 			$this->load->view('neighborhood', $data);
 		} elseif ($this->slug == 'terms') {
+			$data['title'] = 'Terms';
 			$this->load->view('terms', $data);
 		} elseif ($this->slug == 'privacy') {
 			$this->load->view('privacy', $data);
