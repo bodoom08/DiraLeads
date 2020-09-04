@@ -131,22 +131,22 @@ class Webhook extends CI_Controller
             ->get()->result_array();
 
 
-        $data = json_encode($result);
-        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
-            // echo 'Unable to write the file';
-        } else {
-            // echo $data;
-        }
+        // $data = json_encode($result);
+        // if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
+        //     // echo 'Unable to write the file';
+        // } else {
+        //     // echo $data;
+        // }
         $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
 
-        if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
-            // echo 'Unable to write the file';
-        } else {
-            // echo $data;
-        }
+        // if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
+        //     // echo 'Unable to write the file';
+        // } else {
+        //     // echo $data;
+        // }
 
 
-        $owner_number = '+17606165259';
+        // $owner_number = '+17606165259';
 
         $voiceRes = new VoiceResponse();
 
