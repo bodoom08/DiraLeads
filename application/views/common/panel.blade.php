@@ -40,7 +40,7 @@
 
                     <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                            Why DiraLeads 
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
@@ -48,9 +48,9 @@
                         </div>
                     </li>
                     <!-- Mobile View -->
-                    <li class="nav-item" id="about-diraleads-mobile">
-                        <a href="javascript:showAboutOptions()">
-                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                    <li class="nav-item" id="about-diraleads-mobile" style="display: none;">
+                        <a class="dropdown-toggle" href="javascript:showAboutOptions()">
+                        Why DiraLeads 
                         </a>
                     </li>
                     <li class="nav-item" id="about-diraleads-renter" style="display: none">
@@ -82,7 +82,8 @@
                         color: #000 !important;
                     }
                 </style>
-                <ul class="navbar-nav offcanvas-navbar position-relative">
+                <!-- Mobile Responsive -->
+                <ul class="navbar-nav offcanvas-navbar position-relative" id="user-menu-web">
                     <div class="dropdown btns">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{{ site_url() }}/assets/img/avatar/user.png" width="20" alt="avatar">
@@ -91,7 +92,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                             <a class="dropdown-item" href="<?php echo site_url('my_rentals'); ?>">My Rentals</a>
-                            <a class="dropdown-item" href="<?php echo site_url('profile'); ?>">My profile</a>
+                            <a class="dropdown-item" href="<?php echo site_url('profile'); ?>">My Profile</a>
                             <a class="dropdown-item" href="<?php echo site_url('login/logout'); ?>">Logout</a>
                         </div>
                     </div>
@@ -101,6 +102,24 @@
                         </a>
                     </li>
                 </ul>
+                <ul class="navbar-nav offcanvas-navbar position-relative" id="user-menu-mobile" style="display: none;">
+                        <a class="dropdown-toggle" href="javascript:showUserOptions()">
+                            <img src="{{ site_url() }}/assets/img/avatar/user.png" width="20" alt="avatar">
+                            Hi, {{ explode(' ', $_SESSION['name'])[0] }}
+                        </a>
+                </ul>
+                <li class="nav-item" id="user-menu-dashboard" style="display:none">
+                    <a class="nav-link" href="<?php echo site_url('dashboard'); ?>" style="font-family: Raleway, sans-serif;">Dashboard</a>
+                </li>
+                <li class="nav-item" id="user-menu-rental" style="display:none">
+                    <a class="nav-link" href="<?php echo site_url('my_rentals'); ?>" style="font-family: Raleway, sans-serif;">My Rentals</a>
+                </li>
+                <li class="nav-item" id="user-menu-profile" style="display:none">
+                    <a class="nav-link" href="<?php echo site_url('profile'); ?>" style="font-family: Raleway, sans-serif;">My Profile</a>
+                </li>
+                <li class="nav-item" id="user-menu-logout" style="display:none">
+                    <a class="nav-link" href="<?php echo site_url('login/logout'); ?>" style="font-family: Raleway, sans-serif;">Logout</a>
+                </li>
                 @endif
             </div>
         </nav>
@@ -320,11 +339,19 @@
             if ($(document).width() < 1200) {
                     document.getElementById('about-diraleads-mobile').style = "display: block;";
                     document.getElementById('about-diraleads-web').style = "display: none;";
+                    document.getElementById('user-menu-mobile').style = "display: block;";
+                    document.getElementById('user-menu-web').style = "display: none;";
                 } else {
                     document.getElementById('about-diraleads-web').style = "display: block;";
                     document.getElementById('about-diraleads-mobile').style = "display: none;";
+                    document.getElementById('user-menu-mobile').style = "display: none;";
+                    document.getElementById('user-menu-web').style = "display: block;";
                     document.getElementById('about-diraleads-owner').style = "display: none;";
                     document.getElementById('about-diraleads-renter').style = "display: none;";
+                    document.getElementById('user-menu-dashboard').style = 'display: none;';
+                    document.getElementById('user-menu-rental').style = 'display: none;';
+                    document.getElementById('user-menu-profile').style = 'display: none;';
+                    document.getElementById('user-menu-logout').style = 'display: none;';
                 }
         }
 
@@ -335,6 +362,20 @@
             } else {
                 document.getElementById('about-diraleads-owner').style = "display: block;";
                 document.getElementById('about-diraleads-renter').style = "display: block;";
+            }
+        }
+
+        function showUserOptions() {
+            if (document.getElementById('user-menu-dashboard').style.display == 'block') {
+                document.getElementById('user-menu-dashboard').style = 'display: none';
+                document.getElementById('user-menu-rental').style = 'display: none';
+                document.getElementById('user-menu-profile').style = 'display: none';
+                document.getElementById('user-menu-logout').style = 'display: none';
+            } else {
+                document.getElementById('user-menu-dashboard').style = 'display: block';
+                document.getElementById('user-menu-rental').style = 'display: block';
+                document.getElementById('user-menu-profile').style = 'display: block';
+                document.getElementById('user-menu-logout').style = 'display: block';
             }
         }
 
