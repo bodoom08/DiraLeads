@@ -3957,15 +3957,16 @@ img {
 @media only screen and (max-width: 399px) {
   .banner-main .banner-text {
     padding: 10px;
+    top: 10%;
   }
   .banner-main .banner-text p {
     margin-bottom: 5px !important;
   }
   .banner-main .banner-text .primary-text {
-    font-size: 13px !important;
+    font-size: 22px !important;
   }
   .banner-main .banner-text .secondary-text {
-    font-size: 9px !important;
+    font-size: 15px !important;
   }
   ol.carousel-indicators {
     bottom: 0 !important;
@@ -3985,10 +3986,10 @@ img {
     margin-bottom: 5px !important;
   }
   .banner-main .banner-text .primary-text {
-    font-size: 18px !important;
+    font-size: 22px !important;
   }
   .banner-main .banner-text .secondary-text {
-    font-size: 13px !important;
+    font-size: 15px !important;
   }
 }
 @media only screen and (max-width: 768px) and (min-width: 600px) {
