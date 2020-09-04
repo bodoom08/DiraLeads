@@ -693,10 +693,11 @@ $this->load->view('common/front_end_layout/top', [
                                             <div role="tabpanel" class="tab-pane active" id="discover">
                                                 <div class="design-process-content">
                                                     <div class="tabbbing-one">
+                                                        <h5 class="mb-3 font-weight-bold">Add as much detail as possible so that renters get the info they need to book your property faster</h5>
                                                         <ul class="row">
                                                             <li class="col-lg-6">
                                                                 <div class="form-group">
-                                                                    <label for="propertyType">Property Type *</label>
+                                                                    <label for="propertyType">Property Type</label>
                                                                     <select class="form-control" name="property_type" id="propertyType">
                                                                         <option value="apartment">Apartment</option>
                                                                         <option value="basement">Basement</option>
@@ -709,7 +710,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                                             <li class="col-lg-6">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Address *</label>
+                                                                    <label for="exampleFormControlSelect1">Address</label>
                                                                     <input type="text" id="geoLocation" name="street" rows="2" class="form-control md-textarea" placeholder="" />
                                                                 </div>
                                                             </li>
@@ -717,7 +718,7 @@ $this->load->view('common/front_end_layout/top', [
                                                             <li class="col-lg-6">
 
                                                                 <div class="form-group">
-                                                                    <label for="neighborhood">Neighborhood *</label>
+                                                                    <label for="neighborhood">Neighborhood</label>
                                                                     <select class="form-control" name="area_id" id="neighborhood">
                                                                         <option value="">--select--</option>
                                                                         <?php foreach ($areas as $key => $value) : ?>
@@ -730,7 +731,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                                             <li class="col-lg-6" id="neighborhood_other_container" style="display:none;">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Neighborhood other*</label>
+                                                                    <label for="exampleFormControlSelect1">Neighborhood other</label>
                                                                     <input id="neighborhood_other" type="text" placeholder="Neighborhood" class="form-control" name="value[area_other]">
                                                                 </div>
                                                             </li>
@@ -739,7 +740,7 @@ $this->load->view('common/front_end_layout/top', [
                                                         <ul class="row">
                                                             <li class="col-lg-4 ">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Bedrooms *</label>
+                                                                    <label for="exampleFormControlSelect1">Bedrooms</label>
                                                                     <input type="hidden" name="attribute_id[bedrooms]" value="1">
                                                                     <input id="bedrooms" type="number" placeholder="Bedrooms" class="form-control" name="value[bedrooms]">
                                                                 </div>
@@ -747,7 +748,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                                             <li class="col-lg-4">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Bathrooms *</label>
+                                                                    <label for="exampleFormControlSelect1">Bathrooms</label>
                                                                     <input type="hidden" name="attribute_id[bathrooms]" value="2">
                                                                     <input type="number" id="bathrooms" placeholder="Bathrooms" class="form-control" name="value[bathrooms]">
                                                                 </div>
@@ -755,7 +756,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                                             <li class="col-lg-4" id="floorContainer">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Floor Number *</label>
+                                                                    <label for="exampleFormControlSelect1">Floor Number</label>
                                                                     <select class="form-control" id="floorNumber" name="value[florbas]" id="florbas">
                                                                         <option value="">--Select--</option>
                                                                         <option value="0">Basement</option>
@@ -778,7 +779,7 @@ $this->load->view('common/front_end_layout/top', [
                                                         <ul class="row">
                                                             <li class="col-lg-12">
                                                                 <div class="form-group">
-                                                                    <label for="exampleFormControlSelect1">Description *</label>
+                                                                    <label for="exampleFormControlSelect1">Description: (60 character minimum)</label>
                                                                     <textarea type="text" id="description" name="property_desc" rows="2" class="form-control md-textarea" placeholder="Write a short description of your rental - Minimum 60 letters"></textarea>
                                                                 </div>
                                                             </li>
@@ -796,6 +797,7 @@ $this->load->view('common/front_end_layout/top', [
                                             <div role="tabpanel" class="tab-pane" id="strategy">
                                                 <div class="design-process-content">
                                                     <div class="tabbbing-one two">
+                                                        <h5 class="font-weight-bold mb-3">Highlight all amentities and extras to allay any niggling concerns potential renters may have</h5>
                                                         <ul class="amnity">
                                                             <li>
                                                                 <h4>Indoor amenities</h4>
@@ -927,6 +929,15 @@ $this->load->view('common/front_end_layout/top', [
                                             <div role="tabpanel" class="tab-pane" id="optimization">
                                                 <div class="design-process-content">
                                                     <div class="tabbbing-one two">
+                                                        <h5 class="font-weight-bold mb-3">Showcase your property from multiple angles to entice renters to book ASAP</h5>
+                                                        <p>Completely customizable set-your-price options include:</p>
+                                                        <ul class="pl-5 mb-5">
+                                                            <li style="list-style: circle !important;"><p><strong>Daily</strong>&nbsp;pricing (charge a set price per day)</p></li>
+                                                            <li style="list-style: circle !important;"><p><strong>Weekly</strong>&nbsp;pricing (charge a set price per week)</p></li>
+                                                            <li style="list-style: circle !important;"><p><strong>Monthly</strong>&nbsp;pricing (charge a set price per month)</p></li>
+                                                            <li style="list-style: circle !important;"><p><strong>Weekend</strong>&nbsp;pricing (choose which days to include i.e. Friday-Saturday or Thursday-Monday)</p></li>
+                                                            <li style="list-style: circle !important;"><p><strong>Seasonal</strong>&nbsp;pricing (input a higher base price that kicks in automatically during peak seasons)</p></li>
+                                                        </ul>
                                                         <ul class="row">
                                                             <li class="col-lg-12">
                                                                 <div class="form-group">
@@ -969,7 +980,7 @@ $this->load->view('common/front_end_layout/top', [
 
                                                         <li role="presentation8" class="customSession">
                                                             <a href="#yearly" aria-controls="yearly" role="tab" data-toggle="tab">
-                                                                <p>My Rental is seasonal</p>
+                                                                <p>My Rental is available seasonally</p>
                                                             </a>
                                                         </li>
                                                     </ul>
@@ -981,33 +992,32 @@ $this->load->view('common/front_end_layout/top', [
                                                                     <li class="col-lg-10 col-md-10 m-auto">
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                <label for="days">Days ($)</label>
-                                                                                <input type="number" name="prices[days]" id="days" class="datedays" placeholder="Days *">
+                                                                                <label for="days">Price per day</label>
+                                                                                <input type="number" name="prices[days]" id="days" class="datedays" placeholder="$____Daily">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                <label for="weekend">Weekend ($)</label>
-                                                                                <input type="number" name="prices[weekend]" id="weekend" class="weekenddays" placeholder="Weekend *">
+                                                                                <label for="weekend">Price per weekend</label>
+                                                                                <input type="number" name="prices[weekend]" id="weekend" class="weekenddays" placeholder="$___Per weekend">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                <label for="weekly">Weekly ($)</label>
-                                                                                <input type="number" name="prices[weekly]" id="weekly" class="weekly" placeholder="Weekly *">
+                                                                                <label for="weekly">Price per week</label>
+                                                                                <input type="number" name="prices[weekly]" id="weekly" class="weekly" placeholder="$____Weekly">
                                                                             </div>
                                                                             <div class="form-group daily-container col-lg-3 col-md-6 p-1">
-                                                                                <label for="monthly">Monthly ($)</label>
-                                                                                <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="Monthly *">
+                                                                                <label for="monthly">Price per month</label>
+                                                                                <input type="number" name="prices[monthly]" id="monthly" class="monthly" placeholder="$____Monthly">
                                                                             </div>
                                                                         </div>
                                                                         <div class="price-container">
                                                                             <div class="form-group weekend-container">
-                                                                                <label for="weekendFrom">Weekend </label>
-                                                                                <label for="weekendFrom"> From</label>
+                                                                                <label for="weekendFrom">Weekends begin</label>
                                                                                 <select class="form-control" name="weekend_type[from]" id="weekendFrom">
                                                                                     <option value="3">Thursday</option>
                                                                                     <option value="4">Friday</option>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-group weekend-container">
-                                                                                <label for="weekendTo">Till</label>
+                                                                                <label for="weekendTo">Weekends end</label>
                                                                                 <select class="form-control" name="weekend_type[to]" id="weekendTo">
                                                                                     <option value="5">Motzei Shabbos</option>
                                                                                     <option value="6">Sunday</option>
@@ -1022,13 +1032,13 @@ $this->load->view('common/front_end_layout/top', [
 
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
-                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <label for=" manualPrivateNote">Additional information renters should know</label>
                                                                                 <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
 
                                                                         <div class="form-group">
-                                                                            <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule...</a>
+                                                                            <a href="javascript:void()" class="addRule" id="addSeasonPrice">Add seasonal price rule</a>
                                                                             <div class="seasonRule">
                                                                             </div>
                                                                         </div>
@@ -1047,12 +1057,12 @@ $this->load->view('common/front_end_layout/top', [
                                                                     <li class="col-lg-10 m-auto">
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
-                                                                                <label for=" manualPrivateNote">Private notes</label>
+                                                                                <label for=" manualPrivateNote">Additional information renters should know</label>
                                                                                 <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add seasonal price rule...</a>
+                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add seasonal price rule</a>
                                                                             <div class="rule"></div>
                                                                         </div>
                                                                         <div class="form-group">
@@ -1325,8 +1335,8 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="col-sm-6">
                                             <label for="seasonRate">Seasonal Rates</label>
                                             <select class="form-control" name="weekend_type" id="seasonRate">
-                                                <option value="daily">Daily</option>
-                                                <option value="fixed">Fixed</option>
+                                                <option value="daily">Daily Rates</option>
+                                                <option value="fixed">Fixed Rates</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6" id="seasonFixedPrice" style="display:none;">
@@ -1405,9 +1415,9 @@ $this->load->view('common/front_end_layout/top', [
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="fseasonRate">Seasonal Rates</label>
-                                            <select class="form-control" name="weekend_type" id="fseasonRate" placeholder="Daily Rates/Fixed Rates">
-                                                <option value="daily">Daily</option>
-                                                <option value="fixed">Fixed</option>
+                                            <select class="form-control" name="weekend_type" id="fseasonRate" >
+                                                <option value="daily">Daily Rates</option>
+                                                <option value="fixed">Fixed Rates</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6" id="fseasonFixedPrice" style="display:none;">
@@ -1483,8 +1493,8 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="col-sm-6">
                                             <label for="fEditSeasonRate">Seasonal Rates</label>
                                             <select class="form-control" name="weekend_type" id="fEditSeasonRate">
-                                                <option value="daily">Daily</option>
-                                                <option value="fixed">Fixed</option>
+                                                <option value="daily">Daily Rates</option>
+                                                <option value="fixed">Fixed Rates</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1583,8 +1593,8 @@ $this->load->view('common/front_end_layout/top', [
                                         <div class="col-sm-6">
                                             <label for="editSeasonRate">Seasonal rates</label>
                                             <select class="form-control" name="weekend_type" id="editSeasonRate">
-                                                <option value="daily">Daily</option>
-                                                <option value="fixed">Fixed</option>
+                                                <option value="daily">Daily Rates</option>
+                                                <option value="fixed">Fixed Rates</option>
                                             </select>
                                         </div>
                                         <div class="col-sm-6" id="editSeasonFixedPrice" style="display:none;">
