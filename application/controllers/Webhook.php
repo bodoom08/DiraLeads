@@ -113,8 +113,12 @@ class Webhook extends CI_Controller
     public function incoming_call() // manage all incoming calls from customers
     {
 
-        $requests = $this->input->post();
+        // $requests = $this->input->post();
+        $requests = json_decode(file_get_contents('php://input'), true);
 
+        // return $this->output
+        //     ->set_content_type('application/json')
+        //     ->set_output($requests['To']);
 
         $virtual_number = $requests['To'];
         $result = $this->db->select('*')
