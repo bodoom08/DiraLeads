@@ -20,34 +20,34 @@ $header_menu = get_menu('main');
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 
-    <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/style.min.css'); ?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/styles.min.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/styles.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/responsive.css'); ?>">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             setVisibleNavBar();
 
-            $(window).resize(function () {
+            $(window).resize(function() {
                 setVisibleNavBar();
             });
         });
 
         function setVisibleNavBar() {
-            
+
             if ($(document).width() < 1200) {
-                    document.getElementById('about-diraleads-mobile').style = "display: block;";
-                    document.getElementById('about-diraleads-web').style = "display: none;";
-                } else {
-                    document.getElementById('about-diraleads-web').style = "display: block;";
-                    document.getElementById('about-diraleads-mobile').style = "display: none;";
-                    document.getElementById('about-diraleads-owner').style = "display: none;";
-                    document.getElementById('about-diraleads-renter').style = "display: none;";
-                }
+                document.getElementById('about-diraleads-mobile').style = "display: block;";
+                document.getElementById('about-diraleads-web').style = "display: none;";
+            } else {
+                document.getElementById('about-diraleads-web').style = "display: block;";
+                document.getElementById('about-diraleads-mobile').style = "display: none;";
+                document.getElementById('about-diraleads-owner').style = "display: none;";
+                document.getElementById('about-diraleads-renter').style = "display: none;";
+            }
         }
 
         function showAboutOptions() {
-            if ( document.getElementById('about-diraleads-owner').style.display == 'block') {
+            if (document.getElementById('about-diraleads-owner').style.display == 'block') {
                 document.getElementById('about-diraleads-owner').style = "display: none;";
                 document.getElementById('about-diraleads-renter').style = "display: none;";
             } else {
@@ -55,7 +55,6 @@ $header_menu = get_menu('main');
                 document.getElementById('about-diraleads-renter').style = "display: block;";
             }
         }
-
     </script>
 </head>
 
@@ -85,7 +84,7 @@ $header_menu = get_menu('main');
                         } ?>-->
                     <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Why DiraLeads 
+                            Why DiraLeads
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
@@ -95,7 +94,7 @@ $header_menu = get_menu('main');
                     <!-- Mobile View -->
                     <li class="nav-item" id="about-diraleads-mobile" style="display: none;">
                         <a class="dropdown-toggle" href="javascript:showAboutOptions()">
-                        Why DiraLeads 
+                            Why DiraLeads
                         </a>
                     </li>
                     <li class="nav-item" id="about-diraleads-renter" style="display: none">
