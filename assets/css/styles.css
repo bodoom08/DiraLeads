@@ -4125,6 +4125,7 @@ td.fc-more-cell {
     border: none;
     border-bottom: 1px solid #dee2e6;
     padding: 10px 5px;
+    min-height: 170px;
   }
   table.table.property-list tr td {
     width: 50% !important;
@@ -4133,12 +4134,19 @@ td.fc-more-cell {
   }
   table.table.property-list tr td:last-child {
     position: absolute;
-    top: 10px;
+    top: 5px;
     right: 0;
+    height: calc(100% - 10px);
+    min-height: 150px;
+  }
+  table.table.property-list tr td:last-child div.service-tb {
+    height: 100%;
   }
   table.table.property-list tr td:last-child ul {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    height: 100%;
+    justify-content: center;
   }
 }
