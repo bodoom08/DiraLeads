@@ -123,50 +123,50 @@ class Webhook extends CI_Controller
 
 
         $virtual_number = $requests['To'];
-        $result = $this->db->select('*')
+        $query = $this->db->select('*')
             ->from('virtual_numbers')
             ->where('virtual_numbers.number', $virtual_number)
             ->join('properties', 'properties.vn_id = virtual_numbers.id', 'left')
             ->join('users', 'users.id = properties.user_id', 'left')
-            ->get()->result_array();
+            ->get();
 
-
-        // $data = json_encode($result);
-        // if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
-        //     // echo 'Unable to write the file';
-        // } else {
-        //     // echo $data;
-        // }
-        $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
-
-        if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
+        $data = json_encode($requests);
+        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
             // echo 'Unable to write the file';
         } else {
             // echo $data;
         }
 
-
-        $owner_number = '+17606165259';
-
         $voiceRes = new VoiceResponse();
+        if ($query !== FALSE && $query->num_rows() > 0) {
+            $result = $query->result_array();
+            $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
+            if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
+                // echo 'Unable to write the file';
+            } else {
+                // echo $data;
+            }
 
-        $isOwnerAvailable = true;
+            $isOwnerAvailable = true;
 
-        //Make a response for the incoming call
-        if ($isOwnerAvailable) {
-            $voiceRes->say("Thanks for choosing DiraLeads, we are now connecting you with the rental's owner");
+            //Make a response for the incoming call
+            if ($isOwnerAvailable) {
+                $voiceRes->say("Thanks for choosing DiraLeads, we are now connecting you with the rental's owner");
 
-            $roomName = "diraLeads2020";
+                $roomName = "diraLeads2020";
 
-            $dial = $voiceRes->dial('');
-            $dial->number(
-                $owner_number,
-                [
-                    'url' => base_url() . 'webhook/call_receive',
-                ]
-            );
+                $dial = $voiceRes->dial('');
+                $dial->number(
+                    $owner_number,
+                    [
+                        'url' => base_url() . 'webhook/call_receive',
+                    ]
+                );
+            } else {
+                $voiceRes->say("The rental owner is not available now, please try to call him when he is available");
+            }
         } else {
-            $voiceRes->say("The rental owner is not available now, please try to call him when he is available");
+            $voiceRes->say("This is number is not assigned to property");
         }
 
         //return response to Telnyx
