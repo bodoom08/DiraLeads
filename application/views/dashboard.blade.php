@@ -80,7 +80,7 @@ echo form_open_multipart('pricing/manage_subscribed_package_custom', $attrs);
     </div>
     <div class="col-md-12 col-lg-12">
         <div class="item-table">
-            <table class="table">
+            <table class="table property-list">
 
                 <?php if (empty($my_properties)) { ?>
                     <div class="col-lg-12 text-center mt-5 dashboard_fav">
