@@ -711,6 +711,7 @@ div#norecord {
   content: "\f078";
   border: none !important;
   font: normal normal normal 14px/1 FontAwesome;
+  margin-top: -1rem;
 }
 .contact-sec .contact-form button {
   padding: 12px 70px;

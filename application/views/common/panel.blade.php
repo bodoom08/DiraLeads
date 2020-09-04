@@ -10,8 +10,8 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css' />
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css' />
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900' />
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;600;700;800;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
     <link rel='stylesheet' href='assets/fonts/flaticon/font/flaticon.css' />
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
@@ -38,7 +38,7 @@
                     $header_menu = get_menu('main');
                     @endphp
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="about-diraleads-web">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
                         </a>
@@ -47,6 +47,19 @@
                             <a class="dropdown-item" href="/owners" style="font-family: Raleway, sans-serif;">The Owner's Perch</a>
                         </div>
                     </li>
+                    <!-- Mobile View -->
+                    <li class="nav-item" id="about-diraleads-mobile">
+                        <a href="javascript:showAboutOptions()">
+                        Why DiraLeads <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-renter" style="display: none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Renter's View</a>
+                    </li>
+                    <li class="nav-item" id="about-diraleads-owner" style="display:none">
+                        <a class="nav-link" href="/renters" style="font-family: Raleway, sans-serif;">The Owner's View</a>
+                    </li>
+                    <!--  -->
                     <li class="nav-item">
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
@@ -285,6 +298,46 @@
                 }
             });
         }
+
+        function viewAboutProperty() {
+            // Mobile View
+            if ($(document).width() < 1200) {
+
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            setVisibleNavBar();
+
+            $(window).resize(function () {
+                setVisibleNavBar();
+            });
+        });
+
+        function setVisibleNavBar() {
+            
+            if ($(document).width() < 1200) {
+                    document.getElementById('about-diraleads-mobile').style = "display: block;";
+                    document.getElementById('about-diraleads-web').style = "display: none;";
+                } else {
+                    document.getElementById('about-diraleads-web').style = "display: block;";
+                    document.getElementById('about-diraleads-mobile').style = "display: none;";
+                    document.getElementById('about-diraleads-owner').style = "display: none;";
+                    document.getElementById('about-diraleads-renter').style = "display: none;";
+                }
+        }
+
+        function showAboutOptions() {
+            if ( document.getElementById('about-diraleads-owner').style.display == 'block') {
+                document.getElementById('about-diraleads-owner').style = "display: none;";
+                document.getElementById('about-diraleads-renter').style = "display: none;";
+            } else {
+                document.getElementById('about-diraleads-owner').style = "display: block;";
+                document.getElementById('about-diraleads-renter').style = "display: block;";
+            }
+        }
+
     </script>
 </body>
 
