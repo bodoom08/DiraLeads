@@ -494,7 +494,6 @@ ul li {
 ul.navbar-nav.offcanvas-navbar a {
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
 }
 ul.navbar-nav.offcanvas-navbar a img {
   margin: 0 5px 0 0;
