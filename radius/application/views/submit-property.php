@@ -884,7 +884,7 @@ $this->load->view('common/top', [
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" name="amenities[]" value="Sukkah" id="customCheck18">
                                                                     <label class="custom-control-label" for="customCheck18">Sukkah</label>
-                                                                    <input type="number" id="sukkahSleep" name="sleep_number" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;">
+                                                                    <input type="number" id="sukkahSleep" name="sleep_number" placeholder="sleeps *" style="display:none;padding: 0px 10px 0px 10px !important;margin-left: 20px;width: 50%;">
                                                                 </div>
                                                             </li>
                                                             <li>
