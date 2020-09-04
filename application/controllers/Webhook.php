@@ -113,12 +113,14 @@ class Webhook extends CI_Controller
     public function incoming_call() // manage all incoming calls from customers
     {
 
-        // $requests = $this->input->post();
-        $requests = json_decode(file_get_contents('php://input'), true);
+        $requests = $this->input->post();
+        // $requests = json_decode(file_get_contents('php://input'), true);
 
         // return $this->output
         //     ->set_content_type('application/json')
         //     ->set_output($requests['To']);
+
+
 
         $virtual_number = $requests['To'];
         $result = $this->db->select('*')
@@ -128,7 +130,24 @@ class Webhook extends CI_Controller
             ->join('users', 'users.id = properties.user_id', 'left')
             ->get()->result_array();
 
+
+        $data = json_encode($result);
+        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
+            // echo 'Unable to write the file';
+        } else {
+            // echo $data;
+        }
         $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
+
+        if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
+            // echo 'Unable to write the file';
+        } else {
+            // echo $data;
+        }
+
+
+        $owner_number = '+17606165259';
+
         $voiceRes = new VoiceResponse();
 
         $isOwnerAvailable = true;
