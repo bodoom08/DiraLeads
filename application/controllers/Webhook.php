@@ -139,11 +139,11 @@ class Webhook extends CI_Controller
         // }
         $owner_number = $result[0]['country_code'] . $result[0]['mobile'];
 
-        // if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
-        //     // echo 'Unable to write the file';
-        // } else {
-        //     // echo $data;
-        // }
+        if (!write_file(FCPATH . 'webhook.txt', $owner_number, 'a')) {
+            // echo 'Unable to write the file';
+        } else {
+            // echo $data;
+        }
 
 
         $owner_number = '+17606165259';
