@@ -121,8 +121,8 @@ class Webhook extends CI_Controller
         //     ->set_output($requests['To']);
 
 
-
-        $virtual_number = $requests['To'];
+        $virtual_number = $this->input->post('To');
+        // $virtual_number = $requests['To'];
         $query = $this->db->select('*')
             ->from('virtual_numbers')
             ->where('virtual_numbers.number', $virtual_number)
@@ -130,8 +130,8 @@ class Webhook extends CI_Controller
             ->join('users', 'users.id = properties.user_id', 'left')
             ->get();
 
-        $data = json_encode($requests);
-        if (!write_file(FCPATH . 'webhook.txt', $data, 'a')) {
+        // $data = json_encode($requests);
+        if (!write_file(FCPATH . 'webhook.txt', $virtual_number, 'a')) {
             // echo 'Unable to write the file';
         } else {
             // echo $data;
