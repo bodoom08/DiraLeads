@@ -1,706 +1,312 @@
-<?php
-defined('BASEPATH') or exit('No direct script access allowed');
+<html>
+    <head>
+        <title><?php echo isset($title) && html_escape($title) != 'Home' ? html_escape($title) . ' | ' . html_escape(CFG_TITLE) : html_escape(CFG_TITLE); ?></title>
+        <!-- ================================================================ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <!-- ================================================================ -->
+        <link rel="icon" href="assets/favicon.svg" sizes="any" type="image/svg+xml">
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <!-- ================================================================ -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <!-- ========================== Custom Style ====================================== -->
+        <style>
+            /* Navbar Style */
+            .navbar {
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            }
+            .navbar-brand img {
+                width: 150px;
+                padding: .5rem;
+            }
 
-$this->load->view('common/layout/top', [
-    'title' => 'View Rentals'
-]);
-?>
-<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"> -->
-<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/lightslider.css'); ?>" />
-<link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/properties/css/bootstrap-select.min.css'); ?>" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" integrity="sha256-siyOpF/pBWUPgIcQi17TLBkjvNgNQArcmwJB8YvkAgg=" crossorigin="anonymous" />
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap">
-</script>
-<style>
-    .my-header {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 0;
-        z-index: 100;
-        height: 80px;
-        background: white;
-    }
+            /* Filter Option Styles */
+            .filter-option {
+                font-size: 16px;
+                font-weight: 600;
+            }
+            .filter-option:after {
+                display: inline-block;
+                margin-left: .255em;
+                vertical-align: .255em;
+                content: "";
+                border-left: .3em solid transparent;
+                border-right: .3em solid transparent;
+            }
+            .filter-option.option-closed:after {
+                border-top: .3em solid;
+                border-bottom: 0;
+            }
+            .filter-option.option-opened:after {
+                border-top: 0;
+                border-bottom: .3em solid;
+            }
 
-    .explore-search {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 80px;
-        z-index: 100;
-        background: white;
-        margin: 0 !important;
-        padding: 20px 0;
-    }
-
-    .title-bar {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: 180px;
-        z-index: 100;
-        background: white;
-        height: 100px;
-    }
-
-    .filter-btn-mobo {
-        margin: 0 !important;
-    }
-
-    footer,
-    .sub-footer {
-        display: none;
-    }
-
-    #content,
-    #content1,
-    #content2,
-    #content3,
-    #content4,
-    #content5,
-    #content6 {
-        display: none;
-    }
-
-    .search-page {
-        margin: 0 !important;
-        min-height: calc(100vh - 260px);
-
-        margin: 0 !important;
-        min-height: calc(100vh - 300px);
-        z-index: 10;
-        left: 0;
-        right: 0;
-        top: 270px;
-        position: absolute;
-    }
-
-    .search-page .map-region {
-        position: fixed;
-        height: calc(100vh - 300px);
-        right: 0;
-    }
-
-    .map-region #map {
-        height: 100%;
-    }
-
-
-
-    .view-product {
-        max-height: 100%;
-        overflow: hidden;
-    }
-
-    .item-list {
-
-        display: grid;
-        grid-template-columns: 33% 33% 33%;
-        column-gap: 0.5%;
-
-        padding-top: 1rem;
-        padding-bottom: 1rem;
-    }
-
-    .item-card {
-        flex: 0 0 32%;
-        margin-bottom: 0.5rem;
-        padding: 0.5rem;
-        cursor: pointer;
-        border-radius: 5px;
-        background: white;
-    }
-
-    .item-card:nth-child(3n) {
-        /*  */
-    }
-
-    .item-card:hover {
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-        transform: scale(1.05);
-        transition: all 0.5s ease;
-
-        z-index: 10;
-    }
-
-    .item-card .item-desc {
-        width: 100%;
-        padding-left: 20px;
-    }
-
-    .item-image {
-        width: 100%;
-        height: 200px;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: inherit;
-
-        border-radius: 10px;
-        border: 2px solid #82828247;
-
-        display: flex;
-        justify-content: space-between;
-
-        padding-top: 0.1rem;
-        padding-right: 0.5rem;
-    }
-
-    .item-image a {
-        color: red !important;
-        font-size: 22px;
-    }
-
-    .item-image .item-badge {
-        display: inline-block;
-        font-size: 12px;
-        padding: 0.1rem;
-    }
-
-    .item-image .item-badge span {
-        border-radius: 5px;
-        color: white;
-        background: pink;
-        margin: 0.1rem;
-        padding: 0.1rem;
-    }
-
-    #item-detail-dialog {
-        position: fixed;
-        z-index: 100;
-        width: 290px;
-        height: 320px;
-        display: none;
-    }
-
-    @media only screen and (max-width: 768px) {
-        .search-page .map-region {
-            position: relative;
-            margin-top: 2rem;
-        }
-
-        .search-page {
-            top: 370px;
-        }
-
-        .title-bar {
-            width: 90% !important;
-            margin: .5rem auto 0px;
-            position: static;
-        }
-
-        .explore-search {
-            position: static;
-            padding: 100px 0 0px;
-        }
-    }
-</style>
-
-<div class="explore-search">
-    <div class="inner-search px-4">
-        <div class="find-search-box">
-            <input type="search" name="" id="street_search" placeholder="e.g- Brooklyn" value="<?php echo isset($_GET['street']) ? $_GET['street'] : ''; ?>">
-            <span><a href="javascript:search()" name="button_search"><img src="<?php echo site_url('assets/images/search.png'); ?>" /></a></span>
-        </div>
-
-        <div class="filter-btn-mobo">
-            <button id="example" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Rental Type
-                &nbsp;<i class="fa fa-angle-down"></i></button>
-            <div id="content">
-                <h4>Rental Type</h4>
-                <ul class="main-34">
-                    <li <?php echo (isset($_GET['type']) && $_GET['type'] == 'any') || (!isset($_GET['type'])) ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'any' || (!isset($_GET['type'])) ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'any'})">
-                            <i class="fa fa-building-o"></i>
-                            Any
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'house' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'house'})">
-                            <i class="fa fa-home"></i>
-                            House
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'apartment' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'apartment'})">
-                            <i class="fa fa-building-o"></i>
-                            Apartments
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'duplex' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'duplex'})">
-                            <i class="fa fa-building-o"></i>
-                            Duplex
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'villa' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'villa'})">
-                            <i class="fa fa-home"></i>
-                            Villa
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['type']) && $_GET['type'] == 'basement' ? 'active' : ''; ?>" onclick="filter({name: 'type', value: 'basement'})">
-                            <i class="fa fa-home"></i>
-                            Basement
-                        </button>
-                    </li>
-                    <div class="clearfix"></div>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-
-        <div class="filter-btn-mobo">
-            <button id="example2" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Price &nbsp;<i class="fa fa-angle-down"></i></button>
-            <div id="content2">
-            </div>
-        </div>
-
-        <div class="filter-btn-mobo">
-            <button id="example3" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bedrooms &nbsp;<i class="fa fa-angle-down"></i></button>
-            <div id="content3">
-                <h4>Bedrooms</h4>
-                <ul class="main-36">
-                    <li <?php echo (isset($_GET['bedroom']) && $_GET['bedroom'] == 'any') || !isset($_GET['bedroom']) ? 'class=active' : ''; ?>>
-                        <button class="btn propery_any <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == 'any' || !isset($_GET['bedroom']) ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: 'any'})">
-                            Any
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '1' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '1'})">
-                            1+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '2' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '2'})">
-                            2+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '3' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '3'})">
-                            3+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '4' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '4'})">
-                            4+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bedroom']) && $_GET['bedroom'] == '5' ? 'active' : ''; ?>" onclick="filter({name: 'bedroom', value: '5'})">
-                            5+
-                        </button>
-                    </li>
-                    <div class="clearfix"></div>
-                </ul>
-
-            </div>
-            <div class="clearfix"></div>
-        </div>
-
-
-        <div class="filter-btn-mobo">
-            <button id="example5" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Bathroom &nbsp;<i class="fa fa-angle-down"></i> </button>
-            <div id="content5">
-                <h4>Bathroom</h4>
-                <ul class="main-36">
-                    <li <?php echo (isset($_GET['bathroom']) && $_GET['bathroom'] == 'any') || !isset($_GET['bathroom']) ? 'class=active' : ''; ?>>
-                        <button class="btn propery_any <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == 'any' || !isset($_GET['bathroom']) ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: 'any'})">
-                            Any
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '1' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '1'})">
-                            1+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '2' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '2'})">
-                            2+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '3' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '3'})">
-                            3+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '4' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '4'})">
-                            4+
-                        </button>
-                    </li>
-                    <li <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'class=active' : ''; ?>>
-                        <button class="btn <?php echo isset($_GET['bathroom']) && $_GET['bathroom'] == '5' ? 'active' : ''; ?>" onclick="filter({name: 'bathroom', value: '5'})">
-                            5+
-                        </button>
-                    </li>
-                    <div class="clearfix"></div>
-                </ul>
-            </div>
-        </div>
-
-        <div class="filter-btn-mobo">
-            <button id="example6" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this)">
-                Area &nbsp;<i class="fa fa-angle-down"></i>
+            /** Map Style */
+            .map-region {
+                position: fixed;
+                right: 0;
+                height: calc(100vh - 170px);
+            }
+            .map-region #map {
+                width: 100%;
+                height: 100%;
+                border-radius: .5rem;
+            }
+        </style>
+        <!-- ========================== Google Map Scripts ================================= -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script>
+    </head>
+    <body>
+        <!-- ========================= HEADER ======================================= -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <a class="navbar-brand" href="<?php echo site_url()?>">
+                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
             </button>
-            <div id="content6">
-                <h4>Area</h4>
-                <ul class="main-33">
-                    <li <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'class=active' : ''; ?>>
-                        <button class="btn propery_any <?php echo (isset($_GET['area']) && $_GET['area'] == 'any') || !isset($_GET['area']) ? 'active' : ''; ?>" onclick="filter({name: 'area', value: 'any' })">Any</button>
+
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                <form class="form-inline mr-auto mt-4 mb-0">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Montreal QC Canada" aria-label="Montreal QC Canada" aria-describedby="button-search">
+                        <div class="input-group-append">
+                            <button class="btn btn-danger" type="submit" id="button-search">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <ul class="navbar-nav my-2 my-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Why DiraLeads</a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">The Renter's View</a>
+                            <a class="dropdown-item" href="#">The Owner's Perch</a>
+                        </div>
                     </li>
-                    <?php if (isset($areas)) { ?>
-                        <?php foreach ($areas as $index => $area) { ?>
-                            <li><button class="btn <?php echo isset($_GET['area']) && $_GET['area'] == $area['title'] ? 'active' : ''; ?>" onclick="filter({ name: 'area', value: `<?php echo $area['title']; ?>`})"><?php echo $area['title']; ?></button></li>
-                        <?php } ?>
-                    <?php } ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">View Rentals</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">List Your Rental</a>
+                    </li>
                 </ul>
             </div>
+        </nav>
+
+        <!-- ========================== Filters for Web view ====================================== -->
+        <ul class="list-group list-group-horizontal my-2 d-none d-sm-flex">
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-type" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Rental Type">
+                    Rental Type&nbsp;&nbsp;
+                </a>
+            </li>
+
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Any Price">
+                    Any Price&nbsp;&nbsp;
+                </a>
+            </li>
+
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-bed" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Any Beds">
+                    Any Beds&nbsp;&nbsp;
+                </a>
+            </li>
+
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-bath" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Any Bath">
+                    Any Bath&nbsp;&nbsp;
+                </a>
+            </li>
+
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="More">
+                    More&nbsp;&nbsp;
+                </a>
+            </li>
+        </ul>
+
+        <!-- ====================================== Filters for Mobile View ======================================== -->
+        <ul class="list-group list-group-horizontal my-2 d-flex d-sm-none justify-content-between">
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-all" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Filter">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
+                    </svg>&nbsp;
+                    Filters
+                </a>
+            </li>
+
+            <li class="list-group-item border-0 p-1">
+                <a tabindex="0" id="filter-sort" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Sort By">
+                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M3 2a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0v-10A.5.5 0 0 1 3 2z"/>
+                        <path fill-rule="evenodd" d="M5.354 10.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L3 11.793l1.646-1.647a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 9a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                    </svg>&nbsp;
+                    Sort by
+                </a>
+            </li>
+        </ul>
+   
+        <!-- ================================ Search Results Page ============================================= -->
+        <div class="w-100 d-flex px-1">
+            <div class="w-50 d-inline-block">
+                AAA
+            </div>
+            <div class="w-50 d-inline-block map-region">
+                <div id="map"></div>
+            </div>
         </div>
-    </div>
-</div>
-
-<div class="w-50 d-flex justify-content-between title-bar">
-    <div class="pl-4">
-        <h5><?php echo isset($_GET['street']) && $_GET['street'] != 'any' ? $_GET['street'] : 'All'; ?></h5>
-        <small><?php echo isset($properties) ? count($properties) : 0 ?> rentals available on DiraLeads</small>
-    </div>
-    <div class="filter-btn-mobo sortby">
-        <button id="example4" type="button" class="btn btn-pophover" data-container="body" data-toggle="popover" data-placement="bottom" onclick="changeIcon(this);"> Sort By &nbsp;<i class="fa fa-angle-down"></i> </button>
-        <div id="content4">
-            <h4>Sort By</h4>
-            <ul class="main-33">
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'low-high' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'low-high'})">Low to High</button></li>
-                <li><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'high-low' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'high-low'})">High to Low</button></li>
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'newest' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'newest'})">Newest</button></li>
-                <li class="active"><button class="btn <?php echo isset($_GET['sort_by']) && $_GET['sort_by'] == 'oldest' ? 'active' : ''; ?>" onclick="filter({name: 'sort_by', value: 'oldest'})">Oldest</button></li>
-                <div class="clearfix"></div>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<div class="row search-page">
-    <div class="col-lg-6 map-region">
-        <div id="map"></div>
-    </div>
-    <div class="col-lg-6 h-100">
-        <div class="w-100 item-list">
-            <?php if (!isset($properties) || count($properties) == 0) { ?>
-                <h5 class="text-center">No Rentals</h5>
-                <?php } else {
-                foreach ($properties as $property) {
-                ?>
-                    <div class="item-card">
-                        <?php $path = isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'; ?>
-                        <div class="item-image" style="background-image: url(<?php echo site_url('uploads/' . $path); ?>)">
-                            <div class="item-badge">
-                            </div>
-                            <a href="javascript:;">❤</a>
-                        </div>
-                        <div class="item-desc">
-                            <!-- <h5>$<?php echo isset($property['price']) ? $property['price'] : 0; ?>/mo</h5> -->
-                            <p class="font-weight-bold">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0; ?>/day, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0; ?>/week</p>
-                            <p>🏠<?php echo isset($property['bedrooms']) ? $property['bedrooms'] : 0; ?>bd 🎉<?php echo isset($property['bathrooms']) ? $property['bathrooms'] : 0; ?>ba</p>
-                            <p><?php echo isset($property['title']) ? $property['title'] : ''; ?></p>
-                            <p><?php echo isset($property['street']) ? $property['street'] : ''; ?></p>
-                        </div>
-                    </div>
-            <?php }
-            } ?>
-        </div>
-    </div>
-</div>
-
-<div class="item-card" id="item-detail-dialog">
-    <div class="item-image">
-        <div class="item-badge">
-        </div>
-        <a href="javascript:;">❤</a>
-    </div>
-    <div class="item-desc">
-        <p class="font-weight-bold"></p>
-        <p></p>
-        <p></p>
-        <p></p>
-    </div>
-</div>
-
-<input type="hidden" id="filter_type" value="<?php echo isset($_GET['type']) ? $_GET['type'] : 'any'; ?>" />
-<input type="hidden" id="filter_price" value="<?php echo isset($_GET['price']) ? $_GET['price'] : 'any'; ?>" />
-<input type="hidden" id="filter_bedroom" value="<?php echo isset($_GET['bedroom']) ? $_GET['bedroom'] : 'any'; ?>" />
-<input type="hidden" id="filter_bathroom" value="<?php echo isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any'; ?>" />
-<input type="hidden" id="filter_more" value="<?php echo isset($_GET['more']) ? $_GET['more'] : 'any'; ?>" />
-<input type="hidden" id="filter_sort_by" value="<?php echo isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any'; ?>" />
-<input type="hidden" id="filter_street" value="<?php echo isset($_GET['street']) ? $_GET['street'] : 'any'; ?>" />
-<input type="hidden" id="filter_location" value="<?php echo isset($_GET['location']) ? $_GET['location'] : 'any' ?>" />
-<input type="hidden" id="filter_area" value="<?php echo isset($_GET['area']) ? $_GET['area'] : 'any'; ?>" />
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-<script src="<?php echo site_url('/assets/js/bootstrap.min.js'); ?>"></script>
-<script src="<?php echo site_url('/assets/js/bootstrap.js'); ?>"></script>
-<script src="<?php echo site_url('assets/properties/js/bootstrap-select.min.js'); ?>"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha256-2Pjr1OlpZMY6qesJM68t2v39t+lMLvxwpa8QlRjJroA=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha256-bqVeqGdJ7h/lYPq6xrPv/YGzMEb6dNxlfiTUHSgRCp8=" crossorigin="anonymous"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> -->
-<script>
-    var ops = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content').html();
-        }
-    };
-
-    $(function() {
-        // $('.daterangePicker').daterangepicker();
-        $('#example').popover(ops);
-    });
-
-    var ops1 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content1').html();
-        }
-    };
-
-    $(function() {
-        $('#example1').popover(ops1)
-    });
-
-    var ops2 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            // return $('#content2').html();
-            return `
-                <h4>Price</h4>
-                <div class="main-35 input-box-mob">
-                    <ul class="main-36">
-                        <li <?php echo !isset($_GET['price']) || $_GET['price'] == 'any' || $_GET['price'] == '0|0' ? 'class=active' : ''; ?>>
-                            <button class="btn propery_any <?php echo !isset($_GET['price']) || $_GET['price'] == 'any' || $_GET['price'] == '0|0' ? 'class=active' : ''; ?>" onclick="filter({name: 'price', value: '0|0'})">
-                                Any
-                            </button>
-                        </li>
-                        <ul class="p-sec-n">
-                            <li><input type="number" class="form-control" id="price_min" placeholder="No Min" name="min" title="No Min" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[0] : '0'; ?>" onkeydown="setPrice(this, event, 'min')"></li>
-                            <li class="middle-s">to</li>
-                            <li><input type="number" class="form-control" id="price_max" placeholder="No Max" name="max" title="No Max" value="<?php echo isset($_GET['price']) && $_GET['price'] != 'any' ? explode("|", $_GET['price'])[1] : '0'; ?>" onkeydown="setPrice(this, event, 'max')"></li>
-                        </ul>
+        <!-- ====================================== Script ========================================== -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        <!-- ============================= Google Map Script ========================================== -->
+        <script>
+            function initMap(marker = { lat: 31.0461, lng: 34.08516 }) {
+                var map = new google.maps.Map(
+                    document.getElementById('map'),
+                    {
+                        zoom: 8,
+                        center: marker
+                    }
+                );
+            }
+        </script>
+        <!-- ============================= Custom Script ========================================== -->
+        <script>
+            /**
+            **  Search Filter Rendering
+            **/
+            const anyType = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                    <ul class="list-group">
+                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Any</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Sale</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Rent</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Short Term Rent</button></li>
                     </ul>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <button class="btn-md button-theme btn-block" name="pricefilter_button" onclick="setPriceFilter()">Filter</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-    };
-
-    $(function() {
-        $('#example2').popover(ops2)
-    });
-
-    var ops3 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content3').html();
-        }
-    };
-
-    $(function() {
-        $('#example3').popover(ops3)
-    });
-
-    var ops4 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content4').html();
-        }
-    };
-
-    $(function() {
-        $('#example4').popover(ops4)
-    });
-
-    var ops5 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content5').html();
-        }
-    };
-
-    $(function() {
-        $('#example5').popover(ops5);
-    });
-
-    var ops6 = {
-        'html': true,
-        sanitize: false,
-        content: function() {
-            return $('#content6').html();
-        }
-    };
-
-    $(function() {
-        $('#example6').popover(ops6);
-    });
-
-    function initMap(uluru = {
-        lat: 31.0461,
-        lng: 34.8516
-    }) {
-        var center = `<?php echo isset($_GET['location']) ? $_GET['location'] : NULL; ?>`;
-
-        if (center && center != 'any') {
-            center = {
-                lat: JSON.parse(center)[0],
-                lng: JSON.parse(center)[1]
-            }
-        } else {
-            center = {
-                ...uluru
-            };
-        }
-        const map = new google.maps.Map(
-            document.getElementById('map'), {
-                zoom: 8,
-                center
-            }
-        );
-
-        const resourceUrl = `<?php echo site_url('uploads/'); ?>`;
-        let streets = `<?php echo $streets; ?>`;
-        streets = JSON.parse(streets);
-
-        geocoder = new google.maps.Geocoder();
-        streets.forEach((street) => {
-            var marker = new google.maps.Marker({
-                map,
-                position: street.location
-            });
-            marker.addListener('mouseover', function(event) {
-
-                document.getElementById('item-detail-dialog').style = `display: block; top: ${event.ub.clientY}px; left: ${event.ub.clientX}px;`;
-                if (street.property.images && street.property.images.length > 0) {
-                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}${street.property.images[0].path})`);
-                } else {
-                    $('#item-detail-dialog .item-image').css("background-image", `url(${resourceUrl}diraleads-logo.svg)`);
+                    `;
                 }
-                $('#item-detail-dialog .item-desc p')[0].innerHTML = `$${street.property.days_price || 0}/day, $${street.property.weekly_price || 0}/week`;
-                $('#item-detail-dialog .item-desc p')[1].innerHTML = `🏠 ${street.property.bedrooms || 0}bd 🎉 ${street.property.bathrooms}ba ✨ ${street.property.florbas}sqft`;
-                $('#item-detail-dialog .item-desc p')[2].innerHTML = `${street.property.title || ''}`;
-                $('#item-detail-dialog .item-desc p')[3].innerHTML = `${street.property.street || ''}`;
-            });
-
-            marker.addListener('mouseout', function() {
-                document.getElementById('item-detail-dialog').style = "display: none;";
-            });
-        });
-
-        var searchEl = document.getElementById('street_search');
-        var autocomplete = new google.maps.places.Autocomplete(searchEl);
-        autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
-
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            const place = autocomplete.getPlace();
-            const geolocation = [];
-            geolocation.push(place.geometry.location.lat());
-            geolocation.push(place.geometry.location.lng());
-
-            document.getElementById('filter_location').value = JSON.stringify(geolocation);
-            document.getElementById('filter_street').value = searchEl.value;
-
-            filter({
-                name: 'street',
-                value: searchEl.value
-            });
-
-            $('#street_search').removeClass('invaild-input');
-        });
-    }
-
-    function changeIcon(el) {
-        if ($(el).children().hasClass("fa-angle-down")) {
-            $(el).children().removeClass("fa-angle-down");
-            $(el).children().addClass("fa-angle-up");
-            $(".popover-active").click();
-            $(el).removeClass("popover-inactive");
-            $(el).addClass("popover-active");
-        } else if ($(el).children().hasClass("fa-angle-up")) {
-            $(el).children().removeClass("fa-angle-up");
-            $(el).children().addClass("fa-angle-down");
-            $(el).removeClass("popover-active");
-            $(el).addClass("popover-inactive");
-        }
-    }
-
-    function setPrice(element, event, option) {
-        if (event.keyCode == 13) {
-            let filterPrice = [0, 0];
-            if (document.getElementById('filter_price').value != 'any')
-                filterPrice = document.getElementById('filter_price').value.split('|');
-
-            if (option == 'min') {
-                filterPrice[0] = element.value;
-            } else {
-                filterPrice[1] = element.value;
             }
-            filterPrice = filterPrice.join('|');
+            const anyPrice = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item border-0 p-1"><input type="text" class="form-control" placeholder="Min Price" /></li>
+                        <li class="list-group-item border-0 p-1"><input type="text" class="form-control" placeholder="Max Price" /></li>
+                    </ul>
+                    `;
+                }
+            }
+            const anyBed = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">Any</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+1</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+2</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+3</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+4</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+5</button></li>
+                    </ul>
+                    `;
+                }
+            }
+            const anyBath = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">Any</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+1</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+2</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+3</button></li>
+                        </ul>
+                    `;
+                }
+            }
+            const anyMore = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                    <div class="more-filter-options">
+                        Comming Soon
+                    </div>
+                    `;
+                }
+            }
 
-            filter({
-                name: 'price',
-                value: filterPrice
+            $(function () {
+                $('#filter-type').popover(anyType);
             });
-        }
-    }
+            $(function () {
+                $('#filter-price').popover(anyPrice);
+            });
+            $(function () {
+                $('#filter-bed').popover(anyBed);
+            });
+            $(function () {
+                $('#filter-bath').popover(anyBath);
+            });
+            $(function () {
+                $('#filter-more').popover(anyMore);
+            });
+        </script>
 
-    function setPriceFilter() {
-        const minPrice = document.getElementById('price_min').value == '' ? 0 : document.getElementById('price_min').value;
-        const maxPrice = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
+        <script>
+            /**
+            **  Filter Caret Style
+             */
+            $('#filter-type').on('shown.bs.popover', function () {
+                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+            });
+            $('#filter-type').on('hidden.bs.popover', function () {
+                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+            });
 
-        document.getElementById('filter_price').value = `${minPrice}|${maxPrice}`;
-
-        filter({
-            name: 'price',
-            value: `${minPrice}|${maxPrice}`
-        });
-    }
-
-    function filter(option) {
-
-        console.log("Option: ", option.value);
-
-        document.getElementById(`filter_${option.name}`).value = option.value;
-
-        search();
-    }
-
-    function search() {
-        if (document.getElementById('street_search').value == '') {
-            document.getElementById('filter_street').value = 'any';
-            document.getElementById('filter_location').value = 'any';
-        }
-
-        const filterType = document.getElementById('filter_type').value;
-        const filterPrice = document.getElementById('filter_price').value;
-        const filterBed = document.getElementById('filter_bedroom').value;
-        const filterBath = document.getElementById('filter_bathroom').value;
-        const filterMore = document.getElementById('filter_more').value;
-        const filterSort = document.getElementById('filter_sort_by').value;
-        const filterStreet = document.getElementById('filter_street').value;
-        const filterLocation = document.getElementById('filter_location').value;
-        const filterArea = document.getElementById('filter_area').value;
-
-        const location = `/properties?type=${filterType}&bedroom=${filterBed}&bathroom=${filterBath}&more=${filterMore}&sort_by=${filterSort}&price=${filterPrice}&street=${filterStreet}&location=${filterLocation}&area=${filterArea}`;
-
-        console.log("Location: ", location);
-        document.location.href = location;
-    }
-</script>
+            $('#filter-price').on('shown.bs.popover', function () {
+                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+            });
+            $('#filter-price').on('hidden.bs.popover', function () {
+                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+            });
+            
+            $('#filter-bed').on('shown.bs.popover', function () {
+                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+            });
+            $('#filter-bed').on('hidden.bs.popover', function () {
+                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+            });
+            
+            $('#filter-bath').on('shown.bs.popover', function () {
+                $('#filter-bath').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+            });
+            $('#filter-bath').on('hidden.bs.popover', function () {
+                $('#filter-bath').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+            });
+            
+            $('#filter-more').on('shown.bs.popover', function () {
+                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+            });
+            $('#filter-more').on('hidden.bs.popover', function () {
+                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+            });
+        </script>
+    </body>
+</html>
