@@ -1,16 +1,16 @@
 @extends('common.layout')
 @push('styles')
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/bootstrap/css/bootstrap.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/bootstrap/css/bootstrap.min.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/animate/animate.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/animate/animate.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/select2/select2.min.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/plugins/select2/select2.min.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/util.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/main.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/util.css')}}">
+<link rel="stylesheet" type="text/css" href="{{ site_url('assets/maintenance/css/main.css')}}">
 <!--===============================================================================================-->
 @endpush
 
@@ -22,7 +22,7 @@
 		<!--  -->
 		<div class="size1 flex-col-c-m p-l-15 p-r-15 p-t-50 p-b-50">
 			<h3 class="l1-txt1 txt-center p-b-25">
-			We are stocking on rentals
+				We are stocking on rentals
 			</h3>
 
 			<p class="m2-txt1 txt-center p-b-48">
@@ -65,7 +65,7 @@
 	$('.minutes').val(date.getMinutes());
 	$('.seconds').val(date.getSeconds());
 </script>
-<!--===============================================================================================-->	
+<!--===============================================================================================-->
 <script src="{{ site_url('assets/maintenance/plugins/jquery/jquery-3.2.1.min.js')}}"></script>
 <!--===============================================================================================-->
 <script src="{{ site_url('assets/maintenance/plugins/bootstrap/js/popper.js')}}"></script>
@@ -81,7 +81,7 @@
 	$('.cd100').countdown100({
 		endtimeYear: 2020,
 		endtimeMonth: 9,
-		endtimeDate: 8,
+		endtimeDate: 9,
 		endtimeHours: 0,
 		endtimeMinutes: 0,
 		endtimeSeconds: 0,
@@ -90,7 +90,7 @@
 </script>
 <!--===============================================================================================-->
 <script src="{{ site_url('assets/maintenance/plugins/tilt/tilt.jquery.min.js')}}"></script>
-<script >
+<script>
 	$('.js-tilt').tilt({
 		scale: 1.1
 	})
