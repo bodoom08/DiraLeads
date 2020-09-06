@@ -930,7 +930,7 @@ $this->load->view('common/front_end_layout/top', [
                                                 <div class="design-process-content">
                                                     <div class="tabbbing-one two">
                                                         <h5 class="font-weight-bold mb-3">Showcase your property from multiple angles to entice renters to book ASAP</h5>
-                                                        
+
                                                         <ul class="row">
                                                             <li class="col-lg-12">
                                                                 <div class="form-group">
@@ -967,11 +967,21 @@ $this->load->view('common/front_end_layout/top', [
                                                     <h5 class="font-weight-bold">Specify your rental’s availability to save you extra hassle and encourage worry-free booking</h5>
                                                     <p>Completely customizable set-your-price options include:</p>
                                                     <ul class="pl-5 mb-5">
-                                                        <li style="list-style: circle !important;"><p><strong>Daily</strong>&nbsp;pricing (charge a set price per day)</p></li>
-                                                        <li style="list-style: circle !important;"><p><strong>Weekly</strong>&nbsp;pricing (charge a set price per week)</p></li>
-                                                        <li style="list-style: circle !important;"><p><strong>Monthly</strong>&nbsp;pricing (charge a set price per month)</p></li>
-                                                        <li style="list-style: circle !important;"><p><strong>Weekend</strong>&nbsp;pricing (choose which days to include i.e. Friday-Saturday or Thursday-Monday)</p></li>
-                                                        <li style="list-style: circle !important;"><p><strong>Seasonal</strong>&nbsp;pricing (input a higher base price that kicks in automatically during peak seasons)</p></li>
+                                                        <li style="list-style: circle !important;">
+                                                            <p><strong>Daily</strong>&nbsp;pricing (charge a set price per day)</p>
+                                                        </li>
+                                                        <li style="list-style: circle !important;">
+                                                            <p><strong>Weekly</strong>&nbsp;pricing (charge a set price per week)</p>
+                                                        </li>
+                                                        <li style="list-style: circle !important;">
+                                                            <p><strong>Monthly</strong>&nbsp;pricing (charge a set price per month)</p>
+                                                        </li>
+                                                        <li style="list-style: circle !important;">
+                                                            <p><strong>Weekend</strong>&nbsp;pricing (choose which days to include i.e. Friday-Saturday or Thursday-Monday)</p>
+                                                        </li>
+                                                        <li style="list-style: circle !important;">
+                                                            <p><strong>Seasonal</strong>&nbsp;pricing (input a higher base price that kicks in automatically during peak seasons)</p>
+                                                        </li>
                                                     </ul>
 
                                                     <ul class="nav nav-tabs process-model more-icon-preocess calender_icon" role="tablist">
@@ -1418,7 +1428,7 @@ $this->load->view('common/front_end_layout/top', [
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <label for="fseasonRate">Seasonal Rates</label>
-                                            <select class="form-control" name="weekend_type" id="fseasonRate" >
+                                            <select class="form-control" name="weekend_type" id="fseasonRate">
                                                 <option value="daily">Daily Rates</option>
                                                 <option value="fixed">Fixed Rates</option>
                                             </select>
@@ -2477,6 +2487,9 @@ $this->load->view('common/front_end_layout/top', [
                     $('#manualBook').find('.eventClose').text('Close');
                     // $('#calendar').fullCalendar('removeEvents', event._id);
                 });
+            },
+            viewRender: function(view, element) {
+                renderCalendarPrice();
             }
         });
 
@@ -2513,7 +2526,6 @@ $this->load->view('common/front_end_layout/top', [
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                     cache: true
                 },
-
                 select: function(start, end, jsEvent, view) {
                     if ($('.fc-widget-content[data-date="' + moment(start).format('YYYY-MM-DD') + '"] p.day-background.manual-background').length > 0) {
                         $('#date-action ul')[0].style = "display: none";
@@ -2568,10 +2580,13 @@ $this->load->view('common/front_end_layout/top', [
                         $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
 
                     }
+                },
+                viewRender: function(view, element) {
+                    renderSession();
                 }
             });
             //clear calendar and cards
-            $('.fc-bg td').html('');
+            //$('.fc-bg td').html('');
         });
 
         function renderCalendarPrice() {
