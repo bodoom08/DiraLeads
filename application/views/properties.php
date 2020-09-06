@@ -11,6 +11,16 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <!-- ========================== Custom Style ====================================== -->
         <style>
+            /* Public Style */
+            .btn-outline-purple {
+                color: #433357;
+                border-color: #433357;
+            }
+            .btn-outline-purple:hover {
+                color: #fff;
+                background: #433357;
+                border-color: #433357;
+            }
             /* Navbar Style */
             .navbar {
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -68,19 +78,6 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
-                <form class="form-inline mr-auto mt-4 mb-0">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Montreal QC Canada" aria-label="Montreal QC Canada" aria-describedby="button-search">
-                        <div class="input-group-append">
-                            <button class="btn btn-danger" type="submit" id="button-search">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
-                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </form>
                 <ul class="navbar-nav my-2 my-lg-0">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Why DiraLeads</a>
@@ -101,6 +98,21 @@
 
         <!-- ========================== Filters for Web view ====================================== -->
         <ul class="list-group list-group-horizontal my-2 d-none d-sm-flex">
+            <li class='list-group-item border-0 p-1'>
+                <form class="form-inline">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Montreal QC Canada" aria-label="Montreal QC Canada" aria-describedby="button-search">
+                        <div class="input-group-append">
+                            <button class="btn btn-danger" type="submit" id="button-search">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </li>
             <li class="list-group-item border-0 p-1">
                 <a tabindex="0" id="filter-type" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" data-trigger="focus" title="Rental Type">
                     Rental Type&nbsp;&nbsp;
@@ -157,9 +169,8 @@
         <!-- ================================ Search Results Page ============================================= -->
         <div class="w-100 d-flex px-1">
             <div class="w-50 d-inline-block">
-                AAA
             </div>
-            <div class="w-50 d-inline-block map-region">
+            <div class="w-50 d-inline-block d-sm-none map-region p-1">
                 <div id="map"></div>
             </div>
         </div>
@@ -190,10 +201,10 @@
                 content: function () {
                     return `
                     <ul class="list-group">
-                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Any</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Sale</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Rent</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-danger btn-block">Short Term Rent</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-purple btn-block">Any</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-purple btn-block">Sale</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-purple btn-block">Rent</button></li>
+                        <li class="list-group-item border-0"><button class="btn btn-outline-purple btn-block">Short Term Rent</button></li>
                     </ul>
                     `;
                 }
@@ -216,12 +227,12 @@
                 content: function () {
                     return `
                     <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">Any</button></li>
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+1</button></li>
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+2</button></li>
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+3</button></li>
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+4</button></li>
-                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+5</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">Any</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+1</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+2</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+3</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+4</button></li>
+                        <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+5</button></li>
                     </ul>
                     `;
                 }
@@ -232,10 +243,10 @@
                 content: function () {
                     return `
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">Any</button></li>
-                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+1</button></li>
-                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+2</button></li>
-                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-danger">+3</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">Any</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+1</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+2</button></li>
+                            <li class="list-group-item border-0 p-1"><button class="btn btn-outline-purple">+3</button></li>
                         </ul>
                     `;
                 }
