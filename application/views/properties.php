@@ -22,11 +22,12 @@
                 background: #433357;
                 border-color: #433357;
             }
-            .btn-outline-purple {
+            .btn-outline-purple, .btn-purple:hover {
                 color: #433357;
                 border-color: #433357;
+                background: #fff;
             }
-            .btn-outline-purple:hover {
+            .btn-outline-purple:hover, .btn-purple {
                 color: #fff;
                 background: #433357;
                 border-color: #433357;
@@ -43,6 +44,10 @@
                 border: none;
                 padding: .25rem;
             }
+            .form-check-input {
+                margin-top: .4rem;
+            }
+
             /** Popover Style */
             .popover {
                 max-width: calc(100% - .5rem) !important;
@@ -69,6 +74,22 @@
                 font-weight: 600;
                 font-size: 16px;
                 color: #000 !important;
+            }
+            /* Login Button Style */
+            .login a:hover:after {
+                display: none;
+            }
+            .login a:hover {
+                background: #281b3f;
+            }
+            .login a {
+                padding: 6px 30px !important;
+                border-radius: 60px;
+                line-height: 34px;
+                background: #a27107;
+            }
+            .login a img {
+                margin: 0 10px 0 0;
             }
 
             /* Filter Option Styles */
@@ -185,7 +206,8 @@
             }
         </style>
         <!-- ========================== Google Map Scripts ================================= -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script>
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
     </head>
     <body>
         <!-- ========================= HEADER ======================================= -->
@@ -214,9 +236,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/property">List Your Rental</a>
                     </li>
+                    <!-- ============================= Login ================================ -->
                     <?php if (empty($_SESSION['id'])) {?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?php echo site_url('login')?>">
+                    <li class="nav-item login">
+                        <a class="nav-link" href="<?php echo site_url('login')?>" style="color: #fff !important;">
                             <img src="<?php echo site_url('assets/images/login.png'); ?>"> Login / Signup
                         </a>
                     </li>
@@ -240,6 +263,7 @@
             </div>
         </nav>
 
+        <!-- ================================= Search Filters ======================================== -->
         <div class="search-filters-row">
             <form class="form-inline my-2 p-1 d-inline-block col-sm-12 col-md-3 col-lg-2">
                 <div class="input-group">
@@ -259,25 +283,25 @@
             <div class="d-none d-sm-inline-block">
                 <ul class="list-group list-group-horizontal my-2">
                     <li class="list-group-item">
-                        <a tabindex="0" id="filter-type" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Rental Type">
+                        <a tabindex="0" id="filter-type" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">
                             Rental Type&nbsp;&nbsp;
                         </a>
                     </li>
 
                     <li class="list-group-item">
-                        <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom"  title="Price">
+                        <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
                             Price&nbsp;&nbsp;
                         </a>
                     </li>
 
                     <li class="list-group-item">
-                        <a tabindex="0" id="filter-bed" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Bedrooms">
+                        <a tabindex="0" id="filter-bed" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">
                             Bedrooms&nbsp;&nbsp;
                         </a>
                     </li>
 
                     <li class="list-group-item">
-                        <a tabindex="0" id="filter-floor" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Floor">
+                        <a tabindex="0" id="filter-floor" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">
                             Floor&nbsp;&nbsp;
                         </a>
                     </li>
@@ -285,12 +309,12 @@
                     <li class="list-group-item">
                         <div class="form-group form-check mb-0 check-box">
                             <input type="checkbox" class="form-check-input" id="show-rental">
-                            <label class="form-check-label" for="show-rental">Only show Rentals with Pictures</label>
+                            <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                         </div>
                     </li>
 
                     <li class="list-group-item">
-                        <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="More">
+                        <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="More">
                             More&nbsp;&nbsp;
                         </a>
                     </li>
@@ -300,7 +324,7 @@
             <!-- ====================================== Filters for Mobile View ======================================== -->
             <ul class="list-group list-group-horizontal my-2 d-flex d-sm-none justify-content-between">
                 <li class="list-group-item">
-                    <a tabindex="0" id="filter-all" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Filter">
+                    <a tabindex="0" id="filter-all" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Filter">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sliders" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z"/>
                         </svg>&nbsp;
@@ -309,7 +333,7 @@
                 </li>
 
                 <li class="list-group-item">
-                    <a tabindex="0" id="filter-sort" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By">
+                    <a tabindex="0" id="filter-sort" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M3 2a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0v-10A.5.5 0 0 1 3 2z"/>
                             <path fill-rule="evenodd" d="M5.354 10.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L3 11.793l1.646-1.647a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 9a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
@@ -322,15 +346,17 @@
    
         <!-- ================================ Search Results Page ============================================= -->
         <div class="search-result">
+            <!-- ===================================== Search Rentals ===================================== -->
             <div class="col-sm-12 col-md-6 d-inline-block p-1">
-                <div >
+                <div>
+                    <!-- ============================= Search Location ===================================== -->
                     <div class="d-flex justify-content-between">
                         <div class="search-detail">
                             <div class="search-detail-title">Apartments for Rent Near Me</div>
                             <div class="search-detail-result">3,537 rentals available on Trulia</div>
                         </div>
                         <div class="search-detail-sort d-none d-sm-block">
-                            <a tabindex="0" id="filter-sort-web" class="btn btn-lg btn-white btn-outline-secondary filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By" style="height: unset;">
+                            <a tabindex="0" id="filter-sort-web" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By" style="height: unset;">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd" d="M3 2a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0v-10A.5.5 0 0 1 3 2z"/>
                                     <path fill-rule="evenodd" d="M5.354 10.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L3 11.793l1.646-1.647a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 9a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
@@ -339,6 +365,8 @@
                             </a>
                         </div>
                     </div>
+
+                    <!-- =============================== Rental Cards ======================================== -->
                     <div class="w-100 d-flex flex-wrap">
                         <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
                             <a href="javascript:;" class="w-100">
@@ -739,6 +767,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ============================================== Google Map ======================================= -->
             <div class="col-md-6 d-none d-sm-inline-block map-region p-1">
                 <div id="map"></div>
             </div>
@@ -881,7 +911,6 @@
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-outline-purple btn-block">View Rentals</button>
                     `;
                 }
             }
@@ -954,7 +983,7 @@
                             </li>
                         </ul>
                     </div>
-                    <button class="btn btn-outline-purple btn-block">View Rentals</button>
+                    <button class="btn btn-purple btn-block">View Rentals</button>
                     `;
                 }
             }
@@ -1043,7 +1072,7 @@
             **  Filter Caret Style
              */
             $('#filter-type').on('shown.bs.popover', function () {
-                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -1053,11 +1082,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-type').on('hidden.bs.popover', function () {
-                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
 
             $('#filter-price').on('shown.bs.popover', function () {
-                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-bed').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -1067,11 +1096,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-price').on('hidden.bs.popover', function () {
-                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
             
             $('#filter-bed').on('shown.bs.popover', function () {
-                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -1081,11 +1110,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-bed').on('hidden.bs.popover', function () {
-                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
             
             $('#filter-floor').on('shown.bs.popover', function () {
-                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -1095,11 +1124,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-floor').on('hidden.bs.popover', function () {
-                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
             
             $('#filter-more').on('shown.bs.popover', function () {
-                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -1109,11 +1138,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-more').on('hidden.bs.popover', function () {
-                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
             
             $('#filter-all').on('shown.bs.popover', function () {
-                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -1123,11 +1152,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-all').on('hidden.bs.popover', function () {
-                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
             
             $('#filter-sort').on('shown.bs.popover', function () {
-                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -1137,11 +1166,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-sort').on('hidden.bs.popover', function () {
-                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
 
             $('#filter-sort-web').on('shown.bs.popover', function () {
-                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-opened');
+                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -1151,7 +1180,7 @@
                 $('#filter-sort').popover('hide');
             });
             $('#filter-sort-web').on('hidden.bs.popover', function () {
-                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-secondary filter-option option-closed');
+                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
         </script>
     </body>
