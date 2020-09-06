@@ -169,6 +169,13 @@ class Webhook extends CI_Controller
             $voiceRes->say("This is number is not assigned to property");
         }
 
+        $write_data = json_encode($voiceRes);
+        if (!write_file(FCPATH . 'webhook.txt', $write_data, 'a')) {
+            // echo 'Unable to write the file';
+        } else {
+            // echo $data;
+        }
+
         //return response to Telnyx
         return $this->output
             ->set_content_type('text/xml')
