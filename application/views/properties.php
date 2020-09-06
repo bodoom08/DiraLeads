@@ -45,12 +45,18 @@
             }
             /** Popover Style */
             .popover {
-                max-width: unset !important;
+                max-width: calc(100% - .5rem) !important;
             }
             /* Navbar Style */
             nav {
-                padding: 0px 40px !important;
+                padding: 0 !important;
             }
+            @media only screen and (min-width: 1024px) {
+                nav {
+                    padding: 0 40px !important;
+                }
+            }
+            
             .navbar {
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             }
@@ -783,6 +789,7 @@
                 sanitize: false,
                 content: function () {
                     return `
+                    <p class="mb-1 text-center">Select Price's Range</p>
                     <ul class="list-group list-group-horizontal">
                         <li class="list-group-item"><input type="number" class="form-control" placeholder="Min Price" value="0" /></li>
                         <li class="list-group-item"><input type="number" class="form-control" placeholder="Max Price" value="0" /></li>
@@ -795,18 +802,23 @@
                 sanitize: false,
                 content: function () {
                     return `
-                    <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                        <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                        <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                        <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                        <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                        <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
-                    </ul>
+                        <ul class="list-group list-group-horizontal mb-2">
+                            <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
+                            <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
+                            <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
+                            <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
+                            <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
+                            <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
+                        </ul>
+                        <p class="mb-1 text-center">Or Select Bedroom's Range</p>
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Min" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Max" /></li>
+                        </ul>
                     `;
                 }
             }
-            const anyBath = {
+            const anyFloor = {
                 'html': true,
                 sanitize: false,
                 content: function () {
@@ -819,6 +831,11 @@
                             <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
                             <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
                         </ul>
+                        <p class="mb-1 text-center">Or Select Floor's Range</p>
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Min" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Max" /></li>
+                        </ul>
                     `;
                 }
             }
@@ -829,13 +846,6 @@
                     return `
                     <div class="filter-all-body">
                         <ul class="list-group">
-                            <li class="list-group-item">
-                                <div class="filter-all-type">
-                                    <button class="btn btn-outline-purple">Buy</button>
-                                    <button class="btn btn-outline-purple">Rent</button>
-                                    <button class="btn btn-outline-purple">Short Term Rent</button>
-                                </div>
-                            </li>
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Amenities</p>
                                 <ul class="list-group">
@@ -867,7 +877,52 @@
                                     <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-outline-purple btn-block">View Rentals</button>
+                    `;
+                }
+            }
+            const anyAll = {
+                'html': true,
+                sanitize: false,
+                content: function () {
+                    return `
+                    <div class="filter-all-body">
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Amenities</p>
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                            <input type="checkbox" class="form-check-input" id="amenties-1">
+                                            <label class="form-check-label" for="amenties-1">Elevator</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                            <input type="checkbox" class="form-check-input" id="amenties-2">
+                                            <label class="form-check-label" for="amenties-2">Heating</label>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                            <input type="checkbox" class="form-check-input" id="amenties-3">
+                                            <label class="form-check-label" for="amenties-3">Dryer</label>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Bathroom</p>
+                                <ul class="list-group list-group-horizontal">
+                                    <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
+                                    <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
+                                    <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
+                                    <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
+                                    <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -878,18 +933,16 @@
                                     <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
                                 </ul>
                             </li>
                             <li class="list-group-item">
-                                <p class="font-weight-bold mb-1">Floor</p>
+                                <p class="font-weight-bold mb-1">Floors</p>
                                 <ul class="list-group list-group-horizontal">
                                     <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
                                     <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -898,18 +951,6 @@
                                     <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" value="0" /></li>
                                     <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" value="0" /></li>
                                 </ul>
-                            </li>
-                            <li class="list-group-item">
-                                <p class="font-weight-bold mb-1">Keywords</p>
-                                <div class="input-group">
-                                    <input type="text" id="search-keywords" class="form-control" placeholder="Find a keyword" aria-label="Find a keyword" aria-describedby="button-add-keyword">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-brown" id="button-add-keyword">
-                                        Add
-                                        </button>
-                                    </div>
-                                </div>
-                                <ul class="list-group"></ul>
                             </li>
                         </ul>
                     </div>
@@ -981,7 +1022,7 @@
                 $('#filter-bed').popover(anyBed);
             });
             $(function () {
-                $('#filter-floor').popover(anyBath);
+                $('#filter-floor').popover(anyFloor);
             });
             $(function () {
                 $('#filter-more').popover(anyMore);
@@ -991,6 +1032,9 @@
             });
             $(function () {
                 $('#filter-sort-web').popover(anySort);
+            });
+            $(function () {
+                $('#filter-all').popover(anyAll);
             });
         </script>
 
