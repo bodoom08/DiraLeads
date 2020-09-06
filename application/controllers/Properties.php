@@ -11,22 +11,23 @@ class Properties extends MOBO_Controller
         $this->load->library('session');
     }
 
-
+    /*
     public function index()
     {
         $data['title'] = 'Rentals';
         $this->load->view('maintenance', $data);
     }
+    /**/
 
-
-    /*
+    //*
     public function index()
     {
-        $data = $this->M_properties->getAllProducts();
-        $data['areas'] = $this->M_page->get_areas();
-        $this->load->view('properties', $data);
+        // $data = $this->M_properties->getAllProducts();
+        // $data['areas'] = $this->M_page->get_areas();
+        // $this->load->view('properties', $data);
+        $this->load->view('properties');
     }
-    */
+    /**/
 
     public function getAllImages()
     {

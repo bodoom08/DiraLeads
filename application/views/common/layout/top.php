@@ -111,7 +111,7 @@ $header_menu = get_menu('main');
                         <a class="nav-link" href="/properties">View Rentals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="property">List Your Rental</a>
+                        <a class="nav-link" href="/property">List Your Rental</a>
                     </li>
                     <?php if (empty($_SESSION['id'])) { ?>
                         <li class="nav-item">
@@ -133,7 +133,7 @@ $header_menu = get_menu('main');
                                 <a class="dropdown-item" href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                                 <a class="dropdown-item" href="<?php echo site_url('my_rentals'); ?>">My Rentals</a>
                                 <a class="dropdown-item" href="<?php echo site_url('subscription/user'); ?>">My Subscriptions</a>
-                                <a class="dropdown-item" href="<?php echo site_url('profile'); ?>">My profile</a>
+                                <a class="dropdown-item" href="<?php echo site_url('profile'); ?>">My Profile</a>
                                 <a class="dropdown-item" href="<?php echo site_url('login/logout'); ?>">Logout</a>
                             </div>
                         </div>
