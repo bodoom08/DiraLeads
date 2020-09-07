@@ -151,7 +151,8 @@ class Webhook extends CI_Controller
 
             //Make a response for the incoming call
             if ($isOwnerAvailable) {
-                $voiceRes->say("Thanks for choosing DiraLeads, we are now connecting you with the rental's owner");
+                // $voiceRes->say("Thanks for choosing DiraLeads, we are now connecting you with the rental's owner");
+                $voiceRes->play('https://diraleads.com/assets/audios/Youre%20being%20connected.mp3');
 
                 $roomName = "diraLeads2020";
 
@@ -163,10 +164,12 @@ class Webhook extends CI_Controller
                     ]
                 );
             } else {
-                $voiceRes->say("The rental owner is not available now, please try to call him when he is available");
+                // $voiceRes->say("The rental owner is not available now, please try to call him when he is available");
+                $voiceRes->play('https://diraleads.com/assets/audios/Error.mp3');
             }
         } else {
-            $voiceRes->say("This is number is not assigned to property");
+            // $voiceRes->say("This is number is not assigned to property");
+            $voiceRes->play('https://diraleads.com/assets/audios/Error.mp3');
         }
 
         //return response to Telnyx
@@ -179,7 +182,8 @@ class Webhook extends CI_Controller
     {
         $voiceRes = new VoiceResponse();
 
-        $voiceRes->say("this is a caller from DiraLeads");
+        // $voiceRes->say("this is a caller from DiraLeads");
+        $voiceRes->play('https://diraleads.com/assets/audios/Caller%20from%20DiraLeads.mp3');
 
         return $this->output
             ->set_content_type('text/xml')
