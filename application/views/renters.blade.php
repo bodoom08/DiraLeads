@@ -253,6 +253,13 @@
 	});
 </script>
 <style>
+	/** Ben */
+	@media only screen and (max-width: 439px) {
+		.rentalnature-picture img {
+			width: 100%;
+		}
+	}
+
 	/** Muhammad */
 	.btn-create-account {
 		border: none;
