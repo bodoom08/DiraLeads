@@ -10,204 +10,10 @@
         <!-- ================================================================ -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
         <!-- ========================== Custom Style ====================================== -->
-        <style>
-            /* Public Style */
-            .btn-brown {
-                color: #fff;
-                background: #a27107;
-                border-color: #a27107;
-            }
-            .btn-brown:hover {
-                color: #fff;
-                background: #433357;
-                border-color: #433357;
-            }
-            .btn-outline-purple, .btn-purple:hover {
-                color: #433357;
-                border-color: #433357;
-                background: #fff;
-            }
-            .btn-outline-purple:hover, .btn-purple {
-                color: #fff;
-                background: #433357;
-                border-color: #433357;
-            }
-            .check-box {
-                padding: .5rem 1rem;
-                line-height: 1.5;
-                border-radius: .3rem;
-                border-color: #6c757d;
-                border: 1px solid #6c757d;
-                padding-left: 2rem;
-            }
-            .list-group-item {
-                border: none;
-                padding: .25rem;
-            }
-            .form-check-input {
-                margin-top: .4rem;
-            }
-
-            /** Popover Style */
-            .popover {
-                max-width: calc(100% - .5rem) !important;
-            }
-            /* Navbar Style */
-            nav {
-                padding: 0 !important;
-            }
-            @media only screen and (min-width: 1024px) {
-                nav {
-                    padding: 0 40px !important;
-                }
-            }
-            
-            .navbar {
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            }
-            .navbar-brand img {
-                width: 150px;
-                padding: .5rem;
-            }
-            .navbar .nav-link, .dropdown-item {
-                font-family: "Raleway", sans-serif;
-                font-weight: 600;
-                font-size: 16px;
-                color: #000 !important;
-            }
-            /* Login Button Style */
-            .login a:hover:after {
-                display: none;
-            }
-            .login a:hover {
-                background: #281b3f;
-            }
-            .login a {
-                padding: 6px 30px !important;
-                border-radius: 60px;
-                line-height: 34px;
-                background: #a27107;
-            }
-            .login a img {
-                margin: 0 10px 0 0;
-            }
-
-            /* Filter Option Styles */
-            .filter-option {
-                font-size: 16px;
-                font-weight: 600;
-            }
-            .filter-option:after {
-                display: inline-block;
-                margin-left: .255em;
-                vertical-align: .255em;
-                content: "";
-                border-left: .3em solid transparent;
-                border-right: .3em solid transparent;
-            }
-            .filter-option.option-closed:after {
-                border-top: .3em solid;
-                border-bottom: 0;
-            }
-            .filter-option.option-opened:after {
-                border-top: 0;
-                border-bottom: .3em solid;
-            }
-            .filter-all-body {
-                max-height: calc((((((((90vh - 74px) - 64px) - 4px) - 32px) - 88px) - 16px) - 16px) - 4px);
-                overflow: scroll;
-                margin-bottom: 2rem;
-            }
-            .filter-all-type {
-                width: 100%;
-                padding: .5rem;
-                display: flex;
-                justify-content: center;
-            }
-            .filter-all-type button {
-                margin: 0;
-                border-radius: 0;
-            }
-            .filter-all-type button:first-child {
-                border-top-left-radius: .25rem;
-                border-bottom-left-radius: .25rem;
-                border-right: none;
-            }
-            .filter-all-type button:last-child {
-                border-top-right-radius: .25rem;
-                border-bottom-right-radius: .25rem;
-                border-left: none;
-            }
-
-            /** Search Page */
-            .search-filters-row {
-                position: fixed;
-                top: 75px;
-                background: #fff;
-                z-index: 100;
-                width: 100%;
-            }
-            .search-result {
-                width: 100%;
-                padding: 0 .25rem;
-                position: absolute;
-                top: 140px;
-            }
-            .search-detail-title {
-                font-weight: bold;
-                font-size: 20px;
-                line-height: 1.2;
-            }
-            .search-detail-result {
-                font-size: 16px;
-                color: rgb(134, 144, 153);
-                font-weight: normal;
-                margin: 0px;
-                padding-bottom: 8px;
-            }
-            .property-card-image-slider {
-                margin-bottom: .5rem;
-            }
-            .property-card-image-slider .carousel-inner {
-                height: 160px;
-                overflow: hidden;
-                border-radius: .5rem;
-            }
-            .property-detail {
-                padding: 0 .5rem;
-            }
-            .property-detail div {
-                font-size: 16px;
-                line-height: 1.5;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .property-detail svg {
-                width: 20px;
-                height: 20px;
-            }
-            .property-detail .property-detail-price {
-                font-weight: bold;
-                font-size: 20px;
-                line-height: 1.2;
-            }
-
-            /** Map Style */
-            .map-region {
-                position: fixed;
-                right: 0;
-                height: calc(100vh - 170px);
-            }
-            .map-region #map {
-                width: 100%;
-                height: 100%;
-                border-radius: .5rem;
-            }
-        </style>
+        <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css')?>"></link>
         <!-- ========================== Google Map Scripts ================================= -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script>
-        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script> -->
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
     </head>
     <body>
         <!-- ========================= HEADER ======================================= -->
@@ -265,11 +71,12 @@
 
         <!-- ================================= Search Filters ======================================== -->
         <div class="search-filters-row">
-            <form class="form-inline my-2 p-1 d-inline-block col-sm-12 col-md-3 col-lg-2">
+            <div class="form-inline my-2 p-1 d-inline-block col-sm-12 col-md-3 col-lg-2">
                 <div class="input-group">
-                    <input type="text" id="search-place" class="form-control" placeholder="Montreal, QC, Canada" aria-label="Montreal, QC, Canada" aria-describedby="button-search">
+                    <input type="text" id="search-place" class="form-control" aria-describedby="button-search">
                     <div class="input-group-append">
-                        <button class="btn btn-brown" type="submit" id="button-search">
+                        <!-- <button class="btn btn-brown" type="submit" id="button-search"> -->
+                        <button class="btn btn-brown" id="button-search">
                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                                 <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
@@ -277,7 +84,7 @@
                         </button>
                     </div>
                 </div>
-            </form>
+            </div>
 
             <!-- ========================== Filters for Web view ====================================== -->
             <div class="d-none d-sm-inline-block">
@@ -368,7 +175,12 @@
 
                     <!-- =============================== Rental Cards ======================================== -->
                     <div class="w-100 d-flex flex-wrap">
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
+                    <?php if (!isset($properties) || count($properties) == 0) {?>
+                        <h5 class="text-center">No Rentals</h5>
+                    <?php } else {
+                        foreach($properties as $id => $property) {
+                    ?>
+                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card">
                             <a href="javascript:;" class="w-100">
                                 <div id="property-1" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
@@ -377,15 +189,17 @@
                                         <li data-target="#property-1" data-slide-to="2"></li>
                                     </ol>
                                     <div class="carousel-inner">
+                                    <?php if (!isset($property['images']) || count($property['images']) == 0) {?>
                                         <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/fp1.jpg')?>" class="d-block w-100" alt="img1">
+                                            <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="d-block w-100" alt="img1">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/fp2.jpg')?>" class="d-block w-100" alt="img2">
+                                    <?php } else {
+                                        foreach($property['images'] as $index => $image) {
+                                    ?>
+                                        <div class="carousel-item <?php echo $index == 0 ? 'active' : ''?>">
+                                            <img src="/uploads/<?php echo $image['path']?>" class="d-block w-100" alt="img<?php echo $index?>">
                                         </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/fp3.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
+                                    <?php }}?>
                                     </div>
                                     <a class="carousel-control-prev" href="#property-1" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -398,379 +212,41 @@
                                 </div>
                             </a>
                             <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
+                                <div class="property-detail-price">$<?php echo $property['days_price']?>/dy, $<?php echo $property['weekly_price']?>/wk</div>
                                 <div class="property-detail-capacity">
                                     <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
+                                    <?php echo $property['bedrooms']?> bd</span>
+                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg><?php echo $property['bathrooms']?> ba</span>
                                 </div>
                                 <div class="property-detail-address">
-                                1350 Haight St
+                                <?php echo $property['title']?>
                                 </div>
                                 <div class="property-detail-city">
-                                Haight, San Francisco, CA
+                                <?php echo $property['street']?>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-2" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-2" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-2" data-slide-to="1"></li>
-                                        <li data-target="#property-2" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/img/home-1.jpg')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-2.jpg')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-3.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-2" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-2" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-3" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-3" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-3" data-slide-to="1"></li>
-                                        <li data-target="#property-3" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/personal.jpg')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/personal2.jpg')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/personal3.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-3" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-3" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-4" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-4" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-4" data-slide-to="1"></li>
-                                        <li data-target="#property-4" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/fp4.jpg')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/fp2.jpg')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/fp1.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-4" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-4" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-5" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-5" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-5" data-slide-to="1"></li>
-                                        <li data-target="#property-5" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/gal1.webp')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/gal2.webp')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-5.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-5" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-5" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-6" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-6" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-6" data-slide-to="1"></li>
-                                        <li data-target="#property-6" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/gal1.webp')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/gal2.webp')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-5.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-6" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-6" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-7" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-7" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-7" data-slide-to="1"></li>
-                                        <li data-target="#property-7" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/gal1.webp')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/gal2.webp')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-5.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-7" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-7" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-8" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-8" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-8" data-slide-to="1"></li>
-                                        <li data-target="#property-8" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/gal1.webp')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/gal2.webp')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-5.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-8" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-8" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                            <a href="javascript:;" class="w-100">
-                                <div id="property-9" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                    <ol class="carousel-indicators">
-                                        <li data-target="#property-9" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-9" data-slide-to="1"></li>
-                                        <li data-target="#property-9" data-slide-to="2"></li>
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img src="<?php echo site_url('assets/images/gal1.webp')?>" class="d-block w-100" alt="img1">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/images/gal2.webp')?>" class="d-block w-100" alt="img2">
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img src="<?php echo site_url('assets/img/home-5.jpg')?>" class="d-block w-100" alt="img3">
-                                        </div>
-                                    </div>
-                                    <a class="carousel-control-prev" href="#property-9" role="button" data-slide="prev">
-                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Previous</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#property-9" role="button" data-slide="next">
-                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                        <span class="sr-only">Next</span>
-                                    </a>
-                                </div>
-                            </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$700/dy, $5,900/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    5 bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>3 ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                1350 Haight St
-                                </div>
-                                <div class="property-detail-city">
-                                Haight, San Francisco, CA
-                                </div>
-                            </div>
-                        </div>
+                    <?php }}?>
                     </div>
                 </div>
             </div>
 
             <!-- ============================================== Google Map ======================================= -->
             <div class="col-md-6 d-none d-sm-inline-block map-region p-1">
-                <div id="map"></div>
+                <div id="map">
+                </div>
+            </div>
+        </div>
+
+        <div class="property-overview-card" id="property-overview-card">
+            <div class="property-overview-image">
+                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="w-100 block" alt="img1" id="property-overview-image"/>
+            </div>
+            <div class="property-overview-detail">
+                <div class="property-detail-price" id="property-overview-price"></div>
+                <div class="property-detail-capacity" id="property-overview-capacity"></div>
+                <div class="property-detail-address" id="property-overview-address"></div>
+                <div class="property-detail-city" id="property-overview-city"></div>
             </div>
         </div>
 
@@ -796,9 +272,61 @@
 
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     const place = autocomplete.getPlace();
-                    console.log("Place: ", place);
-                    console.log("Map: ", map);
+                    map.setCenter(place.geometry.location);
                 });
+
+                const absCenterMap = {
+                    x: $('#map').width() / 2 + $('#map').offset().left,
+                    y: $('#map').height() / 2 + $('#map').offset().top
+                };
+
+                let streets = `<?php echo $streets; ?>`;
+                streets = JSON.parse(streets);
+                streets.forEach((street) => {
+                    var newMarker = new google.maps.Marker({
+                        position: street.location,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 5,
+                            strokeColor: '#433357'
+                        },
+                        map
+                    });
+
+                    var ghostMarkerEl = document.createElement('div');
+                    ghostMarkerEl.id = "ghost-marker";
+
+                    newMarker.addListener('mouseover', function(event) {
+                        event.ub.path[1].appendChild(ghostMarkerEl);
+                        event.ub.path[1].style.opacity = 1;
+                        event.ub.path[1].style.overflow = "unset";
+
+                        if (street.property.images && street.property.images.length > 0)
+                            document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
+                        document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price}/dy, $${street.property.weekly_price}/wk`;
+                        document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
+                        document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
+                        document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
+                        
+                        let cardLocation = { left: event.ub.clientX, top: event.ub.clientY }
+                        document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
+                        document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
+
+                        if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top) 
+                            document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
+                        if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
+                            document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
+                        document.getElementById('property-overview-card').style.display = 'block';
+                    });
+                    newMarker.addListener('mouseout', function (event) {
+                        const ghostMarker = document.getElementById('ghost-marker');
+                        event.ub.path[1].removeChild(ghostMarker);
+                        event.ub.path[1].style.opacity = 0;
+                        event.ub.path[1].style.overflow = "hidden";
+                        document.getElementById('property-overview-card').style.display = 'none';
+                    });
+                });
+            
             }
         </script>
 
@@ -1189,6 +717,19 @@
             $('#filter-sort-web').on('hidden.bs.popover', function () {
                 $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
+        </script>
+
+        <script>
+            // function viewOnMap(id) {
+            //     let streets = `<?php echo $streets; ?>`;
+            //     streets = JSON.parse(streets);
+            //     const property = streets[id];
+
+            //     map.setCenter(property.location);
+
+            //     console.log("Property: ", property);
+            //     console.log("Map: ", map);
+            // }
         </script>
     </body>
 </html>
