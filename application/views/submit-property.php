@@ -2312,7 +2312,7 @@ $this->load->view('common/front_end_layout/top', [
 
             $('#propertyConfirmationModal div.overlay').css('display', 'none');
 
-            $('#propertyConfirmationModal').show();
+            $('#propertyConfirmationModal').modal('show');
 
             $.ajax({
                 url: '/rental/get_virtual_number',
@@ -3457,7 +3457,7 @@ $this->load->view('common/front_end_layout/top', [
 
             $('#seasonFixedPrice').css('display', 'none');
             $('#seasonDailyPrice').css('display', 'block');
-            $('#myModal').show();
+            $('#myModal').modal('show');
         });
         $('.dayCheck').click(function() {
             // alert('kails');
@@ -3561,16 +3561,16 @@ $this->load->view('common/front_end_layout/top', [
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
+            $('#myModal').modal('hide');
 
         });
         $('.close').click(function() {
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
-            $('#editSeasonModal').hide();
-            $('#fEditSeasonModal').hide();
+            $('#myModal').modal('hide');
+            $('#editSeasonModal').modal('hide');
+            $('#fEditSeasonModal').modal('hide');
         });
 
         $('#updateRule').click(function() {
@@ -3638,7 +3638,7 @@ $this->load->view('common/front_end_layout/top', [
 
             renderSession();
 
-            $('#editSeasonModal').hide();
+            $('#editSeasonModal').modal('hide');
         });
 
         $('#fEdit-season').click(function() { // update season in the first tab
@@ -3702,7 +3702,7 @@ $this->load->view('common/front_end_layout/top', [
             var seval = updatedY.join('&');
             $('#season').val(seval);
 
-            $('#fEditSeasonModal').hide();
+            $('#fEditSeasonModal').modal('hide');
 
             renderCalendarPrice();
         });
@@ -3839,7 +3839,7 @@ $this->load->view('common/front_end_layout/top', [
                     $('#fEditSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#fEditSeasonModal').show();
+                $('#fEditSeasonModal').modal("show");
 
             } else { //second tab
 
@@ -3875,7 +3875,7 @@ $this->load->view('common/front_end_layout/top', [
                     $('#editSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#editSeasonModal').show();
+                $('#editSeasonModal').modal('show');
             }
         });
 
@@ -4058,7 +4058,7 @@ $this->load->view('common/front_end_layout/top', [
             var date = $('#hiddenDate').val();
             var changep = '$' + price;
             $('.fc-widget-content[data-date="' + date + '"]').text(changep);
-            $('#priceModal').hide();
+            $('#priceModal').modal('hide');
             $('.date-actions').css('display', 'none');
         });
         $(document).on('click', '.closePrice', function() {
@@ -4086,7 +4086,7 @@ $this->load->view('common/front_end_layout/top', [
                 },
                 success: function(response) {
                     if (response.type == 'success') {
-                        $('#propertyConfirmationModal').hide();
+                        $('#propertyConfirmationModal').modal('hide');
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
                         $('#confirmSubmit').removeAttr('disabled');
@@ -4102,14 +4102,14 @@ $this->load->view('common/front_end_layout/top', [
 
         $(document).on('click', '#cancelSubmit', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal('hide');
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
 
         $(document).on('click', '#closeConfirmDialog', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal('hide');
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });

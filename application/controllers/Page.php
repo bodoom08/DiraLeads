@@ -42,6 +42,9 @@ class Page extends MOBO_Controller
 			$this->load->view('terms', $data);
 		} elseif ($this->slug == 'privacy') {
 			$this->load->view('privacy', $data);
+		} else if ($this->slug == 'contact') {
+			$data['title'] = 'Contact';
+			$this->load->view('contact', $data);
 		} else {
 			$this->load->view('page', $data);
 		}

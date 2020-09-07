@@ -393,8 +393,12 @@
             if ($(document).width() < 1200) {
                 document.getElementById('about-diraleads-mobile').style = "display: block;";
                 document.getElementById('about-diraleads-web').style = "display: none;";
-                document.getElementById('user-menu-mobile').style = "display: block;";
-                document.getElementById('user-menu-web').style = "display: none;";
+                if (document.getElementById('user-menu-mobile')) {
+                    document.getElementById('user-menu-mobile').style = "display: block;";
+                }
+                if (document.getElementById('user-menu-web')) {
+                    document.getElementById('user-menu-web').style = "display: none;";
+                }
             } else {
                 document.getElementById('about-diraleads-web').style = "display: block;";
                 document.getElementById('about-diraleads-mobile').style = "display: none;";
