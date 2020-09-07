@@ -112,56 +112,58 @@
 
 <!-- Key Section -->
 <div class="key-section">
-	<div class="property-section">
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="property-picture">
-					<img src="assets/images/owners-hand.png" alt="">
+	<div class="container">
+		<div class="property-section">
+			<div class="row">
+				<div class="col-lg-6">
+					<div class="property-picture">
+						<img src="assets/images/owners-hand.png" alt="">
+					</div>
 				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="property-content">
-					<h4>List your property on DiraLeads today!</h4>
-					<h5>Our simple, hassle-free process</h5>
-					<p>1. Sign up to DiraLeads and create your account</p>
-					<p>2. List your rental, asking price, and preferred contact method</p>
-					<p>3. RELAX!</p>
-					<ul>
-						<li>We do the marketing to heimishe renters worldwide</li>
-						<li>We send your rental to our daily email subscribers</li>
-						<li>We deal with all general website inquiries... and YOU get to collect the rent.</li>
-					</ul>
-					<a href="/register" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
+				<div class="col-lg-6">
+					<div class="property-content">
+						<h4>List your property on DiraLeads today!</h4>
+						<h5>Our simple, hassle-free process</h5>
+						<p>1. Sign up to DiraLeads and create your account</p>
+						<p>2. List your rental, asking price, and preferred contact method</p>
+						<p>3. RELAX!</p>
+						<ul>
+							<li>We do the marketing to heimishe renters worldwide</li>
+							<li>We send your rental to our daily email subscribers</li>
+							<li>We deal with all general website inquiries... and YOU get to collect the rent.</li>
+						</ul>
+						<a href="/register" class="create-account-btn">Create My Account <img src="assets/images/plus.png" alt=""></a>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="promise-section">
-		<div class="container">
-			<h2>The DiraLeads Promise</h2>
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="promise-box">
-						<div class="promise-box-icon">
-							<img src="assets/images/promise01.png" alt="">
+		<div class="promise-section">
+			<div class="container">
+				<h2>The DiraLeads Promise</h2>
+				<div class="row">
+					<div class="col-lg-4">
+						<div class="promise-box">
+							<div class="promise-box-icon">
+								<img src="assets/images/promise01.png" alt="">
+							</div>
+							<h5>FREE property<br>listings</h5>
 						</div>
-						<h5>FREE property<br>listings</h5>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="promise-box selected">
-						<div class="promise-box-icon">
-							<img src="assets/images/promise02.png" alt="">
+					<div class="col-lg-4">
+						<div class="promise-box selected">
+							<div class="promise-box-icon">
+								<img src="assets/images/promise02.png" alt="">
+							</div>
+							<h5>Access to thousands<br>of clients</h5>
 						</div>
-						<h5>Access to thousands<br>of clients</h5>
 					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="promise-box">
-						<div class="promise-box-icon">
-							<img src="assets/images/promise03.png" alt="">
+					<div class="col-lg-4">
+						<div class="promise-box">
+							<div class="promise-box-icon">
+								<img src="assets/images/promise03.png" alt="">
+							</div>
+							<h5>Complete control of<br>your rental throughout</h5>
 						</div>
-						<h5>Complete control of<br>your rental throughout</h5>
 					</div>
 				</div>
 			</div>
@@ -279,6 +281,11 @@
 </div>
 
 <style>
+	/** Ben */
+	/* div.row {
+		margin: 0;
+	} */
+
 	/** Muhammad */
 	.btn-create-account {
 		border: none;
