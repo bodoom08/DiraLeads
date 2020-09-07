@@ -174,22 +174,25 @@ if (isset($livedata)) {
         </div>
         <section class="customer-logos slider">
 
-            @php $i = 0;
-            $j=0;
-            $count = count($propertiea_counts)
+            @php 
+                $i = 0;
+                $j=0;
+                $count = count($propertiea_counts)
             @endphp
 
             @foreach($propertiea_counts as $key=>$value)
 
             @php
-            $i++;
-            $j++;
+                $i++;
+                $j++;
             @endphp
 
-            @if($j < 13) @if($i=='1' ) <div class="slide">
+            @if($j < 13) 
+            @if($i=='1' ) 
+            <div class="slide">
                 <div class="mason-sec">
                     <ul>
-                        @endif
+            @endif
 
                         @if($i == '1' || $i == '4')
                         <li><a href="{{ '/properties?area='.$key }}" target="blank">
@@ -207,10 +210,9 @@ if (isset($livedata)) {
 
                         @if($i == '2')
                         <li class="mason-sec">
-                            @endif
+                        @endif
 
                             @if($i == '2' || $i == '3')
-
                             <div class="slide"><a href="{{ '/properties?area='.$key }}" target="blank">
                                     <div class="gallery-sec">
                                         <img src="{{ site_url('assets/images/gal2.webp')}}">
@@ -222,31 +224,43 @@ if (isset($livedata)) {
                                     </div>
                                 </a>
                             </div>
-
-
                             @endif
-                            @if($i == '3')
+
+                        @if($i == '3')
                         </li>
                         @endif
 
-
-                        @if($i == '4')
-                        @php $i = '0' @endphp
+            @if($i == '4')
+            @php $i = '0' @endphp
                     </ul>
                 </div>
-    </div>
-    @endif
-    @endif
-    @endforeach
-    </section>
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-12">
-            <div class="button-sec">
-                <a href="/properties">VIEW NEIGHBORHOOD FEATURES</a>
+            </div>
+            @endif
+        @endif
+        @endforeach
+        </section>
+
+        <section class="customer-logos-mobile">
+        @php $i=0; @endphp
+        @foreach($propertiea_counts as $key=>$value)
+            @if($i < 4)
+            <a href="{{ '/properties?area='.$key }}" target="blank">
+                <div class="customer-logo-card customer-logo-card-{{ $i % 4 }}">
+                    <h3>{{$key}}</h3>
+                </div>
+            </a>
+            @endif
+            @php $i++; @endphp
+        @endforeach
+        </section>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-12">
+                <div class="button-sec">
+                    <a href="/properties">VIEW NEIGHBORHOOD FEATURES</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
