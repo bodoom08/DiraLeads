@@ -206,8 +206,8 @@
             }
         </style>
         <!-- ========================== Google Map Scripts ================================= -->
-        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script>
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script> -->
     </head>
     <body>
         <!-- ========================= HEADER ======================================= -->
@@ -792,6 +792,13 @@
                 
                 var searchEl = document.getElementById('search-place');
                 var autocomplete = new google.maps.places.Autocomplete(searchEl);
+                autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    const place = autocomplete.getPlace();
+                    console.log("Place: ", place);
+                    console.log("Map: ", map);
+                });
             }
         </script>
 
