@@ -201,6 +201,13 @@ class M_property extends CI_Model
                 }
             }
 
+            // Just for testing
+            // return [
+            //     'type' => 'success',
+            //     'text' => 'Property listing done successfully!',
+            //     'virtual_number' => "+1 123123123"
+            // ];
+
             //assing virtual number
             // $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
             // $vn_id_arr = array_column($result, 'vn_id');
