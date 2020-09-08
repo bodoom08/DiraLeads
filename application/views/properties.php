@@ -12,8 +12,93 @@
         <!-- ========================== Custom Style ====================================== -->
         <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css')?>"></link>
         <!-- ========================== Google Map Scripts ================================= -->
-        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script>
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script> -->
+
+        <!-- ============================= Google Map Script ========================================== -->
+        <script>
+            var map;
+            function initMap(marker = { lat: 31.0461, lng: 34.08516 }) {
+                map = new google.maps.Map(
+                    document.getElementById('map'),
+                    {
+                        zoom: 8,
+                        center: marker
+                    }
+                );
+
+                if (navigator.geolocation) {
+                    var options = { timeout: 6000 };
+                    navigator.geolocation.getCurrentPosition(function (position) {
+                        map.setCenter(
+                            {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            }
+                        );
+                    }, function(err) {
+                        console.log("Error: ", err);
+                    }, options);
+                }
+                
+                var searchEl = document.getElementById('search-place');
+                var autocomplete = new google.maps.places.Autocomplete(searchEl);
+                autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
+
+                google.maps.event.addListener(autocomplete, 'place_changed', function () {
+                    const place = autocomplete.getPlace();
+                    map.setCenter(place.geometry.location);
+                });
+
+                let streets = `<?php echo $streets; ?>`;
+                streets = JSON.parse(streets);
+                streets.forEach((street) => {
+                    var newMarker = new google.maps.Marker({
+                        position: street.location,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 5,
+                            strokeColor: '#433357'
+                        },
+                        map
+                    });
+
+                    var ghostMarkerEl = document.createElement('div');
+                    ghostMarkerEl.id = "ghost-marker";
+
+                    newMarker.addListener('mouseover', function(event) {
+                        event.ub.path[1].appendChild(ghostMarkerEl);
+                        event.ub.path[1].style.opacity = 1;
+                        event.ub.path[1].style.overflow = "unset";
+
+                        if (street.property.images && street.property.images.length > 0)
+                            document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
+                        document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price}/dy, $${street.property.weekly_price}/wk`;
+                        document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
+                        document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
+                        document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
+                        
+                        let cardLocation = { left: event.ub.clientX, top: event.ub.clientY }
+                        document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
+                        document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
+
+                        if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top) 
+                            document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
+                        if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
+                            document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
+                        document.getElementById('property-overview-card').style.display = 'block';
+                    });
+                    newMarker.addListener('mouseout', function (event) {
+                        const ghostMarker = document.getElementById('ghost-marker');
+                        event.ub.path[1].removeChild(ghostMarker);
+                        event.ub.path[1].style.opacity = 0;
+                        event.ub.path[1].style.overflow = "hidden";
+                        document.getElementById('property-overview-card').style.display = 'none';
+                    });
+                });
+                
+            }
+        </script>
     </head>
     <body>
         <!-- ========================= HEADER ======================================= -->
@@ -180,7 +265,7 @@
                     <?php } else {
                         foreach($properties as $id => $property) {
                     ?>
-                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card">
+                        <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card" onmouseover="showCardOnMap(<?php echo $id?>)" onmouseout="closeCardOnMap()">
                             <a href="javascript:;" class="w-100">
                                 <div id="property-1" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
@@ -238,6 +323,7 @@
             </div>
         </div>
 
+        <!-- =============================== Property card on map =============================================  -->
         <div class="property-overview-card" id="property-overview-card">
             <div class="property-overview-image">
                 <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="w-100 block" alt="img1" id="property-overview-image"/>
@@ -250,87 +336,18 @@
             </div>
         </div>
 
+        <!-- =============================== Hidden Filter Options ========================================== -->
+        <input type="hidden" id="hid-rental-type" value="[]" />
+        <input type="hidden" id="hid-bed-type" value=""/>
+        <input type="hidden" id="hid-floor-type" value="" />
+        <input type="hidden" id="hid-property-filter" value="{}" />
+
         <!-- ====================================== Script ========================================== -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
-        <!-- ============================= Google Map Script ========================================== -->
-        <script>
-            function initMap(marker = { lat: 31.0461, lng: 34.08516 }) {
-                var map = new google.maps.Map(
-                    document.getElementById('map'),
-                    {
-                        zoom: 8,
-                        center: marker
-                    }
-                );
-                
-                var searchEl = document.getElementById('search-place');
-                var autocomplete = new google.maps.places.Autocomplete(searchEl);
-                autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
-
-                google.maps.event.addListener(autocomplete, 'place_changed', function () {
-                    const place = autocomplete.getPlace();
-                    map.setCenter(place.geometry.location);
-                });
-
-                const absCenterMap = {
-                    x: $('#map').width() / 2 + $('#map').offset().left,
-                    y: $('#map').height() / 2 + $('#map').offset().top
-                };
-
-                let streets = `<?php echo $streets; ?>`;
-                streets = JSON.parse(streets);
-                streets.forEach((street) => {
-                    var newMarker = new google.maps.Marker({
-                        position: street.location,
-                        icon: {
-                            path: google.maps.SymbolPath.CIRCLE,
-                            scale: 5,
-                            strokeColor: '#433357'
-                        },
-                        map
-                    });
-
-                    var ghostMarkerEl = document.createElement('div');
-                    ghostMarkerEl.id = "ghost-marker";
-
-                    newMarker.addListener('mouseover', function(event) {
-                        event.ub.path[1].appendChild(ghostMarkerEl);
-                        event.ub.path[1].style.opacity = 1;
-                        event.ub.path[1].style.overflow = "unset";
-
-                        if (street.property.images && street.property.images.length > 0)
-                            document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
-                        document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price}/dy, $${street.property.weekly_price}/wk`;
-                        document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
-                        document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
-                        document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
-                        
-                        let cardLocation = { left: event.ub.clientX, top: event.ub.clientY }
-                        document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
-                        document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
-
-                        if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top) 
-                            document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
-                        if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
-                            document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
-                        document.getElementById('property-overview-card').style.display = 'block';
-                    });
-                    newMarker.addListener('mouseout', function (event) {
-                        const ghostMarker = document.getElementById('ghost-marker');
-                        event.ub.path[1].removeChild(ghostMarker);
-                        event.ub.path[1].style.opacity = 0;
-                        event.ub.path[1].style.overflow = "hidden";
-                        document.getElementById('property-overview-card').style.display = 'none';
-                    });
-                });
-            
-            }
-        </script>
-
-        <!-- ============================= Custom Script ========================================== -->
+        <!-- ============================= Custom Script for Filter ========================================== -->
         <script>
             /**
             **  Search Filter Rendering
@@ -339,12 +356,23 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
+                    const rentals = JSON.parse(document.getElementById('hid-rental-type').value).toString();
+                    let rentalContent = "";
+                    rentalTypes.forEach((rental, index) => {
+                        rentalContent = `
+                            ${rentalContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setRentalType(${index})">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''}>
+                                    <label class="form-check-label" for="rental-type-${index}">${rental}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
                     return `
-                    <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item border-0"><button class="btn btn-outline-purple">Any</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-purple">Sale</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-purple">Rent</button></li>
-                        <li class="list-group-item border-0"><button class="btn btn-outline-purple">Short Term Rent</button></li>
+                    <ul class="list-group">
+                        ${rentalContent}
                     </ul>
                     `;
                 }
@@ -366,14 +394,21 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    const bedTypes = ['Any','1+','2+','3+','4+'];
+                    const bed = document.getElementById('hid-bed-type').value;
+                    let bedContent = "";
+
+                    bedTypes.forEach((bedType, index) => {
+                        bedContent = `
+                            ${bedContent}
+                            <li class="list-group-item">
+                                <button class="btn btn-outline-purple ${index == bed ? 'active' : ''}" id="bed-type-${index}" onclick="setFilter('bed', ${index})">${bedType}</button>
+                            </li>
+                        `;
+                    });
                     return `
                         <ul class="list-group list-group-horizontal mb-2">
-                            <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
+                            ${bedContent}
                         </ul>
                         <p class="mb-1 text-center">Or Select Bedroom's Range</p>
                         <ul class="list-group list-group-horizontal">
@@ -387,14 +422,21 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    const floorTypes = ['Any','1+','2+','3+','4+'];
+                    const floor = document.getElementById('hid-floor-type').value;
+                    let floorContent = "";
+                    floorTypes.forEach((floorType, index) => {
+                        floorContent = `
+                            ${floorContent}
+                            <li class="list-group-item">
+                                <button class="btn btn-outline-purple ${index == floor ? 'active' : ''}" id="floor-type-${index}" onclick="setFilter('floor', ${index})">${floorType}</button>
+                            </li>
+                        `;
+                    });
+                    
                     return `
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
-                            <li class="list-group-item"><button class="btn btn-outline-purple">5+</button></li>
+                            ${floorContent}
                         </ul>
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
@@ -408,30 +450,25 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    let amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    let amenityContent = '';
+                    amenities.forEach((amenity, index) => {
+                        amenityContent = `${amenityContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenties-${index}">
+                                    <label class="form-check-label" for="amenties-${index}">${amenity}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
                     return `
                     <div class="filter-all-body">
                         <ul class="list-group">
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Amenities</p>
                                 <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-1">
-                                            <label class="form-check-label" for="amenties-1">Elevator</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-2">
-                                            <label class="form-check-label" for="amenties-2">Heating</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-3">
-                                            <label class="form-check-label" for="amenties-3">Dryer</label>
-                                        </div>
-                                    </li>
+                                    ${amenityContent}
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -453,30 +490,44 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    let rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
+                    let rentalContent = "";
+                    rentalTypes.forEach((rental, index) => {
+                        rentalContent = `
+                            ${rentalContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}">
+                                    <label class="form-check-label" for="rental-type-${index}">${rental}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
+                    let amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    let amenityContent = '';
+                    amenities.forEach((amenity, index) => {
+                        amenityContent = `${amenityContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenties-${index}">
+                                    <label class="form-check-label" for="amenties-${index}">${amenity}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
                     return `
                     <div class="filter-all-body">
                         <ul class="list-group">
                             <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Rental Types</p>
+                                <ul class="list-group">
+                                    ${rentalContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Amenities</p>
                                 <ul class="list-group">
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-1">
-                                            <label class="form-check-label" for="amenties-1">Elevator</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-2">
-                                            <label class="form-check-label" for="amenties-2">Heating</label>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                            <input type="checkbox" class="form-check-input" id="amenties-3">
-                                            <label class="form-check-label" for="amenties-3">Dryer</label>
-                                        </div>
-                                    </li>
+                                    ${amenityContent}
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -720,16 +771,80 @@
         </script>
 
         <script>
-            // function viewOnMap(id) {
-            //     let streets = `<?php echo $streets; ?>`;
-            //     streets = JSON.parse(streets);
-            //     const property = streets[id];
+            function showCardOnMap(id) {
+                let streets = `<?php echo $streets; ?>`;
+                streets = JSON.parse(streets);
+                const street = streets[id];
 
-            //     map.setCenter(property.location);
+                if (map) {
+                    try {
+                        map.setCenter(street.location); 
+                    } catch(error) {
+                        console.log("Map is not loaded...");
+                    }
+                }
 
-            //     console.log("Property: ", property);
-            //     console.log("Map: ", map);
-            // }
+                if (street.property.images && street.property.images.length > 0)
+                    document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
+                document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price}/dy, $${street.property.weekly_price}/wk`;
+                document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
+                document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
+                document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
+                        
+                const center = {
+                    left: $('#map').offset().left + $('#map').width() / 2,
+                    top: $('#map').offset().top + $('#map').height() / 2
+                }
+                var ghostMarkerEl = document.createElement('div');
+                ghostMarkerEl.id = "ghost-marker";
+                ghostMarkerEl.style.left = center.left - 13;
+                ghostMarkerEl.style.top = center.top - 13;
+                ghostMarkerEl.style.display = "absolute";
+                document.body.appendChild(ghostMarkerEl);
+
+                document.getElementById('property-overview-card').style.top = center.top - 100;
+                document.getElementById('property-overview-card').style.left = center.left + 30;
+                document.getElementById('property-overview-card').style.display = 'block';
+            }
+
+            function closeCardOnMap() {
+                document.getElementById('property-overview-card').style.display = 'none';
+                var ghostMarkerEl = document.getElementById('ghost-marker');
+                document.body.removeChild(ghostMarkerEl);
+            }
+        </script>
+
+        <!-- ============================= Actions for Filter Control =============================== -->
+        <script>
+            function setRentalType(index) {
+                const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
+                let types = [];
+                document.getElementById(`rental-type-${index}`).checked = !document.getElementById(`rental-type-${index}`).checked;
+                
+                for (let i=0, length=rentalTypes.length; i<length; i++) {
+                    if (document.getElementById(`rental-type-${i}`).checked)
+                        types.push(rentalTypes[i]);
+                }
+                document.getElementById(`hid-rental-type`).value = JSON.stringify(types);
+                filter('type', types);
+            }
+
+            function setFilter(key, index) {
+                for(let i=0; i<5; i++) {
+                    if (i == index) document.getElementById(`${key}-type-${i}`).className += " active"
+                    else document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
+                }
+
+                document.getElementById(`hid-${key}-type`).value = index;
+                filter(key, index);
+            }
+
+            function filter(key, value) {
+                const filterEl = document.getElementById('hid-property-filter');
+                let filters = JSON.parse(filterEl.value);
+                filters[key] = value;
+                document.getElementById('hid-property-filter').value = JSON.stringify(filters);
+            }
         </script>
     </body>
 </html>

@@ -19,6 +19,10 @@
     background: #433357;
     border-color: #433357;
 }
+.btn-outline-purple.active {
+    color: white;
+    background: #433357;
+}
 .check-box {
     padding: .5rem 1rem;
     line-height: 1.5;
