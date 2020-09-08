@@ -82,7 +82,7 @@
 		endtimeYear: 2020,
 		endtimeMonth: 9,
 		endtimeDate: 9,
-		endtimeHours: 0,
+		endtimeHours: 12,
 		endtimeMinutes: 0,
 		endtimeSeconds: 0,
 		timeZone: ""
