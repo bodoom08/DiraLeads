@@ -11,7 +11,7 @@ class Properties extends MOBO_Controller
         $this->load->library('session');
     }
 
-    //*
+    /*
     public function index()
     {
         $data['title'] = 'Rentals';
@@ -19,7 +19,7 @@ class Properties extends MOBO_Controller
     }
     /**/
 
-    /*
+    //*
     public function index()
     {
         $data = $this->M_properties->getAllProducts();
