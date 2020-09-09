@@ -2242,16 +2242,6 @@ $this->load->view('common/top', [
             }
         });
 
-        function weekendPrice(price = '') {
-            var result = '<p class="day-background weekend-background">' + price + '</p>';
-            return result;
-        }
-
-        function unavailablePrice(price = '') {
-            var result = '<p class="day-background unavailable-background">' + price + '</p>';
-            return result;
-        }
-
         function validateForthTab() {
             var day = $('.datedays').val();
             var weekend = $('.weekenddays').val();
@@ -2353,12 +2343,12 @@ $this->load->view('common/top', [
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
-                $('#thumbnailPreview').append(`<p class="text-center">No Image</p>`);
+                $('#thumbnailPreview').html(`<p class="text-center">No Image</p>`);
             } else {
                 const length = $('#image_preview div img').length;
-                $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[0].src}' />`);
+                $('#thumbnailPreview').html(`<img src='${$('#image_preview div img')[0].src}' />`);
             }
-
+            $('#amenitySpec').html('');
             amenities.forEach(amenity => {
                 $('#amenitySpec').append(`<li>${amenity}</li>`);
             });
@@ -3162,6 +3152,16 @@ $this->load->view('common/top', [
 
         function manualPrice(price = '') {
             return '<p class="day-background manual-background">' + price + '</p>';
+        }
+
+        function weekendPrice(price = '') {
+            var result = '<p class="day-background weekend-background">' + price + '</p>';
+            return result;
+        }
+
+        function unavailablePrice(price = '') {
+            var result = '<p class="day-background unavailable-background">' + price + '</p>';
+            return result;
         }
 
         $('#addSeasonPrice').click(function() {
