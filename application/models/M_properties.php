@@ -94,6 +94,16 @@ class M_properties extends CI_Model
         ];
     }
 
+    public function getProductDetail($id) {
+        $query = 'select properties.id, areas.title, properties.street, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active" AND `properties`.`id` = '.$id;
+        $property = $this->db->query($query)->row();
+        $images = $this->db->select('path')->where('property_id', $id)->from('property_images')->get()->result_array();
+        $property->images = $images;
+        $property->amenities = explode(',', $property->amenities);
+        // $property['images'] = $images;
+        return [ "property" => $property];
+    }
+
     public function getAll()
     {
         extract($this->input->get());

@@ -29,6 +29,11 @@ class Properties extends MOBO_Controller
     }
     /**/
 
+    public function rental_detail($id, $title) {
+        $data = $this->M_properties->getProductDetail($id);
+        $this->load->view('rental_detail', $data);
+    }
+
     public function getAllImages()
     {
         $this->output
@@ -213,5 +218,19 @@ class Properties extends MOBO_Controller
         } else {
             die(json_encode(['type' => 'error', 'text' => $this->form_validation->error_string()]));
         }
+    }
+
+    public function search() {
+        $data = array();
+        if (isset($_POST['bed'])) 
+            $data['bed'] = $_POST['bed'];
+        if (isset($_POST['floor']))
+            $data['floor'] = $_POST['floor'];
+        if (isset($_POST['type']))
+            $data['type'] = $_POST['type'];
+
+        echo json_encode([
+            "data" => $data
+        ]);
     }
 }
