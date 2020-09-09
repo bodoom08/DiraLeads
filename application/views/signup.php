@@ -43,7 +43,7 @@ $this->load->view('common/layout/top', [
                         </div>
                         <div class="form-group country-code">
                             <div class="row">
-                                <div class="col-lg-4">
+                                <div class="col-lg-4 col-4">
                                     <label for="">Country Code<code>*</code></label><br />
                                     <input type="text" id="country" name="country" class="phone-field" style="border: 0;opacity: 0;visibility: hidden;">
                                     <!-- <select name="country" class="form-control input-select" id="country" style="width: 100% !important;height:45px !important;"> -->
@@ -57,7 +57,7 @@ $this->load->view('common/layout/top', [
                                     ?>
                                     <!-- </select> -->
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-8 col-8">
                                     <input type="number" id="mobile_number" name="mobile" class="input-text" placeholder="Mobile Number">
                                 </div>
                             </div>
