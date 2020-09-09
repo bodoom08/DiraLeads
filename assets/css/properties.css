@@ -104,6 +104,10 @@ nav {
     border-top: 0;
     border-bottom: .3em solid;
 }
+.filter-option.selected:before {
+    content: "\25CF";
+    color: #a27107;
+}
 .filter-all-body {
     max-height: calc((((((((90vh - 74px) - 64px) - 4px) - 32px) - 88px) - 16px) - 16px) - 4px);
     overflow: scroll;
@@ -157,6 +161,14 @@ nav {
     padding-bottom: 8px;
 }
 /* Property Style */
+.property-card {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    margin: .25rem;
+    padding: 0 !important;
+    border-radius: .5rem;
+    overflow: hidden;
+    padding-bottom: .5rem !important;
+}
 .property-card-image-slider {
     margin-bottom: .5rem;
 }
