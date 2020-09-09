@@ -29,7 +29,7 @@ class Properties extends MOBO_Controller
     }
     /**/
 
-    public function rental_detail($id, $title) {
+    public function rental_detail($id) {
         $data = $this->M_properties->getProductDetail($id);
         $this->load->view('rental_detail', $data);
     }

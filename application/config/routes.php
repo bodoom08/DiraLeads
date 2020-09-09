@@ -56,4 +56,4 @@ $route['translate_uri_dashes'] = false;
 $route['invoice/(:any)'] = 'invoices/byId/$1';
 $route['webhook/incoming_call']['post'] = 'webhook/incoming_call';
 $route['properties/search']['post'] = "properties/search";
-$route['properties/rental_detail/(:any)/(:any)'] = 'properties/rental_detail/$1/$2';
+$route['properties/rental_detail/(:any)'] = 'properties/rental_detail/$1';

@@ -26,13 +26,6 @@
                         center: marker
                     }
                 );
-                detailMap = new google.maps.Map(
-                    document.getElementById('detail-map'),
-                    {
-                        zoom: 8,
-                        center: marker
-                    }
-                );
 
                 if (navigator.geolocation) {
                     var options = { timeout: 6000 };
@@ -280,7 +273,7 @@
                     ?>
                         <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card" onmouseover="showCardOnMap(<?php echo $id?>)" onmouseout="closeCardOnMap()">
                             <!-- <a href="<?php echo site_url('properties/rental_detail/'.$property['id'])?>" class="w-100"> -->
-                            <a href="<?php echo site_url('properties/rental_detail/'.$property['id'].'/'.$property['title'])?>" class="w-100">
+                            <a href="<?php echo site_url('properties/rental_detail/'.$property['id'])?>" class="w-100">
                                 <div id="property-1" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
                                         <li data-target="#property-1" data-slide-to="0" class="active"></li>
