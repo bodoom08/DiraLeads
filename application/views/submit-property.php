@@ -2623,9 +2623,9 @@ $this->load->view('common/front_end_layout/top', [
                 if ($('#customCheck29').is(':checked')) { // only available in weekend checked
 
                     weekday.forEach(day => {
-                        day.html(unavailablePrice());
+                        day.html(unavailablePriceHTML());
                     });
-                    weekday[1].html(unavailablePrice('unavailable'));
+                    weekday[1].html(unavailablePriceHTML('unavailable'));
 
                     if (week != '') {
                         for (var i = weekendFrom; i <= weekendTo; i++) {
@@ -2753,9 +2753,9 @@ $this->load->view('common/front_end_layout/top', [
                 } else {
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
                     });
-                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(fixedPriceD));
                 }
             });
 
@@ -2780,10 +2780,10 @@ $this->load->view('common/front_end_layout/top', [
                 }
 
                 between.forEach(day => {
-                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
                 });
 
-                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPrice(detail.title));
+                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPriceHTML(detail.title));
 
             })
         }
@@ -2807,10 +2807,10 @@ $this->load->view('common/front_end_layout/top', [
                 // console.log("Between: ", between);
 
                 between.forEach(day => {
-                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePriceHTML());
                 });
 
-                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePrice('unavailable'));
+                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePriceHTML('unavailable'));
             });
         }
 
@@ -2915,9 +2915,9 @@ $this->load->view('common/front_end_layout/top', [
                 } else {
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
                     });
-                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(fixedPriceD));
                 }
             });
 
@@ -3005,9 +3005,9 @@ $this->load->view('common/front_end_layout/top', [
 
             // if (isFixedPrice) {
             //     between.forEach(day => {
-            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
             //     });
-            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(price));
             // } else {
             //     between.forEach(day => {
             //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
@@ -3045,11 +3045,11 @@ $this->load->view('common/front_end_layout/top', [
             $('.date-actions').css('display', 'none');
         });
 
-        function seasonalPrice(price = '') {
+        function seasonalPriceHTML(price = '') {
             return '<p class="day-background season-background">' + price + '</p>';
         }
 
-        function manualPrice(price = '') {
+        function manualPriceHTML(price = '') {
             return '<p class="day-background manual-background">' + price + '</p>';
         }
 
@@ -3058,7 +3058,7 @@ $this->load->view('common/front_end_layout/top', [
             return result;
         }
 
-        function unavailablePrice(price = '') {
+        function unavailablePriceHTML(price = '') {
             var result = '<p class="day-background unavailable-background">' + price + '</p>';
             return result;
         }
@@ -3117,19 +3117,19 @@ $this->load->view('common/front_end_layout/top', [
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPriceHTML(title));
 
             // var period = [];
             // price = '$' + price;
 
             // if (isFixedPrice) {
             //     between.forEach(day => {
-            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
             //     });
-            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(price));
             // } else {
             //     between.forEach(day => {
             //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
@@ -3223,10 +3223,10 @@ $this->load->view('common/front_end_layout/top', [
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePrice('unavailable'));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePriceHTML('unavailable'));
 
             // var eventData = {
             //     title: title,
@@ -3306,10 +3306,10 @@ $this->load->view('common/front_end_layout/top', [
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPriceHTML(title));
 
             document.getElementById('hid_editManualStart').value = '';
             document.getElementById('hid_editManualEnd').value = '';
@@ -3356,10 +3356,10 @@ $this->load->view('common/front_end_layout/top', [
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePrice('unavailable'));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(unavailablePriceHTML('unavailable'));
 
             var disableDate = $('.disableDate').val();
             if (disableDate != '') {
