@@ -26,6 +26,13 @@
                         center: marker
                     }
                 );
+                detailMap = new google.maps.Map(
+                    document.getElementById('detail-map'),
+                    {
+                        zoom: 8,
+                        center: marker
+                    }
+                );
 
                 if (navigator.geolocation) {
                     var options = { timeout: 6000 };
@@ -248,7 +255,10 @@
                     <div class="d-flex justify-content-between">
                         <div class="search-detail">
                             <div class="search-detail-title">Apartments for Rent Near Me</div>
-                            <div class="search-detail-result">3,537 rentals available on Trulia</div>
+                            <div class="search-detail-result">
+                            <?php echo isset($properties) ? count($properties) : '0'?>
+                                rentals available on Diraleads
+                            </div>
                         </div>
                         <div class="search-detail-sort d-none d-sm-block">
                             <a tabindex="0" id="filter-sort-web" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By" style="height: unset;">
@@ -269,7 +279,8 @@
                         foreach($properties as $id => $property) {
                     ?>
                         <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card" onmouseover="showCardOnMap(<?php echo $id?>)" onmouseout="closeCardOnMap()">
-                            <a href="javascript:;" class="w-100">
+                            <!-- <a href="<?php echo site_url('properties/rental_detail/'.$property['id'])?>" class="w-100"> -->
+                            <a href="<?php echo site_url('properties/rental_detail/'.$property['id'].'/'.$property['title'])?>" class="w-100">
                                 <div id="property-1" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
                                         <li data-target="#property-1" data-slide-to="0" class="active"></li>
@@ -346,7 +357,8 @@
         <input type="hidden" id="hid-property-filter" value="{}" />
 
         <!-- ====================================== Script ========================================== -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 
@@ -847,6 +859,19 @@
                 let filters = JSON.parse(filterEl.value);
                 filters[key] = value;
                 document.getElementById('hid-property-filter').value = JSON.stringify(filters);
+
+                // $.ajax({
+                //     method: 'POST',
+                //     url: "<?php echo site_url('properties/search')?>",
+                //     data: filters,
+                //     success: function (response) {
+                //         const res = JSON.parse(response);
+                //         console.log("Response: ", res);
+                //     },
+                //     fail: function (error) {
+                //         console.log("Error: ", error);
+                //     }
+                // });
             }
         </script>
     </body>

@@ -243,3 +243,106 @@ nav {
     border-radius: 50%;
     opacity: 0.3;
 }
+
+/* Property Detail View */
+.property-detail-view {
+    display: none;
+    z-index: 1100;
+    width: 100vw;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.property-detail-image-slider {
+    margin-bottom: .5rem;
+}
+.property-detail-image-slider .carousel-inner {
+    height: 500px;
+    overflow: hidden;
+    border-radius: .5rem;
+}
+.property-detail-info {
+    padding: 2.5rem;
+}
+.property-board {
+    margin-left: 30%;
+    margin-top: 50px;
+    margin-right: 5%;
+    background: white;
+    border-radius: .5rem;
+    overflow: hidden;
+    font-family: "Raleway", sans-serif;
+}
+
+#detail-map {
+    width: 100%;
+    height: 300px;
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.property-info {
+    border: none;
+    border-bottom: 2px solid #48484817;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.property-description {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 2px solid #48484817;
+}
+
+.property-amenities {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 2px solid #48484817;
+}
+
+.property-amenities svg {
+    width: 20px;
+    height: 20px;
+}
+
+.property-contact-detail {
+    padding: .5rem;
+    padding-top: 2.5rem;
+}
+
+.property-calendar {
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 2px solid #48484817;
+}
+
+@media only screen and (max-width: 320px) {
+    .property-detail-image-slider .carousel-inner {
+        height: 190px;
+    }
+
+    .property-detail-info, .property-contact-detail {
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 768px) and (min-width: 321px) {
+    .property-detail-image-slider .carousel-inner {
+        height: 200px;
+    }
+
+    .property-detail-info {
+        padding: .5rem;
+    }
+
+    .property-contact-detail {
+        padding: .25rem;
+        padding-top: .5rem;
+    }
+}
