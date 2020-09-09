@@ -1,17 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>Bootstrap Example</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
+<html>
+    <head>
+        <title><?php echo isset($title) && html_escape($title) != 'Home' ? html_escape($title) . ' | ' . html_escape(CFG_TITLE) : html_escape(CFG_TITLE); ?></title>
+        <!-- ================================================================ -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8">
+        <!-- ================================================================ -->
+        <link rel="icon" href="assets/favicon.svg" sizes="any" type="image/svg+xml">
+        <link rel="icon" type="image/png" href="assets/favicon.png" />
+        <!-- ================================================================ -->
+            <!-- Old -->
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
+            <!-- New -->
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
 
-
-  <div class="container">
-    <h3>Collapsible Navbar</h3>
-    <p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).</p>
-    <p>Only when the button is clicked, the navigation bar will be displayed.</p>
-  </div>
-</body>
+        <!-- ============================= Google Map Script ========================================== -->
+        <script>
+            var map;
+            function initMap(marker = { lat: 31.0461, lng: 34.08516 }) {
+                map = new google.maps.Map(
+                    document.getElementById('map'),
+                    {
+                        zoom: 8,
+                        center: marker
+                    }
+                );
+            }
+        </script>
+    </head>
+    <body>
+      <div id="map" style="width: 300px; height: 400px;"></div>
+    </body>
 </html>
