@@ -37,9 +37,10 @@
                         center
                     }
                 );
-                var newMarker =  new google.maps.Marker({
-                    position: { lat: 31.0461, lng: 34.08516 },
-                    detailMap
+
+                let newMarker = new google.maps.Marker({
+                    position: center,
+                    map: detailMap
                 });
             }
         </script> 
@@ -47,15 +48,20 @@
         <!-- =============================== Full Calendar Script ===================================== -->
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                var calendarEl = document.getElementById('availability-caneldar');
+                var calendarEl = document.getElementById('availability-calendar');
 
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialDate: '2020-06-12',
                     editable: false,
-                    selectable: false,
+                    selectable: true,
                     businessHours: true,
-                    dayMaxEvents: true, // allow "more" link when too many events
-                    events: []
+                    dayMaxEvents: true,
+                    events: [],
+                    headerToolbar: {
+                        start: 'title', // will normally be on the left. if RTL, will be on the right
+                        center: '',
+                        end: 'prev,next' // will normally be on the right. if RTL, will be on the left
+                    },
+                    titleFormat: { year: 'numeric', month: 'short' }
                 });
 
                 calendar.render();
@@ -171,7 +177,7 @@
                             <h3>Amenities</h3>
                             <div class="row">
                             <?php foreach($property->amenities as $amenity) {?>
-                                <div class="col-sm-6 col-md-4"><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="hotel" class="svg-inline--fa fa-hotel fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M560 64c8.84 0 16-7.16 16-16V16c0-8.84-7.16-16-16-16H16C7.16 0 0 7.16 0 16v32c0 8.84 7.16 16 16 16h15.98v384H16c-8.84 0-16 7.16-16 16v32c0 8.84 7.16 16 16 16h240v-80c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v80h240c8.84 0 16-7.16 16-16v-32c0-8.84-7.16-16-16-16h-16V64h16zm-304 44.8c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4zm0 96c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4zm-128-96c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4zM179.2 256h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4c0 6.4-6.4 12.8-12.8 12.8zM192 384c0-53.02 42.98-96 96-96s96 42.98 96 96H192zm256-140.8c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4zm0-96c0 6.4-6.4 12.8-12.8 12.8h-38.4c-6.4 0-12.8-6.4-12.8-12.8v-38.4c0-6.4 6.4-12.8 12.8-12.8h38.4c6.4 0 12.8 6.4 12.8 12.8v38.4z"></path></svg>&nbsp;<?php echo $amenity?></div>
+                                <div class="col-sm-6 col-md-4"><?php echo $amenity?></div>
                             <?php }?>
                             </div>
                         </div>
@@ -186,7 +192,7 @@
                     <div class="property-contact-detail">
                         <div class="property-calendar">
                             <h3>Availability</h3>
-                            <div id="availability-caneldar"></div>
+                            <div id="availability-calendar"></div>
                         </div>
 
                         <form>

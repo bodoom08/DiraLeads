@@ -58,8 +58,6 @@ class Properties extends MOBO_Controller
     public function map()
     {
         $coords = $this->M_properties->getPropertyCoords();
-        // var_dump($coords); die;
-
         $this->load->view('map_properties', compact('coords'));
     }
 
