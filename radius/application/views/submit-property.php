@@ -2730,9 +2730,9 @@ $this->load->view('common/top', [
 
                     if (week != '') {
                         for (var i = weekendFrom; i <= weekendTo; i++) {
-                            weekday[i % 7].html(weekendPrice());
+                            weekday[i % 7].html(weekendPriceHTML());
                         }
-                        weekday[midWeekend].html(weekendPrice(week));
+                        weekday[midWeekend].html(weekendPriceHTML(week));
                     } else {
                         for (var i = weekendFrom; i <= weekendTo; i++) {
                             weekday[i % 7].html(days);
@@ -2745,9 +2745,9 @@ $this->load->view('common/top', [
 
                     if (week != '') {
                         for (var i = weekendFrom; i <= weekendTo; i++) {
-                            weekday[i % 7].html(weekendPrice());
+                            weekday[i % 7].html(weekendPriceHTML());
                         }
-                        weekday[midWeekend].html(weekendPrice(week));
+                        weekday[midWeekend].html(weekendPriceHTML(week));
                     } else {
                         for (var i = weekendFrom; i <= weekendTo; i++) {
                             weekday[i % 7].html(days);
@@ -2848,7 +2848,7 @@ $this->load->view('common/top', [
 
                     }
                     // weekday[midWeekend].forEach(weekendDay => {
-                    //     weekendDay.html(weekendPrice(weekendPriceValue));
+                    //     weekendDay.html(weekendPriceHTML(weekendPriceValue));
                     // });
 
                 } else {
@@ -3010,7 +3010,7 @@ $this->load->view('common/top', [
                         })
                     }
                     // weekday[midWeekend].forEach(weekendDay => {
-                    //     weekendDay.html(weekendPrice(weekendPriceValue));
+                    //     weekendDay.html(weekendPriceHTML(weekendPriceValue));
                     // });
 
                 } else {
@@ -3154,7 +3154,7 @@ $this->load->view('common/top', [
             return '<p class="day-background manual-background">' + price + '</p>';
         }
 
-        function weekendPrice(price = '') {
+        function weekendPriceHTML(price = '') {
             var result = '<p class="day-background weekend-background">' + price + '</p>';
             return result;
         }
