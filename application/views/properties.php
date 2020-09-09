@@ -274,11 +274,15 @@
                         <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none property-card" onmouseover="showCardOnMap(<?php echo $id?>)" onmouseout="closeCardOnMap()">
                             <!-- <a href="<?php echo site_url('properties/rental_detail/'.$property['id'])?>" class="w-100"> -->
                             <a href="<?php echo site_url('properties/rental_detail/'.$property['id'])?>" class="w-100">
-                                <div id="property-1" class="carousel slide property-card-image-slider" data-ride="carousel">
+                                <div id="property-<?php echo $id?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li data-target="#property-1" data-slide-to="0" class="active"></li>
-                                        <li data-target="#property-1" data-slide-to="1"></li>
-                                        <li data-target="#property-1" data-slide-to="2"></li>
+                                    <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
+                                        <li data-target="#property-<?php echo $id?>" data-slide-to="0" class="active"></li>
+                                    <?php } else {
+                                        foreach($property['images'] as $index => $image) {
+                                    ?>
+                                        <li data-target="#property-<?php echo $id?>" data-slide-to="<?php echo $index?>" class="<?php echo $index == 0 ? 'active' : ''?>"></li>
+                                    <?php }}?>
                                     </ol>
                                     <div class="carousel-inner">
                                     <?php if (!isset($property['images']) || count($property['images']) == 0) {?>
@@ -293,11 +297,11 @@
                                         </div>
                                     <?php }}?>
                                     </div>
-                                    <a class="carousel-control-prev" href="#property-1" role="button" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#property-<?php echo $id?>" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
                                     </a>
-                                    <a class="carousel-control-next" href="#property-1" role="button" data-slide="next">
+                                    <a class="carousel-control-next" href="#property-<?php echo $id?>" role="button" data-slide="next">
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
