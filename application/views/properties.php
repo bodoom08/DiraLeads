@@ -12,7 +12,9 @@
         <!-- ========================== Custom Style ====================================== -->
         <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css')?>"></link>
         <!-- ========================== Google Map Scripts ================================= -->
+            <!-- Old -->
         <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
+            <!-- New -->
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
 
         <!-- ============================= Google Map Script ========================================== -->
@@ -202,7 +204,7 @@
                     </li>
 
                     <li class="list-group-item">
-                        <div class="form-group form-check mb-0 check-box">
+                        <div class="form-group form-check mb-0 check-box" onclick="setHasPic()">
                             <input type="checkbox" class="form-check-input" id="show-rental">
                             <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                         </div>
@@ -351,6 +353,9 @@
         <input type="hidden" id="hid-rental-type" value="[]" />
         <input type="hidden" id="hid-bed-type" value=""/>
         <input type="hidden" id="hid-floor-type" value="" />
+        <input type="hidden" id="hid-sort" value="any" />
+        <input type="hidden" id="hid-has-pic" value="false" />
+        <input type="hidden" id="hid-amenities" value="[]" />
         <input type="hidden" id="hid-property-filter" value="{}" />
 
         <!-- ====================================== Script ========================================== -->
@@ -462,14 +467,15 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
-                    let amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    const hidAmenities = document.getElementById('hid-amenities').value;
                     let amenityContent = '';
                     amenities.forEach((amenity, index) => {
                         amenityContent = `${amenityContent}
                             <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                    <input type="checkbox" class="form-check-input" id="amenties-${index}">
-                                    <label class="form-check-label" for="amenties-${index}">${amenity}</label>
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setAmenity(${index})">
+                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''}>
+                                    <label class="form-check-label" for="amenity-${index}">${amenity}</label>
                                 </div>
                             </li>
                         `;
@@ -502,7 +508,7 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
-                    let rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
+                    const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
                     let rentalContent = "";
                     rentalTypes.forEach((rental, index) => {
                         rentalContent = `
@@ -589,10 +595,14 @@
                 'html': true,
                 sanitize: false,
                 content: function () {
+                    const sort = document.getElementById('hid-sort').value;
                     return `
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple">
+                                <button class="btn btn-outline-purple ${sort == 'any' ? 'active' : ''}" onclick="setOrder('any')" id="sort-any">Any</button>
+                            </li>
+                            <li class="list-group-item">
+                                <button class="btn btn-outline-purple ${sort == 'high-low-price' ? 'active' : ''}" onclick="setOrder('high-low-price')" id="sort-high-low-price">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-numeric-down-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z"/>
                                         <path fill-rule="evenodd" d="M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
@@ -603,7 +613,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple">
+                                <button class="btn btn-outline-purple ${sort == 'low-high-price' ? 'active' : ''}" onclick="setOrder('low-high-price')" id="sort-low-high-price">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-numeric-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
                                         <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
@@ -614,7 +624,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple">
+                                <button class="btn btn-outline-purple ${sort == 'latest' ? 'active' : ''}" onclick="setOrder('latest')"  id="sort-latest">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z"/>
                                         <path fill-rule="evenodd" d="M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
@@ -625,7 +635,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple">
+                                <button class="btn btn-outline-purple ${sort == 'oldest' ? 'active' : ''}" onclick="setOrder('oldest')"  id="sort-oldest">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
                                         <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
@@ -665,6 +675,7 @@
             });
         </script>
 
+        <!-- ============================ Filter Caret Style control ============================================ -->
         <script>
             /**
             **  Filter Caret Style
@@ -782,6 +793,7 @@
             });
         </script>
 
+        <!-- ================================== Scripts for card popup on google map ================================== -->
         <script>
             function showCardOnMap(id) {
                 let streets = `<?php echo $streets; ?>`;
@@ -843,12 +855,40 @@
 
             function setFilter(key, index) {
                 for(let i=0; i<5; i++) {
-                    if (i == index) document.getElementById(`${key}-type-${i}`).className += " active"
+                    if (i == index) document.getElementById(`${key}-type-${i}`).className += " active";
                     else document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
                 }
 
                 document.getElementById(`hid-${key}-type`).value = index;
                 filter(key, index);
+            }
+
+            function setOrder(order) {
+                const sortTypes = ['any', 'high-low-price', 'low-high-price', 'latest', 'oldest'];
+                for(let i=0, length = sortTypes.length; i<length; i++) {
+                    if (order == sortTypes[i]) document.getElementById(`sort-${sortTypes[i]}`).className += ' active';
+                    else document.getElementById(`sort-${sortTypes[i]}`).className = "btn btn-outline-purple";
+                }
+                document.getElementById('hid-sort').value = order;
+                filter('sort', order);
+            }
+
+            function setHasPic() {
+                document.getElementById('hid-has-pic').value = document.getElementById('hid-has-pic').value == "true" ? "false" : "true";
+                filter('has_pic', document.getElementById('hid-has-pic').value);
+            }
+
+            function setAmenity(index) {
+                const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                let types = [];
+                document.getElementById(`amenity-${index}`).checked = !document.getElementById(`amenity-${index}`).checked;
+                for (let i=0, length=amenities.length; i<length; i++) {
+                    if (document.getElementById(`amenity-${i}`).checked)
+                        types.push(amenities[i]);
+                }
+
+                document.getElementById('hid-amenities').value = JSON.stringify(types);
+                filter('amenities', types);
             }
 
             function filter(key, value) {
