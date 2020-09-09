@@ -2233,9 +2233,9 @@ $this->load->view('common/front_end_layout/top', [
         }
 
         $('#submitBtn').click(function() {
-            if (document.getElementById('submitBtn').className == 'disabled') return;
+            // if (document.getElementById('submitBtn').className == 'disabled') return;
 
-            document.getElementById('submitBtn').className = 'disabled';
+            // document.getElementById('submitBtn').className = 'disabled';
             let amenities = [];
             var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -2331,7 +2331,7 @@ $this->load->view('common/front_end_layout/top', [
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
                     }
-                    document.getElementById('submitBtn').className = '';
+                    // document.getElementById('submitBtn').className = '';
                 }
             });
         });

@@ -160,6 +160,12 @@ $this->load->view('common/top', [
         }
     }
 
+    @media only screen and (min-width: 768px) and (max-width: 1200px) {
+        .modal-content {
+            width: 90% !important;
+        }
+    }
+
     .event-model {
         width: 100% !important;
     }
@@ -1976,9 +1982,9 @@ $this->load->view('common/top', [
 
     function customTimeSet(elem) {
         if ($(elem).val() == 'custom') {
-            $('#custom_div').show();
+            $('#custom_div').modal('show');
         } else {
-            $('#custom_div').hide();
+            $('#custom_div').modal('hide');
         }
     }
 
@@ -2317,9 +2323,9 @@ $this->load->view('common/top', [
         }
 
         $('#submitBtn').click(function() {
-            if (document.getElementById('submitBtn').className == 'disabled') return;
+            // if (document.getElementById('submitBtn').className == 'disabled') return;
 
-            document.getElementById('submitBtn').className = 'disabled';
+            // document.getElementById('submitBtn').className = 'disabled';
             let amenities = [];
             var data = $('#listingForm').serializeArray().reduce(function(obj, item) {
                 obj[item.name] = item.value;
@@ -2395,7 +2401,7 @@ $this->load->view('common/top', [
             }
             $('#propertyConfirmationModal div.overlay').css('display', 'none');
 
-            $('#propertyConfirmationModal').show();
+            $('#propertyConfirmationModal').modal('show');
 
             $.ajax({
                 url: 'property/get_virtual_number',
@@ -2414,7 +2420,7 @@ $this->load->view('common/top', [
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
                     }
-                    document.getElementById('submitBtn').className = '';
+                    // document.getElementById('submitBtn').className = '';
                 }
             });
             // $.get('/rental/get_virtual_number', function(response, status) {
@@ -2581,6 +2587,9 @@ $this->load->view('common/top', [
                     $('#manualBook').find('.eventClose').text('Close');
                     // $('#calendar').fullCalendar('removeEvents', event._id);
                 });
+            },
+            viewRender: function(view, element) {
+                renderCalendarPrice();
             }
         });
 
@@ -2672,10 +2681,13 @@ $this->load->view('common/top', [
                         $('#date-action .date label').html(moment(event.start).format('YYYY-MM-DD'));
 
                     }
+                },
+                viewRender: function(view, element) {
+                    renderSession();
                 }
             });
             //clear calendar and cards
-            $('.fc-bg td').html('');
+            // $('.fc-bg td').html('');
         });
 
         function renderCalendarPrice() {
@@ -3546,7 +3558,7 @@ $this->load->view('common/top', [
 
             $('#seasonFixedPrice').css('display', 'none');
             $('#seasonDailyPrice').css('display', 'block');
-            $('#myModal').show();
+            $('#myModal').modal('show');
         });
         $('.dayCheck').click(function() {
             // alert('kails');
@@ -3650,16 +3662,16 @@ $this->load->view('common/top', [
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
+            $('#myModal').modal('hide');
 
         });
         $('.close').click(function() {
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
-            $('#editSeasonModal').hide();
-            $('#fEditSeasonModal').hide();
+            $('#myModal').modal('hide');
+            $('#editSeasonModal').modal('hide');
+            $('#fEditSeasonModal').modal('hide');
         });
 
         $('#updateRule').click(function() {
@@ -3727,7 +3739,7 @@ $this->load->view('common/top', [
 
             renderSession();
 
-            $('#editSeasonModal').hide();
+            $('#editSeasonModal').modal('hide');
         });
 
         $('#fEdit-season').click(function() { // update season in the first tab
@@ -3791,7 +3803,7 @@ $this->load->view('common/top', [
             var seval = updatedY.join('&');
             $('#season').val(seval);
 
-            $('#fEditSeasonModal').hide();
+            $('#fEditSeasonModal').modal('hide');
 
             renderCalendarPrice();
         });
@@ -3928,7 +3940,7 @@ $this->load->view('common/top', [
                     $('#fEditSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#fEditSeasonModal').show();
+                $('#fEditSeasonModal').modal('show');
 
             } else { //second tab
 
@@ -3964,7 +3976,7 @@ $this->load->view('common/top', [
                     $('#editSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#editSeasonModal').show();
+                $('#editSeasonModal').modal('show');
             }
         });
 
@@ -4147,7 +4159,7 @@ $this->load->view('common/top', [
             var date = $('#hiddenDate').val();
             var changep = '$' + price;
             $('.fc-widget-content[data-date="' + date + '"]').text(changep);
-            $('#priceModal').hide();
+            $('#priceModal').modal('hide');
             $('.date-actions').css('display', 'none');
         });
         $(document).on('click', '.closePrice', function() {
@@ -4175,7 +4187,7 @@ $this->load->view('common/top', [
                 },
                 success: function(response) {
                     if (response.type == 'success') {
-                        $('#propertyConfirmationModal').hide();
+                        $('#propertyConfirmationModal').modal('hide');
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
                         $('#confirmSubmit').removeAttr('disabled');
@@ -4191,14 +4203,14 @@ $this->load->view('common/top', [
 
         $(document).on('click', '#cancelSubmit', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal('hide');
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
 
         $(document).on('click', '#closeConfirmDialog', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal('hide');
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
