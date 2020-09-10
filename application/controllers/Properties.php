@@ -11,15 +11,14 @@ class Properties extends MOBO_Controller
         $this->load->library('session');
     }
 
-    //*
+    /*
     public function index()
     {
         $data['title'] = 'Rentals';
         $this->load->view('maintenance', $data);
     }
-    /**/
+    */
 
-    /*
     public function index()
     {
         $data = $this->M_properties->getAllProducts();
@@ -27,9 +26,9 @@ class Properties extends MOBO_Controller
         $this->load->view('properties', $data);
         // $this->load->view('properties');
     }
-    /**/
 
-    public function rental_detail($id) {
+    public function rental_detail($id)
+    {
         $data = $this->M_properties->getProductDetail($id);
         $this->load->view('rental_detail', $data);
     }
@@ -218,9 +217,10 @@ class Properties extends MOBO_Controller
         }
     }
 
-    public function search() {
+    public function search()
+    {
         $data = array();
-        if (isset($_POST['bed'])) 
+        if (isset($_POST['bed']))
             $data['bed'] = $_POST['bed'];
         if (isset($_POST['floor']))
             $data['floor'] = $_POST['floor'];
