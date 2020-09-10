@@ -112,7 +112,7 @@ class M_properties extends CI_Model
 
     public function getProductDetail($id)
     {
-        $query = 'select users.name, properties.id, areas.title, properties.street, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, virtual_numbers.number from properties join `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
+        $query = 'select users.name, properties.id, areas.title, properties.street, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.weekend_from, properties.weekend_to, properties.only_weekend, properties.status, properties.coords, properties.is_annual, properties.seasonal_price, virtual_numbers.number from properties join `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
         $property = $this->db->query($query)->row();
         $images = $this->db->select('path')->where('property_id', $id)->from('property_images')->get()->result_array();
         $property->images = $images;
