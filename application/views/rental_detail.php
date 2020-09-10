@@ -198,6 +198,14 @@
                         <form>
                             <h3>Contact</h3>
                             <div class="form-group">
+                                <label for="property-host-name">Host Name</label>
+                                <input type="text" class="form-control" id="property-host-name" placeholder="Your Host Name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="property-did-number">DID Number</label>
+                                <input type="text" class="form-control" id="property-did-number" placeholder="DID Number" />
+                            </div>
+                            <div class="form-group">
                                 <label for="property-contact-name">Name</label>
                                 <input type="text" class="form-control" id="property-contact-name" placeholder="Your Name" />
                             </div>

@@ -57,6 +57,8 @@
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     const place = autocomplete.getPlace();
                     map.setCenter(place.geometry.location);
+
+                    filter('coords', place.geometry.location);
                 });
 
                 try {
@@ -213,8 +215,8 @@
                     </li>
 
                     <li class="list-group-item">
-                        <div class="form-group form-check mb-0 check-box" onclick="setHasPic()">
-                            <input type="checkbox" class="form-check-input" id="show-rental">
+                        <div class="form-group form-check mb-0 check-box" >
+                            <input type="checkbox" class="form-check-input" id="show-rental" onclick="setHasPic()">
                             <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                         </div>
                     </li>
@@ -366,6 +368,8 @@
         <input type="hidden" id="hid-has-pic" value="false" />
         <input type="hidden" id="hid-amenities" value="[]" />
         <input type="hidden" id="hid-bath" value="" />
+        <input type="hidden" id="hid-lang" value="" />
+        <input type="hidden" id="hid-sleep" value="0" />
         <input type="hidden" id="hid-property-filter" value="{}" />
 
         <!-- ====================================== Script ========================================== -->
@@ -379,6 +383,7 @@
             /**
             **  Search Filter Rendering
             **/
+
             const anyType = {
                 'html': true,
                 sanitize: false,
@@ -390,8 +395,8 @@
                         rentalContent = `
                             ${rentalContent}
                             <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setRentalType(${index})">
-                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''}>
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''} onclick="setRentalType(${index})">
                                     <label class="form-check-label" for="rental-type-${index}">${rental}</label>
                                 </div>
                             </li>
@@ -479,14 +484,16 @@
                 content: function () {
                     const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
                     const hidAmenities = document.getElementById('hid-amenities').value;
+                    const sukkahContent = `<input type="number" id="sukkah-sleep" placeholder="Sleep" value="${document.getElementById('hid-sleep').value}" ${hidAmenities.includes('Sukkah') ? '' : 'disabled'} min="0" onchange="changeSleep()"/>`;
                     let amenityContent = '';
                     amenities.forEach((amenity, index) => {
                         amenityContent = `${amenityContent}
-                            <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setAmenity(${index})">
-                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''}>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''} onclick="setAmenity(${index})">
                                     <label class="form-check-label" for="amenity-${index}">${amenity}</label>
                                 </div>
+                                ${amenity == "Sukkah" ? sukkahContent : ''}
                             </li>
                         `;
                     });
@@ -498,20 +505,48 @@
                         bathContent = `${bathContent}
                             <li class="list-group-item"><button class="btn btn-outline-purple ${index == hidBath ? 'active' : ''}" id="bath-type-${index}" onclick="setFilter('bath', ${index})">${bath}</button></li>
                         `;
-                    })
+                    });
+
+                    const langs = [
+                        {
+                            key: 'en',
+                            label: 'English'
+                        }, {
+                            key: 'hb',
+                            label: 'Hebrew'
+                        }
+                    ];
+                    const languages = document.getElementById('hid-lang').value;
+                    let langContent = '';
+                    langs.forEach(lang => {
+                        langContent = `${langContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="lang-${lang.key}" onclick="setLang('${lang.key}')" ${languages.includes(lang.key) ? 'checked' : ''}>
+                                    <label class="form-check-label" for="lang-${lang.key}">${lang.label}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
                     return `
                     <div class="filter-all-body">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <p class="font-weight-bold mb-1">Amenities</p>
-                                <ul class="list-group">
-                                    ${amenityContent}
-                                </ul>
-                            </li>
-                            <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Bathroom</p>
                                 <ul class="list-group list-group-horizontal">
                                     ${bathContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Languages</p>
+                                <ul class="list-group">
+                                    ${langContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Amenities</p>
+                                <ul class="list-group">
+                                    ${amenityContent}
                                 </ul>
                             </li>
                         </ul>
@@ -530,8 +565,8 @@
                         rentalContent = `
                             ${rentalContent}
                             <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3 onclick="setRentalType(${index})"">
-                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''}>
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''} onclick="setRentalType(${index})">
                                     <label class="form-check-label" for="rental-type-${index}">${rental}</label>
                                 </div>
                             </li>
@@ -539,14 +574,16 @@
                     });
                     const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
                     const hidAmenities = document.getElementById('hid-amenities').value;
+                    const sukkahContent = `<input type="number" id="sukkah-sleep" placeholder="Sleep" value="${document.getElementById('hid-sleep').value}" ${hidAmenities.includes('Sukkah') ? '' : 'disabled'} min="0" onchange="changeSleep()"/>`;
                     let amenityContent = '';
                     amenities.forEach((amenity, index) => {
                         amenityContent = `${amenityContent}
-                            <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setAmenity(${index})">
-                                    <input type="checkbox" class="form-check-input" id="amenties-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''}>
-                                    <label class="form-check-label" for="amenties-${index}">${amenity}</label>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''} onclick="setAmenity(${index})">
+                                    <label class="form-check-label" for="amenity-${index}">${amenity}</label>
                                 </div>
+                                ${amenity == "Sukkah" ? sukkahContent : ''}
                             </li>
                         `;
                     });
@@ -562,6 +599,37 @@
                             `;
                         });
                     });
+
+                    const bathTypes = ['any', '1+', '2+', '3+', '4+'];
+                    const hidBath = document.getElementById('hid-bath').value;
+                    let bathContent = '';
+                    bathTypes.forEach((bath, index) => {
+                        bathContent = `${bathContent}
+                            <li class="list-group-item"><button class="btn btn-outline-purple ${index == hidBath ? 'active' : ''}" id="bath-type-${index}" onclick="setFilter('bath', ${index})">${bath}</button></li>
+                        `;
+                    });
+
+                    const langs = [
+                        {
+                            key: 'en',
+                            label: 'English'
+                        }, {
+                            key: 'hb',
+                            label: 'Hebrew'
+                        }
+                    ];
+                    const languages = document.getElementById('hid-lang').value;
+                    let langContent = '';
+                    langs.forEach(lang => {
+                        langContent = `${langContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="lang-${lang.key}" onclick="setLang('${lang.key}')" ${languages.includes(lang.key) ? 'checked' : ''}>
+                                    <label class="form-check-label" for="lang-${lang.key}">${lang.label}</label>
+                                </div>
+                            </li>
+                        `;
+                    });
                     return `
                     <div class="filter-all-body">
                         <ul class="list-group">
@@ -569,6 +637,12 @@
                                 <p class="font-weight-bold mb-1">Rental Types</p>
                                 <ul class="list-group">
                                     ${rentalContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Languages</p>
+                                <ul class="list-group">
+                                    ${langContent}
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -859,16 +933,18 @@
 
         <!-- ============================= Actions for Filter Control =============================== -->
         <script>
+            function changeSleep() {
+                document.getElementById('hid-sleep').value = document.getElementById('sukkah-sleep').value;
+            }
+
             function setRentalType(index) {
                 const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
                 let types = [];
-                document.getElementById(`rental-type-${index}`).checked = !document.getElementById(`rental-type-${index}`).checked;
                 
                 for (let i=0, length=rentalTypes.length; i<length; i++) {
                     if (document.getElementById(`rental-type-${i}`).checked)
                         types.push(rentalTypes[i]);
                 }
-                setRentalDropStyle();
 
                 document.getElementById(`hid-rental-type`).value = JSON.stringify(types);
                 filter('type', types);
@@ -879,7 +955,6 @@
                     if (i == index) document.getElementById(`${key}-type-${i}`).className += " active";
                     else document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
                 }
-                setOtherDropStyle(key, index);
 
                 document.getElementById(`hid-${key}`).value = index;
                 filter(key, index);
@@ -900,13 +975,36 @@
                 filter('has_pic', document.getElementById('hid-has-pic').value);
             }
 
+            function setLang(lang) {
+                const langs = [
+                    {
+                        key: 'en',
+                        label: 'English'
+                    }, {
+                        key: 'hb',
+                        label: 'Hebrew'
+                    }
+                ];
+                let languages = [];
+                for (let i=0, length=langs.length; i<length; i++) {
+                    if (document.getElementById(`lang-${langs[i].key}`).checked)
+                        languages.push(langs[i].key);
+                }
+                document.getElementById('hid-lang').value = JSON.stringify(languages);
+                filter('lang', languages);
+            }
+
             function setAmenity(index) {
+                
                 const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
                 let types = [];
-                document.getElementById(`amenity-${index}`).checked = !document.getElementById(`amenity-${index}`).checked;
+                
                 for (let i=0, length=amenities.length; i<length; i++) {
                     if (document.getElementById(`amenity-${i}`).checked)
                         types.push(amenities[i]);
+                }
+                if (amenities[index] == "Sukkah") {
+                    document.getElementById('sukkah-sleep').disabled = !document.getElementById('sukkah-sleep').disabled;
                 }
 
                 document.getElementById('hid-amenities').value = JSON.stringify(types);
