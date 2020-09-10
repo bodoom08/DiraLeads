@@ -2308,7 +2308,7 @@ $this->load->view('common/front_end_layout/top', [
                 url: '/rental/get_virtual_number',
                 method: 'GET',
                 beforeSend: function() {
-                    $('#confirmSubmit').prop('disabled', 'true');
+                    $('#confirmSubmit').prop('disabled', true);
                 },
                 success: function(data) {
                     var response = JSON.parse(data);
@@ -2316,7 +2316,7 @@ $this->load->view('common/front_end_layout/top', [
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
                         $('#virutalNumber').val(response.virtual_number);
-                        $('#confirmSubmit').removeAttr('disabled');
+                        $('#confirmSubmit').prop('disabled', false);
                     } else {
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
@@ -4082,14 +4082,14 @@ $this->load->view('common/front_end_layout/top', [
                 beforeSubmit: function() {
                     event.preventDefault();
                     $('.fa-spinner').prop('display', 'inline');
-                    $('#confirmSubmit').prop('disabled', 'true');
+                    $('#confirmSubmit').prop('disabled', true);
                 },
                 success: function(response) {
                     if (response.type == 'success') {
                         $('#propertyConfirmationModal').modal('hide');
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
-                        $('#confirmSubmit').removeAttr('disabled');
+                        $('#confirmSubmit').prop('disabled', false);
                         document.location.href = "/my_rentals";
                     } else {
                         toastr.warning(response.text);

@@ -2391,13 +2391,14 @@ $this->load->view('common/top', [
             }
             $('#propertyConfirmationModal div.overlay').css('display', 'none');
 
+
             $('#propertyConfirmationModal').modal('show');
 
             $.ajax({
                 url: 'property/get_virtual_number',
                 method: 'GET',
                 beforeSend: function() {
-                    $('#confirmSubmit').prop('disabled', 'true');
+                    $('#confirmSubmit').prop('disabled', true);
                 },
                 success: function(data) {
                     var response = JSON.parse(data);
@@ -2405,7 +2406,7 @@ $this->load->view('common/top', [
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
                         $('#virutalNumber').val(response.virtual_number);
-                        $('#confirmSubmit').removeAttr('disabled');
+                        $('#confirmSubmit').prop('disabled', false);
                     } else {
                         toastr.warning(response.text);
                         document.getElementById('virtualNumber').innerHTML = "not available";
@@ -4190,7 +4191,7 @@ $this->load->view('common/top', [
                         $('#propertyConfirmationModal').modal('hide');
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
-                        $('#confirmSubmit').removeAttr('disabled');
+                        $('#confirmSubmit').prop('disabled', false);
                         window.location.href = '<?php echo site_url('property'); ?>';
                     } else {
                         toastr.warning(response.text);
