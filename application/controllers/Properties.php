@@ -217,18 +217,10 @@ class Properties extends MOBO_Controller
         }
     }
 
-    public function search()
-    {
-        $data = array();
-        if (isset($_POST['bed']))
-            $data['bed'] = $_POST['bed'];
-        if (isset($_POST['floor']))
-            $data['floor'] = $_POST['floor'];
-        if (isset($_POST['type']))
-            $data['type'] = $_POST['type'];
+    public function search() {
+        $data = $this->M_properties->getAllProducts();
+        $data['areas'] = $this->M_page->get_areas();
 
-        echo json_encode([
-            "data" => $data
-        ]);
+        echo json_encode($data);
     }
 }
