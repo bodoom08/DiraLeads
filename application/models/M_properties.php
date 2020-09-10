@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_properties extends CI_Model
 {
 
-    public function getAllProducts() 
+    public function getAllProducts()
     {
         $types = isset($_POST['type']) ? $_POST['type'] : [];
         $bedroom = isset($_POST['bed']) ? $_POST['bed'] : 'any';
@@ -21,35 +21,35 @@ class M_properties extends CI_Model
         if (count($types) > 0) {
             $query .= ' AND (';
         }
-        foreach($types as $index =>  $type) {
-            $query .= '`properties`.`type` = "'.strtolower($type).'" ';
+        foreach ($types as $index =>  $type) {
+            $query .= '`properties`.`type` = "' . strtolower($type) . '" ';
             if ($index + 1 == count($types)) {
                 $query .= ')';
             } else {
                 $query .= ' OR ';
             }
         }
-        foreach($amenities as $amenity) {
-            $query .= ' AND `properties`.`amenities` like "%'.$amenity.'%"';
+        foreach ($amenities as $amenity) {
+            $query .= ' AND `properties`.`amenities` like "%' . $amenity . '%"';
         }
         if ($bedroom != "any") {
-            $query .= ' AND `properties`.`bedrooms` >= '.$bedroom;
+            $query .= ' AND `properties`.`bedrooms` >= ' . $bedroom;
         }
         if ($bathroom != "any") {
-            $query .= ' AND `properties`.`bathrooms` >= '.$bathroom;
+            $query .= ' AND `properties`.`bathrooms` >= ' . $bathroom;
         }
         if ($price != "any" && $price != "0|0") {
             $price = explode("|", $price);
-            $query .= ' AND `properties`.`price` >= '.$price[0] . ' AND `properties`.`price` <= '.$price[1];
+            $query .= ' AND `properties`.`price` >= ' . $price[0] . ' AND `properties`.`price` <= ' . $price[1];
         }
         if ($street != "any") {
-            $query .= ' AND `properties`.`street` = "'.$street.'" OR `properties`.`coords` = "'.$location.'"';
+            $query .= ' AND `properties`.`street` = "' . $street . '" OR `properties`.`coords` = "' . $location . '"';
         }
         if ($area != "any") {
-            $query .= ' AND `areas`.`title` = "'.$area.'"';
+            $query .= ' AND `areas`.`title` = "' . $area . '"';
         }
         if ($sort_by != "any") {
-            switch($sort_by) {
+            switch ($sort_by) {
                 case 'high-low':
                     $query .= ' ORDER BY `properties`.`price` DESC';
                     break;
@@ -59,17 +59,17 @@ class M_properties extends CI_Model
                 case 'lowest':
                     $query .= ' ORDER BY `properties`.`created_at` ASC';
                     break;
-                default: 
+                default:
                     $query .= ' ORDER BY `properties`.`price` ASC';
                     break;
             }
         }
-        
+
         $properties = $this->db->query($query)->result_array();
 
         $streets = array();
         $filteredProperties = array();
-        foreach($properties as $index => $property) {
+        foreach ($properties as $index => $property) {
             $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
             if ($has_pic == 'false' || count($images) > 0) {
                 $property['images'] = $images;
@@ -96,7 +96,6 @@ class M_properties extends CI_Model
                 }
                 $filteredProperties[] = $property;
             }
-            
         }
 
         // echo json_encode([
@@ -104,21 +103,22 @@ class M_properties extends CI_Model
         //    "streets"   => $streets
         // ]);
         // exit;
-            
+
         return [
             "properties" => $filteredProperties,
             "streets"   => json_encode($streets)
         ];
     }
 
-    public function getProductDetail($id) {
-        $query = 'select properties.id, areas.title, properties.street, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active" AND `properties`.`id` = '.$id;
+    public function getProductDetail($id)
+    {
+        $query = 'select users.name, properties.id, areas.title, properties.street, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, virtual_numbers.number from properties join `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
         $property = $this->db->query($query)->row();
         $images = $this->db->select('path')->where('property_id', $id)->from('property_images')->get()->result_array();
         $property->images = $images;
         $property->amenities = explode(',', $property->amenities);
         // $property['images'] = $images;
-        return [ "property" => $property];
+        return ["property" => $property];
     }
 
     public function getAll()
