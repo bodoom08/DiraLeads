@@ -296,44 +296,41 @@
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap(<?php echo $id ?>)" onmouseout="closeCardOnMap()">
-                                    <!-- <a href="<?php echo site_url('properties/rental_detail/' . $property['id']) ?>" class="w-100"> -->
-                                    <a href="<?php echo site_url('properties/rental_detail/' . $property['id']) ?>" class="w-100">
-                                        <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                            <ol class="carousel-indicators">
-                                                <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
-                                                    <li data-target="#property-<?php echo $id ?>" data-slide-to="0" class="active"></li>
-                                                    <?php } else {
-                                                    foreach ($property['images'] as $index => $image) {
-                                                    ?>
-                                                        <li data-target="#property-<?php echo $id ?>" data-slide-to="<?php echo $index ?>" class="<?php echo $index == 0 ? 'active' : '' ?>"></li>
-                                                <?php }
-                                                } ?>
-                                            </ol>
-                                            <div class="carousel-inner">
-                                                <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
-                                                    <div class="carousel-item active">
-                                                        <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="d-block w-100" alt="img1">
+                                <div class="property-card" onmouseover="showCardOnMap(<?php echo $id ?>)" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                    <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
+                                                <li data-target="#property-<?php echo $id ?>" data-slide-to="0" class="active"></li>
+                                                <?php } else {
+                                                foreach ($property['images'] as $index => $image) {
+                                                ?>
+                                                    <li data-target="#property-<?php echo $id ?>" data-slide-to="<?php echo $index ?>" class="<?php echo $index == 0 ? 'active' : '' ?>"></li>
+                                            <?php }
+                                            } ?>
+                                        </ol>
+                                        <div class="carousel-inner">
+                                            <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
+                                                <div class="carousel-item active">
+                                                    <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="d-block w-100" alt="img1">
+                                                </div>
+                                                <?php } else {
+                                                foreach ($property['images'] as $index => $image) {
+                                                ?>
+                                                    <div class="carousel-item <?php echo $index == 0 ? 'active' : '' ?>">
+                                                        <img src="/uploads/<?php echo $image['path'] ?>" class="d-block w-100" alt="img<?php echo $index ?>">
                                                     </div>
-                                                    <?php } else {
-                                                    foreach ($property['images'] as $index => $image) {
-                                                    ?>
-                                                        <div class="carousel-item <?php echo $index == 0 ? 'active' : '' ?>">
-                                                            <img src="/uploads/<?php echo $image['path'] ?>" class="d-block w-100" alt="img<?php echo $index ?>">
-                                                        </div>
-                                                <?php }
-                                                } ?>
-                                            </div>
-                                            <a class="carousel-control-prev" href="#property-<?php echo $id ?>" role="button" data-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                            <a class="carousel-control-next" href="#property-<?php echo $id ?>" role="button" data-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="sr-only">Next</span>
-                                            </a>
+                                            <?php }
+                                            } ?>
                                         </div>
-                                    </a>
+                                        <a class="carousel-control-prev" href="#property-<?php echo $id ?>" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#property-<?php echo $id ?>" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
                                     <div class="property-detail">
                                         <div class="property-detail-price">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0 ?>/dy, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0 ?>/wk</div>
                                         <div class="property-detail-capacity">
@@ -1089,21 +1086,21 @@
                                         <span class="sr-only">Next</span>
                                     </a>
                                 </div>
+                                <div class="property-detail">
+                                    <div class="property-detail-price">$${property.days_price ? property.days_price : 0}/dy, $${property.weekly_price ? property.weekly_price : 0}/wk</div>
+                                    <div class="property-detail-capacity">
+                                        <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
+                                        ${property.bedrooms} bd</span>
+                                        <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${property.bathrooms} ba</span>
+                                    </div>
+                                    <div class="property-detail-address">
+                                    ${property.title}
+                                    </div>
+                                    <div class="property-detail-city">
+                                    ${property.street}
+                                    </div>
+                                </div>
                             </a>
-                            <div class="property-detail">
-                                <div class="property-detail-price">$${property.days_price ? property.days_price : 0}/dy, $${property.weekly_price ? property.weekly_price : 0}/wk</div>
-                                <div class="property-detail-capacity">
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
-                                    ${property.bedrooms} bd</span>
-                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${property.bathrooms} ba</span>
-                                </div>
-                                <div class="property-detail-address">
-                                ${property.title}
-                                </div>
-                                <div class="property-detail-city">
-                                ${property.street}
-                                </div>
-                            </div>
                         </div>
                     </div>
                     `;
@@ -1114,6 +1111,10 @@
 
         function drawNoResult() {
             document.getElementById('property-cards').innerHTML = `<h5 class="text-center">No Rentals</h5>`;
+        }
+
+        function goDetailPage(location) {
+            document.location.href = location;
         }
     </script>
 </body>
