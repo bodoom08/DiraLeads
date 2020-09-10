@@ -530,6 +530,9 @@
                 }, {
                     key: 'hb',
                     label: 'Hebrew'
+                },  {
+                    key: 'yd',
+                    label: 'Yiddish'
                 }];
                 const languages = document.getElementById('hid-lang').value;
                 let langContent = '';
@@ -630,6 +633,9 @@
                 }, {
                     key: 'hb',
                     label: 'Hebrew'
+                },  {
+                    key: 'yd',
+                    label: 'Yiddish'
                 }];
                 const languages = document.getElementById('hid-lang').value;
                 let langContent = '';
