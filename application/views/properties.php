@@ -216,11 +216,11 @@
                     </a>
                 </li>
 
-                <li class="list-group-item">
+                <!-- <li class="list-group-item">
                     <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
                         Price&nbsp;&nbsp;
                     </a>
-                </li>
+                </li> -->
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-bed" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">
@@ -697,6 +697,7 @@
                                     ${typeContents['floor']}
                                 </ul>
                             </li>
+                            <!--
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Price</p>
                                 <ul class="list-group list-group-horizontal">
@@ -704,6 +705,7 @@
                                     <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" value="0" /></li>
                                 </ul>
                             </li>
+                            -->
                         </ul>
                     </div>
                     <button class="btn btn-purple btn-block">View Rentals</button>
@@ -771,9 +773,9 @@
         $(function() {
             $('#filter-type').popover(anyType);
         });
-        $(function() {
-            $('#filter-price').popover(anyPrice);
-        });
+        // $(function() {
+        //     $('#filter-price').popover(anyPrice);
+        // });
         $(function() {
             $('#filter-bed').popover(anyBed);
         });
@@ -801,7 +803,7 @@
          */
         $('#filter-type').on('shown.bs.popover', function() {
             document.getElementById('filter-type').className = document.getElementById('filter-type').className.split('option-closed').join('option-opened');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -810,28 +812,28 @@
             $('#filter-sort-web').popover('hide');
         });
         $('#filter-type').on('hidden.bs.popover', function() {
-            document.getElementById('filter-type').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
+            document.getElementById('filter-type').className = document.getElementById('filter-type').className.split('option-opened').join('option-closed');
             $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
         });
 
-        $('#filter-price').on('shown.bs.popover', function() {
-            document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-closed').join('option-opened');
-            $('#filter-type').popover('hide');
-            $('#filter-bed').popover('hide');
-            $('#filter-floor').popover('hide');
-            $('#filter-more').popover('hide');
-            $('#filter-all').popover('hide');
-            $('#filter-sort').popover('hide');
-            $('#filter-sort-web').popover('hide');
-        });
-        $('#filter-price').on('hidden.bs.popover', function() {
-            document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
-        });
+        // $('#filter-price').on('shown.bs.popover', function() {
+        //     document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-closed').join('option-opened');
+        //     $('#filter-type').popover('hide');
+        //     $('#filter-bed').popover('hide');
+        //     $('#filter-floor').popover('hide');
+        //     $('#filter-more').popover('hide');
+        //     $('#filter-all').popover('hide');
+        //     $('#filter-sort').popover('hide');
+        //     $('#filter-sort-web').popover('hide');
+        // });
+        // $('#filter-price').on('hidden.bs.popover', function() {
+        //     document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
+        // });
 
         $('#filter-bed').on('shown.bs.popover', function() {
             document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
@@ -845,7 +847,7 @@
         $('#filter-floor').on('shown.bs.popover', function() {
             document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
@@ -859,7 +861,7 @@
         $('#filter-more').on('shown.bs.popover', function() {
             document.getElementById('filter-more').className = document.getElementById('filter-more').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-all').popover('hide');
@@ -873,7 +875,7 @@
         $('#filter-all').on('shown.bs.popover', function() {
             document.getElementById('filter-all').className = document.getElementById('filter-all').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -887,7 +889,7 @@
         $('#filter-sort').on('shown.bs.popover', function() {
             document.getElementById('filter-sort').className = document.getElementById('filter-sort').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -901,7 +903,7 @@
         $('#filter-sort-web').on('shown.bs.popover', function() {
             document.getElementById('filter-sort-web').className = document.getElementById('filter-sort-web').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            $('#filter-price').popover('hide');
+            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
