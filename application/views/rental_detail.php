@@ -168,7 +168,7 @@
                        
                         <div class="property-description">
                             <h3>Description</h3>
-                            <p class="d-flex flex-wrap">
+                            <p style="overflow-wrap: break-word">
                                 <?php echo $property->description?>
                             </p>
                         </div>
