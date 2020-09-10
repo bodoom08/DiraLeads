@@ -296,7 +296,7 @@
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap(<?php echo $id ?>)" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo $property['coords']['lat']?>, <?php echo $property['coords']['lng']?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'?>', '<?php echo $property['days_price']?>', '<?php echo $property['weekly_price']?>', '<?php echo $property['bedrooms']?>','<?php echo $property['bathrooms']?>', '<?php echo $property['title']?>', '<?php echo $property['street']?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
@@ -915,25 +915,25 @@
 
     <!-- ================================== Scripts for card popup on google map ================================== -->
     <script>
-        function showCardOnMap(id) {
-            let streets = `<?php echo $streets; ?>`;
-            streets = JSON.parse(streets);
-            const street = streets[id];
-
+        function showCardOnMap(coords, image, days_price, weekly_price, bedrooms, bathrooms, title, street) {
+            const location = JSON.parse(coords);
             if (map) {
                 try {
-                    map.setCenter(street.location);
+                    map.setCenter({
+                        lat: location[0],
+                        lng: location[1]
+                    });
                 } catch (error) {
                     console.log("Map is not loaded...");
                 }
             }
 
-            if (street.property.images && street.property.images.length > 0)
-                document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
-            document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price}/dy, $${street.property.weekly_price}/wk`;
-            document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
-            document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
-            document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
+            
+            document.getElementById('property-overview-image').src = `/uploads/${image}`;
+            document.getElementById('property-overview-price').innerHTML = `$${days_price}/dy, $${weekly_price}/wk`;
+            document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${bathrooms} ba</span>`;
+            document.getElementById('property-overview-address').innerHTML = `${title}`;
+            document.getElementById('property-overview-city').innerHTML = `${street}`;
 
             const center = {
                 left: $('#map').offset().left + $('#map').width() / 2,
@@ -1070,7 +1070,7 @@
             properties.forEach((property, index) => {
                 elements = `${elements}
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                        <div class="property-card" onmouseover="showCardOnMap(${index})" onmouseout="closeCardOnMap()">
+                        <div class="property-card" onmouseover="showCardOnMap('[${property.coords.lat}, ${property.coords.lng}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()">
                             <a href="/properties/rental_detail/${property.id}" class="w-100">
                                 <div id="property-${index}" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
