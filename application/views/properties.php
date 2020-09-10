@@ -331,14 +331,14 @@
                                             <?php }
                                             } ?>
                                         </div>
-                                        <a class="carousel-control-prev" href="#property-<?php echo $id ?>" role="button" data-slide="prev">
+                                        <!-- <a class="carousel-control-prev" href="#property-<?php echo $id ?>" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                         <a class="carousel-control-next" href="#property-<?php echo $id ?>" role="button" data-slide="next">
                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                             <span class="sr-only">Next</span>
-                                        </a>
+                                        </a> -->
                                     </div>
                                     <div class="property-detail">
                                         <div class="property-detail-price">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0 ?>/dy, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0 ?>/wk</div>
@@ -1094,6 +1094,7 @@
                                         `<div class="carousel-item ${idx == 0 ? 'active' : ''}"><img src="/uploads/${image.path}" class="d-block w-100" alt="img${idx}"/></div>`
                                     ))}
                                     </div>
+                                    <!--
                                     <a class="carousel-control-prev" href="#property-${index}" role="button" data-slide="prev">
                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Previous</span>
@@ -1102,6 +1103,7 @@
                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                         <span class="sr-only">Next</span>
                                     </a>
+                                    -->
                                 </div>
                                 <div class="property-detail">
                                     <div class="property-detail-price">$${property.days_price ? property.days_price : 0}/dy, $${property.weekly_price ? property.weekly_price : 0}/wk</div>
