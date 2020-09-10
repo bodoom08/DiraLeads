@@ -213,7 +213,7 @@
                             <!-- <input type="text" class="form-control" id="property-host-name" placeholder="Your Host Name" /> -->
                         </div>
                         <div class="form-group">
-                            <label for="property-did-number">📱 DID Number: <?php echo $property->number; ?></label>
+                            <label for="property-did-number">📱 Phone Number: <?php echo $property->number; ?></label>
                             <!-- <input type="text" class="form-control" id="property-did-number" placeholder="DID Number" /> -->
                         </div>
                         <div class="form-group">
