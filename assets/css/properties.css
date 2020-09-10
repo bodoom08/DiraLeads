@@ -168,6 +168,7 @@ nav {
     border-radius: .5rem;
     overflow: hidden;
     padding-bottom: .5rem !important;
+    cursor: pointer;
 }
 .property-card-image-slider {
     margin-bottom: .5rem;
