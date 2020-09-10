@@ -87,7 +87,7 @@ class M_properties extends CI_Model
                             "lng" => round(doubleval($coord->lng), 5)
                         ];
                     }
-                    $property['coords'] = "";
+                    $property['coords'] = $coord;
                     $property['images'] = $images;
                     array_push($streets, [
                         "location" => $coord,
