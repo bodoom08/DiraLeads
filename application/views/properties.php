@@ -29,7 +29,7 @@
         }) {
             map = new google.maps.Map(
                 document.getElementById('map'), {
-                    zoom: 8,
+                    zoom: 17,
                     center: marker
                 }
             );
