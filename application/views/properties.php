@@ -38,6 +38,13 @@
                                 lng: position.coords.longitude
                             }
                         );
+                        const currentMarker = new google.maps.Marker({
+                            position: {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            },
+                            map
+                        });
                     }, function(err) {
                         console.log("Error: ", err);
                     }, options);
@@ -50,6 +57,8 @@
                 google.maps.event.addListener(autocomplete, 'place_changed', function () {
                     const place = autocomplete.getPlace();
                     map.setCenter(place.geometry.location);
+
+                    filter('coords', place.geometry.location);
                 });
 
                 try {
@@ -66,13 +75,15 @@
                             map
                         });
 
-                        var ghostMarkerEl = document.createElement('div');
+                        var ghostMarkerEl = document.createElement('a');
                         ghostMarkerEl.id = "ghost-marker";
 
                         newMarker.addListener('mouseover', function(event) {
                             event.ub.path[1].appendChild(ghostMarkerEl);
                             event.ub.path[1].style.opacity = 1;
                             event.ub.path[1].style.overflow = "unset";
+                            
+                            ghostMarkerEl.href = `/properties/rental_detail/${street.property.id}`;
 
                             if (street.property.images && street.property.images.length > 0)
                                 document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
@@ -204,8 +215,8 @@
                     </li>
 
                     <li class="list-group-item">
-                        <div class="form-group form-check mb-0 check-box" onclick="setHasPic()">
-                            <input type="checkbox" class="form-check-input" id="show-rental">
+                        <div class="form-group form-check mb-0 check-box" >
+                            <input type="checkbox" class="form-check-input" id="show-rental" onclick="setHasPic()">
                             <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                         </div>
                     </li>
@@ -351,11 +362,14 @@
 
         <!-- =============================== Hidden Filter Options ========================================== -->
         <input type="hidden" id="hid-rental-type" value="[]" />
-        <input type="hidden" id="hid-bed-type" value=""/>
-        <input type="hidden" id="hid-floor-type" value="" />
+        <input type="hidden" id="hid-bed" value=""/>
+        <input type="hidden" id="hid-floor" value="" />
         <input type="hidden" id="hid-sort" value="any" />
         <input type="hidden" id="hid-has-pic" value="false" />
         <input type="hidden" id="hid-amenities" value="[]" />
+        <input type="hidden" id="hid-bath" value="" />
+        <input type="hidden" id="hid-lang" value="" />
+        <input type="hidden" id="hid-sleep" value="0" />
         <input type="hidden" id="hid-property-filter" value="{}" />
 
         <!-- ====================================== Script ========================================== -->
@@ -369,19 +383,20 @@
             /**
             **  Search Filter Rendering
             **/
+
             const anyType = {
                 'html': true,
                 sanitize: false,
                 content: function () {
                     const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
-                    const rentals = JSON.parse(document.getElementById('hid-rental-type').value).toString();
+                    const rentals = document.getElementById('hid-rental-type').value;
                     let rentalContent = "";
                     rentalTypes.forEach((rental, index) => {
                         rentalContent = `
                             ${rentalContent}
                             <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setRentalType(${index})">
-                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''}>
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''} onclick="setRentalType(${index})">
                                     <label class="form-check-label" for="rental-type-${index}">${rental}</label>
                                 </div>
                             </li>
@@ -412,7 +427,7 @@
                 sanitize: false,
                 content: function () {
                     const bedTypes = ['Any','1+','2+','3+','4+'];
-                    const bed = document.getElementById('hid-bed-type').value;
+                    const bed = document.getElementById('hid-bed').value;
                     let bedContent = "";
 
                     bedTypes.forEach((bedType, index) => {
@@ -440,7 +455,7 @@
                 sanitize: false,
                 content: function () {
                     const floorTypes = ['Any','1+','2+','3+','4+'];
-                    const floor = document.getElementById('hid-floor-type').value;
+                    const floor = document.getElementById('hid-floor').value;
                     let floorContent = "";
                     floorTypes.forEach((floorType, index) => {
                         floorContent = `
@@ -469,13 +484,46 @@
                 content: function () {
                     const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
                     const hidAmenities = document.getElementById('hid-amenities').value;
+                    const sukkahContent = `<input type="number" id="sukkah-sleep" placeholder="Sleep" value="${document.getElementById('hid-sleep').value}" ${hidAmenities.includes('Sukkah') ? '' : 'disabled'} min="0" onchange="changeSleep()"/>`;
                     let amenityContent = '';
                     amenities.forEach((amenity, index) => {
                         amenityContent = `${amenityContent}
-                            <li class="list-group-item">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3" onclick="setAmenity(${index})">
-                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''}>
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''} onclick="setAmenity(${index})">
                                     <label class="form-check-label" for="amenity-${index}">${amenity}</label>
+                                </div>
+                                ${amenity == "Sukkah" ? sukkahContent : ''}
+                            </li>
+                        `;
+                    });
+
+                    const bathTypes = ['any', '1+', '2+', '3+', '4+'];
+                    const hidBath = document.getElementById('hid-bath').value;
+                    let bathContent = '';
+                    bathTypes.forEach((bath, index) => {
+                        bathContent = `${bathContent}
+                            <li class="list-group-item"><button class="btn btn-outline-purple ${index == hidBath ? 'active' : ''}" id="bath-type-${index}" onclick="setFilter('bath', ${index})">${bath}</button></li>
+                        `;
+                    });
+
+                    const langs = [
+                        {
+                            key: 'en',
+                            label: 'English'
+                        }, {
+                            key: 'hb',
+                            label: 'Hebrew'
+                        }
+                    ];
+                    const languages = document.getElementById('hid-lang').value;
+                    let langContent = '';
+                    langs.forEach(lang => {
+                        langContent = `${langContent}
+                            <li class="list-group-item">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="lang-${lang.key}" onclick="setLang('${lang.key}')" ${languages.includes(lang.key) ? 'checked' : ''}>
+                                    <label class="form-check-label" for="lang-${lang.key}">${lang.label}</label>
                                 </div>
                             </li>
                         `;
@@ -484,19 +532,21 @@
                     <div class="filter-all-body">
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <p class="font-weight-bold mb-1">Amenities</p>
-                                <ul class="list-group">
-                                    ${amenityContent}
+                                <p class="font-weight-bold mb-1">Bathroom</p>
+                                <ul class="list-group list-group-horizontal">
+                                    ${bathContent}
                                 </ul>
                             </li>
                             <li class="list-group-item">
-                                <p class="font-weight-bold mb-1">Bathroom</p>
-                                <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
+                                <p class="font-weight-bold mb-1">Languages</p>
+                                <ul class="list-group">
+                                    ${langContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Amenities</p>
+                                <ul class="list-group">
+                                    ${amenityContent}
                                 </ul>
                             </li>
                         </ul>
@@ -509,26 +559,73 @@
                 sanitize: false,
                 content: function () {
                     const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
+                    const rentals = document.getElementById('hid-rental-type').value;
                     let rentalContent = "";
                     rentalTypes.forEach((rental, index) => {
                         rentalContent = `
                             ${rentalContent}
                             <li class="list-group-item">
                                 <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}">
+                                    <input type="checkbox" class="form-check-input" id="rental-type-${index}" ${rentals.includes(rental) ? 'checked': ''} onclick="setRentalType(${index})">
                                     <label class="form-check-label" for="rental-type-${index}">${rental}</label>
                                 </div>
                             </li>
                         `;
                     });
-                    let amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
+                    const hidAmenities = document.getElementById('hid-amenities').value;
+                    const sukkahContent = `<input type="number" id="sukkah-sleep" placeholder="Sleep" value="${document.getElementById('hid-sleep').value}" ${hidAmenities.includes('Sukkah') ? '' : 'disabled'} min="0" onchange="changeSleep()"/>`;
                     let amenityContent = '';
                     amenities.forEach((amenity, index) => {
                         amenityContent = `${amenityContent}
+                            <li class="list-group-item d-flex justify-content-between">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="amenity-${index}" ${hidAmenities.includes(amenity) ? 'checked' : ''} onclick="setAmenity(${index})">
+                                    <label class="form-check-label" for="amenity-${index}">${amenity}</label>
+                                </div>
+                                ${amenity == "Sukkah" ? sukkahContent : ''}
+                            </li>
+                        `;
+                    });
+                    const typeButtons = ["Any", "1+", "2+", "3+", "4+"];
+                    const types = ['bath', 'bed', 'floor'];
+                    let typeContents = {};
+                    types.forEach(type => {
+                        typeContents[type] = [];
+                        const value = document.getElementById(`hid-${type}`).value;
+                        typeButtons.forEach((btn, index) => {
+                            typeContents[type] = `${typeContents[type]}
+                                <li class="list-group-item"><button class="btn btn-outline-purple ${index == value ? 'active' : ''}" onclick="setFilter('${type}', ${index})">${btn}</button></li>
+                            `;
+                        });
+                    });
+
+                    const bathTypes = ['any', '1+', '2+', '3+', '4+'];
+                    const hidBath = document.getElementById('hid-bath').value;
+                    let bathContent = '';
+                    bathTypes.forEach((bath, index) => {
+                        bathContent = `${bathContent}
+                            <li class="list-group-item"><button class="btn btn-outline-purple ${index == hidBath ? 'active' : ''}" id="bath-type-${index}" onclick="setFilter('bath', ${index})">${bath}</button></li>
+                        `;
+                    });
+
+                    const langs = [
+                        {
+                            key: 'en',
+                            label: 'English'
+                        }, {
+                            key: 'hb',
+                            label: 'Hebrew'
+                        }
+                    ];
+                    const languages = document.getElementById('hid-lang').value;
+                    let langContent = '';
+                    langs.forEach(lang => {
+                        langContent = `${langContent}
                             <li class="list-group-item">
                                 <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                    <input type="checkbox" class="form-check-input" id="amenties-${index}">
-                                    <label class="form-check-label" for="amenties-${index}">${amenity}</label>
+                                    <input type="checkbox" class="form-check-input" id="lang-${lang.key}" onclick="setLang('${lang.key}')" ${languages.includes(lang.key) ? 'checked' : ''}>
+                                    <label class="form-check-label" for="lang-${lang.key}">${lang.label}</label>
                                 </div>
                             </li>
                         `;
@@ -543,6 +640,12 @@
                                 </ul>
                             </li>
                             <li class="list-group-item">
+                                <p class="font-weight-bold mb-1">Languages</p>
+                                <ul class="list-group">
+                                    ${langContent}
+                                </ul>
+                            </li>
+                            <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Amenities</p>
                                 <ul class="list-group">
                                     ${amenityContent}
@@ -551,31 +654,19 @@
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Bathroom</p>
                                 <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
+                                    ${typeContents['bath']}
                                 </ul>
                             </li>
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Bedrooms</p>
                                 <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
+                                    ${typeContents['bed']}
                                 </ul>
                             </li>
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Floors</p>
                                 <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">Any</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">1+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">2+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">3+</button></li>
-                                    <li class="list-group-item"><button class="btn btn-outline-purple">4+</button></li>
+                                    ${typeContents['floor']}
                                 </ul>
                             </li>
                             <li class="list-group-item">
@@ -673,6 +764,7 @@
             $(function () {
                 $('#filter-all').popover(anyAll);
             });
+
         </script>
 
         <!-- ============================ Filter Caret Style control ============================================ -->
@@ -681,7 +773,7 @@
             **  Filter Caret Style
              */
             $('#filter-type').on('shown.bs.popover', function () {
-                $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-type').className = document.getElementById('filter-type').className.split('option-closed').join('option-opened');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -691,11 +783,12 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-type').on('hidden.bs.popover', function () {
+                document.getElementById('filter-type').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
                 $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
             });
 
             $('#filter-price').on('shown.bs.popover', function () {
-                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-bed').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -705,11 +798,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-price').on('hidden.bs.popover', function () {
-                $('#filter-price').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
             });
             
             $('#filter-bed').on('shown.bs.popover', function () {
-                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-floor').popover('hide');
@@ -719,11 +812,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-bed').on('hidden.bs.popover', function () {
-                $('#filter-bed').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-opened').join('option-closed');
             });
             
             $('#filter-floor').on('shown.bs.popover', function () {
-                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -733,11 +826,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-floor').on('hidden.bs.popover', function () {
-                $('#filter-floor').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-opened').join('option-closed');
             });
             
             $('#filter-more').on('shown.bs.popover', function () {
-                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-more').className = document.getElementById('filter-more').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -747,11 +840,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-more').on('hidden.bs.popover', function () {
-                $('#filter-more').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-more').className = document.getElementById('filter-more').className.split('option-opened').join('option-closed');
             });
             
             $('#filter-all').on('shown.bs.popover', function () {
-                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-all').className = document.getElementById('filter-all').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -761,11 +854,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-all').on('hidden.bs.popover', function () {
-                $('#filter-all').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-all').className = document.getElementById('filter-all').className.split('option-opened').join('option-closed');
             });
             
             $('#filter-sort').on('shown.bs.popover', function () {
-                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-sort').className = document.getElementById('filter-sort').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -775,11 +868,11 @@
                 $('#filter-sort-web').popover('hide');
             });
             $('#filter-sort').on('hidden.bs.popover', function () {
-                $('#filter-sort').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-sort').className = document.getElementById('filter-sort').className.split('option-opened').join('option-closed');
             });
 
             $('#filter-sort-web').on('shown.bs.popover', function () {
-                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-opened');
+                document.getElementById('filter-sort-web').className = document.getElementById('filter-sort-web').className.split('option-closed').join('option-opened');
                 $('#filter-type').popover('hide');
                 $('#filter-price').popover('hide');
                 $('#filter-bed').popover('hide');
@@ -789,7 +882,7 @@
                 $('#filter-sort').popover('hide');
             });
             $('#filter-sort-web').on('hidden.bs.popover', function () {
-                $('#filter-sort-web').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
+                document.getElementById('filter-sort-web').className = document.getElementById('filter-sort-web').className.split('option-opened').join('option-closed');
             });
         </script>
 
@@ -840,15 +933,19 @@
 
         <!-- ============================= Actions for Filter Control =============================== -->
         <script>
+            function changeSleep() {
+                document.getElementById('hid-sleep').value = document.getElementById('sukkah-sleep').value;
+            }
+
             function setRentalType(index) {
                 const rentalTypes = ['Apartment','Basement','House','Duplex','Villa'];
                 let types = [];
-                document.getElementById(`rental-type-${index}`).checked = !document.getElementById(`rental-type-${index}`).checked;
                 
                 for (let i=0, length=rentalTypes.length; i<length; i++) {
                     if (document.getElementById(`rental-type-${i}`).checked)
                         types.push(rentalTypes[i]);
                 }
+
                 document.getElementById(`hid-rental-type`).value = JSON.stringify(types);
                 filter('type', types);
             }
@@ -859,7 +956,7 @@
                     else document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
                 }
 
-                document.getElementById(`hid-${key}-type`).value = index;
+                document.getElementById(`hid-${key}`).value = index;
                 filter(key, index);
             }
 
@@ -878,13 +975,36 @@
                 filter('has_pic', document.getElementById('hid-has-pic').value);
             }
 
+            function setLang(lang) {
+                const langs = [
+                    {
+                        key: 'en',
+                        label: 'English'
+                    }, {
+                        key: 'hb',
+                        label: 'Hebrew'
+                    }
+                ];
+                let languages = [];
+                for (let i=0, length=langs.length; i<length; i++) {
+                    if (document.getElementById(`lang-${langs[i].key}`).checked)
+                        languages.push(langs[i].key);
+                }
+                document.getElementById('hid-lang').value = JSON.stringify(languages);
+                filter('lang', languages);
+            }
+
             function setAmenity(index) {
+                
                 const amenities = ['Elevator','Heating','Dryer','High Chair','Wheelchair Accessible','Linen and Towels','Kid-friendly','Wi-Fi','Air Conditioning','Washing Machine','Crib','Hair dryer','Garden/backyard','Pool','Porch/Balcony','Sukkah','Parking','Pesach Kitchen','Refrigerator','Freezer','Stove','Oven','Microwave','Hot-Plate/Plata','Shabbos Kettle/Urn','Cooking Utensils','Coffee Machine'];
                 let types = [];
-                document.getElementById(`amenity-${index}`).checked = !document.getElementById(`amenity-${index}`).checked;
+                
                 for (let i=0, length=amenities.length; i<length; i++) {
                     if (document.getElementById(`amenity-${i}`).checked)
                         types.push(amenities[i]);
+                }
+                if (amenities[index] == "Sukkah") {
+                    document.getElementById('sukkah-sleep').disabled = !document.getElementById('sukkah-sleep').disabled;
                 }
 
                 document.getElementById('hid-amenities').value = JSON.stringify(types);
@@ -896,6 +1016,8 @@
                 let filters = JSON.parse(filterEl.value);
                 filters[key] = value;
                 document.getElementById('hid-property-filter').value = JSON.stringify(filters);
+
+                console.log("Filters: ", filters);
 
                 // $.ajax({
                 //     method: 'POST',

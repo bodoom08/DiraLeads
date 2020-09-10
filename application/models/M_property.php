@@ -25,6 +25,7 @@ class M_property extends CI_Model
 
     function get_virtual_number()
     {
+        // return ['type' => 'success', 'virtual_number' => '+1 503-234-2345'];
         //assing virtual number
         $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
         $vn_id_arr = array_column($result, 'vn_id');
