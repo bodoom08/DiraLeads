@@ -296,7 +296,7 @@
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo $property['coords']['lat']?>, <?php echo $property['coords']['lng']?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'?>', '<?php echo $property['days_price']?>', '<?php echo $property['weekly_price']?>', '<?php echo $property['bedrooms']?>','<?php echo $property['bathrooms']?>', '<?php echo $property['title']?>', '<?php echo $property['street']?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 31.0461?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 34.08516?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg'?>', '<?php echo $property['days_price']?>', '<?php echo $property['weekly_price']?>', '<?php echo $property['bedrooms']?>','<?php echo $property['bathrooms']?>', '<?php echo $property['title']?>', '<?php echo $property['street']?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
@@ -1070,7 +1070,7 @@
             properties.forEach((property, index) => {
                 elements = `${elements}
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                        <div class="property-card" onmouseover="showCardOnMap('[${property.coords.lat}, ${property.coords.lng}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()">
+                        <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 31.0461}, ${property.coords ? property.coords.lng : 34.08516}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()">
                             <a href="/properties/rental_detail/${property.id}" class="w-100">
                                 <div id="property-${index}" class="carousel slide property-card-image-slider" data-ride="carousel">
                                     <ol class="carousel-indicators">
