@@ -93,6 +93,11 @@ class M_properties extends CI_Model
                         "location" => $coord,
                         "property" => $property
                     ]);
+                } else {
+                    $property['coords'] = [
+                        "lat" => 31.0461,
+                        "lng" => 34.08516
+                    ];
                 }
                 $filteredProperties[] = $property;
             }
