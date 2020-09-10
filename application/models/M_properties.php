@@ -5,19 +5,32 @@ class M_properties extends CI_Model
 
     public function getAllProducts() 
     {
-
-        $type = isset($_GET['type']) ? $_GET['type'] : 'any';
-        $bedroom = isset($_GET['bedroom']) ? $_GET['bedroom'] : 'any';
-        $bathroom = isset($_GET['bathroom']) ? $_GET['bathroom'] : 'any';
-        $sort_by = isset($_GET['sort_by']) ? $_GET['sort_by'] : 'any';
-        $price = isset($_GET['price']) ? $_GET['price'] : 'any';
-        $street = isset($_GET['street']) ? $_GET['street'] : 'any';
-        $location = isset($_GET['location']) ? $_GET['location'] : 'any';
-        $area = isset($_GET['area']) ? $_GET['area'] : 'any';
+        $types = isset($_POST['type']) ? $_POST['type'] : [];
+        $bedroom = isset($_POST['bed']) ? $_POST['bed'] : 'any';
+        $bathroom = isset($_POST['bath']) ? $_POST['bath'] : 'any';
+        $floor = isset($_POST['floor']) ? $_POST['floor'] : 'any';
+        $sort_by = isset($_POST['sort']) ? $_POST['sort'] : 'any';
+        $price = isset($_POST['price']) ? $_POST['price'] : 'any';
+        $street = isset($_POST['street']) ? $_POST['street'] : 'any';
+        $location = isset($_POST['location']) ? $_POST['location'] : 'any';
+        $area = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $has_pic = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
+        $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
 
         $query = 'select properties.id, areas.title, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties join `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active"';
-        if ($type != "any") {
-            $query .= ' AND `properties`.`type` = "'.$type.'"';
+        if (count($types) > 0) {
+            $query .= ' AND (';
+        }
+        foreach($types as $index =>  $type) {
+            $query .= '`properties`.`type` = "'.strtolower($type).'" ';
+            if ($index + 1 == count($types)) {
+                $query .= ')';
+            } else {
+                $query .= ' OR ';
+            }
+        }
+        foreach($amenities as $amenity) {
+            $query .= ' AND `properties`.`amenities` like "%'.$amenity.'%"';
         }
         if ($bedroom != "any") {
             $query .= ' AND `properties`.`bedrooms` >= '.$bedroom;
@@ -55,31 +68,35 @@ class M_properties extends CI_Model
         $properties = $this->db->query($query)->result_array();
 
         $streets = array();
+        $filteredProperties = array();
         foreach($properties as $index => $property) {
             $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
-            $properties[$index]['images'] = $images;
-            
-            if (isset($property['coords']) && $property['coords'] != '[""]') {
-                $coord = json_decode($property['coords']);
-                if (is_array($coord)) {
-                    $coord = [
-                        "lat" => round(doubleval($coord[0]), 5),
-                        "lng" => round(doubleval($coord[1]), 5)
-                    ];
-                } else if (is_object($coord)) {
-                    $coord = [
-                        "lat" => round(doubleval($coord->lat), 5),
-                        "lng" => round(doubleval($coord->lng), 5)
-                    ];
-                }
-                $property['coords'] = "";
+            if ($has_pic == 'false' || count($images) > 0) {
                 $property['images'] = $images;
-                array_push($streets, [
-                    "location" => $coord,
-                    "property" => $property
-                ]);
+
+                if (isset($property['coords']) && $property['coords'] != '[""]') {
+                    $coord = json_decode($property['coords']);
+                    if (is_array($coord)) {
+                        $coord = [
+                            "lat" => round(doubleval($coord[0]), 5),
+                            "lng" => round(doubleval($coord[1]), 5)
+                        ];
+                    } else if (is_object($coord)) {
+                        $coord = [
+                            "lat" => round(doubleval($coord->lat), 5),
+                            "lng" => round(doubleval($coord->lng), 5)
+                        ];
+                    }
+                    $property['coords'] = "";
+                    $property['images'] = $images;
+                    array_push($streets, [
+                        "location" => $coord,
+                        "property" => $property
+                    ]);
+                }
+                $filteredProperties[] = $property;
             }
-            $properties[$index]['coords'] = "";
+            
         }
 
         // echo json_encode([
@@ -89,7 +106,7 @@ class M_properties extends CI_Model
         // exit;
             
         return [
-            "properties" => $properties,
+            "properties" => $filteredProperties,
             "streets"   => json_encode($streets)
         ];
     }
