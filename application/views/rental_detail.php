@@ -10,12 +10,25 @@
     <link rel="icon" type="image/png" href="assets/favicon.png" />
     <!-- ================================================================ -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <!-- ========================== Custom Style ====================================== -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
-    </link>
     <!-- ========================== FullCalendar Style ====================================== -->
 
     <link href="<?php echo site_url('assets/css/fullcalendar.css') ?>" rel="stylesheet" />
+    <!-- ========================== Custom Style ====================================== -->
+    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
+    </link>
+    <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/styles.css') ?>">
+    </link>
+
+
+    <style>
+        .fc-content-skeleton tbody tr:first-child {
+            height: unset;
+        }
+
+        .fc-content-skeleton tbody tr {
+            height: 20px;
+        }
+    </style>
     <!-- ====================================== Script ========================================== -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
@@ -23,10 +36,10 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="<?php echo site_url('assets/js/moment.min.js') ?>"></script>
     <!-- ========================== Full Calendar ========================================== -->
-    <!-- <script src='<?php echo site_url('assets/js/fullcalendar.js'); ?>'></script> -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/fullcalendar/main.css') ?>">
+    <script src='<?php echo site_url('assets/js/fullcalendar.js'); ?>'></script>
+    <!-- <link rel="stylesheet" href="<?php echo site_url('assets/fullcalendar/main.css') ?>">
     </link>
-    <script src="<?php echo site_url('assets/fullcalendar/main.js') ?>"></script>
+    <script src="<?php echo site_url('assets/fullcalendar/main.js') ?>"></script> -->
     <!-- ========================== Google Map Scripts ================================= -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&language=en&libraries=places&callback=initMap"></script>
@@ -50,7 +63,7 @@
             }
             detailMap = new google.maps.Map(
                 document.getElementById('detail-map'), {
-                    zoom: 8,
+                    zoom: 17,
                     center
                 }
             );
@@ -64,77 +77,123 @@
 
     <!-- =============================== Full Calendar Script ===================================== -->
     <script>
-        var data = <?php echo json_encode($property); ?>;
-        console.log("property", data);
-        // set seasonal pricing data
-        var isAnnual = <?php echo $property->is_annual; ?>;
-        var seasonalPrice = "<?php echo $property->seasonal_price; ?>";
-        if (isAnnual == "true") { // switch tab
-            $('#season').val(seasonalPrice);
-        } else {
-            $('#session').val(seasonalPrice);
-        }
-
-        $('#days').val('<?php echo $property->days_price; ?>');
-        $('#weekend').val('<?php echo $property->weekend_price; ?>');
-
-        $('#weekendFrom').val('<?php echo $property->weekend_from; ?>');
-        $('#weekendTo').val('<?php echo $property->weekend_to; ?>');
-
         document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('availability-calendar');
+            //load prices
+            var data = <?php echo json_encode($property); ?>;
+            console.log("property", data);
+            // set seasonal pricing data
+            var isAnnual = <?php echo $property->is_annual; ?>;
+            var seasonalPrice = "<?php echo $property->seasonal_price; ?>";
+            console.log('is_annual', isAnnual);
+            if (isAnnual == true) { // switch tab
+                $('#season').val(seasonalPrice);
+            } else {
+                $('#session').val(seasonalPrice);
+            }
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                editable: false,
-                selectable: true,
-                businessHours: true,
-                dayMaxEvents: true,
-                headerToolbar: {
-                    start: 'title', // will normally be on the left. if RTL, will be on the right
-                    center: '',
-                    end: 'prev,next' // will normally be on the right. if RTL, will be on the left
-                },
-                titleFormat: {
-                    year: 'numeric',
-                    month: 'short'
-                },
-                events: {
-                    url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
-                    cache: true
-                },
-            });
+            $('#days').val('<?php echo $property->days_price; ?>');
+            $('#weekend').val('<?php echo $property->weekend_price; ?>');
 
-            calendar.render();
+            $('#weekendFrom').val('<?php echo $property->weekend_from; ?>');
+            $('#weekendTo').val('<?php echo $property->weekend_to; ?>');
+            $('#isOnlyWeekend').val('<?php echo $property->only_weekend; ?>');
+
+            $('.blockDetail').val('<?php echo $property->blocked_date; ?>');
+            $('.disableDetail').val('<?php echo $property->manual_booking; ?>');
 
 
-            var d = moment().format('YYYY-MM-DD');
+            // var calendarEl = document.getElementById('availability-calendar');
 
-            // $('#availability-calendar').fullCalendar({
-            //     header: {
-            //         left: 'prev,next today',
-            //         center: 'title',
-            //         right: 'month'
-            //         // right: 'month,agendaWeek'
-            //     },
-            //     defaultDate: d,
-            //     defaultView: 'month',
+            // var calendar = new FullCalendar.Calendar(calendarEl, {
             //     editable: false,
             //     selectable: true,
-            //     fixedWeekCount: false,
-            //     timeZone: 'local',
+            //     businessHours: true,
+            //     dayMaxEvents: true,
+            //     headerToolbar: {
+            //         start: 'title', // will normally be on the left. if RTL, will be on the right
+            //         center: '',
+            //         end: 'prev,next' // will normally be on the right. if RTL, will be on the left
+            //     },
+            //     titleFormat: {
+            //         year: 'numeric',
+            //         month: 'short'
+            //     },
             //     events: {
             //         url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
             //         cache: true
             //     },
-            //     viewRender: function(view, element) {
-            //         if (isAnnual == "true") { // switch tab
-            //             renderCalendarPrice();
-            //         } else {
-            //             renderSession();
-            //         }
-
-            //     }
             // });
+
+            // calendar.render();
+
+
+            var d = moment().format('YYYY-MM-DD');
+
+            $('#availability-calendar').fullCalendar({
+                header: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'month'
+                    // right: 'month,agendaWeek'
+                },
+                defaultDate: d,
+                defaultView: 'month',
+                editable: false,
+                selectable: true,
+                fixedWeekCount: false,
+                timeZone: 'local',
+                events: {
+                    url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
+                    cache: true
+                },
+                viewRender: function(view, element) {
+                    if (isAnnual == true) { // switch tab
+                        renderCalendarPrice();
+                    } else {
+                        renderSession();
+                    }
+
+                }
+            });
+
+            function seasonalPriceHTML(price = '') {
+                return '<p class="day-background season-background">' + price + '</p>';
+            }
+
+            function manualPriceHTML(price = '') {
+                return '<p class="day-background manual-background">' + price + '</p>';
+            }
+
+            function weekendPriceHTML(price = '') {
+                var result = '<p class="day-background weekend-background">' + price + '</p>';
+                return result;
+            }
+
+            function unavailablePriceHTML(price = '') {
+                var result = '<p class="day-background unavailable-background">' + price + '</p>';
+                return result;
+            }
+
+            function convert(str) {
+            var date = new Date(str);
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+            day = ("0" + date.getDate()).slice(-2);
+            return [date.getFullYear(), mnth, day].join("-");
+        }
+
+        function updateDate(str) {
+            var date = new Date(str);
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+            day = ("0" + date.getDate()).slice(-2);
+            return [date.getFullYear(), mnth, day].join("-");
+        }
+
+        function converts(str) {
+            var date = new Date(str);
+            mnth = ("0" + (date.getMonth() + 1)).slice(-2);
+            day = ("0" + date.getDate()).slice(-2);
+            return [day, mnth, date.getFullYear()].join("/");
+        }
 
             function renderCalendarPrice() {
                 //clear calendar and cards
@@ -149,10 +208,12 @@
                 weekday.push($('.fc-day.fc-widget-content.fc-sat'));
                 weekday.push($('.fc-day.fc-widget-content.fc-sun'));
 
-                var day = $('.datedays').val();
-                var weekend = $('.weekenddays').val();
+                var day = $('#days').val();
+                var weekend = $('#weekend').val();
                 var weekly = $('#weekly').val();
                 var monthly = $('#monthly').val();
+
+                console.log(day, weekend, weekly, monthly);
 
 
                 // if (weekend != '') {
@@ -176,7 +237,7 @@
 
                 var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
 
-                if ($('#customCheck29').is(':checked')) { // only available in weekend checked
+                if ($('#isOnlyWeekend').val() == 'true') { // only available in weekend checked
 
                     weekday.forEach(day => {
                         day.html(unavailablePriceHTML());
@@ -598,20 +659,15 @@
                             <?php } ?>
                         </div>
                     </div>
-
-                    <div class="property-location">
-                        <h3>Location</h3>
-                        <div id="detail-map"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <div class="property-contact-detail">
-                    <div class="property-calendar">
+                    <div class="property-calendar form-group">
                         <h3>Availability</h3>
                         <div id="availability-calendar"></div>
                     </div>
 
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-4">
+                <div class="property-contact-detail">
                     <form>
                         <h3>Contact</h3>
                         <div class="form-group">
@@ -636,6 +692,11 @@
                         </div>
                         <button class="btn btn-purple btn-block" type="submit">Send Message</button>
                     </form>
+
+                    <div class="property-location">
+                        <h3>Location</h3>
+                        <div id="detail-map"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -648,7 +709,7 @@
     <input type="hidden" name="blockedDate" class="blockDetail" value="[]" />
     <input type="hidden" id="days" class="datedays" />
     <input type="hidden" id="weekend" class="weekenddays" />
-    <input type="hidden" id="isOnlyWeekend" class="datedays" />
+    <input type="hidden" id="isOnlyWeekend" />
     <input type="hidden" id="weekendFrom" />
     <input type="hidden" id="weekendTo" />
 

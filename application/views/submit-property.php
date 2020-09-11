@@ -73,33 +73,6 @@ $this->load->view('common/front_end_layout/top', [
         margin: 0;
     }
 
-    .fc-event.parashat {
-        background-color: #257e4a;
-        border-color: #257e4a;
-        color: #FFF !important;
-    }
-
-    .fc-event.holiday.yomtov,
-    .fc-event.holiday.yomtov a {
-        background-color: #ffd446;
-        border-color: #ffd446;
-        /* color:  !important; */
-    }
-
-    .fc-event.holiday.yomtov,
-    .fc-event.holiday.yomtov a {
-        background-color: #ffd446;
-        border-color: #ffd446;
-        color: #333;
-    }
-
-    .fc-event.hebdate,
-    .fc-event.omer {
-        background-color: #FFF;
-        border-color: #FFF;
-        color: #999;
-    }
-
     .modal {
         display: none;
         /* Hidden by default */
@@ -493,39 +466,6 @@ $this->load->view('common/front_end_layout/top', [
         width: 90%;
     }
 
-    .day-background {
-        width: 100%;
-        height: 25%;
-        margin-bottom: 0px !important;
-        font-size: 16px;
-
-
-        margin-right: -1px;
-        margin-left: -1px;
-        position: relative;
-    }
-
-    .weekend-background {
-        border: 1px solid #ea7676;
-        background-color: #ea7676;
-    }
-
-    .season-background {
-        border: 1px solid #76eaaf;
-        background-color: #76eaaf;
-        font-weight: bold;
-    }
-
-    .manual-background {
-        border: 1px solid #76a7ea;
-        background-color: #76a7ea;
-        font-weight: bold;
-    }
-
-    .unavailable-background {
-        border: 1px solid #d4d0d0;
-        background-color: #d4d0d0;
-    }
 
     .modal-row input {
         border: #e5e5e5 1px solid;
