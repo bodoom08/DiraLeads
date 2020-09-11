@@ -17,7 +17,8 @@ class M_properties extends CI_Model
         $has_pic = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
         $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
 
-        $query = 'select properties.id, areas.title, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties JOIN `areas` on `areas`.`id` = `properties`.`area_id` where `properties`.`status` = "active"';
+        $query = 'select properties.id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords from properties LEFT JOIN `areas` on `properties`.`area_id` = `areas`.`id` where `properties`.`status` = "active"';
+
         if (count($types) > 0) {
             $query .= ' AND (';
         }
