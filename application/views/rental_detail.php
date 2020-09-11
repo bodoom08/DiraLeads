@@ -602,47 +602,14 @@
 
     <!-- =============================== Property Detail View ============================================= -->
     <div class="container mt-3">
-        <!-- <div class="property-board-image">
-            <div id="property-detail-image" class="carousel slide property-detail-image-slider" data-ride="carousel">
-                <?php if (!isset($property->images) || count($property->images) == 0) { ?>
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="d-block w-100" />
-                        </div>
-                    </div>
-                <?php } else { ?>
-
-                    <ol class="carousel-indicators">
-                        <?php foreach ($property->images as $index => $image) { ?>
-                            <li data-target="#property-detail-image" data-slide-to="<?php echo $index ?>" class="<?php echo $index == 0 ? 'active' : '' ?>"></li>
-                        <?php } ?>
-                    </ol>
-                    <div class="carousel-inner">
-                        <?php foreach ($property->images as $index => $image) { ?>
-                            <div class="carousel-item <?php echo $index == 0 ? 'active' : '' ?>">
-                                <img src="<?php echo site_url('uploads/' . $image['path']) ?>" class="d-block w-100" />
-                            </div>
-                        <?php  } ?>
-                    </div>
-                <?php } ?>
-                <a class="carousel-control-prev" href="#property-detail-image" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#property-detail-image" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-        </div> -->
         <div class="property-image-board">
         <?php if (!isset($property->images) || count($property->images) == 0) { ?>
             <div class="property-image-full">
-                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="h-100" />
+                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="w-100" />
             </div>
         <?php } else if (count($property->images) == 1) { ?>
             <div class="property-image-full">
-                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" class="h-100" />
+                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" class="w-100" />
             </div>
         <?php } else if (count($property->images) == 2) { ?>
             <div class="property-image-medium pr-1">
@@ -662,7 +629,7 @@
         <?php }?> 
         <?php if (isset($property->images) && count($property->images) > 0) { ?>
             <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
-        <?php }?>
+        <?php }?> 
             
         </div>
         <div class="row">
