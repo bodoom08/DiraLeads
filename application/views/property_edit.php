@@ -2001,6 +2001,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
         });
 
+        $('#geoLocation').on("change paste keyup", function() {
+            if ($('.geolocation').val() != '') {
+                $('#geoLocation').removeClass('invaild-input');
+            } else {
+                $('#geoLocation').addClass('invaild-input');
+            }
+        });
+
         $('#bedrooms').on("change paste keyup", function() {
             if ($('#bedrooms').val() != '') {
                 $('#bedrooms').removeClass('invaild-input');

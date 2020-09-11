@@ -1874,6 +1874,14 @@ $this->load->view('common/front_end_layout/top', [
             }
         });
 
+        $('#geoLocation').on("change paste keyup", function() {
+            if ($('.geolocation').val() != '') {
+                $('#geoLocation').removeClass('invaild-input');
+            } else {
+                $('#geoLocation').addClass('invaild-input');
+            }
+        });
+
         $('#bedrooms').on("change paste keyup", function() {
             if ($('#bedrooms').val() != '') {
                 $('#bedrooms').removeClass('invaild-input');
@@ -1938,6 +1946,7 @@ $this->load->view('common/front_end_layout/top', [
                 valid = false;
             }
             var street = $('.geolocation').val();
+            console.log('geolocation', street);
             if (street == '') {
                 $('#geoLocation').addClass('invaild-input');
                 valid = false;
