@@ -602,7 +602,7 @@
 
     <!-- =============================== Property Detail View ============================================= -->
     <div class="container mt-3">
-        <div class="property-board-image">
+        <!-- <div class="property-board-image">
             <div id="property-detail-image" class="carousel slide property-detail-image-slider" data-ride="carousel">
                 <?php if (!isset($property->images) || count($property->images) == 0) { ?>
                     <div class="carousel-inner">
@@ -634,6 +634,36 @@
                     <span class="sr-only">Next</span>
                 </a>
             </div>
+        </div> -->
+        <div class="property-image-board">
+        <?php if (!isset($property->images) || count($property->images) == 0) { ?>
+            <div class="property-image-full">
+                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="h-100" />
+            </div>
+        <?php } else if (count($property->images) == 1) { ?>
+            <div class="property-image-full">
+                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" class="h-100" />
+            </div>
+        <?php } else if (count($property->images) == 2) { ?>
+            <div class="property-image-medium pr-1">
+                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" />
+            </div>
+            <div class="property-image-medium pl-1 d-none d-sm-block">
+                <img src="<?php echo site_url('uploads/' . $property->images[1]['path'])?>" />
+            </div>
+        <?php } else {?>
+            <div class="property-image-big">
+                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" />
+            </div>
+            <div class="property-image-small">
+                <img src="<?php echo site_url('uploads/' . $property->images[1]['path'])?>" />
+                <img src="<?php echo site_url('uploads/' . $property->images[2]['path'])?>" />
+            </div>
+        <?php }?> 
+        <?php if (isset($property->images) && count($property->images) > 0) { ?>
+            <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
+        <?php }?>
+            
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-8">
@@ -702,6 +732,24 @@
         </div>
     </div>
 
+    <div id="myModal" class="modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+        <?php if (isset($property->images) && count($property->images) > 0) { 
+            foreach($property->images as $index => $image) {
+        ?>
+            <div class="mySlides">
+                <div class="numbertext"><?php echo $index . ' / ' . count($property->images)?></div>
+                <img src="<?php echo site_url('uploads/' . $image['path'])?>" class="w-100" />
+            </div>
+        <?php }}?>
+
+            <!-- Next/previous controls -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
     <input type="hidden" id="session" value="" name="seasonal_price[session]">
     <input type="hidden" id="season" value="" name="seasonal_price[season]">
     <input type="hidden" name="is_annual" class="isAnnual" value="true" />
@@ -712,6 +760,55 @@
     <input type="hidden" id="isOnlyWeekend" />
     <input type="hidden" id="weekendFrom" />
     <input type="hidden" id="weekendTo" />
+
+    <script>
+        function showImages(index) {
+
+        }
+    </script>
+
+    <script>
+    // Open the Modal
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    // Close the Modal
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("demo");
+        var captionText = document.getElementById("caption");
+        if (n > slides.length) {slideIndex = 1}
+        if (n < 1) {slideIndex = slides.length}
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex-1].style.display = "block";
+        dots[slideIndex-1].className += " active";
+        captionText.innerHTML = dots[slideIndex-1].alt;
+    }
+    </script>
 
 </body>
 
