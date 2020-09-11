@@ -242,8 +242,8 @@ nav {
 }
 #ghost-marker {
     position: fixed;
-    left: -5px;
-    top: -5px;
+    left: -13px;
+    top: -13px;
     width: 26px;
     height: 26px;
     user-select: none;
