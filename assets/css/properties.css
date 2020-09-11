@@ -347,6 +347,10 @@ nav {
     left: .5rem;
     top: .5rem;
 }
+.property-image-full {
+    width: 100%;
+    height: 30vw;
+}
 .property-image-big {
     padding-right: .25rem;
     width: 75%;
@@ -422,6 +426,9 @@ nav {
     .property-image-medium img {
         width: 100%;
         height: auto;
+    }
+    .property-image-full {
+        height: 50vw;
     }
 }
 
