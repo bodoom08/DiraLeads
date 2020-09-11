@@ -927,7 +927,9 @@
     <!-- ================================== Scripts for card popup on google map ================================== -->
     <script>
         function showCardOnMap(coords, image, days_price, weekly_price, bedrooms, bathrooms, title, street) {
+            console.log("Coords: ", coords);
             const location = JSON.parse(coords);
+            console.log("Location: ", location);
             if (map) {
                 try {
                     map.setCenter({
