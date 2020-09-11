@@ -500,6 +500,7 @@
                 return `
                         <ul class="list-group list-group-horizontal">
                             ${floorContent}
+                            <li class="list-group-item"><button class="btn btn-outline-purple ${'5' === floor ? 'active' : ''}" id="floor-type-5" onclick="setFilter('floor', 5)">Basement</button></li>
                         </ul>
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
@@ -630,6 +631,10 @@
                                 <li class="list-group-item"><button class="btn btn-outline-purple ${index == value ? 'active' : ''}" onclick="setFilter('${type}', ${index})">${btn}</button></li>
                             `;
                     });
+                    if (type == 'floor')
+                        typeContents[type] = `${typeContents[type]}
+                                <li class="list-group-item"><button class="btn btn-outline-purple ${'5' == value ? 'active' : ''}" onclick="setFilter('${type}', 5)">Basement</button></li>
+                            `;
                 });
 
                 const bathTypes = ['any', '1+', '2+', '3+', '4+'];
