@@ -397,10 +397,10 @@
                     }
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
                     });
 
-                    $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPrice(detail.title));
+                    $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPriceHTML(detail.title));
 
                 })
             }
@@ -424,10 +424,10 @@
                     // console.log("Between: ", between);
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePriceHTML());
                     });
 
-                    $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePrice('unavailable'));
+                    $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(unavailablePriceHTML('unavailable'));
                 });
             }
 
@@ -526,15 +526,15 @@
                             })
                         }
                         // weekday[midWeekend].forEach(weekendDay => {
-                        //     weekendDay.html(weekendPrice(weekendPriceValue));
+                        //     weekendDay.html(weekendPriceHTML(weekendPriceValue));
                         // });
 
                     } else {
 
                         between.forEach(day => {
-                            $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                            $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
                         });
-                        $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                        $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(fixedPriceD));
                     }
                 });
 

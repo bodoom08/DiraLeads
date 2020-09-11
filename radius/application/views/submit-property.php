@@ -2082,12 +2082,12 @@ $this->load->view('common/top', [
                 $('#propertyType').addClass('invaild-input');
                 valid = false;
             }
-            var street = $('[name="street').val();
+            var street = $('.geolocation').val();
             if (street == '') {
-                $('[name="street').addClass('invaild-input');
+                $('#geoLocation').addClass('invaild-input');
                 valid = false;
             } else {
-                $('[name="street').removeClass('invaild-input');
+                $('#geoLocation').removeClass('invaild-input');
             }
 
             if ($('#neighborhood').val() == '') {
