@@ -954,7 +954,6 @@
             ghostMarkerEl.id = "ghost-marker";
             ghostMarkerEl.style.left = center.left - 13;
             ghostMarkerEl.style.top = center.top - 13;
-            ghostMarkerEl.style.display = "absolute";
             document.body.appendChild(ghostMarkerEl);
 
             document.getElementById('property-overview-card').style.top = center.top - 100;
