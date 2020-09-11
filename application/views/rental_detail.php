@@ -706,7 +706,7 @@
             foreach($property->images as $index => $image) {
         ?>
             <div class="mySlides">
-                <div class="numbertext"><?php echo $index . ' / ' . count($property->images)?></div>
+                <div class="numbertext"><?php echo $index + 1 . ' / ' . count($property->images)?></div>
                 <img src="<?php echo site_url('uploads/' . $image['path'])?>" class="w-100" />
             </div>
         <?php }}?>
