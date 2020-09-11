@@ -203,14 +203,14 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <div class="form-group">
                                         <label for="price_max">Price</label>
                                         <div class="max-min">
                                             <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                                 <li class="d-flex justify-content-center align-items-center p-0">
                                     <a class="areaFilter" href="javascript:search();">LOCATE MY DREAM RENTAL</a>
                                 </li>
