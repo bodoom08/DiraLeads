@@ -241,7 +241,7 @@ nav {
     border-radius: .5rem;
 }
 #ghost-marker {
-    position: absolute;
+    position: fixed;
     left: -5px;
     top: -5px;
     width: 26px;
