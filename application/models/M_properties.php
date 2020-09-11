@@ -46,9 +46,9 @@ class M_properties extends CI_Model
         if ($street != "any") {
             $query .= ' AND `properties`.`street` = "' . $street . '" OR `properties`.`coords` = "' . $location . '"';
         }
-        if ($area != "any") {
-            $query .= ' AND `areas`.`title` = "' . $area . '"';
-        }
+        // if ($area != "any") {
+        //     $query .= ' AND `areas`.`title` = "' . $area . '"';
+        // }
         if ($sort_by != "any") {
             switch ($sort_by) {
                 case 'high-low':
