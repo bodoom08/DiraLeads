@@ -1147,5 +1147,7 @@
 
 <script>
     var data = <?php echo json_encode($properties); ?>;
-    console.log("Properteis", data);
+    data.forEach(rental => {
+        console.log("Properteis", rental.coords);
+    })
 </script>

@@ -75,7 +75,7 @@ class M_properties extends CI_Model
             if ($has_pic == 'false' || count($images) > 0) {
                 $property['images'] = $images;
 
-                if (isset($property['coords']) && $property['coords'] != '[""]') {
+                if (isset($property['coords']) && $property['coords'] != '[""]' && $property['coords'] != '[]') {
                     $coord = json_decode($property['coords']);
                     if (is_array($coord)) {
                         $coord = [
