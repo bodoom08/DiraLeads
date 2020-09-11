@@ -304,7 +304,7 @@
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 31.0461 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 34.08516 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : '' ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 31.0461 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 34.08516 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
@@ -357,7 +357,7 @@
                                             <?php } ?>
                                         </div>
                                         <div class="property-detail-address">
-                                            <?php echo isset($property['title']) ? $property['title'] : '' ?>
+                                            <?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>
                                         </div>
                                         <div class="property-detail-city">
                                             <?php echo $property['street'] ?>
