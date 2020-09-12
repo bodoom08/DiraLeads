@@ -1141,7 +1141,8 @@
         }
 
         function goDetailPage(location) {
-            document.location.href = location;
+            // document.location.href = location;
+            window.open(location, '_blank');
         }
     </script>
 
