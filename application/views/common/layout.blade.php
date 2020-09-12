@@ -169,41 +169,43 @@
 
         <div class="search-main">
             <div class="tabbing-sec p-0 border-0">
-                <div class="tab-content" id="pills-tabContent">
-                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                        <div class="search-box" style="padding: 5px 20px;">
-                            <ul>
-                                <li>
-                                    <div class="form-group">
-                                        <label for="filter_area">Area</label>
-                                        <select class="form-control areaSelect" id="filter_area">
-                                            @if ( isset($areas))
-                                            <option value="any">Any</option>
-                                            @foreach ($areas as $area)
+                <!-- <?php echo form_open_multipart('properties', 'id="searchRentals" class=""'); ?> -->
+                <form method="post" accept-charset="utf-8" action="properties" id="searchRentals">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                            <div class="search-box" style="padding: 5px 20px;">
+                                <ul>
+                                    <li>
+                                        <div class="form-group">
+                                            <label for="filter_area">Area</label>
+                                            <select class="form-control areaSelect" id="filter_area" name="area">
+                                                @if ( isset($areas))
+                                                <option value="any">Any</option>
+                                                @foreach ($areas as $area)
 
-                                            <option value="{{$area['title']}}">{{ $area['title'] }}</option>
+                                                <option value="{{$area['id']}}">{{ $area['title'] }}</option>
 
-                                            @endforeach
-                                            @endif
-                                        </select>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        <label for="filter_date">Dates</label>
-                                        <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
-
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-group">
-                                        <label for="bedroom">Bedrooms</label>
-                                        <div class="max-min">
-                                            <input type="number" id="bedroom" name="name" class="form-control" placeholder="Bedrooms">
+                                                @endforeach
+                                                @endif
+                                            </select>
                                         </div>
-                                    </div>
-                                </li>
-                                <!-- <li>
+                                    </li>
+                                    <li>
+                                        <div class="form-group">
+                                            <label for="filter_date">Dates</label>
+                                            <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
+
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="form-group">
+                                            <label for="bedroom">Bedrooms</label>
+                                            <div class="max-min">
+                                                <input type="number" id="bedroom" name="bed" class="form-control" placeholder="Bedrooms">
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <!-- <li>
                                     <div class="form-group">
                                         <label for="price_max">Price</label>
                                         <div class="max-min">
@@ -211,13 +213,15 @@
                                         </div>
                                     </div>
                                 </li> -->
-                                <li class="d-flex justify-content-center align-items-center p-0">
-                                    <a class="areaFilter" href="javascript:search();">LOCATE MY DREAM RENTAL</a>
-                                </li>
-                            </ul>
+
+                                    <li class="d-flex justify-content-center align-items-center p-0">
+                                        <a type="submit" class="areaFilter">LOCATE MY DREAM RENTAL</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -293,16 +297,18 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
-                var site = "<?php echo site_url() ?>";
-                var areaSelect = $('.areaSelect').find(":selected").val();
-                var dateRange = $('.dateRangePicker').val().split('-');
-                var from = dateRange[0];
-                var to = dateRange[1];
-                var price_max = $('#price_max').val();
-                var toDate = moment(to).format("YYYY-DD-MM");
-                var fromDate = moment(from).format("YYYY-DD-MM");
-                var bedroom = $('#bedroom').val();
-                window.location = site + 'properties/lists?for=short%20term%20rent&area=' + areaSelect + '&fromDate=' + fromDate + '&toDate=' + toDate + '&bedroom=' + bedroom + '&price_max=' + price_max
+                // var site = "<?php echo site_url() ?>";
+                // var areaSelect = $('.areaSelect').find(":selected").val();
+                // var dateRange = $('.dateRangePicker').val().split('-');
+                // var from = dateRange[0];
+                // var to = dateRange[1];
+                // var price_max = $('#price_max').val();
+                // var toDate = moment(to).format("YYYY-DD-MM");
+                // var fromDate = moment(from).format("YYYY-DD-MM");
+                // var bedroom = $('#bedroom').val();
+                // window.location = site + 'properties/lists?for=short%20term%20rent&area=' + areaSelect + '&fromDate=' + fromDate + '&toDate=' + toDate + '&bedroom=' + bedroom + '&price_max=' + price_max
+
+                $('#searchRentals').submit();
 
             })
         })
@@ -371,11 +377,13 @@
 
     <script>
         function search() {
-            const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
-            const bedroom = document.getElementById('bedroom').value == '' ? 'any' : document.getElementById('bedroom').value;
-            const price = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
+            // const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
+            // const bedroom = document.getElementById('bedroom').value == '' ? 'any' : document.getElementById('bedroom').value;
+            // const price = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
 
-            document.location.href = `/properties?type=any&bedroom=${bedroom}&bathroom=any&more=any&sort_by=any&price=0|${price}&street=any&location=any&area=${areaId}`;
+            // document.location.href = `/properties?type=any&bedroom=${bedroom}&bathroom=any&more=any&sort_by=any&price=0|${price}&street=any&location=any&area=${areaId}`;
+
+
         }
     </script>
 

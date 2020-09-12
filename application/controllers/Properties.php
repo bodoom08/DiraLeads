@@ -217,7 +217,8 @@ class Properties extends MOBO_Controller
         }
     }
 
-    public function search() {
+    public function search() // filter on properties page
+    {
         $data = $this->M_properties->getAllProducts();
         $data['areas'] = $this->M_page->get_areas();
 

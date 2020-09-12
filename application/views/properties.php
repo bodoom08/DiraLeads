@@ -447,8 +447,8 @@
                 return `
                     <p class="mb-1 text-center">Select Price's Range</p>
                     <ul class="list-group list-group-horizontal">
-                        <li class="list-group-item"><input type="number" class="form-control" placeholder="Min Price" value="0" /></li>
-                        <li class="list-group-item"><input type="number" class="form-control" placeholder="Max Price" value="0" /></li>
+                        <li class="list-group-item"><input type="number" class="form-control" placeholder="Min Price" /></li>
+                        <li class="list-group-item"><input type="number" class="form-control" placeholder="Max Price" /></li>
                     </ul>
                     `;
             }
@@ -475,8 +475,8 @@
                         </ul>
                         <p class="mb-1 text-center">Or Select Bedroom's Range</p>
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Min" /></li>
-                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Max" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" /></li>
                         </ul>
                     `;
             }
@@ -504,8 +504,8 @@
                         </ul>
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Min" /></li>
-                            <li class="list-group-item"><input type="number" class="form-control" value="0" placeholder="Max" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" /></li>
                         </ul>
                     `;
             }
@@ -711,8 +711,8 @@
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Price</p>
                                 <ul class="list-group list-group-horizontal">
-                                    <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" value="0" /></li>
-                                    <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" value="0" /></li>
+                                    <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
+                                    <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" /></li>
                                 </ul>
                             </li>
                             -->
@@ -1150,10 +1150,3 @@
 </body>
 
 </html>
-
-<script>
-    var data = <?php echo json_encode($properties); ?>;
-    data.forEach(rental => {
-        console.log("Properteis", rental.coords);
-    })
-</script>
