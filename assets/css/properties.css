@@ -352,7 +352,7 @@ nav {
     height: 30vw;
 }
 .property-image-big {
-    padding-right: .25rem;
+    padding-right: .15rem;
     width: 75%;
     height: 30vw;
     overflow: hidden;
@@ -362,7 +362,7 @@ nav {
     min-width: 100%;
 }
 .property-image-small {
-    padding-left: .3rem;
+    padding-left: .15rem;
     width: 25%;
     height: 30vw;
     overflow: hidden;
