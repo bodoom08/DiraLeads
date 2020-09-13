@@ -428,7 +428,7 @@
             'html': true,
             sanitize: false,
             content: function() {
-                const rentalTypes = ['Apartment', 'Basement', 'House', 'Duplex', 'Villa'];
+                const rentalTypes = ['Apartment', 'House', 'Duplex', 'Villa'];
                 const rentals = document.getElementById('hid-rental-type').value;
                 let rentalContent = "";
                 rentalTypes.forEach((rental, index) => {
@@ -600,7 +600,7 @@
             'html': true,
             sanitize: false,
             content: function() {
-                const rentalTypes = ['Apartment', 'Basement', 'House', 'Duplex', 'Villa'];
+                const rentalTypes = ['Apartment', 'House', 'Duplex', 'Villa'];
                 const rentals = document.getElementById('hid-rental-type').value;
                 let rentalContent = "";
                 rentalTypes.forEach((rental, index) => {
