@@ -244,10 +244,11 @@
                         <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                     </div>
                 </li>
-
+                <!-- 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Areas&nbsp;&nbsp;</a>
-                </li>
+                </li> 
+                -->
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="More">
@@ -731,11 +732,11 @@
                                     ${typeContents['floor']}
                                 </ul>
                             </li>
+                            <!--
                             <li>
                                 <p class="font-weight-bold mb-1">Areas</p>
                                 ${areas}
                             </li>
-                            <!--
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Price</p>
                                 <ul class="list-group list-group-horizontal">
