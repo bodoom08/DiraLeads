@@ -1035,7 +1035,7 @@
     <!-- ================================== Scripts for card popup on google map ================================== -->
     <script>
         function showCardOnMap(coords, image, days_price, weekly_price, bedrooms, bathrooms, title, street) {
-            if (window.innerWidth < 576) return ;
+            if (window.innerWidth < 576) return;
             const location = JSON.parse(coords);
             if (map) {
                 try {
