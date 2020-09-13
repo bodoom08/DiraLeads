@@ -618,121 +618,127 @@
     </nav>
 
     <!-- =============================== Property Detail View ============================================= -->
-    <div class="container mt-3">
-        <div class="property-image-board">
-            <?php if (!isset($property->images) || count($property->images) == 0) { ?>
-                <div class="property-image-full">
-                    <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100" />
-                </div>
-            <?php } else if (count($property->images) == 1) { ?>
-                <div class="property-image-full">
-                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" />
-                </div>
-            <?php } else if (count($property->images) == 2) { ?>
-                <div class="property-image-medium pr-1">
-                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
-                </div>
-                <div class="property-image-medium pl-1 d-none d-sm-block">
-                    <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
-                </div>
-            <?php } else { ?>
-                <div class="property-image-big">
-                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
-                </div>
-                <div class="property-image-small">
-                    <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
-                    <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" />
-                </div>
-            <?php } ?>
-            <?php if (isset($property->images) && count($property->images) > 0) { ?>
-                <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
-            <?php } ?>
+    <?php if ($property) { ?>
+        <div class="container mt-3">
+            <div class="property-image-board">
+                <?php if (!isset($property->images) || count($property->images) == 0) { ?>
+                    <div class="property-image-full">
+                        <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100" />
+                    </div>
+                <?php } else if (count($property->images) == 1) { ?>
+                    <div class="property-image-full">
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" />
+                    </div>
+                <?php } else if (count($property->images) == 2) { ?>
+                    <div class="property-image-medium pr-1">
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
+                    </div>
+                    <div class="property-image-medium pl-1 d-none d-sm-block">
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
+                    </div>
+                <?php } else { ?>
+                    <div class="property-image-big">
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
+                    </div>
+                    <div class="property-image-small">
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
+                        <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" />
+                    </div>
+                <?php } ?>
+                <?php if (isset($property->images) && count($property->images) > 0) { ?>
+                    <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
+                <?php } ?>
 
-        </div>
-        <div class="row">
-            <div class="col-sm-12 col-md-8">
-                <div class="property-detail-info">
-                    <div class="property-info">
-                        <p class="mb-2"><?php echo $property->title ?></p>
-                        <h5><?php echo $property->street ?></h5>
-                        <div class="property-detail-capacity">
-                            <span><?php echo $property->type ?></span>
-                            <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path>
-                                </svg>
-                                <?php echo $property->bedrooms ?> bd</span>
-                            <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path>
-                                </svg><?php echo $property->bathrooms ?> ba</span>
-
-                            <?php if ($property->florbas > 0) { ?>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="property-detail-info">
+                        <div class="property-info">
+                            <p class="mb-2"><?php echo $property->title ?></p>
+                            <h5><?php echo $property->street ?></h5>
+                            <div class="property-detail-capacity">
+                                <span><?php echo $property->type ?></span>
                                 <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M13.748 21.276l-3.093-3.097v3.097h3.093zm12.852 5.32H10.655v.004h-5.32v-.004H5.32v-5.32h.015V5.32L26.6 26.596z" fill="#869099"></path>
-                                    </svg><?php echo $property->florbas ?> fl</span>
-                            <?php } ?>
-                        </div>
-                    </div>
+                                        <path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path>
+                                    </svg>
+                                    <?php echo $property->bedrooms ?> bd</span>
+                                <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path>
+                                    </svg><?php echo $property->bathrooms ?> ba</span>
 
-                    <div class="property-description">
-                        <h3>Description</h3>
-                        <p style="overflow-wrap: break-word">
-                            <?php echo $property->description ?>
-                        </p>
-                    </div>
-
-                    <div class="property-amenities">
-                        <h3>Amenities</h3>
-                        <div class="row">
-                            <?php foreach ($property->amenities as $amenity) { ?>
-                                <div class="col-sm-6 col-md-4"><?php echo $amenity ?></div>
-                            <?php } ?>
+                                <?php if ($property->florbas > 0) { ?>
+                                    <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M13.748 21.276l-3.093-3.097v3.097h3.093zm12.852 5.32H10.655v.004h-5.32v-.004H5.32v-5.32h.015V5.32L26.6 26.596z" fill="#869099"></path>
+                                        </svg><?php echo $property->florbas ?> fl</span>
+                                <?php } ?>
+                            </div>
                         </div>
-                    </div>
-                    <div class="property-calendar form-group">
-                        <h3 class="pricing-text">Availability && Pricing</h3>
-                        <h5 class="pricing-text">$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h5>
-                        <?php if ($property->private_note != '') { ?>
-                            <h6 class="pricing-text">Note: <?php echo $property->private_note; ?></h6>
-                        <?php } ?>
-                        <div id="availability-calendar"></div>
+
+                        <div class="property-description">
+                            <h3>Description</h3>
+                            <p style="overflow-wrap: break-word">
+                                <?php echo $property->description ?>
+                            </p>
+                        </div>
+
+                        <div class="property-amenities">
+                            <h3>Amenities</h3>
+                            <div class="row">
+                                <?php foreach ($property->amenities as $amenity) { ?>
+                                    <div class="col-sm-6 col-md-4"><?php echo $amenity ?></div>
+                                <?php } ?>
+                            </div>
+                        </div>
+                        <div class="property-calendar form-group">
+                            <h3 class="pricing-text">Availability && Pricing</h3>
+                            <h5 class="pricing-text">$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h5>
+                            <?php if ($property->private_note != '') { ?>
+                                <h6 class="pricing-text">Note: <?php echo $property->private_note; ?></h6>
+                            <?php } ?>
+                            <div id="availability-calendar"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-12 col-md-4">
-                <div class="property-contact-detail">
-                    <form>
-                        <h3>Contact</h3>
-                        <div class="form-group">
-                            <label for="property-host-name">Host Name: <?php echo $property->name; ?></label>
-                            <!-- <input type="text" class="form-control" id="property-host-name" placeholder="Your Host Name" /> -->
-                        </div>
-                        <div class="form-group">
-                            <label for="property-did-number">📱 Phone Number: <?php echo $property->number; ?></label>
-                            <!-- <input type="text" class="form-control" id="property-did-number" placeholder="DID Number" /> -->
-                        </div>
-                        <div class="form-group">
-                            <label for="property-contact-name">Name</label>
-                            <input type="text" class="form-control" id="property-contact-name" placeholder="Your Name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="property-contact-email">Email</label>
-                            <input type="email" class="form-control" id="property-contact-email" placeholder="Your Email" />
-                        </div>
-                        <div class="form-group">
-                            <label for="property-contact-message">Message</label>
-                            <textarea class="form-control" id="property-contact-message" placeholder="Message"></textarea>
-                        </div>
-                        <button class="btn btn-purple btn-block" type="submit">Send Message</button>
-                    </form>
+                <div class="col-sm-12 col-md-4">
+                    <div class="property-contact-detail">
+                        <form>
+                            <h3>Contact</h3>
+                            <div class="form-group">
+                                <label for="property-host-name">Host Name: <?php echo $property->name; ?></label>
+                                <!-- <input type="text" class="form-control" id="property-host-name" placeholder="Your Host Name" /> -->
+                            </div>
+                            <div class="form-group">
+                                <label for="property-did-number">📱 Phone Number: <?php echo $property->number; ?></label>
+                                <!-- <input type="text" class="form-control" id="property-did-number" placeholder="DID Number" /> -->
+                            </div>
+                            <div class="form-group">
+                                <label for="property-contact-name">Name</label>
+                                <input type="text" class="form-control" id="property-contact-name" placeholder="Your Name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="property-contact-email">Email</label>
+                                <input type="email" class="form-control" id="property-contact-email" placeholder="Your Email" />
+                            </div>
+                            <div class="form-group">
+                                <label for="property-contact-message">Message</label>
+                                <textarea class="form-control" id="property-contact-message" placeholder="Message"></textarea>
+                            </div>
+                            <button class="btn btn-purple btn-block" type="submit">Send Message</button>
+                        </form>
 
-                    <div class="property-location">
-                        <h3>Location</h3>
-                        <div id="detail-map"></div>
+                        <div class="property-location">
+                            <h3>Location</h3>
+                            <div id="detail-map"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php } else { ?>
+        <div style="text-align:center;margin-top:100px;">
+            <h1>This rental does not exist.</h1>
+        </div>
+    <?php } ?>
 
     <div id="myModal" class="modal">
         <span class="close cursor" onclick="closeModal()">&times;</span>
