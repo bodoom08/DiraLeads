@@ -653,7 +653,7 @@
             <div class="col-sm-12 col-md-8">
                 <div class="property-detail-info">
                     <div class="property-info">
-                        <h3>$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h3>
+                        <!-- <h3>$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h3> -->
                         <p class="mb-2"><?php echo $property->title ?></p>
                         <h5><?php echo $property->street ?></h5>
                         <div class="property-detail-capacity">
