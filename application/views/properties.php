@@ -246,7 +246,7 @@
                 </li>
 
                 <li class="list-group-item">
-                    <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Neighbors&nbsp;&nbsp;</a>
+                    <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Areas&nbsp;&nbsp;</a>
                 </li>
 
                 <li class="list-group-item">
@@ -677,6 +677,21 @@
                             </li>
                         `;
                 });
+
+                const areas = `
+                <?php if (isset($areas) && count($areas) == 0) { ?>
+                    <h5 class="text-center">No Areas</h5>
+                <?php } else { ?>
+                <select class="custom-select custom-select-md">
+                    <option value="0" selected>Any</option>
+                <?php
+                    foreach ($areas as $area) { ?>
+                    <option value="<?php echo $area['id'] ?>"><?php echo $area['title'] ?></option>
+                <?php }
+                } ?>
+                </select>
+                `
+
                 return `
                     <div class="filter-all-body">
                         <ul class="list-group">
@@ -716,6 +731,10 @@
                                     ${typeContents['floor']}
                                 </ul>
                             </li>
+                            <li>
+                                <p class="font-weight-bold mb-1">Areas</p>
+                                ${areas}
+                            </li>
                             <!--
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Price</p>
@@ -738,7 +757,7 @@
                 const sort = document.getElementById('hid-sort').value;
                 return `
                         <ul class="list-group">
-<!--
+            <!--
                             <li class="list-group-item">
                                 <button class="btn btn-outline-purple ${sort == 'any' ? 'active' : ''}" onclick="setOrder('any')" id="sort-any">Any</button>
                             </li>
@@ -764,7 +783,7 @@
                                     Ascending by Price
                                 </button>
                             </li>
--->
+            -->
 
                             <li class="list-group-item">
                                 <button class="btn btn-outline-purple ${sort == 'latest' ? 'active' : ''}" onclick="setOrder('latest')"  id="sort-latest">
@@ -835,13 +854,13 @@
                     `;
             }
         }
-        const anyNeighbor = {
+        const anyArea = {
             'html': true,
             sanitize: false,
             content: function() {
                 return `
                 <?php if (isset($areas) && count($areas) == 0) { ?>
-                    <h5 class="text-center">No Neighbors</h5>
+                    <h5 class="text-center">No Areas</h5>
                 <?php } else { ?>
                 <select class="custom-select custom-select-md">
                     <option value="0" selected>Any</option>
@@ -880,7 +899,7 @@
             $('#filter-all').popover(anyAll);
         });
         $(function() {
-            $('#filter-area').popover(anyNeighbor);
+            $('#filter-area').popover(anyArea);
         })
     </script>
 
