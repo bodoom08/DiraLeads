@@ -129,8 +129,14 @@ class M_properties extends CI_Model
     {
         $query = 'select users.name, properties.id, areas.title, properties.street, properties.type, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.weekend_from, properties.weekend_to, properties.only_weekend, properties.status, properties.coords, properties.is_annual, properties.seasonal_price, properties.blocked_date, properties.manual_booking, properties.private_note , virtual_numbers.number from properties join `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
         $property = $this->db->query($query)->row();
-        $images = $this->db->select('path')->where('property_id', $id)->from('property_images')->get()->result_array();
-        $property->images = $images;
+        $images_query = $this->db->select('path')->where('property_id', $id)->from('property_images')->get();
+        // $property->images = $images;
+        $property->images = array();
+        if ($images_query !== FALSE && $images_query->num_rows() > 0) {
+            foreach ($images_query->result_array() as $row) {
+                $property->images[] = $row;
+            }
+        }
         $property->amenities = explode(',', $property->amenities);
         // $property['images'] = $images;
         return ["property" => $property];
