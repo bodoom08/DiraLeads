@@ -13,13 +13,17 @@
     <!-- ========================== FullCalendar Style ====================================== -->
 
     <link href="<?php echo site_url('assets/css/fullcalendar.css') ?>" rel="stylesheet" />
+
+    <!-- =========================== Photoswipe ===================================================-->
+    <link href="<?php echo site_url('assets/photoswipe/photoswipe.css')?>" rel="stylesheet" />
+    <link href="<?php echo site_url('assets/photoswipe/default-skin/default-skin.css')?>" rel="stylesheet" />
     <!-- ========================== Custom Style ====================================== -->
     <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
     </link>
     <link rel="stylesheet" type="text/css" href="<?php echo site_url('assets/css/styles.css') ?>">
     </link>
 
-
+    <!-- =================================== Availability Calendar ==============================================-->
     <style>
         .fc-content-skeleton tbody tr:first-child {
             height: unset;
@@ -46,6 +50,7 @@
             height: 25px;
         }
     </style>
+
     <!-- ====================================== Script ========================================== -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
@@ -57,6 +62,9 @@
     <!-- <link rel="stylesheet" href="<?php echo site_url('assets/fullcalendar/main.css') ?>">
     </link>
     <script src="<?php echo site_url('assets/fullcalendar/main.js') ?>"></script> -->
+    <!-- ============================= Photoswipe Scripts ==================================================== -->
+    <script src="<?php echo site_url('assets/photoswipe/photoswipe.min.js')?>"></script>
+    <script src="<?php echo site_url('assets/photoswipe/photoswipe-ui-default.min.js')?>"></script>
     <!-- ========================== Google Map Scripts ================================= -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&language=en&libraries=places&callback=initMap"></script>
@@ -690,7 +698,7 @@
                             </div>
                         </div>
                         <div class="property-calendar form-group">
-                            <h3 class="pricing-text">Availability && Pricing</h3>
+                            <h3 class="pricing-text">Availability</h3>
                             <h5 class="pricing-text">$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h5>
                             <?php if ($property->private_note != '') { ?>
                                 <h6 class="pricing-text">Note: <?php echo $property->private_note; ?></h6>
