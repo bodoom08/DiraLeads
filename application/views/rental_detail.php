@@ -662,7 +662,9 @@
                     </div>
                     <div class="property-calendar form-group">
                         <h3>Availability && Pricing</h3>
-                        <h6 class="pricing-note">Note: <?php echo $property->private_note; ?></h6>
+                        <?php if ($property->private_note != '') { ?>
+                            <h6 class="pricing-note">Note: <?php echo $property->private_note; ?></h6>
+                        <?php } ?>
                         <div id="availability-calendar"></div>
                     </div>
                 </div>
