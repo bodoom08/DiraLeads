@@ -29,8 +29,8 @@
             height: 20px;
         }
 
-        .pricing-note {
-            margin: 10px 0 5px;
+        .property-calendar .pricing-text {
+            margin-bottom: 10px;
         }
 
         .property-detail-capacity {
@@ -653,7 +653,6 @@
             <div class="col-sm-12 col-md-8">
                 <div class="property-detail-info">
                     <div class="property-info">
-                        <!-- <h3>$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h3> -->
                         <p class="mb-2"><?php echo $property->title ?></p>
                         <h5><?php echo $property->street ?></h5>
                         <div class="property-detail-capacity">
@@ -690,9 +689,10 @@
                         </div>
                     </div>
                     <div class="property-calendar form-group">
-                        <h3>Availability && Pricing</h3>
+                        <h3 class="pricing-text">Availability && Pricing</h3>
+                        <h5 class="pricing-text">$<?php echo $property->days_price ? $property->days_price : 0 ?>/dy, $<?php echo $property->weekend_price ? $property->weekend_price : 0 ?>/wk</h5>
                         <?php if ($property->private_note != '') { ?>
-                            <h6 class="pricing-note">Note: <?php echo $property->private_note; ?></h6>
+                            <h6 class="pricing-text">Note: <?php echo $property->private_note; ?></h6>
                         <?php } ?>
                         <div id="availability-calendar"></div>
                     </div>
