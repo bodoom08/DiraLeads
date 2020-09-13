@@ -77,6 +77,7 @@
                             event.ub.path[1].style.overflow = "unset";
 
                             ghostMarkerEl.href = `/properties/rental_detail/${street.property.id}`;
+                            ghostMarkerEl.target = '_blank';
 
                             if (street.property.images && street.property.images.length > 0)
                                 document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
