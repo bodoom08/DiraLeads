@@ -241,6 +241,10 @@
                 </li>
 
                 <li class="list-group-item">
+                    <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Neighbors&nbsp;&nbsp;</a>
+                </li>
+
+                <li class="list-group-item">
                     <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="More">
                         More&nbsp;&nbsp;
                     </a>
@@ -779,6 +783,24 @@
                     `;
             }
         }
+        const anyNeighbor = {
+            'html' : true,
+            sanitize: false,
+            content: function () {
+                return `
+                <?php if (isset($areas) && count($areas) == 0) {?>
+                    <h5 class="text-center">No Neighbors</h5>
+                <?php } else { ?>
+                <select class="custom-select custom-select-md">
+                    <option value="0" selected>Any</option>
+                <?php 
+                    foreach($areas as $area) {?>
+                    <option value="<?php echo $area['id']?>"><?php echo $area['title']?></option>
+                <?php }}?>
+                </select>
+                `;
+            }
+        }
 
         $(function() {
             $('#filter-type').popover(anyType);
@@ -804,6 +826,9 @@
         $(function() {
             $('#filter-all').popover(anyAll);
         });
+        $(function() {
+            $('#filter-area').popover(anyNeighbor);
+        })
     </script>
 
     <!-- ============================ Filter Caret Style control ============================================ -->
