@@ -28,6 +28,10 @@
         .fc-content-skeleton tbody tr {
             height: 20px;
         }
+
+        .pricing-note {
+            margin: 10px 0 5px;
+        }
     </style>
     <!-- ====================================== Script ========================================== -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -658,8 +662,7 @@
                     </div>
                     <div class="property-calendar form-group">
                         <h3>Availability && Pricing</h3>
-                        <h4>Pricing note:</h4>
-                        <p><?php echo $property->private_note; ?></p>
+                        <h6 class="pricing-note">Note: <?php echo $property->private_note; ?></h6>
                         <div id="availability-calendar"></div>
                     </div>
                 </div>
