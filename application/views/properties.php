@@ -348,7 +348,7 @@
                                         </a> -->
                                     </div>
                                     <div class="property-detail">
-                                        <div class="property-detail-price">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0 ?>/dy, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0 ?>/wk</div>
+                                        <!-- <div class="property-detail-price">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0 ?>/dy, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0 ?>/wk</div> -->
                                         <div class="property-detail-capacity">
                                             <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path>
@@ -788,19 +788,20 @@
             }
         }
         const anyNeighbor = {
-            'html' : true,
+            'html': true,
             sanitize: false,
-            content: function () {
+            content: function() {
                 return `
-                <?php if (isset($areas) && count($areas) == 0) {?>
+                <?php if (isset($areas) && count($areas) == 0) { ?>
                     <h5 class="text-center">No Neighbors</h5>
                 <?php } else { ?>
                 <select class="custom-select custom-select-md">
                     <option value="0" selected>Any</option>
-                <?php 
-                    foreach($areas as $area) {?>
-                    <option value="<?php echo $area['id']?>"><?php echo $area['title']?></option>
-                <?php }}?>
+                <?php
+                    foreach ($areas as $area) { ?>
+                    <option value="<?php echo $area['id'] ?>"><?php echo $area['title'] ?></option>
+                <?php }
+                } ?>
                 </select>
                 `;
             }
