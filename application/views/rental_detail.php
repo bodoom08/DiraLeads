@@ -603,34 +603,34 @@
     <!-- =============================== Property Detail View ============================================= -->
     <div class="container mt-3">
         <div class="property-image-board">
-        <?php if (!isset($property->images) || count($property->images) == 0) { ?>
-            <div class="property-image-full">
-                <img src="<?php echo site_url('uploads/diraleads-logo.svg')?>" class="w-100" />
-            </div>
-        <?php } else if (count($property->images) == 1) { ?>
-            <div class="property-image-full">
-                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" class="w-100" />
-            </div>
-        <?php } else if (count($property->images) == 2) { ?>
-            <div class="property-image-medium pr-1">
-                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" />
-            </div>
-            <div class="property-image-medium pl-1 d-none d-sm-block">
-                <img src="<?php echo site_url('uploads/' . $property->images[1]['path'])?>" />
-            </div>
-        <?php } else {?>
-            <div class="property-image-big">
-                <img src="<?php echo site_url('uploads/' . $property->images[0]['path'])?>" />
-            </div>
-            <div class="property-image-small">
-                <img src="<?php echo site_url('uploads/' . $property->images[1]['path'])?>" />
-                <img src="<?php echo site_url('uploads/' . $property->images[2]['path'])?>" />
-            </div>
-        <?php }?> 
-        <?php if (isset($property->images) && count($property->images) > 0) { ?>
-            <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
-        <?php }?> 
-            
+            <?php if (!isset($property->images) || count($property->images) == 0) { ?>
+                <div class="property-image-full">
+                    <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100" />
+                </div>
+            <?php } else if (count($property->images) == 1) { ?>
+                <div class="property-image-full">
+                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" />
+                </div>
+            <?php } else if (count($property->images) == 2) { ?>
+                <div class="property-image-medium pr-1">
+                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
+                </div>
+                <div class="property-image-medium pl-1 d-none d-sm-block">
+                    <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
+                </div>
+            <?php } else { ?>
+                <div class="property-image-big">
+                    <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
+                </div>
+                <div class="property-image-small">
+                    <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
+                    <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" />
+                </div>
+            <?php } ?>
+            <?php if (isset($property->images) && count($property->images) > 0) { ?>
+                <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
+            <?php } ?>
+
         </div>
         <div class="row">
             <div class="col-sm-12 col-md-8">
@@ -657,10 +657,11 @@
                         </div>
                     </div>
                     <div class="property-calendar form-group">
-                        <h3>Availability</h3>
+                        <h3>Availability && Pricing</h3>
+                        <h4>Pricing note:</h4>
+                        <p><?php echo $property->private_note; ?></p>
                         <div id="availability-calendar"></div>
                     </div>
-
                 </div>
             </div>
             <div class="col-sm-12 col-md-4">
@@ -702,14 +703,15 @@
     <div id="myModal" class="modal">
         <span class="close cursor" onclick="closeModal()">&times;</span>
         <div class="modal-content">
-        <?php if (isset($property->images) && count($property->images) > 0) { 
-            foreach($property->images as $index => $image) {
-        ?>
-            <div class="mySlides">
-                <div class="numbertext"><?php echo $index + 1 . ' / ' . count($property->images)?></div>
-                <img src="<?php echo site_url('uploads/' . $image['path'])?>" class="w-100" />
-            </div>
-        <?php }}?>
+            <?php if (isset($property->images) && count($property->images) > 0) {
+                foreach ($property->images as $index => $image) {
+            ?>
+                    <div class="mySlides">
+                        <div class="numbertext"><?php echo $index + 1 . ' / ' . count($property->images) ?></div>
+                        <img src="<?php echo site_url('uploads/' . $image['path']) ?>" class="w-100" />
+                    </div>
+            <?php }
+            } ?>
 
             <!-- Next/previous controls -->
             <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -735,46 +737,50 @@
     </script>
 
     <script>
-    // Open the Modal
-    function openModal() {
-        document.getElementById("myModal").style.display = "block";
-    }
-
-    // Close the Modal
-    function closeModal() {
-        document.getElementById("myModal").style.display = "none";
-    }
-
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    // Next/previous controls
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    // Thumbnail image controls
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("demo");
-        var captionText = document.getElementById("caption");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        // Open the Modal
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
+
+        // Close the Modal
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
         }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        captionText.innerHTML = dots[slideIndex-1].alt;
-    }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        // Next/previous controls
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        // Thumbnail image controls
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {
+                slideIndex = 1
+            }
+            if (n < 1) {
+                slideIndex = slides.length
+            }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            captionText.innerHTML = dots[slideIndex - 1].alt;
+        }
     </script>
 
 </body>
