@@ -791,7 +791,7 @@
                 <?php if (isset($areas) && count($areas) == 0) {?>
                     <h5 class="text-center">No Neighbors</h5>
                 <?php } else { ?>
-                <select class="custom-select custom-select-lg">
+                <select class="custom-select custom-select-md">
                     <option value="0" selected>Any</option>
                 <?php 
                     foreach($areas as $area) {?>
