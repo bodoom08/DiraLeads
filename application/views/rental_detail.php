@@ -626,8 +626,15 @@
     </nav>
 
     <!-- =============================== Property Detail View ============================================= -->
+    <div id="property-load">
+        <div class="spinner-border" role="status" id="property-load-spinner">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="container mt-3" id="property-detail-body">
     <?php if ($property) { ?>
-        <div class="container mt-3">
+        
             <div class="property-image-board">
                 <?php if (!isset($property->images) || count($property->images) == 0) { ?>
                     <div class="property-image-full">
@@ -641,7 +648,7 @@
                     <div class="property-image-medium pr-1">
                         <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
                     </div>
-                    <div class="property-image-medium pl-1 d-none d-sm-block">
+                    <div class="property-image-medium pl-1 d-none d-sm-flex">
                         <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
                     </div>
                 <?php } else { ?>
@@ -741,30 +748,11 @@
                     </div>
                 </div>
             </div>
-        </div>
     <?php } else { ?>
-        <div style="text-align:center;margin-top:100px;">
+        <div style="text-align:center;margin-top:50px;">
             <h1>This rental does not exist.</h1>
         </div>
     <?php } ?>
-
-    <div id="myModal" class="modal">
-        <span class="close cursor" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <?php if (isset($property->images) && count($property->images) > 0) {
-                foreach ($property->images as $index => $image) {
-            ?>
-                    <div class="mySlides">
-                        <div class="numbertext"><?php echo $index + 1 . ' / ' . count($property->images) ?></div>
-                        <img src="<?php echo site_url('uploads/' . $image['path']) ?>" class="w-100" />
-                    </div>
-            <?php }
-            } ?>
-
-            <!-- Next/previous controls -->
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
     </div>
 
     <input type="hidden" id="session" value="" name="seasonal_price[session]">
@@ -843,56 +831,7 @@
             </div>
     
     </div>
-
-    <!--
-    <script>
-        // Open the Modal
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
-        }
-
-        // Close the Modal
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-
-        var slideIndex = 1;
-        showSlides(slideIndex);
-
-        // Next/previous controls
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        // Thumbnail image controls
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("demo");
-            var captionText = document.getElementById("caption");
-            if (n > slides.length) {
-                slideIndex = 1
-            }
-            if (n < 1) {
-                slideIndex = slides.length
-            }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-            captionText.innerHTML = dots[slideIndex - 1].alt;
-        }
-    </script>
-    -->
-
+    
     <!-- ============================= Image Gallery LightBox ================================ -->
     
     <script>
@@ -900,10 +839,12 @@
         images = JSON.parse(images);
 
         var imageElements = [];
+        document.getElementById('property-load').style.display = "flex";
+        document.getElementById('property-detail-body').style.display = "none";
+
         images.forEach(image => {
             var img = new Image();
             img.src = `/uploads/${image.path}`;
-            console.log("src: ", img.src);
             img.onload = function () {
                 imageElements.push({
                     src: img.src,
@@ -913,6 +854,9 @@
             }
         });
 
+        document.getElementById('property-load').style.display = "none";
+        document.getElementById('property-detail-body').style.display = "block";
+        
         var openPhotoSwipe = function() {
 
             var pswpElement = document.querySelectorAll('.pswp')[0];
@@ -932,6 +876,14 @@
             gallery.init();
         };
     </script>
+
+    <!-- ================================= Loading Image Controller ============================== -->
+    <!-- <script>
+        function imageLoaded(element) {
+            element.parentElement.children[0].style.display = "none";
+            element.parentElement.children[1].style.display = "block";
+        }
+    </script> -->
 
 </body>
 
