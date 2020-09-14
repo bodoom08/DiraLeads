@@ -324,7 +324,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
                                 <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                        <ol class="carousel-indicators">
+                                        <!-- <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
                                                 <li data-target="#property-<?php echo $id ?>" data-slide-to="0" class="active"></li>
                                                 <?php } else {
@@ -333,7 +333,7 @@
                                                     <li data-target="#property-<?php echo $id ?>" data-slide-to="<?php echo $index ?>" class="<?php echo $index == 0 ? 'active' : '' ?>"></li>
                                             <?php }
                                             } ?>
-                                        </ol>
+                                        </ol> -->
                                         <div class="carousel-inner">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
                                                 <div class="carousel-item active">
