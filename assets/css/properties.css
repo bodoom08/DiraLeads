@@ -376,13 +376,28 @@ nav {
     margin-top: .15rem;
 }
 .property-image-medium {
-    /* width: 50%; */
+    width: 100%;
     height: 30vw;
     overflow: hidden;
 }
 .property-image-medium img {
     height: 100%;
     width: auto;
+}
+
+#property-load {
+    width: 100vw;
+    height: calc(100vh - 150px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#property-load-spinner {
+    width: 3rem;
+    height: 3rem;
+}
+#property-detail-body {
+    display: none;
 }
 
 @media only screen and (max-width: 320px) {
