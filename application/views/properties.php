@@ -1189,7 +1189,7 @@
         }
 
         function setRentalType(index) {
-            const rentalTypes = ['Apartment', 'Basement', 'House', 'Duplex', 'Villa'];
+            const rentalTypes = ['Apartment', 'House', 'Duplex', 'Villa'];
             let types = [];
 
             for (let i = 0, length = rentalTypes.length; i < length; i++) {
