@@ -15,8 +15,8 @@
     <link href="<?php echo site_url('assets/css/fullcalendar.css') ?>" rel="stylesheet" />
 
     <!-- =========================== Photoswipe ===================================================-->
-    <link href="<?php echo site_url('assets/photoswipe/photoswipe.css')?>" rel="stylesheet" />
-    <link href="<?php echo site_url('assets/photoswipe/default-skin/default-skin.css')?>" rel="stylesheet" />
+    <link href="<?php echo site_url('assets/photoswipe/photoswipe.css') ?>" rel="stylesheet" />
+    <link href="<?php echo site_url('assets/photoswipe/default-skin/default-skin.css') ?>" rel="stylesheet" />
     <!-- ========================== Custom Style ====================================== -->
     <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
     </link>
@@ -63,8 +63,8 @@
     </link>
     <script src="<?php echo site_url('assets/fullcalendar/main.js') ?>"></script> -->
     <!-- ============================= Photoswipe Scripts ==================================================== -->
-    <script src="<?php echo site_url('assets/photoswipe/photoswipe.min.js')?>"></script>
-    <script src="<?php echo site_url('assets/photoswipe/photoswipe-ui-default.min.js')?>"></script>
+    <script src="<?php echo site_url('assets/photoswipe/photoswipe.min.js') ?>"></script>
+    <script src="<?php echo site_url('assets/photoswipe/photoswipe-ui-default.min.js') ?>"></script>
     <!-- ========================== Google Map Scripts ================================= -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&language=en&libraries=places&callback=initMap"></script>
@@ -170,6 +170,12 @@
                 events: {
                     url: "https://www.hebcal.com/hebcal/?cfg=fc&v=1&maj=on&min=on&nx=on&year=now&month=x&ss=on&mf=on&d=on&s=on&lg=a",
                     cache: true
+                },
+                select: function(start, end, jsEvent, view) {
+                    jsEvent.preventDefault();
+                },
+                eventClick: function(event, jsEvent) {
+                    jsEvent.preventDefault();
                 },
                 viewRender: function(view, element) {
                     if (isAnnual == true) { // switch tab
@@ -633,8 +639,8 @@
     </div>
 
     <div class="container mt-3" id="property-detail-body">
-    <?php if ($property) { ?>
-        
+        <?php if ($property) { ?>
+
             <div class="property-image-board">
                 <?php if (!isset($property->images) || count($property->images) == 0) { ?>
                     <div class="property-image-full">
@@ -642,22 +648,22 @@
                     </div>
                 <?php } else if (count($property->images) == 1) { ?>
                     <div class="property-image-full">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" onclick="openPhotoSwipe()" style="cursor: pointer;" />
                     </div>
                 <?php } else if (count($property->images) == 2) { ?>
                     <div class="property-image-medium pr-1">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;" />
                     </div>
                     <div class="property-image-medium pl-1 d-none d-sm-flex">
-                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;" />
                     </div>
                 <?php } else { ?>
                     <div class="property-image-big">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;" />
                     </div>
                     <div class="property-image-small">
-                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;"/>
-                        <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" onclick="openPhotoSwipe(2)" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;" />
+                        <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" onclick="openPhotoSwipe(2)" style="cursor: pointer;" />
                     </div>
                 <?php } ?>
                 <?php if (isset($property->images) && count($property->images) > 0) { ?>
@@ -748,11 +754,11 @@
                     </div>
                 </div>
             </div>
-    <?php } else { ?>
-        <div style="text-align:center;margin-top:50px;">
-            <h1>This rental does not exist.</h1>
-        </div>
-    <?php } ?>
+        <?php } else { ?>
+            <div style="text-align:center;margin-top:50px;">
+                <h1>This rental does not exist.</h1>
+            </div>
+        <?php } ?>
     </div>
 
     <input type="hidden" id="session" value="" name="seasonal_price[session]">
@@ -768,14 +774,14 @@
 
     <!-- Root element of PhotoSwipe. Must have class pswp. -->
     <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-        
+
         <!-- Background of PhotoSwipe. 
              It's a separate element, as animating opacity is faster than rgba(). -->
         <div class="pswp__bg"></div>
-    
+
         <!-- Slides wrapper with overflow:hidden. -->
         <div class="pswp__scroll-wrap">
-    
+
             <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
             <div class="pswp__container">
                 <!-- don't modify these 3 pswp__item elements, data is added later on -->
@@ -783,59 +789,59 @@
                 <div class="pswp__item"></div>
                 <div class="pswp__item"></div>
             </div>
-    
+
             <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
             <div class="pswp__ui pswp__ui--hidden">
-    
+
                 <div class="pswp__top-bar">
-    
+
                     <!--  Controls are self-explanatory. Order can be changed. -->
-    
+
                     <div class="pswp__counter"></div>
-    
+
                     <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-    
+
                     <button class="pswp__button pswp__button--share" title="Share"></button>
-    
+
                     <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-    
+
                     <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-    
+
                     <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
                     <!-- element will get class pswp__preloader--active when preloader is running -->
                     <div class="pswp__preloader">
                         <div class="pswp__preloader__icn">
-                          <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                          </div>
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
-    
+
                 <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div> 
+                    <div class="pswp__share-tooltip"></div>
                 </div>
-    
+
                 <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
                 </button>
-    
+
                 <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
                 </button>
-    
+
                 <div class="pswp__caption">
                     <div class="pswp__caption__center"></div>
                 </div>
-    
-              </div>
-    
+
             </div>
-    
+
+        </div>
+
     </div>
-    
+
     <!-- ============================= Image Gallery LightBox ================================ -->
-    
+
     <script>
-        var images = `<?php echo $property->images && count($property->images) > 0 ? json_encode($property->images) : '[]'?>`;
+        var images = `<?php echo $property->images && count($property->images) > 0 ? json_encode($property->images) : '[]' ?>`;
         images = JSON.parse(images);
 
         var imageElements = [];
@@ -845,7 +851,7 @@
         images.forEach(image => {
             var img = new Image();
             img.src = `/uploads/${image.path}`;
-            img.onload = function () {
+            img.onload = function() {
                 imageElements.push({
                     src: img.src,
                     w: this.width,
@@ -856,25 +862,25 @@
 
         document.getElementById('property-load').style.display = "none";
         document.getElementById('property-detail-body').style.display = "block";
-        
+
         var openPhotoSwipe = function(index = 0) {
 
 
             var pswpElement = document.querySelectorAll('.pswp')[0];
-            
+
             // define options (if needed)
             var options = {
-                    // history & focus options are disabled on CodePen        
+                // history & focus options are disabled on CodePen        
                 history: false,
                 focus: false,
                 index,
 
                 showAnimationDuration: 0,
                 hideAnimationDuration: 0
-                
+
             };
-            
-            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, imageElements, options);
+
+            var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, imageElements, options);
             gallery.init();
         };
     </script>
