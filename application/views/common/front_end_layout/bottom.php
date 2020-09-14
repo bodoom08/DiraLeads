@@ -1,13 +1,14 @@
 <?php $this->load->view('common/scripts'); ?>
 <?php
-$CI =& get_instance();
-$users = $CI->db
+$CI = &get_instance();
+if (isset($_SESSION['id'])) {
+    $users = $CI->db
         ->where('id', $_SESSION['id'])
         ->where('notification_pref_alert', 'active')
         ->get('users')
         ->row();
 
-$allSubs = $CI->db
+    $allSubs = $CI->db
         ->where('user_id', $_SESSION['id'])
         ->group_start()
         ->where('start_date<=', date('Y-m-d'))
@@ -15,20 +16,27 @@ $allSubs = $CI->db
         ->group_end()
         ->get('user_packages')
         ->row();
-if($users && $allSubs)
-    if(($users->notification_email == 'inactive') && ($users->notification_phone == 'inactive') && ($users->notification_fax == 'inactive'))
-        $show_pref_alert = 'active';
+
+
+    if ($users && $allSubs)
+        if (($users->notification_email == 'inactive') && ($users->notification_phone == 'inactive') && ($users->notification_fax == 'inactive'))
+            $show_pref_alert = 'active';
+        else
+            $show_pref_alert = 'inactive';
     else
         $show_pref_alert = 'inactive';
-else
+} else {
     $show_pref_alert = 'inactive';
+}
+
+
 ?>
 <script>
-    $session_id = "<?php echo $_SESSION['id']; ?>";
+    $session_id = "<?php echo isset($_SESSION['id']) ? $_SESSION['id'] : ''; ?>";
     $show_pref_alert = "<?php echo $show_pref_alert; ?>";
-    
-    $(function() {        
-        if($show_pref_alert == 'active') {
+
+    $(function() {
+        if ($show_pref_alert == 'active') {
             $('.dashboard-content').prepend(`<div class="alert alert-primary alert-dismissible fade show mt-3" id="notification-section" role="alert">
                 <div class="row align-items-center">
                     <div class="col-md col-sm col-lg-1">
@@ -46,11 +54,12 @@ else
                 </button>                        
             </div>`);
         }
-        
+
 
     });
+
     function dismissAlert() {
-        if(confirm("Are you sure want to perform this action")) {
+        if (confirm("Are you sure want to perform this action")) {
             $.ajax({
                 url: '<?php echo site_url('profile/notification_pref_status_update') ?>',
                 type: "POST",
@@ -59,7 +68,7 @@ else
                 },
                 success: function(data) {
                     data = JSON.parse(data);
-                    if(data.type == 'success') {
+                    if (data.type == 'success') {
                         alert('Notification pref dismissed');
                         location.reload();
                     }
@@ -76,4 +85,4 @@ else
 </script>
 </body>
 
-</html> 
+</html>
