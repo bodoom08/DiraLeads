@@ -517,8 +517,6 @@
                 });
 
                 return `
-                        
-
                         <ul class="list-group list-group-horizontal">
                             ${floorContent}
                             <li class="list-group-item d-flex align-items-center">
@@ -528,8 +526,6 @@
                                 </div>
                             </li>
                         </ul>
-
-                        
 
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
