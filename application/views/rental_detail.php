@@ -642,22 +642,22 @@
                     </div>
                 <?php } else if (count($property->images) == 1) { ?>
                     <div class="property-image-full">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" onclick="openPhotoSwipe()"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" class="w-100" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
                     </div>
                 <?php } else if (count($property->images) == 2) { ?>
                     <div class="property-image-medium pr-1">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
                     </div>
                     <div class="property-image-medium pl-1 d-none d-sm-flex">
-                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;"/>
                     </div>
                 <?php } else { ?>
                     <div class="property-image-big">
-                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" onclick="openPhotoSwipe()" style="cursor: pointer;"/>
                     </div>
                     <div class="property-image-small">
-                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)"/>
-                        <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" onclick="openPhotoSwipe(2)"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" onclick="openPhotoSwipe(1)" style="cursor: pointer;"/>
+                        <img src="<?php echo site_url('uploads/' . $property->images[2]['path']) ?>" onclick="openPhotoSwipe(2)" style="cursor: pointer;"/>
                     </div>
                 <?php } ?>
                 <?php if (isset($property->images) && count($property->images) > 0) { ?>
