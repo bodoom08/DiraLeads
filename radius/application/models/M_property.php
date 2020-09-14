@@ -14,7 +14,7 @@ class M_property extends CI_Model
         $this->db->start_cache();
 
         $query['select'] = ['a.for', 'a.type', 'c.title', 'a.house_number', 'b.name', 'a.available_date', 'a.user_role'];
-        $this->db->select('a.*,b.name as user_name,c.title as area, b.id as user_id, b.email as user_email');
+        $this->db->select('a.*,b.name as user_name, c.title as area, b.id as user_id, b.email as user_email');
         $this->db->join('areas c', 'a.area_id = c.id', 'left');
         $this->db->where('a.user_id = b.id');
         // $this->db->where('a.area_id = c.id');

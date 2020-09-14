@@ -17,52 +17,52 @@ $this->load->view('common/top', [
                     <div class="dashboard-content">
                         <div class="table-design bg-light">
                             <!-- <form action="" method="GET"> -->
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <input type="text" class="form-control" name="property_id" placeholder="Search By Property ID" autocomplete="off" value="<?php echo (isset($_GET['property_id'])) ? $_GET['property_id'] : ''; ?>">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <button class="btn btn-primary" type="submit" onclick="dt_reload()"><i class="fa fa-search"></i> Search </button>
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" name="property_id" placeholder="Search By Property ID" autocomplete="off" value="<?php echo (isset($_GET['property_id'])) ? $_GET['property_id'] : ''; ?>">
                                 </div>
+                                <div class="col-md-3">
+                                    <button class="btn btn-primary" type="submit" onclick="dt_reload()"><i class="fa fa-search"></i> Search </button>
+                                </div>
+                            </div>
                             <!-- </form> -->
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="pull-left">
                                         <h5><?php
-                                            if(constant('IS_AGENT')) {
+                                            if (constant('IS_AGENT')) {
                                                 echo 'Properties (Pending listing)';
                                             } else {
                                                 echo 'Records';
                                             }
-                                        ?></h5>
+                                            ?></h5>
                                     </div>
                                     <div class="pull-right mb-3">
-<span class="btn btn-primary" onclick="window.location.href='<?php echo site_url('property/add_property'); ?>'"><i class="fa fa-plus"></i> Add </span>
+                                        <span class="btn btn-primary" onclick="window.location.href='<?php echo site_url('property/add_property'); ?>'"><i class="fa fa-plus"></i> Add </span>
                                         <span class="btn btn-primary" onclick="table_refresh();"><i class="fa fa-refresh"></i> Refresh</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="property-table" class="table table-btn table-sm small table-striped nowrap dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>Owner</th>
-                                        <th>For</th>
-                                        <th>Property ID</th>
-                                        <th>Property Type</th>
-                                        <th>Area</th>
-                                        <th>Price</th>
-                                        <th>Available Date</th>
-                                        <th>Status</th>
-                                        <th>Created/Edited By</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
+                                <table id="property-table" class="table table-btn table-sm small table-striped nowrap dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>User ID</th>
+                                            <th>Owner</th>
+                                            <th>For</th>
+                                            <th>Property ID</th>
+                                            <th>Property Type</th>
+                                            <th>Area</th>
+                                            <th>Price</th>
+                                            <th>Available Date</th>
+                                            <th>Status</th>
+                                            <th>Created/Edited By</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -86,10 +86,10 @@ $this->load->view('common/top', [
             ajax: {
                 url: "<?php echo site_url('property/json') ?>",
                 data: function(d) {
-                   d.property_id = $('input[name="property_id"]').val()
+                    d.property_id = $('input[name="property_id"]').val()
                 }
             }
-            
+
         });
     });
 
@@ -139,7 +139,7 @@ $this->load->view('common/top', [
         });
     }
 
-    function editProperty(property_id){
+    function editProperty(property_id) {
         var form = document.createElement("form");
         var element1 = document.createElement("input");
         var element2 = document.createElement("input");

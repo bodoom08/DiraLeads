@@ -41,6 +41,7 @@ class Property extends MOBO_User
 
         $data['data'] = array_map(
             function ($row) {
+                $row['area'] = $row['area'] ?? $row['area_other'];
 
                 if ($row['vn_id']) {
                     if ($row['status'] == 'active') {
