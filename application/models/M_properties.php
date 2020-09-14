@@ -18,6 +18,8 @@ class M_properties extends CI_Model
         $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
         $area = isset($_POST['area']) ? $_POST['area'] : 'any';
         $languages = isset($_POST['lang']) ? $_POST['lang'] : [];
+        $date_from = isset($_POST['date_from']) ? $_POST['date_from'] : '';
+        $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : '';
 
         $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active"';
 
@@ -46,7 +48,7 @@ class M_properties extends CI_Model
             $query .= ' AND `properties`.`bedrooms` >= ' . $bedroom;
         }
         if ($floor != "any") {
-            $query .= ' AND `properties`.`florbas` >= ' . $floor;
+            $query .= ' AND `properties`.`florbas` = ' . $floor;
         }
         if ($bathroom != "any") {
             $query .= ' AND `properties`.`bathrooms` >= ' . $bathroom;
@@ -64,19 +66,33 @@ class M_properties extends CI_Model
         if ($location != "any") {
             $query .= ' AND ( `areas`.`title` LIKE "' . $location . '" OR "' . $location . '" LIKE CONCAT(`areas`.`title`, "%"))';
         }
+        if ($date_from != "") {
+            $query .= ' AND `properties`.`created_at` > "' . $date_from . '"';
+        }
+        if ($date_to != "") {
+            $query .= ' AND `properties`.`updated_at` <= "' . $date_to . '"';
+        }
         if ($sort_by != "any") {
             switch ($sort_by) {
-                case 'high-low':
-                    $query .= ' ORDER BY `properties`.`price` DESC';
-                    break;
-                case 'newest':
+                case 'latest':
                     $query .= ' ORDER BY `properties`.`created_at` DESC';
                     break;
-                case 'lowest':
+                case 'oldest':
                     $query .= ' ORDER BY `properties`.`created_at` ASC';
                     break;
+                case 'updated':
+                    $query .= ' ORDER BY `properties`.`updated_at` DESC';
+                    break;
+                case 'bedroom-down':
+                    $query .= ' ORDER BY `properties`.`bedrooms` DESC';
+                    break;
+                case 'bedroom-up':
+                    $query .= ' ORDER BY `properties`.`bedrooms` ASC';
+                    break;
+                case 'area':
+                    $query .= ' ORDER BY `properties`.`area_id` DESC';
+                    break;
                 default:
-                    $query .= ' ORDER BY `properties`.`price` ASC';
                     break;
             }
         }
