@@ -31,6 +31,11 @@
     border: 1px solid #6c757d;
     padding-left: 2rem;
 }
+input[type="checkbox"]:checked .form-check-label:before {
+    color: #fff;
+    border-color: #a27107;
+    background-color: #a27107;
+}
 .list-group-item {
     border: none;
     padding: .25rem;
