@@ -11,8 +11,10 @@
     <!-- ================================================================ -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- ========================== Custom Style ====================================== -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
-    </link>
+    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>"></link>
+    <!-- ========================== Multi-Date Picker ====================================== -->
+    <link rel="stylesheet" href="<?php echo site_url('assets/css/jquery-ui.multidatespicker.css') ?>" />
+
     <!-- ========================== Google Map Scripts ================================= -->
     <!-- Old -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
@@ -110,7 +112,6 @@
                 } catch (error) {
                     console.log("No Street...");
                 }
-
 
                 if (navigator.geolocation) {
                     var options = {
@@ -225,6 +226,12 @@
                         Price&nbsp;&nbsp;
                     </a>
                 </li> -->
+
+                <li class="list-group-item">
+                    <a tabindex="0" id="filter-date" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
+                            Date&nbsp;&nbsp;
+                    </a>
+                </li>
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-bed" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">
@@ -418,6 +425,7 @@
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="<?php echo site_url('assets/js/jquery-ui.multidatespicker.js') ?>"></script>
 
     <!-- ============================= Custom Script for Filter ========================================== -->
     <script>
@@ -874,6 +882,22 @@
                 `;
             }
         }
+        const anyDate = {
+            'html': true,
+            sanitize: false,
+            content: function () {
+                return `
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="text" id="filter-date-from" class="form-control" value="" />
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" id="filter-date-to" class="form-control" value="" />
+                        </div>
+                    </div>
+                `;
+            }
+        }
 
         $(function() {
             $('#filter-type').popover(anyType);
@@ -901,6 +925,9 @@
         });
         $(function() {
             $('#filter-area').popover(anyArea);
+        });
+        $(function() {
+            $('#filter-date').popover(anyDate);
         })
     </script>
 
@@ -918,6 +945,7 @@
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-type').on('hidden.bs.popover', function() {
             document.getElementById('filter-type').className = document.getElementById('filter-type').className.split('option-opened').join('option-closed');
@@ -947,6 +975,7 @@
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-bed').on('hidden.bs.popover', function() {
             document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-opened').join('option-closed');
@@ -961,6 +990,7 @@
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-floor').on('hidden.bs.popover', function() {
             document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-opened').join('option-closed');
@@ -975,6 +1005,7 @@
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-more').on('hidden.bs.popover', function() {
             document.getElementById('filter-more').className = document.getElementById('filter-more').className.split('option-opened').join('option-closed');
@@ -989,6 +1020,7 @@
             $('#filter-more').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-all').on('hidden.bs.popover', function() {
             document.getElementById('filter-all').className = document.getElementById('filter-all').className.split('option-opened').join('option-closed');
@@ -1003,6 +1035,7 @@
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
             $('#filter-sort-web').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-sort').on('hidden.bs.popover', function() {
             document.getElementById('filter-sort').className = document.getElementById('filter-sort').className.split('option-opened').join('option-closed');
@@ -1017,9 +1050,33 @@
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
+            $('#filter-date').popover('hide');
         });
         $('#filter-sort-web').on('hidden.bs.popover', function() {
             document.getElementById('filter-sort-web').className = document.getElementById('filter-sort-web').className.split('option-opened').join('option-closed');
+        });
+
+        $('#filter-date').on('shown.bs.popover', function() {
+            document.getElementById('filter-date').className = document.getElementById('filter-date').className.split('option-closed').join('option-opened');
+            $('#filter-type').popover('hide');
+            // $('#filter-price').popover('hide');
+            $('#filter-bed').popover('hide');
+            $('#filter-floor').popover('hide');
+            $('#filter-more').popover('hide');
+            $('#filter-all').popover('hide');
+            $('#filter-sort').popover('hide');
+            $('#filter-sort-web').popover('hide');
+            
+            $('#filter-date-from').datepicker({
+                minDate: 0, // today
+                dateFormat: "yy-mm-dd",
+            });
+            $('#filter-date-to').datepicker({
+                dateFormat: "yy-mm-dd",
+            });
+        });
+        $('#filter-date').on('hidden.bs.popover', function() {
+            document.getElementById('filter-date').className = document.getElementById('filter-date').className.split('option-opened').join('option-closed');
         });
 
         $('body').on('click', function(e) {
@@ -1047,7 +1104,6 @@
                     console.log("Map is not loaded...");
                 }
             }
-
 
             document.getElementById('property-overview-image').src = `/uploads/${image}`;
             // document.getElementById('property-overview-price').innerHTML = `$${days_price ? days_price : 0}/dy, $${weekly_price ? weekly_price : 0}/wk`;
