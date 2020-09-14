@@ -420,6 +420,8 @@
     <input type="hidden" id="hid-bath" value="" />
     <input type="hidden" id="hid-lang" value="" />
     <input type="hidden" id="hid-sleep" value="0" />
+    <input type="hidden" id="hid-date-from" value="" />
+    <input type="hidden" id="hid-date-to" value="" />
     <input type="hidden" id="hid-property-filter" value="{}" />
 
     <!-- ====================================== Script ========================================== -->
@@ -523,7 +525,7 @@
                             <li class="list-group-item">
                                 <div class="h-100 px-3 d-flex align-items-center" style="border: 1px solid #433357;border-radius: .25rem;">
                                     <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                        <input type="checkbox" class="form-check-input" id="floor-type-0" ${floor == '0' ? 'checked' : ''} onclick="setFilter('floor', 0)">
+                                        <input type="checkbox" class="form-check-input" id="floor-type-0" ${floor == '0' ? 'checked' : ''} onclick="setFloorFilter()">
                                         <label class="form-check-label" for="floor-type-0">Basement</label>
                                     </div>
                                 </div>
@@ -649,21 +651,25 @@
                         `;
                 });
                 const typeButtons = ["Any", "1+", "2+", "3+", "4+"];
-                const types = ['bath', 'bed', 'floor'];
+                const types = ['bath', 'bed'];
                 let typeContents = {};
                 types.forEach(type => {
                     typeContents[type] = [];
                     const value = document.getElementById(`hid-${type}`).value;
                     typeButtons.forEach((btn, index) => {
                         typeContents[type] = `${typeContents[type]}
-                                <li class="list-group-item"><button class="btn btn-outline-purple ${index == value ? 'active' : ''}" onclick="setFilter('${type}', ${index})">${btn}</button></li>
+                                <li class="list-group-item"><button id="${type}-type-${index}" class="btn btn-outline-purple ${index == value ? 'active' : ''}" onclick="setFilter('${type}', ${index})">${btn}</button></li>
                             `;
                     });
-                    if (type == 'floor')
-                        typeContents[type] = `${typeContents[type]}
-                                <li class="list-group-item"><button class="btn btn-outline-purple ${'5' == value ? 'active' : ''}" onclick="setFilter('${type}', 5)">Basement</button></li>
-                            `;
                 });
+
+                let floorContent = "";
+                const floorValue = document.getElementById('hid-floor').value;
+                for (let i=1; i<5; i++) {
+                    floorContent = `${floorContent}
+                        <li class="list-group-item"><button id="floor-type-${i}" class="btn btn-outline-purple ${i == floorValue ? 'active' : ''}" onclick="setFilter('floor', ${i})">${i}</button></li>
+                    `;
+                }
 
                 const bathTypes = ['any', '1+', '2+', '3+', '4+'];
                 const hidBath = document.getElementById('hid-bath').value;
@@ -747,7 +753,15 @@
                             <li class="list-group-item">
                                 <p class="font-weight-bold mb-1">Floors</p>
                                 <ul class="list-group list-group-horizontal">
-                                    ${typeContents['floor']}
+                                    ${floorContent}
+                                    <li class='list-group-item'>
+                                        <div class="h-100 px-3 d-flex align-items-center" style="border: 1px solid #433357;border-radius: .25rem;">
+                                            <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                                <input type="checkbox" class="form-check-input" id="floor-type-0" ${floorValue == '0' ? 'checked' : ''} onclick="setFloorFilter()">
+                                                <label class="form-check-label" for="floor-type-0">Basement</label>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </li>
                             <!--
@@ -776,11 +790,11 @@
                 const sort = document.getElementById('hid-sort').value;
                 return `
                         <ul class="list-group">
-            <!--
+            
                             <li class="list-group-item">
                                 <button class="btn btn-outline-purple ${sort == 'any' ? 'active' : ''}" onclick="setOrder('any')" id="sort-any">Any</button>
                             </li>
-
+                <!--
                             <li class="list-group-item">
                                 <button class="btn btn-outline-purple ${sort == 'high-low-price' ? 'active' : ''}" onclick="setOrder('high-low-price')" id="sort-high-low-price">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-numeric-down-alt" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -827,7 +841,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple" onclick="setOrder('latest')"  id="sort-latest">
+                                <button class="btn btn-outline-purple ${sort == 'updated' ? 'active' : ''}" onclick="setOrder('updated')"  id="sort-updated">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 2a.5.5 0 0 1 .5.5v11a.5.5 0 0 1-1 0v-11A.5.5 0 0 1 4 2z"/>
                                         <path fill-rule="evenodd" d="M6.354 11.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L4 12.793l1.646-1.647a.5.5 0 0 1 .708 0z"/>
@@ -838,7 +852,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple" onclick="setOrder('oldest')"  id="sort-oldest">
+                                <button class="btn btn-outline-purple ${sort == 'bedroom-down' ? 'active' : ''}" onclick="setOrder('bedroom-down')"  id="sort-bedroom-down">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
                                         <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
@@ -849,7 +863,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple" onclick="setOrder('oldest')"  id="sort-oldest">
+                                <button class="btn btn-outline-purple ${sort == 'bedroom-up' ? 'active' : ''}" onclick="setOrder('bedroom-up')"  id="sort-bedroom-up">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
                                         <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
@@ -860,7 +874,7 @@
                             </li>
 
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple" onclick="setOrder('oldest')"  id="sort-oldest">
+                                <button class="btn btn-outline-purple ${sort == 'area' ? 'active' : ''}" onclick="setOrder('area')"  id="sort-area">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-alpha-up" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                         <path fill-rule="evenodd" d="M4 14a.5.5 0 0 0 .5-.5v-11a.5.5 0 0 0-1 0v11a.5.5 0 0 0 .5.5z"/>
                                         <path fill-rule="evenodd" d="M6.354 4.854a.5.5 0 0 0 0-.708l-2-2a.5.5 0 0 0-.708 0l-2 2a.5.5 0 1 0 .708.708L4 3.207l1.646 1.647a.5.5 0 0 0 .708 0z"/>
@@ -896,6 +910,9 @@
             'html': true,
             sanitize: false,
             content: function() {
+                const fromDate = document.getElementById('hid-date-from').value;
+                const toDate = document.getElementById('hid-date-to').value;
+
                 return `
                     <div class="row">
                         <div class="col-sm-6">
@@ -906,7 +923,7 @@
                                 </svg>
                                 &nbsp;&nbsp;Date From
                             </label>
-                            <input type="text" id="filter-date-from" class="form-control" value="" />
+                            <input type="text" id="filter-date-from" class="form-control" value="${fromDate}" onchange="changeDateRange('from', this)"/>
                         </div>
                         <div class="col-sm-6">
                             <label for="filter-date-to">
@@ -914,8 +931,9 @@
                                     <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
                                     <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
                                 </svg>
-                                &nbsp;&nbsp;Date To</label>
-                            <input type="text" id="filter-date-to" class="form-control" value="" />
+                                &nbsp;&nbsp;Date To
+                            </label>
+                            <input type="text" id="filter-date-to" class="form-control" value="${toDate}" onchange="changeDateRange('to', this)"/>
                         </div>
                     </div>
                 `;
@@ -1091,10 +1109,12 @@
             $('#filter-sort-web').popover('hide');
 
             $('#filter-date-from').datepicker({
+                // minDate: 0,
                 dateFormat: "yy-mm-dd",
                 autoclose: true
             });
             $('#filter-date-to').datepicker({
+                // minDate: 0,
                 dateFormat: "yy-mm-dd",
                 autoclose: true
             });
@@ -1163,6 +1183,11 @@
             document.getElementById('hid-sleep').value = document.getElementById('sukkah-sleep').value;
         }
 
+        function changeDateRange(type, element) {
+            document.getElementById(`hid-date-${type}`).value = element.value;
+            filter(`date_${type}`, element.value);
+        }
+
         function setRentalType(index) {
             const rentalTypes = ['Apartment', 'Basement', 'House', 'Duplex', 'Villa'];
             let types = [];
@@ -1179,7 +1204,11 @@
         function setFilter(key, index) {
             for (let i = 0; i < 5; i++) {
                 if (i == index) document.getElementById(`${key}-type-${i}`).className += " active";
-                else document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
+                else if (!(key == 'floor' && i == 0)) document.getElementById(`${key}-type-${i}`).className = 'btn btn-outline-purple';
+            }
+
+            if (key == 'floor') {
+                document.getElementById('floor-type-0').checked = false;
             }
 
             document.getElementById(`hid-${key}`).value = index;
@@ -1187,7 +1216,7 @@
         }
 
         function setOrder(order) {
-            const sortTypes = ['any', 'high-low-price', 'low-high-price', 'latest', 'oldest'];
+            const sortTypes = ['any','latest','oldest','updated','bedroom-down','bedroom-up','area'];
             for (let i = 0, length = sortTypes.length; i < length; i++) {
                 if (order == sortTypes[i]) document.getElementById(`sort-${sortTypes[i]}`).className += ' active';
                 else document.getElementById(`sort-${sortTypes[i]}`).className = "btn btn-outline-purple";
@@ -1202,7 +1231,6 @@
         }
 
         function setArea() {
-            console.log(document.getElementById('search-place').value);
             filter('location', document.getElementById('search-place').value);
         }
 
@@ -1243,13 +1271,32 @@
             filter('amenities', types);
         }
 
+        function setFloorFilter() {
+            const floor = document.getElementById('hid-floor').value;
+
+            for (let i = 1; i < 5; i++) {
+                document.getElementById(`floor-type-${i}`).className = 'btn btn-outline-purple';
+            }
+
+            if (floor == '0') {
+                document.getElementById('hid-floor').value = 'any';
+                filter('floor', 'any');
+            } else {
+                document.getElementById('hid-floor').value = '0';
+                filter('floor', 0);
+            }
+        }
+
         function filter(key, value) {
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
             filters[key] = value;
             document.getElementById('hid-property-filter').value = JSON.stringify(filters);
 
-            console.log("Filters: ", filters);
+            const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
+            controls.forEach(control => {
+                $(`#${control}`).popover('hide');
+            });
 
             $.ajax({
                 method: 'POST',
@@ -1308,7 +1355,7 @@
                                     <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>
                                     ${property.bedrooms} bd</span>
                                     <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${property.bathrooms} ba</span>
-                                    ${property.florbas ? `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M13.748 21.276l-3.093-3.097v3.097h3.093zm12.852 5.32H10.655v.004h-5.32v-.004H5.32v-5.32h.015V5.32L26.6 26.596z" fill="#869099"></path></svg>${property.florbas}fl</span>` : ''}
+                                    ${property.florbas && property.florbas > 0 ? `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M13.748 21.276l-3.093-3.097v3.097h3.093zm12.852 5.32H10.655v.004h-5.32v-.004H5.32v-5.32h.015V5.32L26.6 26.596z" fill="#869099"></path></svg>${property.florbas}fl</span>` : ''}
                                 </div>
                                 <div class="property-detail-address">
                                 ${property.title}
