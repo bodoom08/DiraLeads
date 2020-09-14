@@ -12,9 +12,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- ========================== Custom Style ====================================== -->
     <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>"></link>
-    <!-- ========================== Multi-Date Picker ====================================== -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/css/jquery-ui.multidatespicker.css') ?>" />
-
+    <!-- ============================================== JQuery UI CSS ========================================-->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/jquery-ui-git.css" />
     <!-- ========================== Google Map Scripts ================================= -->
     <!-- Old -->
     <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
@@ -193,8 +192,10 @@
             </ul>
         </div>
     </nav>
+    
     <!-- ================================= Maintain ======================================== -->
     <div style="overflow: visible; pointer-events: none; position: fixed; width: 100%; top: 0; right: 0; left: 0; background-color: rgba(255, 141, 141, 0.26); padding: 5px; text-align: center; color: red; z-index: 10000; font-size: 18px;">We are still working on making this page perfect, thanks for your patiance</div>
+    
     <!-- ================================= Search Filters ======================================== -->
     <div class="search-filters-row">
         <div class="form-inline my-2 p-1 d-inline-block col-sm-12 col-md-3 col-lg-2">
@@ -321,7 +322,7 @@
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 31.0461 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 34.08516 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
@@ -421,11 +422,11 @@
     <input type="hidden" id="hid-property-filter" value="{}" />
 
     <!-- ====================================== Script ========================================== -->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-    <script src="<?php echo site_url('assets/js/jquery-ui.multidatespicker.js') ?>"></script>
 
     <!-- ============================= Custom Script for Filter ========================================== -->
     <script>
@@ -889,9 +890,22 @@
                 return `
                     <div class="row">
                         <div class="col-sm-6">
+                            <label for="filter-date-from">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height:20px">
+                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
+                                </svg>
+                                &nbsp;&nbsp;Date From
+                            </label>
                             <input type="text" id="filter-date-from" class="form-control" value="" />
                         </div>
                         <div class="col-sm-6">
+                            <label for="filter-date-to">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-calendar-date" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height:20px">
+                                    <path fill-rule="evenodd" d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    <path d="M6.445 11.688V6.354h-.633A12.6 12.6 0 0 0 4.5 7.16v.695c.375-.257.969-.62 1.258-.777h.012v4.61h.675zm1.188-1.305c.047.64.594 1.406 1.703 1.406 1.258 0 2-1.066 2-2.871 0-1.934-.781-2.668-1.953-2.668-.926 0-1.797.672-1.797 1.809 0 1.16.824 1.77 1.676 1.77.746 0 1.23-.376 1.383-.79h.027c-.004 1.316-.461 2.164-1.305 2.164-.664 0-1.008-.45-1.05-.82h-.684zm2.953-2.317c0 .696-.559 1.18-1.184 1.18-.601 0-1.144-.383-1.144-1.2 0-.823.582-1.21 1.168-1.21.633 0 1.16.398 1.16 1.23z"/>
+                                </svg>
+                                &nbsp;&nbsp;Date To</label>
                             <input type="text" id="filter-date-to" class="form-control" value="" />
                         </div>
                     </div>
@@ -1066,13 +1080,14 @@
             $('#filter-all').popover('hide');
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
-            
+
             $('#filter-date-from').datepicker({
-                minDate: 0, // today
                 dateFormat: "yy-mm-dd",
+                autoclose: true
             });
             $('#filter-date-to').datepicker({
                 dateFormat: "yy-mm-dd",
+                autoclose: true
             });
         });
         $('#filter-date').on('hidden.bs.popover', function() {
@@ -1250,7 +1265,7 @@
             properties.forEach((property, index) => {
                 elements = `${elements}
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
-                        <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 31.0461}, ${property.coords ? property.coords.lng : 34.08516}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()" onclick="goDetailPage('/properties/rental_detail/${property.id}')">
+                        <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 40.7128}, ${property.coords ? property.coords.lng : 74.0060}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()" onclick="goDetailPage('/properties/rental_detail/${property.id}')">
                             <div id="property-${index}" class="carousel slide property-card-image-slider" data-ride="carousel">
                                 <ol class="carousel-indicators">
                                 ${ !property.images || property.images.length == 0 ? `<li data-target="#property-${index}" data-slide-to="0" class="active"></li>` : property.images.map((image, idx) => (
