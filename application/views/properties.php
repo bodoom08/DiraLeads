@@ -1293,10 +1293,10 @@
             filters[key] = value;
             document.getElementById('hid-property-filter').value = JSON.stringify(filters);
 
-            const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
-            controls.forEach(control => {
-                $(`#${control}`).popover('hide');
-            });
+            // const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
+            // controls.forEach(control => {
+            //     $(`#${control}`).popover('hide');
+            // });
 
             $.ajax({
                 method: 'POST',
