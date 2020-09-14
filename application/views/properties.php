@@ -504,23 +504,33 @@
             'html': true,
             sanitize: false,
             content: function() {
-                const floorTypes = ['Any', '1+', '2+', '3+', '4+'];
+                const floorTypes = ['1', '2', '3', '4'];
                 const floor = document.getElementById('hid-floor').value;
                 let floorContent = "";
                 floorTypes.forEach((floorType, index) => {
                     floorContent = `
                             ${floorContent}
                             <li class="list-group-item">
-                                <button class="btn btn-outline-purple ${index == floor ? 'active' : ''}" id="floor-type-${index}" onclick="setFilter('floor', ${index})">${floorType}</button>
+                                <button class="btn btn-outline-purple ${index + 1 == floor ? 'active' : ''}" id="floor-type-${index + 1}" onclick="setFilter('floor', ${index + 1})">${floorType}</button>
                             </li>
                         `;
                 });
 
                 return `
+                        
+
                         <ul class="list-group list-group-horizontal">
                             ${floorContent}
-                            <li class="list-group-item"><button class="btn btn-outline-purple ${'5' === floor ? 'active' : ''}" id="floor-type-5" onclick="setFilter('floor', 5)">Basement</button></li>
+                            <li class="list-group-item d-flex align-items-center">
+                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                    <input type="checkbox" class="form-check-input" id="floor-type-0" ${floor == '0' ? 'checked' : ''} onclick="setFilter('floor', 0)">
+                                    <label class="form-check-label" for="floor-type-0">Basement</label>
+                                </div>
+                            </li>
                         </ul>
+
+                        
+
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
                             <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
