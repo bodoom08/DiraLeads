@@ -53,9 +53,10 @@ class M_properties extends CI_Model
         if ($area != "any") {
             $query .= ' AND `properties`.`area_id` = "' . $area . '"';
         }
-        if ($location != "any") {
-            $query .= ' AND ( CONTAINS(`areas`.`title` ,"' . $location . '") OR CONTAINS("' . $location . '",`areas`.`title`)';
-        }
+        // if ($location != "any") {
+        //     $query .= ' AND ( CONTAINS(`areas`.`title` ,"' . $location . '") OR CONTAINS("' . $location . '",`areas`.`title`)';
+        //     // $query .= ' AND  CONTAINS("' . $location . '" ,`areas`.`title`)';
+        // }
         if ($sort_by != "any") {
             switch ($sort_by) {
                 case 'high-low':

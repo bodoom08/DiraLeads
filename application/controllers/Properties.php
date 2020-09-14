@@ -30,7 +30,11 @@ class Properties extends MOBO_Controller
     public function rental_detail($id)
     {
         $data = $this->M_properties->getProductDetail($id);
-        $this->load->view('rental_detail', $data);
+        if ($data['property']) {
+            $this->load->view('rental_detail', $data);
+        } else {
+            $this->load->view('notfound');
+        }
     }
 
     public function getAllImages()

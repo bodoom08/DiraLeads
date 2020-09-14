@@ -602,7 +602,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                     <label for="propertyType">Property Type *</label>
                                                                     <select class="form-control" name="property_type" id="propertyType">
                                                                         <option value="apartment" <?php echo $property_details['type'] == 'apartment' ? 'selected' : '' ?>>Apartment</option>
-                                                                        <option value="basement" <?php echo $property_details['type'] == 'basement' ? 'selected' : '' ?>>Basement</option>
+                                                                        <!-- <option value="basement" <?php echo $property_details['type'] == 'basement' ? 'selected' : '' ?>>Basement</option> -->
                                                                         <option value="house" <?php echo $property_details['type'] == 'house' ? 'selected' : '' ?>>House</option>
                                                                         <option value="duplex" <?php echo $property_details['type'] == 'duplex' ? 'selected' : '' ?>>Duplex</option>
                                                                         <option value="villa" <?php echo $property_details['type'] == 'villa' ? 'selected' : '' ?>>Villa</option>

@@ -640,7 +640,6 @@ $this->load->view('common/front_end_layout/top', [
                                                                     <label for="propertyType">Property Type</label>
                                                                     <select class="form-control" name="property_type" id="propertyType">
                                                                         <option value="apartment">Apartment</option>
-                                                                        <option value="basement">Basement</option>
                                                                         <option value="house">House</option>
                                                                         <option value="duplex">Duplex</option>
                                                                         <option value="villa">Villa</option>
