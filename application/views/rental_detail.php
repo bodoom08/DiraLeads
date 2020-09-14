@@ -654,7 +654,7 @@
                     </div>
                 <?php } ?>
                 <?php if (isset($property->images) && count($property->images) > 0) { ?>
-                    <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
+                    <button class="btn btn-outline-purple" onclick="openPhotoSwipe()">Show All Photos</button>
                 <?php } ?>
 
             </div>
@@ -778,12 +778,73 @@
     <input type="hidden" id="weekendFrom" />
     <input type="hidden" id="weekendTo" />
 
-    <script>
-        function showImages(index) {
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        
+        <!-- Background of PhotoSwipe. 
+             It's a separate element, as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+    
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+    
+            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+            <div class="pswp__container">
+                <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+    
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+    
+                <div class="pswp__top-bar">
+    
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+    
+                    <div class="pswp__counter"></div>
+    
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+    
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+    
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+    
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+    
+                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+    
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+    
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+    
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+    
+              </div>
+    
+            </div>
+    
+    </div>
 
-        }
-    </script>
-
+    <!--
     <script>
         // Open the Modal
         function openModal() {
@@ -829,6 +890,47 @@
             dots[slideIndex - 1].className += " active";
             captionText.innerHTML = dots[slideIndex - 1].alt;
         }
+    </script>
+    -->
+
+    <!-- ============================= Image Gallery LightBox ================================ -->
+    
+    <script>
+        var images = `<?php echo $property->images && count($property->images) > 0 ? json_encode($property->images) : '[]'?>`;
+        images = JSON.parse(images);
+
+        var imageElements = [];
+        images.forEach(image => {
+            var img = new Image();
+            img.src = `/uploads/${image.path}`;
+            console.log("src: ", img.src);
+            img.onload = function () {
+                imageElements.push({
+                    src: img.src,
+                    w: this.width,
+                    h: this.height
+                });
+            }
+        });
+
+        var openPhotoSwipe = function() {
+
+            var pswpElement = document.querySelectorAll('.pswp')[0];
+            
+            // define options (if needed)
+            var options = {
+                    // history & focus options are disabled on CodePen        
+                history: false,
+                focus: false,
+
+                showAnimationDuration: 0,
+                hideAnimationDuration: 0
+                
+            };
+            
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, imageElements, options);
+            gallery.init();
+        };
     </script>
 
 </body>
