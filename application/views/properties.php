@@ -11,7 +11,8 @@
     <!-- ================================================================ -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <!-- ========================== Custom Style ====================================== -->
-    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>"></link>
+    <link rel="stylesheet" href="<?php echo site_url('assets/css/properties.css') ?>">
+    </link>
     <!-- ============================================== JQuery UI CSS ========================================-->
     <link rel="stylesheet" href="https://code.jquery.com/ui/jquery-ui-git.css" />
     <!-- ========================== Google Map Scripts ================================= -->
@@ -192,10 +193,10 @@
             </ul>
         </div>
     </nav>
-    
+
     <!-- ================================= Maintain ======================================== -->
     <div style="overflow: visible; pointer-events: none; position: fixed; width: 100%; top: 0; right: 0; left: 0; background-color: rgba(255, 141, 141, 0.26); padding: 5px; text-align: center; color: red; z-index: 10000; font-size: 18px;">We are still working on making this page perfect, thanks for your patiance</div>
-    
+
     <!-- ================================= Search Filters ======================================== -->
     <div class="search-filters-row">
         <div class="form-inline my-2 p-1 d-inline-block col-sm-12 col-md-3 col-lg-2">
@@ -230,7 +231,7 @@
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-date" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
-                            Date&nbsp;&nbsp;
+                        Date&nbsp;&nbsp;
                     </a>
                 </li>
 
@@ -892,7 +893,7 @@
         const anyDate = {
             'html': true,
             sanitize: false,
-            content: function () {
+            content: function() {
                 return `
                     <div class="row">
                         <div class="col-sm-6">
@@ -1210,11 +1211,14 @@
             }, {
                 key: 'hb',
                 label: 'Hebrew'
+            }, {
+                key: 'yd',
+                label: 'Yiddish'
             }];
             let languages = [];
             for (let i = 0, length = langs.length; i < length; i++) {
                 if (document.getElementById(`lang-${langs[i].key}`).checked)
-                    languages.push(langs[i].key);
+                    languages.push(langs[i].label);
             }
             document.getElementById('hid-lang').value = JSON.stringify(languages);
             filter('lang', languages);

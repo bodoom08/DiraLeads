@@ -17,8 +17,9 @@ class M_properties extends CI_Model
         $has_pic = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
         $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
         $area = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $languages = isset($_POST['lang']) ? $_POST['lang'] : [];
 
-        $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other from properties LEFT JOIN `areas` on `properties`.`area_id` = `areas`.`id` where `properties`.`status` = "active"';
+        $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active"';
 
         if (count($types) > 0) {
             $query .= ' AND (';
@@ -34,6 +35,13 @@ class M_properties extends CI_Model
         foreach ($amenities as $amenity) {
             $query .= ' AND `properties`.`amenities` like "%' . $amenity . '%"';
         }
+
+        if (count($languages) > 0) {
+            foreach ($languages as $language) {
+                $query .= ' AND `users`.`language` LIKE "%' . $language . '%"';
+            }
+        }
+
         if ($bedroom != "any") {
             $query .= ' AND `properties`.`bedrooms` >= ' . $bedroom;
         }
@@ -73,6 +81,9 @@ class M_properties extends CI_Model
             }
         }
 
+        // echo $query;
+        // exit;
+
         $query_get = $this->db->query($query);
         $properties = array();
         if ($query_get !== FALSE && $query_get->num_rows() > 0) {
@@ -80,7 +91,6 @@ class M_properties extends CI_Model
                 $properties[] = $row;
             }
         }
-        // $properties = $this->db->query($query)->result_array();
 
         $streets = array();
         $filteredProperties = array();
@@ -118,12 +128,6 @@ class M_properties extends CI_Model
                 $filteredProperties[] = $property;
             }
         }
-
-        // echo json_encode([
-        //    "properties" => $properties,
-        //    "streets"   => $streets
-        // ]);
-        // exit;
 
         return [
             "properties" => $filteredProperties,
