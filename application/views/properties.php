@@ -325,7 +325,7 @@
                             <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
                                 <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
-                                        <ol class="carousel-indicators">
+                                        <!-- <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
                                                 <li data-target="#property-<?php echo $id ?>" data-slide-to="0" class="active"></li>
                                                 <?php } else {
@@ -334,7 +334,7 @@
                                                     <li data-target="#property-<?php echo $id ?>" data-slide-to="<?php echo $index ?>" class="<?php echo $index == 0 ? 'active' : '' ?>"></li>
                                             <?php }
                                             } ?>
-                                        </ol>
+                                        </ol> -->
                                         <div class="carousel-inner">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
                                                 <div class="carousel-item active">
@@ -520,10 +520,12 @@
                 return `
                         <ul class="list-group list-group-horizontal">
                             ${floorContent}
-                            <li class="list-group-item d-flex align-items-center">
-                                <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
-                                    <input type="checkbox" class="form-check-input" id="floor-type-0" ${floor == '0' ? 'checked' : ''} onclick="setFilter('floor', 0)">
-                                    <label class="form-check-label" for="floor-type-0">Basement</label>
+                            <li class="list-group-item">
+                                <div class="h-100 px-3 d-flex align-items-center" style="border: 1px solid #433357;border-radius: .25rem;">
+                                    <div class="form-group form-check mb-0 check-box border-0 p-0 pl-3">
+                                        <input type="checkbox" class="form-check-input" id="floor-type-0" ${floor == '0' ? 'checked' : ''} onclick="setFilter('floor', 0)">
+                                        <label class="form-check-label" for="floor-type-0">Basement</label>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -1277,11 +1279,13 @@
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
                         <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 40.7128}, ${property.coords ? property.coords.lng : 74.0060}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()" onclick="goDetailPage('/properties/rental_detail/${property.id}')">
                             <div id="property-${index}" class="carousel slide property-card-image-slider" data-ride="carousel">
+                                <!--
                                 <ol class="carousel-indicators">
                                 ${ !property.images || property.images.length == 0 ? `<li data-target="#property-${index}" data-slide-to="0" class="active"></li>` : property.images.map((image, idx) => (
                                     `<li data-target="#property-${idx}" data-slide-to="${idx}" class="${idx == 0 ? 'active' : ''}"></li>`
                                 ))}
                                 </ol>
+                                -->
                                 <div class="carousel-inner">
                                 ${ !property.images || property.images.length == 0 ? `<div class="carousel-item active"><img src="/uploads/diraleads-logo.svg" class="d-block w-100" alt="img1"></div>` : property.images.map((image, idx) => (
                                     `<div class="carousel-item ${idx == 0 ? 'active' : ''}"><img src="/uploads/${image.path}" class="d-block w-100" alt="img${idx}"/></div>`
