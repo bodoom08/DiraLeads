@@ -626,8 +626,15 @@
     </nav>
 
     <!-- =============================== Property Detail View ============================================= -->
+    <div id="property-load">
+        <div class="spinner-border" role="status" id="property-load-spinner">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
+    <div class="container mt-3" id="property-detail-body">
     <?php if ($property) { ?>
-        <div class="container mt-3">
+        
             <div class="property-image-board">
                 <?php if (!isset($property->images) || count($property->images) == 0) { ?>
                     <div class="property-image-full">
@@ -641,7 +648,7 @@
                     <div class="property-image-medium pr-1">
                         <img src="<?php echo site_url('uploads/' . $property->images[0]['path']) ?>" />
                     </div>
-                    <div class="property-image-medium pl-1 d-none d-sm-block">
+                    <div class="property-image-medium pl-1 d-none d-sm-flex">
                         <img src="<?php echo site_url('uploads/' . $property->images[1]['path']) ?>" />
                     </div>
                 <?php } else { ?>
@@ -654,7 +661,7 @@
                     </div>
                 <?php } ?>
                 <?php if (isset($property->images) && count($property->images) > 0) { ?>
-                    <button class="btn btn-outline-purple" onclick="openModal()">Show All Photos</button>
+                    <button class="btn btn-outline-purple" onclick="openPhotoSwipe()">Show All Photos</button>
                 <?php } ?>
 
             </div>
@@ -741,30 +748,11 @@
                     </div>
                 </div>
             </div>
-        </div>
     <?php } else { ?>
-        <div style="text-align:center;margin-top:100px;">
+        <div style="text-align:center;margin-top:50px;">
             <h1>This rental does not exist.</h1>
         </div>
     <?php } ?>
-
-    <div id="myModal" class="modal">
-        <span class="close cursor" onclick="closeModal()">&times;</span>
-        <div class="modal-content">
-            <?php if (isset($property->images) && count($property->images) > 0) {
-                foreach ($property->images as $index => $image) {
-            ?>
-                    <div class="mySlides">
-                        <div class="numbertext"><?php echo $index + 1 . ' / ' . count($property->images) ?></div>
-                        <img src="<?php echo site_url('uploads/' . $image['path']) ?>" class="w-100" />
-                    </div>
-            <?php }
-            } ?>
-
-            <!-- Next/previous controls -->
-            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-            <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        </div>
     </div>
 
     <input type="hidden" id="session" value="" name="seasonal_price[session]">
@@ -778,58 +766,124 @@
     <input type="hidden" id="weekendFrom" />
     <input type="hidden" id="weekendTo" />
 
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+    <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+        
+        <!-- Background of PhotoSwipe. 
+             It's a separate element, as animating opacity is faster than rgba(). -->
+        <div class="pswp__bg"></div>
+    
+        <!-- Slides wrapper with overflow:hidden. -->
+        <div class="pswp__scroll-wrap">
+    
+            <!-- Container that holds slides. PhotoSwipe keeps only 3 slides in DOM to save memory. -->
+            <div class="pswp__container">
+                <!-- don't modify these 3 pswp__item elements, data is added later on -->
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+    
+            <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+            <div class="pswp__ui pswp__ui--hidden">
+    
+                <div class="pswp__top-bar">
+    
+                    <!--  Controls are self-explanatory. Order can be changed. -->
+    
+                    <div class="pswp__counter"></div>
+    
+                    <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+    
+                    <button class="pswp__button pswp__button--share" title="Share"></button>
+    
+                    <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+    
+                    <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+    
+                    <!-- Preloader demo https://codepen.io/dimsemenov/pen/yyBWoR -->
+                    <!-- element will get class pswp__preloader--active when preloader is running -->
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                          <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div> 
+                </div>
+    
+                <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+                </button>
+    
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+                </button>
+    
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+    
+              </div>
+    
+            </div>
+    
+    </div>
+    
+    <!-- ============================= Image Gallery LightBox ================================ -->
+    
     <script>
-        function showImages(index) {
+        var images = `<?php echo $property->images && count($property->images) > 0 ? json_encode($property->images) : '[]'?>`;
+        images = JSON.parse(images);
 
-        }
+        var imageElements = [];
+        document.getElementById('property-load').style.display = "flex";
+        document.getElementById('property-detail-body').style.display = "none";
+
+        images.forEach(image => {
+            var img = new Image();
+            img.src = `/uploads/${image.path}`;
+            img.onload = function () {
+                imageElements.push({
+                    src: img.src,
+                    w: this.width,
+                    h: this.height
+                });
+            }
+        });
+
+        document.getElementById('property-load').style.display = "none";
+        document.getElementById('property-detail-body').style.display = "block";
+        
+        var openPhotoSwipe = function() {
+
+            var pswpElement = document.querySelectorAll('.pswp')[0];
+            
+            // define options (if needed)
+            var options = {
+                    // history & focus options are disabled on CodePen        
+                history: false,
+                focus: false,
+
+                showAnimationDuration: 0,
+                hideAnimationDuration: 0
+                
+            };
+            
+            var gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, imageElements, options);
+            gallery.init();
+        };
     </script>
 
-    <script>
-        // Open the Modal
-        function openModal() {
-            document.getElementById("myModal").style.display = "block";
+    <!-- ================================= Loading Image Controller ============================== -->
+    <!-- <script>
+        function imageLoaded(element) {
+            element.parentElement.children[0].style.display = "none";
+            element.parentElement.children[1].style.display = "block";
         }
-
-        // Close the Modal
-        function closeModal() {
-            document.getElementById("myModal").style.display = "none";
-        }
-
-        var slideIndex = 1;
-        showSlides(slideIndex);
-
-        // Next/previous controls
-        function plusSlides(n) {
-            showSlides(slideIndex += n);
-        }
-
-        // Thumbnail image controls
-        function currentSlide(n) {
-            showSlides(slideIndex = n);
-        }
-
-        function showSlides(n) {
-            var i;
-            var slides = document.getElementsByClassName("mySlides");
-            var dots = document.getElementsByClassName("demo");
-            var captionText = document.getElementById("caption");
-            if (n > slides.length) {
-                slideIndex = 1
-            }
-            if (n < 1) {
-                slideIndex = slides.length
-            }
-            for (i = 0; i < slides.length; i++) {
-                slides[i].style.display = "none";
-            }
-            for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-            slides[slideIndex - 1].style.display = "block";
-            dots[slideIndex - 1].className += " active";
-            captionText.innerHTML = dots[slideIndex - 1].alt;
-        }
-    </script>
+    </script> -->
 
 </body>
 
