@@ -54,7 +54,7 @@ class M_properties extends CI_Model
             $query .= ' AND `properties`.`area_id` = "' . $area . '"';
         }
         if ($location != "any") {
-            $query .= ' AND CHARINDEX(`areas`.`title` ,"' . $location . '") > 0';
+            $query .= ' AND ( CONTAINS(`areas`.`title` ,"' . $location . '") OR CONTAINS("' . $location . '",`areas`.`title`)';
         }
         if ($sort_by != "any") {
             switch ($sort_by) {
