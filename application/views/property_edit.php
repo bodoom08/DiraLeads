@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed');
 
 $this->load->view('common/front_end_layout/top', [
-    'title' => 'List Your Property',
+    'title' => 'Update Your Property',
 ]);
 ?>
 
@@ -1072,53 +1072,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="modal fade modal-event" tabindex="-1" id="seasonModal" role="dialog">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content event-model">
-                                    <div class="modal-header">
-                                        <h4 class="modal-title">Add seasonal price</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonTitle">Season title</label>
-                                                <input type="text" name="title" id="seasonTitle" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonStart">Starts at</label>
-                                                <input type="text" name="starts_at" class="startDate" id="seasonStart" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonEnd">Ends at</label>
-                                                <input type="text" name="ends_at" class="startDate" id="seasonEnd" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-12">
-                                                <label class="col-sm-4" for="seasonPrice">Price</label>
-                                                <input type="number" name="ends_at" class="" id="seasonPrice" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-sm-6" style="text-align: center;">
-                                                <input type="checkbox" class="custom-control-input" name="onlyWeekend" id="customCheck30">
-                                                <label class="custom-control-label" style="font-size: 16px;" for="customCheck30">Fixed Price</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default eventClose" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary" id="add-season">Add season</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-
+                        
                         <div class="modal fade modal-event" tabindex="-1" id="manualBook" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
