@@ -1189,7 +1189,7 @@
         }
 
         function setRentalType(index) {
-            const rentalTypes = ['Apartment', 'Basement', 'House', 'Duplex', 'Villa'];
+            const rentalTypes = ['Apartment', 'House', 'Duplex', 'Villa'];
             let types = [];
 
             for (let i = 0, length = rentalTypes.length; i < length; i++) {
@@ -1293,10 +1293,10 @@
             filters[key] = value;
             document.getElementById('hid-property-filter').value = JSON.stringify(filters);
 
-            const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
-            controls.forEach(control => {
-                $(`#${control}`).popover('hide');
-            });
+            // const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
+            // controls.forEach(control => {
+            //     $(`#${control}`).popover('hide');
+            // });
 
             $.ajax({
                 method: 'POST',
