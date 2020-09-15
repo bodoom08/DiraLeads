@@ -26,6 +26,8 @@
         var map;
         var searchEl;
         var autocomplete;
+        let rentals = JSON.parse(`<?php echo isset($properties) ? json_encode($properties) : '[]'?>`);
+        console.log("Rentals: ", rentals);
 
         function initMap(marker = {
             lat: 31.0461,
@@ -427,9 +429,9 @@
     <!-- ====================================== Script ========================================== -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
 
     <!-- ============================= Custom Script for Filter ========================================== -->
     <script>
@@ -923,7 +925,7 @@
                                 </svg>
                                 &nbsp;&nbsp;Date From
                             </label>
-                            <input type="text" id="filter-date-from" class="form-control" value="${fromDate}" onchange="changeDateRange('from', this)"/>
+                            <input type="text" id="filter-date-from" class="form-control" value="${fromDate}" onkeydown="disableKeyDown(event)" onchange="changeDateRange('from', this)"/>
                         </div>
                         <div class="col-sm-6">
                             <label for="filter-date-to">
@@ -933,7 +935,7 @@
                                 </svg>
                                 &nbsp;&nbsp;Date To
                             </label>
-                            <input type="text" id="filter-date-to" class="form-control" value="${toDate}" onchange="changeDateRange('to', this)"/>
+                            <input type="text" id="filter-date-to" class="form-control" value="${toDate}" onkeydown="disableKeyDown(event)" onchange="changeDateRange('to', this)"/>
                         </div>
                     </div>
                 `;
@@ -969,7 +971,11 @@
         });
         $(function() {
             $('#filter-date').popover(anyDate);
-        })
+        });
+
+        function disableKeyDown(event) {
+            event.preventDefault();
+        }
     </script>
 
     <!-- ============================ Filter Caret Style control ============================================ -->
@@ -1185,7 +1191,50 @@
 
         function changeDateRange(type, element) {
             document.getElementById(`hid-date-${type}`).value = element.value;
-            filter(`date_${type}`, element.value);
+
+            if (type == 'from') {
+                if (document.getElementById('hid-date-to').value == '') {
+                    let date = new Date(document.getElementById('hid-date-from').value);
+                    date.setDate(date.getDate() + 1);
+
+                    document.getElementById('hid-date-to').value = getFullDate(date);
+                    document.getElementById('filter-date-to').value = getFullDate(date);
+                } else {
+                    let dateFrom = new Date(document.getElementById('hid-date-from').value);
+                    let dateTo = new Date(document.getElementById('hid-date-to').value);
+
+                    if (dateFrom.getTime() >= dateTo.getTime()) {
+                        dateFrom.setDate(dateFrom.getDate() + 1);
+
+                        document.getElementById('hid-date-to').value = getFullDate(dateFrom);
+                        document.getElementById('filter-date-to').value = getFullDate(dateFrom);
+                    }
+                }
+            } else {
+                if (document.getElementById('hid-date-from').value == '') {
+                    let date = new Date(document.getElementById('hid-date-to').value);
+                    date.setDate(date.getDate() - 1);
+
+                    document.getElementById('hid-date-from').value = getFullDate(date);
+                    document.getElementById('filter-date-from').value = getFullDate(date);
+                } else {
+                    let dateFrom = new Date(document.getElementById('hid-date-from').value);
+                    let dateTo = new Date(document.getElementById('hid-date-to').value);
+
+                    if (dateFrom.getTime() >= dateTo.getTime()) {
+                        dateTo.setDate(dateTo.getDate() - 1);
+
+                        document.getElementById('hid-date-from').value = getFullDate(dateTo);
+                        document.getElementById('filter-date-from').value = getFullDate(dateTo);
+                    }
+                }
+            }
+
+            filterRentalsByDate();
+        }
+
+        function getFullDate(date) {
+            return `${date.getFullYear()}-${date.getMonth() < 9 ? '0' : ''}${date.getMonth() + 1}-${date.getDate() < 9 ? '0' : ''}${date.getDate() + 1}`;
         }
 
         function setRentalType(index) {
@@ -1291,6 +1340,7 @@
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
             filters[key] = value;
+            console.log("Filters: ", filters);
             document.getElementById('hid-property-filter').value = JSON.stringify(filters);
 
             // const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
@@ -1310,8 +1360,12 @@
 
                     if (properties.length == 0)
                         drawNoResult();
-                    else
-                        drawRentalCard(properties);
+                    else {
+                        rentals = res.properties;
+                        if (document.getElementById('hid-date-from').value == '')
+                            drawRentalCard(properties);
+                        else filterRentalsByDate();
+                    }
                 },
                 fail: function(error) {
                     console.log("Error: ", error);
@@ -1379,6 +1433,57 @@
         function goDetailPage(location) {
             // document.location.href = location;
             window.open(location, '_blank');
+        }
+
+        function filterRentalsByDate() {
+            const dateFrom = new Date(document.getElementById('hid-date-from').value);
+            const dateTo = new Date(document.getElementById('hid-date-to').value);
+
+            console.log("Before: ", rentals.length);
+
+            const properties = rentals.filter(rental => {
+                let flag = true;
+                rental['manual_booking'] && rental['manual_booking'].map(item => {
+                    if (flag) {
+                        const checkInDate = new Date(item.checkInDate);
+                        const checkOutDate = new Date(item.checkOutDate);
+
+                        // console.log({
+                        //     from: document.getElementById('hid-date-from').value,
+                        //     to: document.getElementById('hid-date-to').value
+                        // }, {
+                        //     checkInDate: item.checkInDate,
+                        //     checkOutDate: item.checkOutDate
+                        // });
+
+                        if (dateFrom.getTime() >= checkInDate.getTime() && dateTo.getTime() <= checkOutDate.getTime()) flag = false;
+                    }
+                });
+                if (!flag) return false;
+
+                rental['blocked_date'] && rental['blocked_date'].map(item => {
+                    if (flag) {
+                        const checkInDate = new Date(item.checkInDate);
+                        const checkOutDate = new Date(item.checkOutDate);
+
+                        // console.log({
+                        //     from: document.getElementById('hid-date-from').value,
+                        //     to: document.getElementById('hid-date-to').value
+                        // }, {
+                        //     checkInDate: item.checkInDate,
+                        //     checkOutDate: item.checkOutDate
+                        // });
+
+                        if (dateFrom.getTime() >= checkInDate.getTime() && dateTo.getTime() <= checkOutDate.getTime()) flag = false;
+                    }
+                });
+                return flag;
+            });
+
+            document.getElementById('property-cards').innerHTML = '';
+            document.getElementById('search-results-count').innerHTML = `${properties.length} rentals available on Diraleads`;
+
+            drawRentalCard(properties);
         }
     </script>
 
