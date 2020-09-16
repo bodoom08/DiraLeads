@@ -2277,9 +2277,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 } else {
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
                     });
-                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(fixedPriceD));
                 }
             });
 
@@ -2304,10 +2304,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
 
                 between.forEach(day => {
-                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                    $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
                 });
 
-                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPrice(detail.title));
+                $('.fc-widget-content[data-date="' + convert(midd) + '"]').html(manualPriceHTML(detail.title));
 
             })
         }
@@ -2439,9 +2439,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 } else {
 
                     between.forEach(day => {
-                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+                        $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
                     });
-                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(fixedPriceD));
+                    $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(fixedPriceD));
                 }
             });
 
@@ -2529,9 +2529,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             // if (isFixedPrice) {
             //     between.forEach(day => {
-            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
             //     });
-            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(price));
             // } else {
             //     between.forEach(day => {
             //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
@@ -2569,11 +2569,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.date-actions').css('display', 'none');
         });
 
-        function seasonalPrice(price = '') {
+        function seasonalPriceHTML(price = '') {
             return '<p class="day-background season-background">' + price + '</p>';
         }
 
-        function manualPrice(price = '') {
+        function manualPriceHTML(price = '') {
             return '<p class="day-background manual-background">' + price + '</p>';
         }
         $('#addSeasonPrice').click(function() {
@@ -2629,19 +2629,19 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPriceHTML(title));
 
             // var period = [];
             // price = '$' + price;
 
             // if (isFixedPrice) {
             //     between.forEach(day => {
-            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPrice());
+            //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(seasonalPriceHTML());
             //     });
-            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPrice(price));
+            //     $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(seasonalPriceHTML(price));
             // } else {
             //     between.forEach(day => {
             //         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(price);
@@ -2819,10 +2819,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             }
 
             between.forEach(day => {
-                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPrice());
+                $('.fc-widget-content[data-date="' + convert(day) + '"]').html(manualPriceHTML());
             });
 
-            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPrice(title));
+            $('.fc-widget-content[data-date="' + convert(middate) + '"]').html(manualPriceHTML(title));
 
             document.getElementById('hid_editManualStart').value = '';
             document.getElementById('hid_editManualEnd').value = '';
@@ -3408,7 +3408,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     disabledArrs = disableDate
                 }
                 var disabledArr = disabledArrs.split('|');
-                for (i = 0; i < disabledArr.length; i++) {
+                // console.log("--disabledArr--", disabledArr)
+                
+                for (i = 1; i < disabledArr.length; i++) {
                     var data = disabledArr[i].split(",");
                     var From = data[0].split('/');
 
