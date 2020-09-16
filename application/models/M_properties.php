@@ -18,10 +18,8 @@ class M_properties extends CI_Model
         $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
         $area = isset($_POST['area']) ? $_POST['area'] : 'any';
         $languages = isset($_POST['lang']) ? $_POST['lang'] : [];
-        $date_from = isset($_POST['date_from']) ? $_POST['date_from'] : '';
-        $date_to = isset($_POST['date_to']) ? $_POST['date_to'] : '';
 
-        $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active"';
+        $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ';
 
         if (count($types) > 0) {
             $query .= ' AND (';
@@ -65,12 +63,6 @@ class M_properties extends CI_Model
         }
         if ($location != "any") {
             $query .= ' AND ( `areas`.`title` LIKE "' . $location . '" OR "' . $location . '" LIKE CONCAT(`areas`.`title`, "%"))';
-        }
-        if ($date_from != "") {
-            $query .= ' AND `properties`.`created_at` > "' . $date_from . '"';
-        }
-        if ($date_to != "") {
-            $query .= ' AND `properties`.`updated_at` <= "' . $date_to . '"';
         }
         if ($sort_by != "any") {
             switch ($sort_by) {
@@ -131,6 +123,8 @@ class M_properties extends CI_Model
                     }
                     $property['coords'] = $coord;
                     $property['images'] = $images;
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
                     array_push($streets, [
                         "location" => $coord,
                         "property" => $property
@@ -140,7 +134,10 @@ class M_properties extends CI_Model
                         "lat" => 31.0461,
                         "lng" => 34.08516
                     ];
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
                 }
+                
                 $filteredProperties[] = $property;
             }
         }
