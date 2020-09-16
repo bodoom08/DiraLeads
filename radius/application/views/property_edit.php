@@ -9,7 +9,7 @@ $this->load->view('common/top', [
 <link rel="stylesheet" href="//unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
 <link rel="stylesheet" href="<?php echo site_url('../assets/css/jquery-ui.multidatespicker.css') ?>">
 <link href="<?php echo site_url('../assets/css/fullcalendar.css') ?>" rel="stylesheet" />
-<link rel="stylesheet" type="text/css" href="<?php echo site_url('../assets/css/styles.css') ?>">
+<link href="<?php echo site_url('../assets/css/radius_styles.css') ?>" rel="stylesheet" />
 
 <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
 
@@ -22,522 +22,24 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     background-color: unset;
 }
 */
-    .date-action-dialog {
-        width: 100%;
-        height: 100%;
-        background: transparent;
-        display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 100;
-    }
-
-    .date-action {
-        display: none;
-        position: absolute;
-        background: none;
-        width: 100%;
-        min-width: 200px;
-        width: auto;
-        height: auto;
-        top: 25px;
-        left: 10px;
-        cursor: pointer;
-        z-index: 130;
-        background-color: white;
-        border: 1px #dfdfdf solid;
-        border-radius: 5px;
-        box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    .date {
-        background-color: #f4f4f4;
-        font-size: 16px;
-        font-weight: bold;
-        color: #333;
-        text-align: left;
-        min-height: 32px;
-        line-height: 32px;
-        text-indent: 12px;
-        border-radius: 5px 5px 0 0;
-    }
-
-    .date-action ul li a {
-        font-size: 14px;
-        color: #76d0be;
-        white-space: normal;
-        white-space: nowrap;
-    }
-
-    .date-action ul li {
-        padding-bottom: 10px;
-    }
-
-    .date-action ul {
-        padding: 11px 12px;
-        margin: 0;
-    }
-
-    .modal {
-        display: none;
-        /* Hidden by default */
-        position: fixed;
-        /* Stay in place */
-        z-index: 1;
-        /* Sit on top */
-        padding-top: 100px;
-        /* Location of the box */
-        left: 0;
-        top: 0;
-        width: 100%;
-        /* Full width */
-        height: 100%;
-        /* Full height */
-        overflow: auto;
-        /* Enable scroll if needed */
-        background-color: rgb(0, 0, 0);
-        /* Fallback color */
-        background-color: rgba(0, 0, 0, 0.4);
-        /* Black w/ opacity */
-    }
-
-    /* Modal Content */
-    .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 40% !important;
-        position: relative;
-    }
-
-    .event-model {
-        width: 100% !important;
-    }
-
-    .modal-backdrop.fade {
-        opacity: 0 !important;
-    }
-
-    .modal-backdrop {
-        position: relative !important;
-    }
-
-    /* The Close Button */
-    .close {
-        color: #aaaaaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    form#newsletterform .form-group label {
-        font-size: 15px;
-        font-weight: normal;
-        color: #000;
-    }
-
-    form#newsletterform .form-group input {
-        border: #e5e5e5 1px solid;
-    }
-
-    form#newsletterform .form-group {
-        width: 50%;
-        float: left;
-        padding-right: 20px;
-    }
-
-    .form-group.custom-group {
-        width: 100% !important;
-        float: left;
-        display: inline-block;
-    }
-
-    .modal-content span.close {
-        position: absolute;
-        right: 10px;
-        top: 5px;
-        opacity: inherit;
-        color: #333;
-    }
-
-    .form-group.custom-group input {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-
-    .form-group.custom-group input:first-child {
-        margin-right: 10px;
-        margin-left: 0px;
-    }
-
-    .form-group input[type=checkbox] {
-        margin-right: 10px;
-    }
-
-    input.seasonButton {
-        font-size: 15px;
-        background: #a27107;
-        padding: 10px 30px;
-        margin: 0 10px 0;
-        border-radius: 30px;
-        color: #fff;
-        border: 0;
+    .overlay {
+        /* display: flex; */
         text-align: center;
-    }
-
-    .form-group.button {
-        width: 100% !important;
-        text-align: center;
-    }
-
-    .tabbbing-one.two {
-        text-align: left;
-        display: inline-block;
-    }
-
-    .sessionalRule p {
-        margin-bottom: 0px;
-    }
-
-    .sessionalRule {
-        padding: 10px;
-    }
-
-    .sessionalRule p i {
-        float: right;
-        vertical-align: bottom;
-        margin-top: 5px;
-    }
-
-    .sessionalRule:last-child {
-        margin-right: 0px;
-    }
-
-    .tabbbing-one.two {
-        text-align: left;
-        display: inline-block;
-        width: 100%;
-    }
-
-    .rule {
-        width: 100%;
-        float: left;
-    }
-
-    .seasonRule {
-        width: 100%;
-        float: left;
-    }
-
-    .sessionalRule p:first-child {
-        font-weight: 700;
-        font-size: 16px;
-    }
-
-    a.addRule {
-        border: #a27107 1px solid;
-        padding: 15px 50px;
-        display: inline-block;
-        margin-bottom: 30px;
-        font-weight: 700;
-        color: #a27107;
-    }
-
-    .form-group input[type=checkbox] {
-        position: relative;
-    }
-
-    .form-group input[type=checkbox]::before {
-        color: #fff;
-        border-color: #a27107;
-        background-color: #a27107;
-    }
-
-    .form-group input[type=checkbox]::after {
-        position: absolute;
-        top: .25rem;
-        left: -1.5rem;
-        display: block;
-        width: 1rem;
-        height: 1rem;
-        content: "";
-        background: no-repeat 50%/50% 50%;
-    }
-
-    .tabbbing-one.two .form-group {
-        text-align: center;
-    }
-
-    .sessionalRule {
-        padding: 10px;
-        width: 31.33%;
-        float: left;
-        margin: 0 5px 10px 5px;
-    }
-
-    button.fc-month-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right.fc-state-active {
-        display: none;
-    }
-
-    button.fc-today-button.fc-button.fc-state-default.fc-corner-left.fc-corner-right {
-        display: none;
-    }
-
-    .fc-toolbar .fc-center {
-        float: right !important;
-    }
-
-    .modal-event .modal-content.event-model {
-        padding: 0px;
-    }
-
-    button.close span {
-        color: #fff;
-    }
-
-    .modal-event .modal-header {
-        background-color: #a27107;
-        color: #fff;
-        padding: 10px;
-    }
-
-    .modal-event .modal-header h4 {
-        color: #fff;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .custom-event .modal-content.event-model {
-        padding: 0px;
-    }
-
-    button.close span {
-        color: #fff;
-    }
-
-    .custom-event .modal-header {
-        background-color: #a27107;
-        color: #fff;
-        padding: 10px;
-    }
-
-    .session_modal .modal-header {
-        background-color: #a27107;
-        color: #fff;
-        padding: 20px;
-    }
-
-    .session_modal .modal-content {
-        padding: 0 0px 20px 0px;
-    }
-
-    .session_modal .modal-content span {
-        color: #fff !important;
-    }
-
-    form#newsletterform {
-        padding: 15px;
-    }
-
-    .custom-event .modal-header h4 {
-        color: #fff;
-        font-size: 16px;
-        font-weight: 600;
-    }
-
-    .form-group.custom-group .custom-control.custom-checkbox {
-        width: 14%;
-        float: left;
-        padding-left: 5px;
-    }
-
-    .form-group.custom-group .custom-control.custom-checkbox:first-child {
-        padding-left: 0px;
-    }
-
-    @media (max-width:767px) {
-        .modal-content {
-            width: 90%;
-        }
-
-        form#newsletterform .form-group {
-            width: 100%;
-        }
-
-        .sessionalRule {
-            padding: 10px;
-            width: 100%;
-            float: left;
-            margin: 0 5px 10px 5px;
-        }
-    }
-
-    /**Ben */
-
-    .a-disabled {
-        pointer-events: none;
-        cursor: default;
-    }
-
-    .invaild-input {
-        border: 1px solid red !important;
-    }
-
-    .upload-pictures {
-        color: #fff;
-    }
-
-    .upload-pictures a {
-        cursor: pointer;
-        font-size: 15px;
-        background: #a27107;
-        padding: 10px 50px;
-        margin: 0 10px 0;
-        border-radius: 30px;
-        border: 0;
-        text-align: center;
-    }
-
-    .price-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .price-container label {
-        margin-top: .5em;
-    }
-
-    .price-container input {
-        /* width: 120px; */
-    }
-
-    .weekend-container {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        margin-bottom: 20px;
-        margin-right: 20px;
-    }
-
-    .weekend-container label {
-        margin-right: 20px;
-    }
-
-    .weekend-container select {
-        width: 200px;
-    }
-
-    .daily-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-    }
-
-    .daily-container input {
-        width: 90%;
-    }
-
-    .modal-row input {
-        border: #e5e5e5 1px solid;
-        padding: 5px 10px 5px 10px;
-    }
-
-    .date-actions a:hover {
-        color: grey;
-    }
-
-    .modal-content .row {
-        margin-bottom: 10px;
-    }
-
-    .season-action {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-top: 10px;
-    }
-
-    .season-action .fa-trash {
-        font-size: 20px;
-        color: red;
-        cursor: pointer;
-    }
-
-    .season-action .rulEdit {
-        border: 1px solid;
-        border-radius: 3px;
-        padding: 2px 6px;
-        font-size: 14px;
-        cursor: pointer;
-    }
-
-    /**
-    Muhammad Theme
-*/
-    input.mhButton {
-        text-align: center;
-        font-size: 15px;
-        border-radius: 30px;
-        padding: 10px 30px;
-        margin: 0 10px 0;
-        border: 0;
-    }
-
-    .mhButton.confirmButton {
-        background: #a27107;
-        color: #fff;
-    }
-
-    .mhButton.cancelButton {
-        background: #eee;
-        color: #a27107;
-    }
-
-    #thumbnailPreview,
-    #thumbnailPreview img {
-        max-width: 100%;
-        max-height: 250px;
-    }
-
-    .control-thumbnail {
-        width: 2rem;
-        height: 2rem;
-        background-image: url(../assets/images/arrow_left.png);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
         position: absolute;
         top: 50%;
-        cursor: pointer;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0, 0.5);
+        font-size: 5rem;
+        color: white;
     }
 
-    .control-thumbnail-left {
-        left: 0.1rem;
-    }
-
-    .control-thumbnail-right {
-        right: 0.1rem;
-        transform: rotateZ(180deg);
-    }
-
-    .fc-content-skeleton tbody tr:first-child {
-        height: unset;
-    }
-
-    .fc-content-skeleton tbody tr {
-        height: 20px;
+    .overlay i {
+        margin-top: 40%;
     }
 </style>
 <div class="dashboard">
@@ -590,7 +92,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </ul>
                                         <!-- end design process steps-->
                                         <!-- Tab panes -->
-                                        <?php echo form_open_multipart('my_rentals/update', 'id="updateForm" class=""'); ?>
+                                        <?php echo form_open_multipart('property/update', 'id="updateForm" class=""'); ?>
                                         <div class="tab-content">
                                             <div role="tabpanel" class="tab-pane active" id="discover">
                                                 <div class="design-process-content">
@@ -906,20 +408,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="optimization">
                                                 <div class="design-process-content">
-                                                    <div class="tabbbing-one two">
-                                                        <ul class="row">
-                                                            <li class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <label for="upload_file">
-                                                                        <ul>
-                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
-                                                                        </ul>
-                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
-                                                                    </label>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group" style="text-align:center;">
+                                                                <label for="upload_file">
+                                                                    <ul>
+                                                                        <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                    </ul>
+                                                                    <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-12">
@@ -1720,10 +1219,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                 </div>
 
                                                 <label class="font-weight-bold">Virtual Number</label>
-                                                <p id="virtualNumber"><?php echo $virtual_number; ?></p>
+                                                <p id="virtualNumber"><?php echo isset($virtual_number) ? $virtual_number : ''; ?></p>
                                             </div>
                                         </div>
-
+                                        
+                                        <div class="fa-3x overlay" style="display: none;">
+                                            <i class="fa fa-spinner fa-spin"></i>
+                                        </div>
                                     </div>
 
                                     <div class="modal-footer">
@@ -1765,7 +1267,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     </div>
 </div>
 <?php $this->load->view('common/bottom'); ?>
-a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="<?php echo site_url('../assets/js/jquery-ui.multidatespicker.js') ?>"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -1790,6 +1292,13 @@ a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            const place = autocomplete.getPlace();
+            const geolocation = [];
+            geolocation.push(place.geometry.location.lat());
+            geolocation.push(place.geometry.location.lng());
+
+            $('.geolocation').val(JSON.stringify(geolocation));
+
             $('[name="street').removeClass('invaild-input');
         });
     }
@@ -4072,6 +3581,11 @@ a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
+            if (document.getElementById('confirmSubmit').className.includes('disabled'))
+                return;
+            document.getElementById('confirmSubmit').className += " disabled";
+
+            $('#propertyConfirmationModal div.overlay').css('display', 'block');
             $('#updateForm').ajaxSubmit({
                 data: {
                     'short_term_available_date': function() {
@@ -4089,7 +3603,7 @@ a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
                         $('#propertyConfirmationModal').hide();
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
-                        document.location.href = "/my_rentals";
+                        document.location.href = '<?php echo site_url('property'); ?>';
 
                     } else {
                         toastr.warning(response.text);
@@ -4196,7 +3710,7 @@ a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
         //if date and availability is clicked
 
-        var date = "<?php echo $_SESSION['forDate'] ?>";
+        var date = "<?php echo isset($_SESSION['forDate']) ? $_SESSION['forDate'] : '' ?>";
         if (date != '') {
 
             // renderFirstCalendar();
@@ -4443,6 +3957,12 @@ a<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
     // set property_id
     var propertyID = <?php echo $property_details['id']; ?>;
-    console.log("virutal_number", propertyID);
+    console.log("property_id", propertyID);
     $('#property_id').val(propertyID);
+</script>
+<script>
+    // set geoLocation
+    var coords = "<?php echo $property_details['coords']; ?>";
+
+    $('.geolocation').val(coords);
 </script>

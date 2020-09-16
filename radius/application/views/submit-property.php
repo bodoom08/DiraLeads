@@ -946,20 +946,17 @@ $this->load->view('common/top', [
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="optimization">
                                                 <div class="design-process-content">
-                                                    <div class="tabbbing-one two">
-                                                        <ul class="row">
-                                                            <li class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <label for="upload_file">
-                                                                        <ul>
-                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
-                                                                        </ul>
-                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
-                                                                    </label>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group" style="text-align:center;">
+                                                                <label for="upload_file">
+                                                                    <ul>
+                                                                        <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                    </ul>
+                                                                    <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-12">

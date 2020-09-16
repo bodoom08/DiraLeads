@@ -483,6 +483,26 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         cursor: pointer;
     }
 
+    .overlay {
+        /* display: flex; */
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -moz-transform: translateX(-50%) translateY(-50%);
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%) translateY(-50%);
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0, 0, 0, 0.5);
+        font-size: 5rem;
+        color: white;
+    }
+
+    .overlay i {
+        margin-top: 40%;
+    }
+
     /**
     Muhammad Theme
 */
@@ -907,20 +927,17 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="optimization">
                                                 <div class="design-process-content">
-                                                    <div class="tabbbing-one two">
-                                                        <ul class="row">
-                                                            <li class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <label for="upload_file">
-                                                                        <ul>
-                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
-                                                                        </ul>
-                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
-                                                                    </label>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group" style="text-align:center;">
+                                                                <label for="upload_file">
+                                                                    <ul>
+                                                                        <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                    </ul>
+                                                                    <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-12">
@@ -1072,7 +1089,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="modal fade modal-event" tabindex="-1" id="manualBook" role="dialog">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content event-model">
@@ -1722,10 +1739,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                             </div>
 
                                             <label class="font-weight-bold">Virtual Number</label>
-                                            <p id="virtualNumber"><?php echo $virtual_number; ?></p>
+                                            <p id="virtualNumber"><?php echo isset($virtual_number) ? $virtual_number : ''; ?></p>
                                         </div>
                                     </div>
 
+                                    <div class="fa-3x overlay" style="display: none;">
+                                        <i class="fa fa-spinner fa-spin"></i>
+                                    </div>
                                 </div>
 
                                 <div class="modal-footer">
@@ -1813,6 +1833,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
+
+            const place = autocomplete.getPlace();
+            const geolocation = [];
+            geolocation.push(place.geometry.location.lat());
+            geolocation.push(place.geometry.location.lng());
+
+            $('.geolocation').val(JSON.stringify(geolocation));
+
             $('[name="street').removeClass('invaild-input');
         });
     }
@@ -4095,6 +4123,11 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         // Confirmation before submit
         $(document).on('click', '#confirmSubmit', function() {
+            if (document.getElementById('confirmSubmit').className.includes('disabled'))
+                return;
+            document.getElementById('confirmSubmit').className += " disabled";
+
+            $('#propertyConfirmationModal div.overlay').css('display', 'block');
             $('#updateForm').ajaxSubmit({
                 data: {
                     'short_term_available_date': function() {
@@ -4219,7 +4252,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         //if date and availability is clicked
 
-        var date = "<?php echo $_SESSION['forDate'] ?>";
+        var date = "<?php echo isset($_SESSION['forDate']) ? $_SESSION['forDate'] : '' ?>";
         if (date != '') {
 
             // renderFirstCalendar();
@@ -4468,4 +4501,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
     var propertyID = <?php echo $property_details['id']; ?>;
     console.log("virutal_number", propertyID);
     $('#property_id').val(propertyID);
+</script>
+<script>
+    // set geoLocation
+    var coords = "<?php echo $property_details['coords']; ?>";
+
+    $('.geolocation').val(coords);
 </script>

@@ -867,22 +867,18 @@ $this->load->view('common/front_end_layout/top', [
                                             </div>
                                             <div role="tabpanel" class="tab-pane" id="optimization">
                                                 <div class="design-process-content">
-                                                    <div class="tabbbing-one two">
+                                                    <div class="row">
                                                         <h5 class="font-weight-bold mb-3">Showcase your property from multiple angles to entice renters to book ASAP</h5>
-
-                                                        <ul class="row">
-                                                            <li class="col-lg-12">
-                                                                <div class="form-group">
-                                                                    <label for="upload_file">
-                                                                        <ul>
-                                                                            <li class="upload-pictures"><a>Upload Pictures</a></li>
-                                                                        </ul>
-                                                                        <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
-                                                                    </label>
-                                                                </div>
-                                                            </li>
-
-                                                        </ul>
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group" style="text-align:center;">
+                                                                <label for="upload_file">
+                                                                    <ul>
+                                                                        <li class="upload-pictures"><a>Upload Pictures</a></li>
+                                                                    </ul>
+                                                                    <input type="file" style="visibility:hidden;" id="upload_file" onchange="preview_image();" accept="image/x-png,image/jpeg" name="userfile[]" aria-label="File browser example" multiple>
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-lg-12">
@@ -1725,13 +1721,13 @@ $this->load->view('common/front_end_layout/top', [
             geolocation.push(place.geometry.location.lng());
 
             $('.geolocation').val(JSON.stringify(geolocation));
+
+            $('[name="street').removeClass('invaild-input');
         });
 
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
-        google.maps.event.addListener(autocomplete, 'place_changed', function() {
-            $('[name="street').removeClass('invaild-input');
-        });
+        
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap&language=en" async defer></script>
