@@ -119,6 +119,32 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                             </li>
 
                                                             <li class="col-lg-6">
+                                                                <div class="form-group">
+                                                                    <label for="exampleFormControlSelect1">User</label>
+                                                                    <select name="user_id" id="selectUser" class="form-control custom-select" required>
+                                                                        <option value="">Select User</option>
+                                                                        <?php foreach ($users as $key => $value) : ?>
+                                                                            <?php
+                                                                            $dataParams = [
+                                                                                'contact_type' => $value['contact_type'],
+                                                                                'day_of_the_weak'  => $value['day_of_the_weak'],
+                                                                                'time_of_day'  => $value['time_of_day'],
+                                                                                'from_time'  => $value['from_time'],
+                                                                                'to_time'  => $value['to_time'],
+                                                                            ];
+                                                                            ?>
+
+                                                                            <?php
+                                                                            extract($_GET);
+                                                                            ?>
+                                                                            <option value="<?php echo $value['id'] ?>" data-pref="<?php echo htmlspecialchars(json_encode($dataParams), ENT_QUOTES, 'UTF-8'); ?>" <?php echo ($value['id'] == $property_details['user_id']) ? 'selected' : ''; ?>><?php echo $value['id'] ?></option>
+
+                                                                        <?php endforeach; ?>
+                                                                    </select>
+                                                                </div>
+                                                            </li>
+
+                                                            <li class="col-lg-6">
 
                                                                 <div class="form-group">
                                                                     <label for="neighborhood">Neighborhood *</label>
@@ -1470,6 +1496,13 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             }
         });
+        $('#selectUser').on("change paste keyup", function() {
+            if ($('#selectUser').val() != '') {
+                $('#selectUser').removeClass('invaild-input');
+            } else {
+                $('#selectUser').addClass('invaild-input');
+            }
+        });
         $('#neighborhood_other').on("change paste keyup", function() {
             if ($('#neighborhood_other').val() != '') {
                 $('#neighborhood_other').removeClass('invaild-input');
@@ -1518,7 +1551,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             } else {
                 $('#geoLocation').removeClass('invaild-input');
             }
-
+            if ($('#selectUser').val() == '') {
+                $('#selectUser').addClass('invaild-input');
+                valid = false;
+            }
             if ($('#neighborhood').val() == '') {
                 $('#neighborhood').addClass('invaild-input');
                 valid = false;

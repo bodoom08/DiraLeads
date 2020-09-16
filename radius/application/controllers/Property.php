@@ -101,6 +101,7 @@ class Property extends MOBO_User
         $data['attributes'] = $this->M_property->getAllAttributes();
         $data['areas'] = $this->M_property->getAllAreas();
         $data['property'] = $this->M_property->edit();
+        $data['users'] = $this->M_property->getAllUsers();
         $this->load->view('property_edit', $data);
     }
 

@@ -607,7 +607,7 @@ class M_property extends CI_Model
             ->get('property_images')->result_array();
         $data['property_user_details'] = $this->db
             ->where('id', $data['property_details']['user_id'])
-            ->select('name, email, contact_type, day_of_the_weak, time_of_day, from_time, to_time')
+            ->select('id, name, email, contact_type, day_of_the_weak, time_of_day, from_time, to_time')
             ->get('users')->row_array();
         return $data;
     }
@@ -846,7 +846,7 @@ class M_property extends CI_Model
             $amenitie = "";
         }
         $property_data = [
-            'user_id' => $_SESSION['id'],
+            'user_id' => $_POST['user_id'],
             'for' => 'short term rent',
             // 'house_number' => $house_no,
             'amenities' => $amenitie,
