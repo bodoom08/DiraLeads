@@ -1156,7 +1156,8 @@
             console.log("Element Name: ", e.target);
             $('[data-toggle=popover]').each(function() {
                 // hide any open popovers when the anywhere else in the body is clicked
-                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && e.target.parentNode.className != 'ui-datepicker-next ui-corner-all' && e.target.parentNode.className != 'ui-datepicker-prev ui-corner-all') {
+                console.log(e.target.parentNode.className);
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && !e.target.parentNode.className.includes('ui-datepicker-next') && !e.target.parentNode.className.includes('ui-datepicker-prev') && !e.target.parentNode.className.includes('ui-datepicker-title')) {
                     $(this).popover('hide');
                 }
             });
