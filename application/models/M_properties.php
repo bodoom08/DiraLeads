@@ -123,6 +123,8 @@ class M_properties extends CI_Model
                     }
                     $property['coords'] = $coord;
                     $property['images'] = $images;
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
                     array_push($streets, [
                         "location" => $coord,
                         "property" => $property
@@ -132,9 +134,10 @@ class M_properties extends CI_Model
                         "lat" => 31.0461,
                         "lng" => 34.08516
                     ];
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
                 }
-                $property['blocked_date'] = json_decode($property['blocked_date']);
-                $property['manual_booking'] = json_decode($property['manual_booking']);
+                
                 $filteredProperties[] = $property;
             }
         }

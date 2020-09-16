@@ -27,7 +27,6 @@
         var searchEl;
         var autocomplete;
         let rentals = JSON.parse(`<?php echo isset($properties) ? json_encode($properties) : '[]'?>`);
-        console.log("Rentals: ", rentals);
 
         function initMap(marker = {
             lat: 31.0461,
