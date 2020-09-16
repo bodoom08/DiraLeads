@@ -1162,16 +1162,6 @@
                 }
             });
         });
-
-        function isChild (obj, parentObj){
-            while (obj != undefined && obj != null && obj.tagName.toUpperCase() != 'BODY'){
-                if (obj == parentObj){
-                    return true;
-                }
-                obj = obj.parentNode;
-            }
-            return false;
-        }
     </script>
 
     <!-- ================================== Scripts for card popup on google map ================================== -->
