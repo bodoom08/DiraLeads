@@ -1153,13 +1153,24 @@
         });
 
         $('body').on('click', function(e) {
+            console.log("Element Name: ", e.target);
             $('[data-toggle=popover]').each(function() {
                 // hide any open popovers when the anywhere else in the body is clicked
-                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && e.target.parentNode.className != 'ui-datepicker-next ui-corner-all' && e.target.parentNode.className != 'ui-datepicker-prev ui-corner-all') {
                     $(this).popover('hide');
                 }
             });
         });
+
+        function isChild (obj, parentObj){
+            while (obj != undefined && obj != null && obj.tagName.toUpperCase() != 'BODY'){
+                if (obj == parentObj){
+                    return true;
+                }
+                obj = obj.parentNode;
+            }
+            return false;
+        }
     </script>
 
     <!-- ================================== Scripts for card popup on google map ================================== -->
