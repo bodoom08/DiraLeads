@@ -23,14 +23,15 @@
 
     <!-- ============================= Google Map Script ========================================== -->
     <script>
-        var map;
         var searchEl;
         var autocomplete;
         let rentals = JSON.parse(`<?php echo isset($properties) ? json_encode($properties) : '[]'?>`);
+        let map;
+        let markers = [];
 
         function initMap(marker = {
-            lat: 31.0461,
-            lng: 34.08516
+            lat: 40.7128,
+            lng: -74.0060
         }) {
             map = new google.maps.Map(
                 document.getElementById('map'), {
@@ -109,6 +110,8 @@
                             event.ub.path[1].style.overflow = "hidden";
                             document.getElementById('property-overview-card').style.display = 'none';
                         });
+
+                        markers.push(newMarker);
                     });
                 } catch (error) {
                     console.log("No Street...");
@@ -137,6 +140,27 @@
             } catch (error) {
                 console.log("Error mapping");
             }
+        }
+
+        function clearMarkers(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+
+            markers = [];
+        }
+
+        function addMarker(location) {
+            const marker = new google.maps.Marker({
+                position: location,
+                icon: {
+                    path: google.maps.SymbolPath.CIRCLE,
+                    scale: 5,
+                    strokeColor: '#433357'
+                },
+                map
+            });
+            markers.push(marker);
         }
     </script>
 </head>
@@ -1143,6 +1167,7 @@
         function showCardOnMap(coords, image, days_price, weekly_price, bedrooms, bathrooms, title, street) {
             if (window.innerWidth < 576) return;
             const location = JSON.parse(coords);
+            
             if (map) {
                 try {
                     map.setCenter({
@@ -1374,7 +1399,11 @@
 
         function drawRentalCard(properties) {
             let elements = '';
+            clearMarkers(null);
             properties.forEach((property, index) => {
+                if (property.coords)
+                    addMarker(property.coords);
+
                 elements = `${elements}
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
                         <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 40.7128}, ${property.coords ? property.coords.lng : 74.0060}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()" onclick="goDetailPage('/properties/rental_detail/${property.id}')">
