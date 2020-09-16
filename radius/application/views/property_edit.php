@@ -2098,7 +2098,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('.fc-bg td').html('');
         }
 
-        $(document).on('click', '.costomSession', function() {
+        $(document).on('click', '.customSession', function() {
             renderSecondCalendar();
 
         });
