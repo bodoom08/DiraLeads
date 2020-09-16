@@ -523,24 +523,23 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                         </div>
 
                                                         <div role="tabpanel" class="tab-pane" id="yearly">
-                                                            <div class="tabbbing-one two">
-                                                                <ul class="row">
-                                                                    <li class="col-lg-10 m-auto">
-                                                                        <div class="price-container">
-                                                                            <div class="form-group daily-container" style="width: 100%;">
-                                                                                <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
-                                                                            </div>
+
+                                                            <div class="row">
+                                                                <div class="col-lg-10 m-auto">
+                                                                    <div class="price-container">
+                                                                        <div class="form-group daily-container" style="width: 100%;">
+                                                                            <label for=" manualPrivateNote">Private notes</label>
+                                                                            <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
                                                                         </div>
-                                                                        <div class="form-group">
-                                                                            <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
-                                                                            <div class="rule"></div>
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <div id='seasonCalendar'></div>
-                                                                        </div>
-                                                                    </li>
-                                                                </ul>
+                                                                    </div>
+                                                                    <div class="form-group" style="text-align: center;">
+                                                                        <a href="javascript:void()" class="addRule" id="addRule">Add sessional price rule...</a>
+                                                                        <div class="rule"></div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <div id='seasonCalendar'></div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1222,7 +1221,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                 <p id="virtualNumber"><?php echo isset($virtual_number) ? $virtual_number : ''; ?></p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="fa-3x overlay" style="display: none;">
                                             <i class="fa fa-spinner fa-spin"></i>
                                         </div>
@@ -1412,9 +1411,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
     function customTimeSet(elem) {
         if ($(elem).val() == 'custom') {
-            $('#custom_div').show();
+            $('#custom_div').modal("show");
         } else {
-            $('#custom_div').hide();
+            $('#custom_div').modal("hide");
         }
     }
 
@@ -1824,7 +1823,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 document.getElementById('ctrlThumbRight').style = "display: block;";
             }
 
-            $('#propertyConfirmationModal').show();
+            $('#propertyConfirmationModal').modal("show");
         });
 
         $(document).on('change', '#florbas', function() {
@@ -2970,7 +2969,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             $('#seasonFixedPrice').css('display', 'none');
             $('#seasonDailyPrice').css('display', 'block');
-            $('#myModal').show();
+            $('#myModal').modal("show");
         });
         $('.dayCheck').click(function() {
             // alert('kails');
@@ -3074,16 +3073,16 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
+            $('#myModal').modal("hide");
 
         });
         $('.close').click(function() {
             $('#newsletterform').each(function() {
                 this.reset();
             });
-            $('#myModal').hide();
-            $('#editSeasonModal').hide();
-            $('#fEditSeasonModal').hide();
+            $('#myModal').modal("hide");
+            $('#editSeasonModal').modal("hide");
+            $('#fEditSeasonModal').modal("hide");
         });
 
         $('#updateRule').click(function() {
@@ -3151,7 +3150,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
             renderSession();
 
-            $('#editSeasonModal').hide();
+            $('#editSeasonModal').modal("hide");
         });
 
         $('#fEdit-season').click(function() { // update season in the first tab
@@ -3215,7 +3214,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var seval = updatedY.join('&');
             $('#season').val(seval);
 
-            $('#fEditSeasonModal').hide();
+            $('#fEditSeasonModal').modal("hide");
 
             renderCalendarPrice();
         });
@@ -3353,7 +3352,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#fEditSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#fEditSeasonModal').show();
+                $('#fEditSeasonModal').modal("show");
 
             } else { //second tab
 
@@ -3389,7 +3388,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                     $('#editSeasonDailyPrice').css('display', 'block');
                 }
 
-                $('#editSeasonModal').show();
+                $('#editSeasonModal').modal("show");
             }
         });
 
@@ -3572,7 +3571,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var date = $('#hiddenDate').val();
             var changep = '$' + price;
             $('.fc-widget-content[data-date="' + date + '"]').text(changep);
-            $('#priceModal').hide();
+            $('#priceModal').modal("hide");
             $('.date-actions').css('display', 'none');
         });
         $(document).on('click', '.closePrice', function() {
@@ -3600,7 +3599,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 },
                 success: function(response) {
                     if (response.type == 'success') {
-                        $('#propertyConfirmationModal').hide();
+                        $('#propertyConfirmationModal').modal("hide");
                         $('#thumbnailPreview').empty();
                         $('#amenitySpec').empty();
                         document.location.href = '<?php echo site_url('property'); ?>';
@@ -3616,14 +3615,14 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         $(document).on('click', '#cancelSubmit', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal("hide");
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
 
         $(document).on('click', '#closeConfirmDialog', function() {
             // Cancel form submit
-            $('#propertyConfirmationModal').hide();
+            $('#propertyConfirmationModal').modal("hide");
             $('#thumbnailPreview').empty();
             $('#amenitySpec').empty();
         });
