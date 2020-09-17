@@ -428,7 +428,6 @@
             <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100 block" alt="img1" id="property-overview-image" />
         </div>
         <div class="property-overview-detail">
-            <div class="property-detail-price" id="property-overview-price"></div>
             <div class="property-detail-capacity" id="property-overview-capacity"></div>
             <div class="property-detail-address" id="property-overview-address"></div>
             <div class="property-detail-city" id="property-overview-city"></div>
