@@ -48,71 +48,13 @@
                 const place = autocomplete.getPlace();
                 map.setCenter(place.geometry.location);
 
-                // filter('location', place.geometry.location);
                 document.getElementById('search-detail-title').innerHTML = `Apartments for ${searchEl.value}`;
+                filter('location', searchEl.value.split(', '));
             });
 
             try {
                 try {
-                    let streets = `<?php echo $streets; ?>`;
-                    streets = JSON.parse(streets);
-                    streets.forEach((street) => {
-                        var newMarker = new google.maps.Marker({
-                            position: street.location,
-                            icon: {
-                                path: google.maps.SymbolPath.CIRCLE,
-                                scale: 5,
-                                strokeColor: '#433357'
-                            },
-                            map
-                        });
-
-                        var ghostMarkerEl = document.createElement('a');
-                        ghostMarkerEl.id = "ghost-marker";
-                        ghostMarkerEl.style.position = "absolute";
-                        ghostMarkerEl.style.left = -6;
-                        ghostMarkerEl.style.top = -6;
-
-
-                        newMarker.addListener('mouseover', function(event) {
-                            console.log("Event: ", event);
-                            event.ub.path[1].appendChild(ghostMarkerEl);
-                            event.ub.path[1].style.opacity = 1;
-                            event.ub.path[1].style.overflow = "unset";
-
-                            ghostMarkerEl.href = `/properties/rental_detail/${street.property.id}`;
-                            ghostMarkerEl.target = '_blank';
-
-                            if (street.property.images && street.property.images.length > 0)
-                                document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
-                            // document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price ? street.property.days_price : 0}/dy, $${street.property.weekend_price ? street.property.weekend_price : 0}/wk`;
-                            document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
-                            document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
-                            document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
-
-                            let cardLocation = {
-                                left: event.ub.clientX,
-                                top: event.ub.clientY
-                            }
-                            document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
-                            document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
-
-                            if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top)
-                                document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
-                            if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
-                                document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
-                            document.getElementById('property-overview-card').style.display = 'block';
-                        });
-                        newMarker.addListener('mouseout', function(event) {
-                            const ghostMarker = document.getElementById('ghost-marker');
-                            event.ub.path[1].removeChild(ghostMarker);
-                            event.ub.path[1].style.opacity = 0;
-                            event.ub.path[1].style.overflow = "hidden";
-                            document.getElementById('property-overview-card').style.display = 'none';
-                        });
-
-                        markers.push(newMarker);
-                    });
+                    addMarkers();
                 } catch (error) {
                     console.log("No Street...");
                 }
@@ -150,17 +92,66 @@
             markers = [];
         }
 
-        function addMarker(location) {
-            const marker = new google.maps.Marker({
-                position: location,
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 5,
-                    strokeColor: '#433357'
-                },
-                map
+        function addMarkers() {
+            let streets = `<?php echo $streets; ?>`;
+            streets = JSON.parse(streets);
+            streets.forEach((street) => {
+                var newMarker = new google.maps.Marker({
+                    position: street.location,
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 5,
+                        strokeColor: '#433357'
+                    },
+                    map
+                });
+
+                var ghostMarkerEl = document.createElement('a');
+                ghostMarkerEl.id = "ghost-marker";
+                ghostMarkerEl.style.position = "absolute";
+                ghostMarkerEl.style.left = -6;
+                ghostMarkerEl.style.top = -6;
+
+
+                newMarker.addListener('mouseover', function(event) {
+                    console.log("Event: ", event);
+                    event.ub.path[1].appendChild(ghostMarkerEl);
+                    event.ub.path[1].style.opacity = 1;
+                    event.ub.path[1].style.overflow = "unset";
+
+                    ghostMarkerEl.href = `/properties/rental_detail/${street.property.id}`;
+                    ghostMarkerEl.target = '_blank';
+
+                    if (street.property.images && street.property.images.length > 0)
+                        document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
+                    // document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price ? street.property.days_price : 0}/dy, $${street.property.weekend_price ? street.property.weekend_price : 0}/wk`;
+                    document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
+                    document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
+                    document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
+
+                    let cardLocation = {
+                        left: event.ub.clientX,
+                        top: event.ub.clientY
+                    }
+                    document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
+                    document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
+
+                    if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top)
+                        document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
+                    if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
+                        document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
+                    document.getElementById('property-overview-card').style.display = 'block';
+                });
+                newMarker.addListener('mouseout', function(event) {
+                    const ghostMarker = document.getElementById('ghost-marker');
+                    event.ub.path[1].removeChild(ghostMarker);
+                    event.ub.path[1].style.opacity = 0;
+                    event.ub.path[1].style.overflow = "hidden";
+                    document.getElementById('property-overview-card').style.display = 'none';
+                });
+
+                markers.push(newMarker);
             });
-            markers.push(marker);
         }
     </script>
 </head>
@@ -1507,9 +1498,8 @@
         function drawRentalCard(properties) {
             let elements = '';
             clearMarkers(null);
+            addMarkers();
             properties.forEach((property, index) => {
-                if (property.coords)
-                    addMarker(property.coords);
 
                 elements = `${elements}
                     <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
