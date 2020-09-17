@@ -530,7 +530,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                         <div class="price-container">
                                                                             <div class="form-group daily-container" style="width: 100%;">
                                                                                 <label for=" manualPrivateNote">Private notes</label>
-                                                                                <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                                <textarea rows="5" style="width: 100%;" name="private_note[manual]" id="manualPrivateNote" placeholder="Notes"><?php echo $property_details['is_annual'] == 'true' ? $property_details['private_note'] : ''; ?></textarea>
                                                                             </div>
                                                                         </div>
 
@@ -555,7 +555,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                                                     <div class="price-container">
                                                                         <div class="form-group daily-container" style="width: 100%;">
                                                                             <label for=" manualPrivateNote">Private notes</label>
-                                                                            <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"></textarea>
+                                                                            <textarea rows="5" style="width: 100%;" name="private_note[sessional]" id="manualPrivateNote" placeholder="Notes"><?php echo $property_details['is_annual'] == 'false' ? $property_details['private_note'] : ''; ?></textarea>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group" style="text-align: center;">
@@ -1861,7 +1861,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 document.getElementById('ctrlThumbRight').style = "display: block;";
             }
             $('#propertyConfirmationModal div.overlay').css('display', 'none');
-            
+
             $('#propertyConfirmationModal').modal("show");
         });
 
