@@ -102,6 +102,14 @@ class Property extends MOBO_User
         $data['areas'] = $this->M_property->getAllAreas();
         $data['property'] = $this->M_property->edit();
         $data['users'] = $this->M_property->getAllUsers();
+
+        $result = $this->db->select('*')
+            ->from('virtual_numbers')
+            ->where('virtual_numbers.id', $data['property']['property_details']['vn_id'])
+            ->get()->result_array();
+
+        $data['virtual_number'] = isset($result[0]) ? $result[0]['number'] : 'not available';
+
         $this->load->view('property_edit', $data);
     }
 
