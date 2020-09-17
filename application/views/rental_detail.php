@@ -108,7 +108,7 @@
             console.log("property", data);
             // set seasonal pricing data
             var isAnnual = <?php echo $property->is_annual; ?>;
-            var seasonalPrice = "<?php echo $property->seasonal_price; ?>";
+            var seasonalPrice = `<?php echo $property->seasonal_price; ?>`;
             console.log('is_annual', isAnnual);
             if (isAnnual == true) { // switch tab
                 $('#season').val(seasonalPrice);
