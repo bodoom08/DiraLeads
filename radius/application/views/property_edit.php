@@ -1021,7 +1021,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fEditSeasonStart">Seasn start at*</label>
+                                                <label for="fEditSeasonStart">Season start at*</label>
                                                 <input type="text" style="width: 100%;" id="fEditSeasonStart" class="startDate" name="startDate" />
                                             </div>
                                             <div class="col-sm-6">
@@ -3445,7 +3445,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 }
                 var disabledArr = disabledArrs.split('|');
                 // console.log("--disabledArr--", disabledArr)
-                
+
                 for (i = 1; i < disabledArr.length; i++) {
                     var data = disabledArr[i].split(",");
                     var From = data[0].split('/');

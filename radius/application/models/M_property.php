@@ -912,7 +912,8 @@ class M_property extends CI_Model
                 $this->load->library('upload');
                 // $files = $_FILES;
                 $cpt = count($files['userfile']['name']);
-                $path = FCPATH . "/uploads";
+                // $path = FCPATH . "/uploads";
+                $path = "../uploads";
                 $config = array();
                 $config['upload_path'] = $path;
                 $config['allowed_types'] = 'jpg|jpeg|png';
