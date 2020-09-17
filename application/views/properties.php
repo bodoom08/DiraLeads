@@ -114,7 +114,6 @@
 
 
                 newMarker.addListener('mouseover', function(event) {
-                    console.log("Event: ", event);
                     event.ub.path[1].appendChild(ghostMarkerEl);
                     event.ub.path[1].style.opacity = 1;
                     event.ub.path[1].style.overflow = "unset";
@@ -1378,7 +1377,6 @@
                 data[`${key}_range`] = null;
                 document.getElementById('hid-property-filter').value = JSON.stringify(data);
             }
-            console.log(key, index);
             filter(key, index);
         }
 
@@ -1561,8 +1559,6 @@
         function filterRentalsByDate() {
             const dateFrom = new Date(document.getElementById('hid-date-from').value);
             const dateTo = new Date(document.getElementById('hid-date-to').value);
-
-            console.log("Before: ", rentals.length);
 
             const properties = rentals.filter(rental => {
                 let flag = true;
