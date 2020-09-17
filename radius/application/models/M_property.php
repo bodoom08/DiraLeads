@@ -814,6 +814,9 @@ class M_property extends CI_Model
             return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
         }
 
+        // remove property images
+        $this->db->where('property_id', $property_id)->delete('property_images');
+
         // Check the property Image before upload
         if (!empty($_FILES)) {
             $this->load->library('upload');

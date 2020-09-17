@@ -2225,7 +2225,9 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             var weekly = $('#weekly').val();
             var monthly = $('#monthly').val();
 
-            if (day == '' && weekend == '' && weekly == '' && monthly == '') {
+            var isAnual = $('.isAnnual').val();
+
+            if (isAnual == 'true' && day == '' && weekend == '' && weekly == '' && monthly == '') {
                 $('.datedays').addClass('invaild-input');
                 $('.weekenddays').addClass('invaild-input');
                 $('#weekly').addClass('invaild-input');
