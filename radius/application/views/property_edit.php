@@ -1814,10 +1814,10 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
             document.getElementById('ctrlThumbIndex').value = '0';
             // Add thumbnail as preview
             if ($('#image_preview div img').length === 0) {
-                $('#thumbnailPreview').append(`<p class="text-center">No Image</p>`);
+                $('#thumbnailPreview').html(`<p class="text-center">No Image</p>`);
             } else {
                 const length = $('#image_preview div img').length;
-                $('#thumbnailPreview').append(`<img src='${$('#image_preview div img')[0].src}' />`);
+                $('#thumbnailPreview').html(`<img src='${$('#image_preview div img')[0].src}' />`);
             }
 
             amenities.forEach(amenity => {
@@ -1860,7 +1860,8 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                 document.getElementById('ctrlThumbLeft').style = "display: block;";
                 document.getElementById('ctrlThumbRight').style = "display: block;";
             }
-
+            $('#propertyConfirmationModal div.overlay').css('display', 'none');
+            
             $('#propertyConfirmationModal').modal("show");
         });
 
