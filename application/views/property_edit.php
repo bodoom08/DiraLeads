@@ -4231,7 +4231,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
 
         // set seasonal pricing data
         var isAnnual = "<?php echo $property_details['is_annual']; ?>";
-        var seasonalPrice = "<?php echo $property_details['seasonal_price']; ?>";
+        var seasonalPrice = `<?php echo $property_details['seasonal_price']; ?>`;
         if (isAnnual == "true") { // switch tab
             $('#season').val(seasonalPrice);
             $('.costomSession').removeClass('active');
