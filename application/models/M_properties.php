@@ -10,9 +10,9 @@ class M_properties extends CI_Model
         $bathroom   = isset($_POST['bath']) ? $_POST['bath'] : 'any';
         $floor      = isset($_POST['floor']) ? $_POST['floor'] : 'any';
         $sort_by    = isset($_POST['sort']) ? $_POST['sort'] : 'any';
-        $price      = isset($_POST['price']) ? $_POST['price'] : 'any';
-        $street     = isset($_POST['street']) ? $_POST['street'] : 'any';
-        $location   = isset($_POST['location']) ? $_POST['location'] : 'any';
+        // $price      = isset($_POST['price']) ? $_POST['price'] : 'any';
+        // $street     = isset($_POST['street']) ? $_POST['street'] : 'any';
+        $location   = isset($_POST['location']) ? $_POST['location'] : [];
         $area       = isset($_POST['area']) ? $_POST['area'] : 'any';
         $has_pic    = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
         $amenities  = isset($_POST['amenities']) ? $_POST['amenities'] : [];
@@ -59,18 +59,19 @@ class M_properties extends CI_Model
         if ($bathroom != "any") {
             $query .= ' AND `properties`.`bathrooms` >= ' . $bathroom;
         }
-        if ($price != "any" && $price != "0|0") {
-            $price = explode("|", $price);
-            $query .= ' AND `properties`.`price` >= ' . $price[0] . ' AND `properties`.`price` <= ' . $price[1];
-        }
-        if ($street != "any") {
-            $query .= ' AND `properties`.`street` = "' . $street . '" OR `properties`.`coords` = "' . $location . '"';
-        }
+        // if ($price != "any" && $price != "0|0") {
+        //     $price = explode("|", $price);
+        //     $query .= ' AND `properties`.`price` >= ' . $price[0] . ' AND `properties`.`price` <= ' . $price[1];
+        // }
+        // if ($street != "any") {
+        //     $query .= ' AND `properties`.`street` = "' . $street . '" OR `properties`.`coords` = "' . $location . '"';
+        // }
         if ($area != "any") {
             $query .= ' AND `properties`.`area_id` = "' . $area . '"';
         }
-        if ($location != "any") {
-            $query .= ' AND ( `areas`.`title` LIKE "' . $location . '" OR "' . $location . '" LIKE CONCAT(`areas`.`title`, "%"))';
+        if (count($location) > 0) {
+            $neighbor = strtolower($location[0]);
+            $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
         }
         if ($sort_by != "any") {
             switch ($sort_by) {
