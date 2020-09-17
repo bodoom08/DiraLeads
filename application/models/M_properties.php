@@ -5,19 +5,21 @@ class M_properties extends CI_Model
 
     public function getAllProducts()
     {
-        $types = isset($_POST['type']) ? $_POST['type'] : [];
-        $bedroom = isset($_POST['bed']) ? $_POST['bed'] : 'any';
-        $bathroom = isset($_POST['bath']) ? $_POST['bath'] : 'any';
-        $floor = isset($_POST['floor']) ? $_POST['floor'] : 'any';
-        $sort_by = isset($_POST['sort']) ? $_POST['sort'] : 'any';
-        $price = isset($_POST['price']) ? $_POST['price'] : 'any';
-        $street = isset($_POST['street']) ? $_POST['street'] : 'any';
-        $location = isset($_POST['location']) ? $_POST['location'] : 'any';
-        $area = isset($_POST['area']) ? $_POST['area'] : 'any';
-        $has_pic = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
-        $amenities = isset($_POST['amenities']) ? $_POST['amenities'] : [];
-        $area = isset($_POST['area']) ? $_POST['area'] : 'any';
-        $languages = isset($_POST['lang']) ? $_POST['lang'] : [];
+        $types      = isset($_POST['type']) ? $_POST['type'] : [];
+        $bedroom    = isset($_POST['bed']) ? $_POST['bed'] : 'any';
+        $bathroom   = isset($_POST['bath']) ? $_POST['bath'] : 'any';
+        $floor      = isset($_POST['floor']) ? $_POST['floor'] : 'any';
+        $sort_by    = isset($_POST['sort']) ? $_POST['sort'] : 'any';
+        $price      = isset($_POST['price']) ? $_POST['price'] : 'any';
+        $street     = isset($_POST['street']) ? $_POST['street'] : 'any';
+        $location   = isset($_POST['location']) ? $_POST['location'] : 'any';
+        $area       = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $has_pic    = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
+        $amenities  = isset($_POST['amenities']) ? $_POST['amenities'] : [];
+        $area       = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $languages  = isset($_POST['lang']) ? $_POST['lang'] : [];
+        $bed_range  = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
+        $floor_range = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
 
         $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ';
 
@@ -42,11 +44,17 @@ class M_properties extends CI_Model
             }
         }
 
-        if ($bedroom != "any") {
+        if ($bedroom != "any" && $bedroom != '0') {
             $query .= ' AND `properties`.`bedrooms` >= ' . $bedroom;
         }
-        if ($floor != "any") {
+        if ($bed_range) {
+            $query .= ' AND `properties`.`bedrooms` >= ' . $bed_range['min'] . ' AND `properties`.`bedrooms` <= ' . $bed_range['max'];
+        }
+        if ($floor != "any" && $floor != '0') {
             $query .= ' AND `properties`.`florbas` = ' . $floor;
+        }
+        if ($floor_range) {
+            $query .= ' AND `properties`.`florbas` >= ' . $floor_range['min'] . ' AND `properties`.`florbas` <= ' . $floor_range['max'];
         }
         if ($bathroom != "any") {
             $query .= ' AND `properties`.`bathrooms` >= ' . $bathroom;

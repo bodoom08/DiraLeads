@@ -447,6 +447,10 @@
     <input type="hidden" id="hid-sleep" value="0" />
     <input type="hidden" id="hid-date-from" value="" />
     <input type="hidden" id="hid-date-to" value="" />
+    <input type="hidden" id="hid-bed-min" value="" />
+    <input type="hidden" id="hid-bed-max" value="" />
+    <input type="hidden" id="hid-floor-min" value="" />
+    <input type="hidden" id="hid-floor-max" value="" />
     <input type="hidden" id="hid-property-filter" value="{}" />
 
     <!-- ====================================== Script ========================================== -->
@@ -506,6 +510,8 @@
             content: function() {
                 const bedTypes = ['Any', '1+', '2+', '3+', '4+'];
                 const bed = document.getElementById('hid-bed').value;
+                const minBed = document.getElementById('hid-bed-min').value;
+                const maxBed = document.getElementById('hid-bed-max').value;
                 let bedContent = "";
 
                 bedTypes.forEach((bedType, index) => {
@@ -522,8 +528,8 @@
                         </ul>
                         <p class="mb-1 text-center">Or Select Bedroom's Range</p>
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
-                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" id="bed-type-min" min="0" value="${minBed}" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" id="bed-type-max" min="0" value="${maxBed}" /></li>
                         </ul>
                     `;
             }
@@ -534,6 +540,8 @@
             content: function() {
                 const floorTypes = ['1', '2', '3', '4'];
                 const floor = document.getElementById('hid-floor').value;
+                const minFloor = document.getElementById('hid-floor-min').value;
+                const maxFloor = document.getElementById('hid-floor-max').value;
                 let floorContent = "";
                 floorTypes.forEach((floorType, index) => {
                     floorContent = `
@@ -559,8 +567,8 @@
 
                         <p class="mb-1 text-center">Or Select Floor's Range</p>
                         <ul class="list-group list-group-horizontal">
-                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" /></li>
-                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Min" id="floor-type-min" min="0" value="${minFloor}" /></li>
+                            <li class="list-group-item"><input type="number" class="form-control" placeholder="Max" id="floor-type-max" min="0" value="${maxFloor}" /></li>
                         </ul>
                     `;
             }
@@ -999,6 +1007,68 @@
         function disableKeyDown(event) {
             event.preventDefault();
         }
+
+        function changeBedMin(event) {
+            const min = parseInt(event.target.value);
+            const max = parseInt(document.getElementById('bed-type-max').value);
+
+            if (!max || max <= min) document.getElementById('bed-type-max').value = min + 1;
+
+            document.getElementById('hid-bed-min').value = min;
+            document.getElementById('hid-bed-max').value = document.getElementById('bed-type-max').value;
+
+            filter('bed_range', {
+                min: document.getElementById('hid-bed-min').value,
+                max: document.getElementById('hid-bed-max').value,
+            });
+        }
+
+        function changeBedMax(event) {
+            const min = parseInt(document.getElementById('bed-type-min').value);
+            const max = parseInt(event.target.value);
+
+            if (!min) document.getElementById('bed-type-min').value = 0;
+            else if (min >= max) document.getElementById('bed-type-min').value = max - 1;
+
+            document.getElementById('hid-bed-min').value = document.getElementById('bed-type-min').value;
+            document.getElementById('hid-bed-max').value = max;
+
+            filter('bed_range', {
+                min: document.getElementById('hid-bed-min').value,
+                max: document.getElementById('hid-bed-max').value,
+            });
+        }
+
+        function changeFloorMin(event) {
+            const min = parseInt(event.target.value);
+            const max = parseInt(document.getElementById('floor-type-max').value);
+            
+            if (!max || max <= min) document.getElementById('floor-type-max').value = min + 1;
+
+            document.getElementById('hid-floor-min').value = min;
+            document.getElementById('hid-floor-max').value = document.getElementById('floor-type-max').value;
+
+            filter('floor_range', {
+                min: document.getElementById('hid-floor-min').value,
+                max: document.getElementById('hid-floor-max').value,
+            });
+        }
+
+        function changeFloorMax(event) {
+            const min = parseInt(document.getElementById('floor-type-min').value);
+            const max = parseInt(event.target.value);
+            
+            if (!min) document.getElementById('floor-type-min').value = 0;
+            else if (min >= max) document.getElementById('floor-type-min').value = max - 1;
+
+            document.getElementById('hid-floor-min').value = document.getElementById('floor-type-min').value;
+            document.getElementById('hid-floor-max').value = max;
+
+            filter('floor_range', {
+                min: document.getElementById('hid-floor-min').value,
+                max: document.getElementById('hid-floor-max').value,
+            });
+        }
     </script>
 
     <!-- ============================ Filter Caret Style control ============================================ -->
@@ -1046,6 +1116,17 @@
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
             $('#filter-date').popover('hide');
+
+            const bedMinEl = document.getElementById('bed-type-min');
+            bedMinEl.addEventListener('change', changeBedMin);
+            const bedMaxEl = document.getElementById('bed-type-max');
+            bedMaxEl.addEventListener('change', changeBedMax);
+        });
+        $('#filter-bed').on('hide.bs.popover', function () {
+            const bedMinEl = document.getElementById('bed-type-min');
+            if (bedMinEl) bedMinEl.removeEventListener('change', changeBedMin);
+            const bedMaxEl = document.getElementById('bed-type-max');
+            if (bedMaxEl) bedMaxEl.removeEventListener('change', changeBedMax);
         });
         $('#filter-bed').on('hidden.bs.popover', function() {
             document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-opened').join('option-closed');
@@ -1061,6 +1142,17 @@
             $('#filter-sort').popover('hide');
             $('#filter-sort-web').popover('hide');
             $('#filter-date').popover('hide');
+
+            const floorMinEl = document.getElementById('floor-type-min');
+            floorMinEl.addEventListener('change', changeFloorMin);
+            const floorMaxEl = document.getElementById('floor-type-max');
+            floorMaxEl.addEventListener('change', changeFloorMax);
+        });
+        $('#filter-floor').on('hide.bs.popover', function () {
+            const floorMinEl = document.getElementById('floor-type-min');
+            if (floorMinEl) floorMinEl.removeEventListener('change', changeFloorMin);
+            const floorMaxEl = document.getElementById('floor-type-max');
+            if (floorMaxEl) floorMaxEl.removeEventListener('change', changeFloorMax);
         });
         $('#filter-floor').on('hidden.bs.popover', function() {
             document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-opened').join('option-closed');
@@ -1153,10 +1245,8 @@
         });
 
         $('body').on('click', function(e) {
-            console.log("Element Name: ", e.target);
             $('[data-toggle=popover]').each(function() {
                 // hide any open popovers when the anywhere else in the body is clicked
-                console.log(e.target.parentNode.className);
                 if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0 && !e.target.parentNode.className.includes('ui-datepicker-next') && !e.target.parentNode.className.includes('ui-datepicker-prev') && !e.target.parentNode.className.includes('ui-datepicker-title')) {
                     $(this).popover('hide');
                 }
@@ -1287,6 +1377,18 @@
             }
 
             document.getElementById(`hid-${key}`).value = index;
+            
+            if (index > 0) {
+                document.getElementById(`hid-${key}-min`).value = '';
+                document.getElementById(`hid-${key}-max`).value = '';
+                document.getElementById(`${key}-type-min`).value = '';
+                document.getElementById(`${key}-type-max`).value = '';
+
+                let data = JSON.parse(document.getElementById('hid-property-filter').value);
+                data[`${key}_range`] = null;
+                document.getElementById('hid-property-filter').value = JSON.stringify(data);
+            }
+            console.log(key, index);
             filter(key, index);
         }
 
@@ -1366,8 +1468,12 @@
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
             filters[key] = value;
-            console.log("Filters: ", filters);
             document.getElementById('hid-property-filter').value = JSON.stringify(filters);
+
+            console.log("Filters: ", filters);
+
+            if (key == 'bed_range') { setFilter('bed', 0); return ; }
+            if (key == 'floor_range') { setFilter('floor', 0); return ;}
 
             // const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
             // controls.forEach(control => {
