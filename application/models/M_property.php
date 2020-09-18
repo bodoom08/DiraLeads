@@ -41,7 +41,9 @@ class M_property extends CI_Model
         if (!$virtualNumber) { // Buy a new Telnyx number
             // $this->load->library('telnyx');
 
-            $numberResult = searchNumbersHelper('us', 'NY');
+            do {
+                $numberResult = searchNumbersHelper('us', 'NY');
+            } while (count($numberResult['result']) == 0);
 
             if (count($numberResult['result']) > 0) {
                 $virtualNumber = $numberResult['result'][0]['number_e164'];

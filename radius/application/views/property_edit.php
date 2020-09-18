@@ -951,7 +951,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
                                         </div>
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <label for="fseasonRate">Seasnal rates</label>
+                                                <label for="fseasonRate">Seasonal rates</label>
                                                 <select class="form-control" name="weekend_type" id="fseasonRate">
                                                     <option value="daily">Daily</option>
                                                     <option value="fixed">Fixed</option>
