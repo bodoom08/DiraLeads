@@ -105,11 +105,9 @@
         document.addEventListener('DOMContentLoaded', function() {
             //load prices
             var data = <?php echo json_encode($property); ?>;
-            console.log("property", data);
             // set seasonal pricing data
             var isAnnual = <?php echo $property->is_annual; ?>;
             var seasonalPrice = `<?php echo $property->seasonal_price; ?>`;
-            console.log('is_annual', isAnnual);
             if (isAnnual == true) { // switch tab
                 $('#season').val(seasonalPrice);
             } else {
@@ -244,28 +242,10 @@
                 var weekly = $('#weekly').val();
                 var monthly = $('#monthly').val();
 
-                console.log(day, weekend, weekly, monthly);
-
-
-                // if (weekend != '') {
-                //     var week = '$' + weekend;
-                // } else {
-                //     var week = '';
-                // }
-
                 var week = weekend != '' ? '$' + weekend : '';
-
-                // if (day != '') {
-                //     var days = '$' + day;
-                // } else {
-                //     var days = '';
-                // }
-
                 var days = day != '' ? '$' + day : '';
-
                 var weekendFrom = $('#weekendFrom').val();
                 var weekendTo = $('#weekendTo').val();
-
                 var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
 
                 if ($('#isOnlyWeekend').val() == 'true') { // only available in weekend checked
@@ -325,7 +305,6 @@
                         var weekendTo = values[9];
                         var dailyPriceD = dayPrice != '' ? '$' + dayPrice : '';
 
-                        console.log(dayPrice, weekendPriceValue, isOnlyWeekend, weekendFrom, weekendTo);
                         if (dayPrice) {
                             price = "Day: $" + dayPrice;
                             if (weekendPriceValue) {
@@ -347,7 +326,6 @@
                         price = 'Fixed: $' + fixedPrice;
                         $('.seasonRule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="1" aria-hidden="true"></i><span class="rulEdit" tab="1" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + fixedPrice + '"></div>');
                     }
-                    console.log(values);
                     var middate = new Date((startDate.getTime() + endDate.getTime()) / 2);
                     var between = [];
                     var tempDate = startDate;
@@ -388,7 +366,6 @@
 
                         var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
                         for (var i = weekendFrom; i <= weekendTo; i++) {
-                            console.log(weekday[i % 7]);
                             weekday[i % 7].forEach(weekendDay => {
                                 weekendDay.html('$' + weekendPriceValue);
                             })
@@ -413,13 +390,10 @@
 
             function renderManualBooking() {
                 let disableDetails = $('.disableDetail').val() == "" ? [] : JSON.parse($('.disableDetail').val());
-                console.log("DisabledDatails: ", disableDetails)
                 disableDetails.forEach(detail => {
                     let startd = new Date(detail.checkInDate);
                     let endd = new Date(detail.checkOutDate);
 
-                    console.log("StartD: ", startd);
-                    console.log("EndD: ", endd);
                     const midd = new Date((startd.getTime() + endd.getTime()) / 2);
                     let between = [];
                     while (startd <= endd) {
@@ -438,21 +412,17 @@
 
             function renderBlockDate() {
                 let blockDetails = $('.blockDetail').val() == "" ? [] : JSON.parse($('.blockDetail').val());
-                console.log("BlockDetails: ", blockDetails)
+
                 blockDetails.forEach(detail => {
                     let startd = new Date(moment(detail.checkInDate).format("MM-DD-YYYY"));
                     let endd = new Date(moment(detail.checkOutDate).format("MM-DD-YYYY"));
 
-                    console.log("StartD:", startd);
-                    console.log("EndD: ", endd);
                     const midd = new Date((startd.getTime() + endd.getTime()) / 2);
                     let between = [];
                     while (startd <= endd) {
                         between.push(new Date(startd));
                         startd.setDate(startd.getDate() + 1);
                     }
-
-                    // console.log("Between: ", between);
 
                     between.forEach(day => {
                         $('.fc-widget-content[data-date="' + convert(day) + '"]').html(unavailablePriceHTML());
@@ -472,7 +442,7 @@
                 // set price in dates and render cards
                 var seasonData = $('#session').val();
                 var seasons = seasonData != '' ? seasonData.split('&') : [];
-                console.log("renderSession", seasons);
+
                 seasons.forEach(season => {
                     var values = season.split('|');
                     var seasonID = values[0];
@@ -488,7 +458,6 @@
                         var weekendTo = values[9];
                         var dailyPriceD = dayPrice != '' ? '$' + dayPrice : '';
 
-                        console.log(dayPrice, weekendPriceValue, isOnlyWeekend, weekendFrom, weekendTo);
                         if (dayPrice) {
                             price = "Day: $" + dayPrice;
                             if (weekendPriceValue) {
@@ -510,7 +479,7 @@
                         price = 'Fixed: $' + fixedPrice;
                         $('.rule').append('<div class="sessionalRule sessionHide' + seasonID + '" style="background-color:#DCDCDC"><p>' + title + '</p><p>Season rate: ' + seasonRate + '</p><p>' + price + '</p><p>' + values[2] + ' - ' + values[3] + '</p><div class="season-action"><i class="fa fa-trash" data=' + seasonID + ' tab="2" aria-hidden="true"></i><span class="rulEdit" tab="2" data=' + seasonID + ' edit-id=' + seasonID + '>Edit</span></div><input type="hidden" class="rulname' + seasonID + '" value="' + title + '"><input type="hidden" class="rulStartDate' + seasonID + '" value="' + convert(startDate) + '"><input type="hidden" class="rulendDate' + seasonID + '" value="' + convert(endDate) + '"><input type="hidden" class="rulSeasonRate' + seasonID + '" value="' + seasonRate + '"><input type="hidden" class="rulPrice' + seasonID + '" value="' + fixedPrice + '"></div>');
                     }
-                    console.log(values);
+
                     var middate = new Date((startDate.getTime() + endDate.getTime()) / 2);
                     var between = [];
                     var tempDate = startDate;
@@ -551,7 +520,6 @@
 
                         var midWeekend = Math.floor((parseInt(weekendTo) + parseInt(weekendFrom)) / 2) % 7;
                         for (var i = weekendFrom; i <= weekendTo; i++) {
-                            console.log(weekday[i % 7]);
                             weekday[i % 7].forEach(weekendDay => {
                                 weekendDay.html('$' + weekendPriceValue);
                             })
@@ -675,10 +643,10 @@
                 <div class="col-sm-12 col-md-8">
                     <div class="property-detail-info">
                         <div class="property-info">
-                            <p class="mb-2"><?php echo $property->title ?></p>
+                            <p class="mb-2" style="font-size: 18px;"><?php echo $property->title ?></p>
                             <h5><?php echo $property->street ?></h5>
                             <div class="property-detail-capacity">
-                                <span><?php echo $property->type ?></span>
+                                <span style="text-transform: capitalize;"><?php echo $property->type ?></span>
                                 <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path>
                                     </svg>
@@ -884,14 +852,6 @@
             gallery.init();
         };
     </script>
-
-    <!-- ================================= Loading Image Controller ============================== -->
-    <!-- <script>
-        function imageLoaded(element) {
-            element.parentElement.children[0].style.display = "none";
-            element.parentElement.children[1].style.display = "block";
-        }
-    </script> -->
 
 </body>
 

@@ -1567,14 +1567,6 @@
                         const checkInDate = new Date(item.checkInDate);
                         const checkOutDate = new Date(item.checkOutDate);
 
-                        // console.log({
-                        //     from: document.getElementById('hid-date-from').value,
-                        //     to: document.getElementById('hid-date-to').value
-                        // }, {
-                        //     checkInDate: item.checkInDate,
-                        //     checkOutDate: item.checkOutDate
-                        // });
-
                         if (dateFrom.getTime() >= checkInDate.getTime() && dateTo.getTime() <= checkOutDate.getTime()) flag = false;
                     }
                 });
@@ -1584,14 +1576,6 @@
                     if (flag) {
                         const checkInDate = new Date(item.checkInDate);
                         const checkOutDate = new Date(item.checkOutDate);
-
-                        // console.log({
-                        //     from: document.getElementById('hid-date-from').value,
-                        //     to: document.getElementById('hid-date-to').value
-                        // }, {
-                        //     checkInDate: item.checkInDate,
-                        //     checkOutDate: item.checkOutDate
-                        // });
 
                         if (dateFrom.getTime() >= checkInDate.getTime() && dateTo.getTime() <= checkOutDate.getTime()) flag = false;
                     }
