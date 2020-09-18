@@ -36,7 +36,7 @@ class M_property extends CI_Model
             ->row();
 
 
-        if (!isset($vn_id)) { // Buy a new Telnyx number
+        if (!isset($vn_number)) { // Buy a new Telnyx number
             // $this->load->library('telnyx');
             $this->load->helper('telnyx_number');
 
