@@ -237,11 +237,13 @@
                     </a>
                 </li>
 
-                <!-- <li class="list-group-item">
+                <!-- 
+                <li class="list-group-item">
                     <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
                         Price&nbsp;&nbsp;
                     </a>
-                </li> -->
+                </li> 
+                -->
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-date" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
@@ -267,6 +269,7 @@
                         <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                     </div>
                 </li>
+
                 <!-- 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Areas&nbsp;&nbsp;</a>
