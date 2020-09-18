@@ -121,19 +121,18 @@ class M_property extends CI_Model
     function get_virtual_number()
     {
         //assing virtual number
-        $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
+        $result = $this->db->select('vn_id')->where('vn_id IS Not NULL', null, false)->get('properties')->result_array();
         $vn_id_arr = array_column($result, 'vn_id');
 
-        $virtualNumber = $this->db->select('id')
+        $vn_number = $this->db->select('number')
             ->where_not_in('id', $vn_id_arr)
+            ->order_by('id', 'ASC')
             ->get('virtual_numbers')
             ->row();
 
-        $virtualNumber = false;
-        $this->load->helper('telnyx_number');
-
-        if (!$virtualNumber) { // Buy a new Telnyx number
+        if (!isset($vn_number)) { // Buy a new Telnyx number
             // $this->load->library('telnyx');
+            $this->load->helper('telnyx_number');
 
             do {
                 $numberResult = searchNumbersHelper('us', 'NY');
@@ -145,6 +144,8 @@ class M_property extends CI_Model
             } else {
                 return ['type' => 'warning', 'text' => 'No virtual number was found, please contact admin!'];
             }
+        } else {
+            $virtualNumber = $vn_number->number;
         }
 
         return ['type' => 'success', 'virtual_number' => $virtualNumber];
@@ -548,12 +549,13 @@ class M_property extends CI_Model
                 ->get('virtual_numbers')
                 ->row();
 
-            $vn = false;
-            $this->load->helper('telnyx_number');
-            if ($vn) { // Check if there is non-allocated Telnyx number in the table
+            if (isset($vn)) { // Check if there is non-allocated Telnyx number in the table
                 $this->load->helper('did');
                 allocate_did($property_id, $vn->id, 'Auto Re-assign', 'DID re-allocation');
+                $response['virtual_number'] = $vn->number;
             } else { // Buy a new Telnyx number
+                $this->load->helper('telnyx_number');
+
                 $numberOrders = createNumberOrdersHelper($virtual_number);
 
                 if (is_array($numberOrders)) {

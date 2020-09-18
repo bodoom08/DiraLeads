@@ -2410,6 +2410,7 @@ $this->load->view('common/top', [
                     if (response.type == 'success') {
                         document.getElementById('virtualNumber').innerHTML = response.virtual_number;
                         $('#virutalNumber').val(response.virtual_number);
+                        $('#confirmSubmit').removeClass('disabled');
                         $('#confirmSubmit').prop('disabled', false);
                     } else {
                         toastr.warning(response.text);
