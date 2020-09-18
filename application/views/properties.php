@@ -26,6 +26,7 @@
         var searchEl;
         var autocomplete;
         let rentals = JSON.parse(`<?php echo isset($properties) ? json_encode($properties) : '[]'?>`);
+        let streets = JSON.parse(`<?php echo isset($streets) ? $streets : '[]'; ?>`);
         let map;
         let markers = [];
 
@@ -84,17 +85,15 @@
             }
         }
 
-        function clearMarkers(map) {
+        function clearMarkers() {
             for (let i = 0; i < markers.length; i++) {
-                markers[i].setMap(map);
+                markers[i].setMap(null);
             }
 
             markers = [];
         }
 
         function addMarkers() {
-            let streets = `<?php echo $streets; ?>`;
-            streets = JSON.parse(streets);
             streets.forEach((street) => {
                 var newMarker = new google.maps.Marker({
                     position: street.location,
@@ -1475,8 +1474,15 @@
                 success: function(response) {
                     const res = JSON.parse(response);
                     const properties = res.properties;
+                    streets = JSON.parse(res.streets);
+
+                    console.log("Streets:", streets);
+
                     document.getElementById('property-cards').innerHTML = '';
                     document.getElementById('search-results-count').innerHTML = `${properties.length} rentals available on Diraleads`;
+
+                    // Clear Markers
+                    clearMarkers();
 
                     if (properties.length == 0)
                         drawNoResult();
@@ -1495,7 +1501,6 @@
 
         function drawRentalCard(properties) {
             let elements = '';
-            clearMarkers(null);
             addMarkers();
             properties.forEach((property, index) => {
 
