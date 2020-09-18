@@ -21,7 +21,7 @@ class M_properties extends CI_Model
         $bed_range  = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
         $floor_range = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
 
-        $query = 'select properties.id, areas.title, properties.area_id, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ';
+        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ';
 
         if (count($types) > 0) {
             $query .= ' AND (';
@@ -112,6 +112,7 @@ class M_properties extends CI_Model
         $streets = array();
         $filteredProperties = array();
         foreach ($properties as $index => $property) {
+            if ($property['area_id'] == 0) $property['title'] = $property['area_other'];
 
             $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
             if ($has_pic == 'false' || count($images) > 0) {
@@ -159,7 +160,7 @@ class M_properties extends CI_Model
 
     public function getProductDetail($id)
     {
-        $query = 'select users.name, properties.id, areas.title, properties.street, properties.type, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.weekend_from, properties.weekend_to, properties.only_weekend, properties.status, properties.coords, properties.is_annual, properties.seasonal_price, properties.blocked_date, properties.manual_booking, properties.private_note , virtual_numbers.number from properties LEFT JOIN `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
+        $query = 'select users.name, properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.type, properties.amenities, properties.description, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.weekend_from, properties.weekend_to, properties.only_weekend, properties.status, properties.coords, properties.is_annual, properties.seasonal_price, properties.blocked_date, properties.manual_booking, properties.private_note , virtual_numbers.number from properties LEFT JOIN `areas` on `areas`.`id` = `properties`.`area_id` LEFT JOIN `virtual_numbers` ON `properties`.`vn_id` = `virtual_numbers`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" AND `properties`.`id` = ' . $id;
         $property_query = $this->db->query($query);
         $property = [];
         if ($property_query !== FALSE && $property_query->num_rows() > 0) {
@@ -173,6 +174,9 @@ class M_properties extends CI_Model
                 }
             }
             $property->amenities = explode(',', $property->amenities);
+            
+            if ($property->area_id == 0)
+                $property->title = $property->area_other;
         }
 
         return ["property" => $property];
