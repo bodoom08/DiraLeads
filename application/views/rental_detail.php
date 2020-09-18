@@ -612,7 +612,6 @@
             <div class="property-image-board">
                 <?php if (!isset($property->images) || count($property->images) == 0) { ?>
                     <div class="property-image-full" style="background-image: url(<?php echo site_url('uploads/diraleads-logo.svg') ?>); background-repeat: no-repeat; background-size: contain; background-position: center;">
-                        <!-- <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100" /> -->
                     </div>
                 <?php } else if (count($property->images) == 1) { ?>
                     <div class="property-image-full">

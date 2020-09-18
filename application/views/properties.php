@@ -336,7 +336,7 @@
                         <?php } else {
                         foreach ($properties as $id => $property) {
                         ?>
-                            <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
+                            <div class="col-md-12 col-lg-6 col-xl-4 p-1 mb-1 border-none">
                                 <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
@@ -1505,7 +1505,7 @@
             properties.forEach((property, index) => {
 
                 elements = `${elements}
-                    <div class="col-sm-12 col-md-6 col-lg-4 p-1 mb-1 border-none">
+                    <div class="col-md-12 col-lg-6 col-xl-4 p-1 mb-1 border-none">
                         <div class="property-card" onmouseover="showCardOnMap('[${property.coords ? property.coords.lat : 40.7128}, ${property.coords ? property.coords.lng : 74.0060}]', '${property.images && property.images.length > 0 ? property.images[0].path : 'diraleads-logo.svg'}', '${property.days_price}', '${property.weekly_price}', '${property.bedrooms}', '${property.bathrooms}', '${property.title}', '${property.street}')" onmouseout="closeCardOnMap()" onclick="goDetailPage('/properties/rental_detail/${property.id}')">
                             <div id="property-${index}" class="carousel slide property-card-image-slider" data-ride="carousel">
                                 <ol class="carousel-indicators">
