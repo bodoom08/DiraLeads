@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+define('ITEMS_PER_PAGE', 30);
 
 class Properties extends MOBO_Controller
 {
@@ -9,6 +10,7 @@ class Properties extends MOBO_Controller
         $this->load->model('M_properties');
         $this->load->model('M_page');
         $this->load->library('session');
+        $this->load->library('pagination');
     }
 
     /*
@@ -19,13 +21,13 @@ class Properties extends MOBO_Controller
     }
     */
 
-    public function index()
-    {
-        $data = $this->M_properties->getAllProducts();
-        $data['areas'] = $this->M_page->get_areas();
-        $this->load->view('properties', $data);
-        // $this->load->view('properties');
-    }
+    // public function index()
+    // {
+    //     $data = $this->M_properties->getAllProducts();
+    //     $data['areas'] = $this->M_page->get_areas();
+    //     $this->load->view('properties', $data);
+    //     // $this->load->view('properties');
+    // }
 
     public function rental_detail($id)
     {
@@ -223,9 +225,39 @@ class Properties extends MOBO_Controller
 
     public function search() // filter on properties page
     {
-        $data = $this->M_properties->getAllProducts();
+        $total_rows = $this->M_properties->property_count_by_conditions();
+
+        $page_index = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
+        $page_cursors = ceil($total_rows / ITEMS_PER_PAGE);
+
+        $data = $this->M_properties->fetch_properties(ITEMS_PER_PAGE, $page_index * ITEMS_PER_PAGE);
         $data['areas'] = $this->M_page->get_areas();
+        $data['total_properties'] = $total_rows;
+        $data['links'] = [
+            'page_cursors'  => $page_cursors,
+            'page_index'    => $page_index,
+            'page_url'      => base_url('properties/search')
+        ];
 
         echo json_encode($data);
+    }
+
+    public function index()
+    {
+        $total_rows = $this->M_properties->property_count();
+
+        $page_index = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
+        $page_cursors = ceil($total_rows / ITEMS_PER_PAGE);
+
+        $data = $this->M_properties->fetch_properties(ITEMS_PER_PAGE, $page_index * ITEMS_PER_PAGE);
+        $data['areas'] = $this->M_page->get_areas();
+        $data['total_properties'] = $total_rows;
+        $data['links'] = [
+            'page_cursors'  => $page_cursors,
+            'page_index'    => $page_index,
+            'page_url'      => base_url('properties')
+        ];
+
+        $this->load->view('rentals', $data);
     }
 }

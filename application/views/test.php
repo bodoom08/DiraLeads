@@ -11,10 +11,10 @@
             <!-- Old -->
         <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
             <!-- New -->
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script>
+        <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&libraries=places&callback=initMap"></script> -->
 
         <!-- ============================= Google Map Script ========================================== -->
-        <script>
+        <!-- <script>
             var map;
             function initMap(marker = { lat: 31.0461, lng: 34.08516 }) {
                 map = new google.maps.Map(
@@ -25,9 +25,16 @@
                     }
                 );
             }
-        </script>
+        </script> -->
     </head>
     <body>
-      <div id="map" style="width: 300px; height: 400px;"></div>
+      <!-- <div id="map" style="width: 300px; height: 400px;"></div> -->
+      <?php 
+        foreach($properties as $property) {
+            echo $property->street . "<br />";
+        }
+      ?>
+
+      <p><?php echo $links?></p>
     </body>
 </html>

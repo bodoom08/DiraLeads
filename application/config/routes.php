@@ -57,3 +57,7 @@ $route['invoice/(:any)'] = 'invoices/byId/$1';
 $route['webhook/incoming_call']['post'] = 'webhook/incoming_call';
 $route['properties/search']['post'] = "properties/search";
 $route['properties/rental_detail/(:any)'] = 'properties/rental_detail/$1';
+
+// Property Pagination
+$route['properties/(:any)'] = 'properties/index/$1';
+$route['properties/search/(:any)'] = 'properties/search/$1';
