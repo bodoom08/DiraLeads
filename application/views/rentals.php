@@ -1465,7 +1465,7 @@
                             drawRentalCard(properties);
                         else filterRentalsByDate();
 
-                        drawPaginator(res.links);
+                        drawPaginator(res.links, res.total_properties);
                     }
 
                 },
@@ -1574,6 +1574,8 @@
         }
 
         function drawPaginator(links, total) {
+            console.log("Links: ", links);
+            console.log("Total: ", total);
             let paginatorDom = `
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center mb-1">
