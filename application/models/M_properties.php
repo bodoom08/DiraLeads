@@ -2,6 +2,10 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class M_properties extends CI_Model
 {
+    public function __construct() 
+    {
+        parent::__construct();
+    }
 
     public function getAllProducts()
     {
@@ -21,7 +25,7 @@ class M_properties extends CI_Model
         $bed_range  = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
         $floor_range = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
 
-        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ';
+        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" LIMIT 10';
 
         if (count($types) > 0) {
             $query .= ' AND (';
@@ -98,9 +102,6 @@ class M_properties extends CI_Model
             }
         }
 
-        // echo $query;
-        // exit;
-
         $query_get = $this->db->query($query);
         $properties = array();
         if ($query_get !== FALSE && $query_get->num_rows() > 0) {
@@ -174,7 +175,6 @@ class M_properties extends CI_Model
                 }
             }
             $property->amenities = explode(',', $property->amenities);
-            
             if ($property->area_id == 0)
                 $property->title = $property->area_other;
         }
@@ -521,6 +521,7 @@ class M_properties extends CI_Model
             ->result_array();
         return compact('data', 'image');
     }
+
     public function getPropertiesWithAttributes()
     {
         $page = $this->input->get('page');
@@ -793,6 +794,7 @@ class M_properties extends CI_Model
             ->result_array();
         return compact('properties', 'all_properties_count', 'images');
     }
+
     public function getAllImages()
     {
         return $this->db
@@ -800,6 +802,7 @@ class M_properties extends CI_Model
             ->get('property_images')
             ->result_array();
     }
+
     public function getPropertyCoords()
     {
         $for = $this->input->get('for');
@@ -910,4 +913,173 @@ class M_properties extends CI_Model
             return null;
         }
     }
+
+    public function property_count() 
+    {
+        $this->db->where('status', 'active');
+        $this->db->from('properties');
+        return $this->db->count_all_results();
+    }
+
+    function generate_query() 
+    {
+        $types          = isset($_POST['type']) ? $_POST['type'] : [];
+        $bedroom        = isset($_POST['bed']) ? $_POST['bed'] : 'any';
+        $bathroom       = isset($_POST['bath']) ? $_POST['bath'] : 'any';
+        $floor          = isset($_POST['floor']) ? $_POST['floor'] : 'any';
+        $sort_by        = isset($_POST['sort']) ? $_POST['sort'] : 'any';
+        $location       = isset($_POST['location']) ? $_POST['location'] : [];
+        $area           = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $amenities      = isset($_POST['amenities']) ? $_POST['amenities'] : [];
+        $area           = isset($_POST['area']) ? $_POST['area'] : 'any';
+        $languages      = isset($_POST['lang']) ? $_POST['lang'] : [];
+        $bed_range      = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
+        $floor_range    = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
+
+        $query = '';
+
+        if (count($types) > 0) {
+            $query .= ' AND (';
+        }
+        foreach ($types as $index =>  $type) {
+            $query .= '`properties`.`type` = "' . strtolower($type) . '" ';
+            if ($index + 1 == count($types)) {
+                $query .= ')';
+            } else {
+                $query .= ' OR ';
+            }
+        }
+        foreach ($amenities as $amenity) {
+            $query .= ' AND `properties`.`amenities` like "%' . $amenity . '%"';
+        }
+        if (count($languages) > 0) {
+            foreach ($languages as $language) {
+                $query .= ' AND `users`.`language` LIKE "%' . $language . '%"';
+            }
+        }
+        if ($bedroom != "any" && $bedroom != '0') {
+            $query .= ' AND `properties`.`bedrooms` >= ' . $bedroom;
+        }
+        if ($bed_range) {
+            $query .= ' AND `properties`.`bedrooms` >= ' . $bed_range['min'] . ' AND `properties`.`bedrooms` <= ' . $bed_range['max'];
+        }
+        if ($floor != "any" && $floor != '0') {
+            $query .= ' AND `properties`.`florbas` = ' . $floor;
+        }
+        if ($floor_range) {
+            $query .= ' AND `properties`.`florbas` >= ' . $floor_range['min'] . ' AND `properties`.`florbas` <= ' . $floor_range['max'];
+        }
+        if ($bathroom != "any") {
+            $query .= ' AND `properties`.`bathrooms` >= ' . $bathroom;
+        }
+        if ($area != "any") {
+            $query .= ' AND `properties`.`area_id` = "' . $area . '"';
+        }
+        if (count($location) > 0) {
+            $neighbor = strtolower($location[0]);
+            $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
+        }
+        if ($sort_by != "any") {
+            switch ($sort_by) {
+                case 'latest':
+                    $query .= ' ORDER BY `properties`.`created_at` DESC';
+                    break;
+                case 'oldest':
+                    $query .= ' ORDER BY `properties`.`created_at` ASC';
+                    break;
+                case 'updated':
+                    $query .= ' ORDER BY `properties`.`updated_at` DESC';
+                    break;
+                case 'bedroom-down':
+                    $query .= ' ORDER BY `properties`.`bedrooms` DESC';
+                    break;
+                case 'bedroom-up':
+                    $query .= ' ORDER BY `properties`.`bedrooms` ASC';
+                    break;
+                case 'area':
+                    $query .= ' ORDER BY `properties`.`area_id` DESC';
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return $query;
+    }
+
+    public function property_count_by_conditions()
+    {
+        $sql_query = 'select properties.id from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query();
+        $query = $this->db->query($sql_query);
+
+        return $query->num_rows();
+    }
+
+    public function fetch_properties($limit, $start) 
+    {
+        $has_pic        = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
+
+        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query();
+
+
+        $query .= ' LIMIT ' . $start . ', ' . $limit;
+
+        $query = $this->db->query($query);
+
+        $properties = array();
+        if ($query !== FALSE && $query->num_rows() > 0) {
+            foreach ($query->result_array() as $row) {
+                $properties[] = $row;
+            }
+        }
+
+        $streets = array();
+        $filteredProperties = array();
+        foreach ($properties as $index => $property) {
+            if ($property['area_id'] == 0) $property['title'] = $property['area_other'];
+
+            $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
+            if ($has_pic == 'false' || count($images) > 0) {
+                $property['images'] = $images;
+
+                if (isset($property['coords']) && $property['coords'] != '[""]' && $property['coords'] != '[]') {
+                    $coord = json_decode($property['coords']);
+                    if (is_array($coord)) {
+                        $coord = [
+                            "lat" => round(doubleval($coord[0]), 5),
+                            "lng" => round(doubleval($coord[1]), 5)
+                        ];
+                    } else if (is_object($coord)) {
+                        $coord = [
+                            "lat" => round(doubleval($coord->lat), 5),
+                            "lng" => round(doubleval($coord->lng), 5)
+                        ];
+                    }
+                    $property['coords'] = $coord;
+                    $property['images'] = $images;
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
+                    array_push($streets, [
+                        "location" => $coord,
+                        "property" => $property
+                    ]);
+                } else {
+                    $property['coords'] = [
+                        "lat" => 31.0461,
+                        "lng" => 34.08516
+                    ];
+                    $property['blocked_date'] = json_decode($property['blocked_date']);
+                    $property['manual_booking'] = json_decode($property['manual_booking']);
+                }
+                
+                $filteredProperties[] = $property;
+            }
+        }
+
+        return [
+            "properties" => $filteredProperties,
+            "streets"   => json_encode($streets)
+        ];
+    }
+
 }
