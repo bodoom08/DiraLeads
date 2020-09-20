@@ -380,7 +380,7 @@
 
             <div class="paginator mt-3" id="search-paginator">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
+                    <ul class="pagination justify-content-center mb-1">
                         <?php if ( $links['page_index'] > 0) :?>
                             <li class="page-item">
                                 <a href="javascript:onPaginate(1)" class="page-link">First</a>
@@ -401,6 +401,8 @@
                     </ul>
                 </nav>
             </div>
+
+            <p class="text-center" id="paginate-status"><small class="text-muted"><?php echo $links['page_index'] * 30 + 1?> - <?php echo ($links['page_index'] + 1) * 30?> of <?php echo $total_properties?> Results</small></p>
         </div>
 
         <!-- ============================================== Google Map ======================================= -->
@@ -1504,7 +1506,7 @@
                             drawRentalCard(properties);
                         else filterRentalsByDate();
 
-                        drawPaginator(res.links);
+                        drawPaginator(res.links, res.total_properties);
                     }
 
                 },
@@ -1571,10 +1573,10 @@
             document.getElementById('property-cards').innerHTML = `<h5 class="text-center">No Rentals</h5>`;
         }
 
-        function drawPaginator(links) {
+        function drawPaginator(links, total) {
             let paginatorDom = `
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
+                    <ul class="pagination justify-content-center mb-1">
             `;
 
             if (links.page_index > 0) 
@@ -1604,6 +1606,9 @@
             `;
 
             document.getElementById('search-paginator').innerHTML = paginatorDom;
+            document.getElementById('paginate-status').innerHTML = `
+                <small class="text-muted">${links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
+            `;
         }
 
         function goDetailPage(location) {
