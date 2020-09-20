@@ -1002,6 +1002,8 @@ class M_properties extends CI_Model
                 default:
                     break;
             }
+        } else {
+            $query .= ' ORDER BY `properties`.`id` DESC';
         }
 
         return $query;
