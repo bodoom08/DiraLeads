@@ -335,7 +335,7 @@
                                         </ol>
                                         <div class="carousel-inner">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
-                                                <div class="carousel-item active">
+                                                <div class="carousel-item  d-flex align-item-center h-100 active">
                                                     <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="d-block w-100" alt="img1">
                                                 </div>
                                                 <?php } else {
@@ -414,7 +414,7 @@
 
     <!-- =============================== Property card on map =============================================  -->
     <div class="property-overview-card" id="property-overview-card">
-        <div class="property-overview-image">
+        <div class="property-overview-image d-flex align-items-center h-100">
             <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100 block" alt="img1" id="property-overview-image" />
         </div>
         <div class="property-overview-detail">
@@ -1545,7 +1545,7 @@
                                 ))}
                                 </ol>
                                 <div class="carousel-inner">
-                                ${ !property.images || property.images.length == 0 ? `<div class="carousel-item active"><img src="/uploads/diraleads-logo.svg" class="d-block w-100" alt="img1"></div>` : property.images.map((image, idx) => (
+                                ${ !property.images || property.images.length == 0 ? `<div class="carousel-item d-flex align-item-center h-100 active"><img src="/uploads/diraleads-logo.svg" class="d-block w-100" alt="img1"></div>` : property.images.map((image, idx) => (
                                     `<div class="carousel-item ${idx == 0 ? 'active' : ''}"><img src="/uploads/${image.path}" class="d-block w-100" alt="img${idx}"/></div>`
                                 ))}
                                 </div>

@@ -1063,7 +1063,16 @@ class M_properties extends CI_Model
                     $property['manual_booking'] = json_decode($property['manual_booking']);
                     array_push($streets, [
                         "location" => $coord,
-                        "property" => $property
+                        "property" => [
+                            "id"        => $property['id'],
+                            "coords"    => $property['coords'],
+                            "images"    => $property['images'],
+                            "bathrooms" => $property['bathrooms'],
+                            "bedrooms"  => $property['bedrooms'],
+                            "florbas"   => $property['florbas'],
+                            "street"    => $property['street'],
+                            "title"     => $property['title']
+                        ]
                     ]);
                 } else {
                     $property['coords'] = [
