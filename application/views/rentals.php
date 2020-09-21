@@ -427,7 +427,7 @@
 
     <!-- =============================== Property card on map =============================================  -->
     <div class="property-overview-card" id="property-overview-card">
-        <div class="property-overview-image d-flex align-items-center h-100">
+        <div class="property-overview-image d-flex align-items-center">
             <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100 block" alt="img1" id="property-overview-image" />
         </div>
         <div class="property-overview-detail">
