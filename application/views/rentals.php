@@ -16,9 +16,6 @@
     <!-- ============================================== JQuery UI CSS ========================================-->
     <link rel="stylesheet" href="https://code.jquery.com/ui/jquery-ui-git.css" />
     <!-- ========================== Google Map Scripts ================================= -->
-    <!-- Old -->
-    <!-- <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap"></script> -->
-    <!-- New -->
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByMhYirwn_EOt2HPNbeWtVE-BVEypa6kI&language=en&libraries=places&callback=initMap"></script>
 
     <!-- ============================= Google Map Script ========================================== -->
@@ -122,7 +119,6 @@
 
                     if (street.property.images && street.property.images.length > 0)
                         document.getElementById('property-overview-image').src = '/uploads/' + street.property.images[0].path;
-                    // document.getElementById('property-overview-price').innerHTML = `$${street.property.days_price ? street.property.days_price : 0}/dy, $${street.property.weekend_price ? street.property.weekend_price : 0}/wk`;
                     document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${street.property.bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${street.property.bathrooms} ba</span>`;
                     document.getElementById('property-overview-address').innerHTML = `${street.property.title}`;
                     document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
@@ -217,7 +213,6 @@
             <div class="input-group">
                 <input type="text" id="search-place" class="form-control" aria-describedby="button-search">
                 <div class="input-group-append">
-                    <!-- <button class="btn btn-brown" type="submit" id="button-search"> -->
                     <button class="btn btn-brown" id="button-search" onclick="setArea()">
                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
@@ -236,14 +231,6 @@
                         Rental Type&nbsp;&nbsp;
                     </a>
                 </li>
-
-                <!-- 
-                <li class="list-group-item">
-                    <a tabindex="0" id="filter-price" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
-                        Price&nbsp;&nbsp;
-                    </a>
-                </li> 
-                -->
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-date" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-container="body" data-toggle="popover" data-placement="bottom">
@@ -269,12 +256,6 @@
                         <label class="form-check-label" for="show-rental" style="font-size: 16px;font-weight: 600;">Only show Rentals with Pictures</label>
                     </div>
                 </li>
-
-                <!-- 
-                <li class="list-group-item">
-                    <a tabindex="0" id="filter-area" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom">Areas&nbsp;&nbsp;</a>
-                </li> 
-                -->
 
                 <li class="list-group-item">
                     <a tabindex="0" id="filter-more" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="More">
@@ -317,7 +298,7 @@
                     <div class="search-detail">
                         <div class="search-detail-title" id="search-detail-title">Apartments for Rent Near Me</div>
                         <div class="search-detail-result" id="search-results-count">
-                            <?php echo isset($properties) ? count($properties) : '0' ?>
+                            <?php echo isset($total_properties) ? $total_properties : '0' ?>
                             rentals available on Diraleads
                         </div>
                     </div>
@@ -334,13 +315,13 @@
 
                 <!-- =============================== Rental Cards ======================================== -->
                 <div class="w-100 d-flex flex-wrap" id="property-cards">
-                    <?php if (!isset($properties) || count($properties) == 0) { ?>
+                    <?php if (!isset($total_properties) || $total_properties == 0) { ?>
                         <h5 class="text-center">No Rentals</h5>
                         <?php } else {
                         foreach ($properties as $id => $property) {
                         ?>
                             <div class="col-md-12 col-lg-6 col-xl-4 p-1 mb-1 border-none">
-                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '<?php echo $property['days_price'] ?>', '<?php echo $property['weekly_price'] ?>', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
+                                <div class="property-card" onmouseover="showCardOnMap('[<?php echo isset($property['coords']) ? $property['coords']['lat'] : 40.7128 ?>, <?php echo isset($property['coords']) ? $property['coords']['lng'] : 74.0060 ?>]', '<?php echo isset($property['images']) && count($property['images']) > 0 ? $property['images'][0]['path'] : 'diraleads-logo.svg' ?>', '0', '0', '<?php echo $property['bedrooms'] ?>','<?php echo $property['bathrooms'] ?>', '<?php echo isset($property['title']) ? $property['title'] : $property['area_other'] ?>', '<?php echo $property['street'] ?>')" onmouseout="closeCardOnMap()" onclick="goDetailPage('<?php echo site_url('properties/rental_detail/' . $property['id']) ?>')">
                                     <div id="property-<?php echo $id ?>" class="carousel slide property-card-image-slider" data-ride="carousel">
                                         <ol class="carousel-indicators">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
@@ -354,7 +335,7 @@
                                         </ol>
                                         <div class="carousel-inner">
                                             <?php if (!isset($property['images']) || count($property['images']) == 0) { ?>
-                                                <div class="carousel-item active">
+                                                <div class="carousel-item  d-flex align-item-center h-100 active">
                                                     <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="d-block w-100" alt="img1">
                                                 </div>
                                                 <?php } else {
@@ -366,17 +347,8 @@
                                             <?php }
                                             } ?>
                                         </div>
-                                        <!-- <a class="carousel-control-prev" href="#property-<?php echo $id ?>" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#property-<?php echo $id ?>" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a> -->
                                     </div>
                                     <div class="property-detail">
-                                        <!-- <div class="property-detail-price">$<?php echo isset($property['days_price']) ? $property['days_price'] : 0 ?>/dy, $<?php echo isset($property['weekly_price']) ? $property['weekly_price'] : 0 ?>/wk</div> -->
                                         <div class="property-detail-capacity">
                                             <span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path>
@@ -406,21 +378,31 @@
                 </div>
             </div>
 
-            <div class="paginator mt-3">
+            <div class="paginator mt-3" id="search-paginator">
                 <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1">Previous</a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
+                    <ul class="pagination justify-content-center mb-1">
+                        <?php if ( $links['page_index'] > 0) :?>
+                            <li class="page-item">
+                                <a href="javascript:onPaginate(1)" class="page-link">First</a>
+                            </li>
+                        <?php endif?>
+
+                        <?php for ( $index = 0; $index < $links['page_cursors']; $index ++) {?>
+                            <li class="page-item <?php echo $index == $links['page_index'] ? 'disabled' : ''?>">
+                                <a href="javascript:onPaginate(<?php echo $index + 1?>)" class="page-link"><?php echo $index + 1?></a>
+                            </li>
+                        <?php }?>
+
+                        <?php if ($links['page_index'] < $links['page_cursors'] - 1) :?>
+                            <li class="page-item">
+                                <a href="javascript:onPaginate(<?php echo $links['page_cursors']?>)" class="page-link">Last</a>
+                            </li>
+                        <?php endif?>
                     </ul>
                 </nav>
             </div>
+
+            <p class="text-center" id="paginate-status"><small class="text-muted"><?php echo $links['page_index'] * 30 + 1?> - <?php echo ($links['page_index'] + 1) * 30?> of <?php echo $total_properties?> Results</small></p>
         </div>
 
         <!-- ============================================== Google Map ======================================= -->
@@ -432,7 +414,7 @@
 
     <!-- =============================== Property card on map =============================================  -->
     <div class="property-overview-card" id="property-overview-card">
-        <div class="property-overview-image">
+        <div class="property-overview-image d-flex align-items-center h-100">
             <img src="<?php echo site_url('uploads/diraleads-logo.svg') ?>" class="w-100 block" alt="img1" id="property-overview-image" />
         </div>
         <div class="property-overview-detail">
@@ -1085,7 +1067,6 @@
          */
         $('#filter-type').on('shown.bs.popover', function() {
             document.getElementById('filter-type').className = document.getElementById('filter-type').className.split('option-closed').join('option-opened');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -1099,24 +1080,9 @@
             $('#filter-type').attr('class', 'btn btn-lg btn-white btn-outline-purple filter-option option-closed');
         });
 
-        // $('#filter-price').on('shown.bs.popover', function() {
-        //     document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-closed').join('option-opened');
-        //     $('#filter-type').popover('hide');
-        //     $('#filter-bed').popover('hide');
-        //     $('#filter-floor').popover('hide');
-        //     $('#filter-more').popover('hide');
-        //     $('#filter-all').popover('hide');
-        //     $('#filter-sort').popover('hide');
-        //     $('#filter-sort-web').popover('hide');
-        // });
-        // $('#filter-price').on('hidden.bs.popover', function() {
-        //     document.getElementById('filter-price').className = document.getElementById('filter-price').className.split('option-opened').join('option-closed');
-        // });
-
         $('#filter-bed').on('shown.bs.popover', function() {
             document.getElementById('filter-bed').className = document.getElementById('filter-bed').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
@@ -1142,7 +1108,6 @@
         $('#filter-floor').on('shown.bs.popover', function() {
             document.getElementById('filter-floor').className = document.getElementById('filter-floor').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-more').popover('hide');
             $('#filter-all').popover('hide');
@@ -1168,7 +1133,6 @@
         $('#filter-more').on('shown.bs.popover', function() {
             document.getElementById('filter-more').className = document.getElementById('filter-more').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-all').popover('hide');
@@ -1183,7 +1147,6 @@
         $('#filter-all').on('shown.bs.popover', function() {
             document.getElementById('filter-all').className = document.getElementById('filter-all').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -1198,7 +1161,6 @@
         $('#filter-sort').on('shown.bs.popover', function() {
             document.getElementById('filter-sort').className = document.getElementById('filter-sort').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -1213,7 +1175,6 @@
         $('#filter-sort-web').on('shown.bs.popover', function() {
             document.getElementById('filter-sort-web').className = document.getElementById('filter-sort-web').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -1228,7 +1189,6 @@
         $('#filter-date').on('shown.bs.popover', function() {
             document.getElementById('filter-date').className = document.getElementById('filter-date').className.split('option-closed').join('option-opened');
             $('#filter-type').popover('hide');
-            // $('#filter-price').popover('hide');
             $('#filter-bed').popover('hide');
             $('#filter-floor').popover('hide');
             $('#filter-more').popover('hide');
@@ -1237,12 +1197,10 @@
             $('#filter-sort-web').popover('hide');
 
             $('#filter-date-from').datepicker({
-                // minDate: 0,
                 dateFormat: "yy-mm-dd",
                 autoclose: true
             });
             $('#filter-date-to').datepicker({
-                // minDate: 0,
                 dateFormat: "yy-mm-dd",
                 autoclose: true
             });
@@ -1279,7 +1237,6 @@
             }
 
             document.getElementById('property-overview-image').src = `/uploads/${image}`;
-            // document.getElementById('property-overview-price').innerHTML = `$${days_price ? days_price : 0}/dy, $${weekly_price ? weekly_price : 0}/wk`;
             document.getElementById('property-overview-capacity').innerHTML = `<span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M9.196 14.603h15.523v.027h1.995v10.64h-3.99v-4.017H9.196v4.017h-3.99V6.65h3.99v7.953zm2.109-1.968v-2.66h4.655v2.66h-4.655z" fill="#869099"></path></svg>${bedrooms} bd</span><span><svg class="svg" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M23.981 15.947H26.6v1.33a9.31 9.31 0 0 1-9.31 9.31h-2.66a9.31 9.31 0 0 1-9.31-9.31v-1.33h16.001V9.995a2.015 2.015 0 0 0-2.016-2.015h-.67c-.61 0-1.126.407-1.29.965a2.698 2.698 0 0 1 1.356 2.342H13.3a2.7 2.7 0 0 1 1.347-2.337 4.006 4.006 0 0 1 3.989-3.63h.67a4.675 4.675 0 0 1 4.675 4.675v5.952z" fill="#869099"></path></svg>${bathrooms} ba</span>`;
             document.getElementById('property-overview-address').innerHTML = `${title}`;
             document.getElementById('property-overview-city').innerHTML = `${street}`;
@@ -1471,6 +1428,13 @@
         }
 
         function filter(key, value) {
+            document.getElementById('property-cards').innerHTML = `
+            <div class="w-100 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>`;
+
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
             filters[key] = value;
@@ -1481,24 +1445,21 @@
             if (key == 'bed_range') { setFilter('bed', 0); return ; }
             if (key == 'floor_range') { setFilter('floor', 0); return ;}
 
-            // const controls = ['filter-bed','filter-floor','filter-more','filter-all','filter-sort','filter-sort-web','filter-date'];
-            // controls.forEach(control => {
-            //     $(`#${control}`).popover('hide');
-            // });
-
             $.ajax({
                 method: 'POST',
                 url: "<?php echo site_url('properties/search') ?>",
                 data: filters,
                 success: function(response) {
                     const res = JSON.parse(response);
+                    console.log("Response: ", res);
+
                     const properties = res.properties;
                     streets = JSON.parse(res.streets);
 
                     console.log("Streets:", streets);
 
                     document.getElementById('property-cards').innerHTML = '';
-                    document.getElementById('search-results-count').innerHTML = `${properties.length} rentals available on Diraleads`;
+                    document.getElementById('search-results-count').innerHTML = `${res.total_properties ? res.total_properties : 0} rentals available on Diraleads`;
 
                     // Clear Markers
                     clearMarkers();
@@ -1510,7 +1471,58 @@
                         if (document.getElementById('hid-date-from').value == '')
                             drawRentalCard(properties);
                         else filterRentalsByDate();
+
+                        drawPaginator(res.links, res.total_properties);
                     }
+
+                },
+                fail: function(error) {
+                    console.log("Error: ", error);
+                }
+            });
+        }
+
+        function onPaginate(page) {
+
+            document.getElementById('property-cards').innerHTML = `
+            <div class="w-100 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>`;
+            const filterEl = document.getElementById('hid-property-filter');
+            let filters = JSON.parse(filterEl.value);
+
+            $.ajax({
+                method: 'POST',
+                url: `/properties/search?page=${page}`,
+                data: filters,
+                success: function(response) {
+                    const res = JSON.parse(response);
+                    console.log("Response: ", res);
+
+                    const properties = res.properties;
+                    streets = JSON.parse(res.streets);
+
+                    console.log("Streets:", streets);
+
+                    document.getElementById('property-cards').innerHTML = '';
+                    document.getElementById('search-results-count').innerHTML = `${res.total_properties ? res.total_properties : 0} rentals available on Diraleads`;
+
+                    // Clear Markers
+                    clearMarkers();
+
+                    if (properties.length == 0)
+                        drawNoResult();
+                    else {
+                        rentals = res.properties;
+                        if (document.getElementById('hid-date-from').value == '')
+                            drawRentalCard(properties);
+                        else filterRentalsByDate();
+
+                        drawPaginator(res.links, res.total_properties);
+                    }
+
                 },
                 fail: function(error) {
                     console.log("Error: ", error);
@@ -1533,7 +1545,7 @@
                                 ))}
                                 </ol>
                                 <div class="carousel-inner">
-                                ${ !property.images || property.images.length == 0 ? `<div class="carousel-item active"><img src="/uploads/diraleads-logo.svg" class="d-block w-100" alt="img1"></div>` : property.images.map((image, idx) => (
+                                ${ !property.images || property.images.length == 0 ? `<div class="carousel-item d-flex align-item-center h-100 active"><img src="/uploads/diraleads-logo.svg" class="d-block w-100" alt="img1"></div>` : property.images.map((image, idx) => (
                                     `<div class="carousel-item ${idx == 0 ? 'active' : ''}"><img src="/uploads/${image.path}" class="d-block w-100" alt="img${idx}"/></div>`
                                 ))}
                                 </div>
@@ -1573,6 +1585,44 @@
 
         function drawNoResult() {
             document.getElementById('property-cards').innerHTML = `<h5 class="text-center">No Rentals</h5>`;
+        }
+
+        function drawPaginator(links, total) {
+            let paginatorDom = `
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center mb-1">
+            `;
+
+            if (links.page_index > 0) 
+                paginatorDom += `
+                    <li class="page-item">
+                        <a href="javascript:onPaginate(1)" class="page-link">First</a>
+                    </li>
+                `;
+
+            for (let i=0; i<links.page_cursors; i++) 
+                paginatorDom += `
+                    <li class="page-item ${i == links.page_index ? 'disabled' : '' }">
+                        <a href="javascript:onPaginate(${i+1})" class="page-link">${i+1}</a>
+                    </li>
+                `;
+            
+            if (links.page_index < links.page_cursors - 1)
+                paginatorDom += `
+                    <li class="page-item">
+                        <a href="javascript:onPaginate(${links.page_cursors})" class="page-link">Last</a>
+                    </li>
+                `;
+
+            paginatorDom += `
+                    </ul>
+                </nav>
+            `;
+
+            document.getElementById('search-paginator').innerHTML = paginatorDom;
+            document.getElementById('paginate-status').innerHTML = `
+                <small class="text-muted">${links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
+            `;
         }
 
         function goDetailPage(location) {
