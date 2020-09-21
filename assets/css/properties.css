@@ -1,584 +1,596 @@
 /* Public Style */
 .btn-brown {
-    color: #fff;
-    background: #a27107;
-    border-color: #a27107;
+  color: #fff;
+  background: #a27107;
+  border-color: #a27107;
 }
 .btn-brown:hover {
-    color: #fff;
-    background: #433357;
-    border-color: #433357;
+  color: #fff;
+  background: #433357;
+  border-color: #433357;
 }
-.btn-outline-purple, .btn-purple:hover {
-    color: #433357;
-    border-color: #433357;
-    background: #fff;
+.btn-outline-purple,
+.btn-purple:hover {
+  color: #433357;
+  border-color: #433357;
+  background: #fff;
 }
-.btn-outline-purple:hover, .btn-purple {
-    color: #fff;
-    background: #433357;
-    border-color: #433357;
+.btn-outline-purple:hover,
+.btn-purple {
+  color: #fff;
+  background: #433357;
+  border-color: #433357;
 }
 .btn-outline-purple.active {
-    color: white;
-    background: #433357;
+  color: white;
+  background: #433357;
 }
 .check-box {
-    padding: .5rem 1rem;
-    line-height: 1.5;
-    border-radius: .3rem;
-    border-color: #6c757d;
-    border: 1px solid #6c757d;
-    padding-left: 2rem;
+  padding: 0.5rem 1rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+  border-color: #6c757d;
+  border: 1px solid #6c757d;
+  padding-left: 2rem;
 }
 input[type="checkbox"]:checked .form-check-label:before {
-    color: #fff;
-    border-color: #a27107;
-    background-color: #a27107;
+  color: #fff;
+  border-color: #a27107;
+  background-color: #a27107;
 }
 .list-group-item {
-    border: none;
-    padding: .25rem;
+  border: none;
+  padding: 0.25rem;
 }
 .form-check-input {
-    margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 /** Popover Style */
 .popover {
-    max-width: calc(100% - .5rem) !important;
+  max-width: calc(100% - 0.5rem) !important;
 }
 /* Navbar Style */
 nav {
-    padding: 0 !important;
+  padding: 0 !important;
 }
 @media only screen and (min-width: 1024px) {
-    nav {
-        padding: 0 40px !important;
-    }
+  nav {
+    padding: 0 40px !important;
+  }
 }
 
 .navbar {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .navbar-brand img {
-    width: 150px;
-    padding: .5rem;
+  width: 150px;
+  padding: 0.5rem;
 }
-.navbar .nav-link, .dropdown-item {
-    font-family: "Raleway", sans-serif;
-    font-weight: 600;
-    font-size: 16px;
-    color: #000 !important;
+.navbar .nav-link,
+.dropdown-item {
+  font-family: "Raleway", sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000 !important;
 }
 /* Login Button Style */
 .login a:hover:after {
-    display: none;
+  display: none;
 }
 .login a:hover {
-    background: #281b3f;
+  background: #281b3f;
 }
 .login a {
-    padding: 6px 30px !important;
-    border-radius: 60px;
-    line-height: 34px;
-    background: #a27107;
+  padding: 6px 30px !important;
+  border-radius: 60px;
+  line-height: 34px;
+  background: #a27107;
 }
 .login a img {
-    margin: 0 10px 0 0;
+  margin: 0 10px 0 0;
 }
 
 /* Filter Option Styles */
 .filter-option {
-    font-size: 16px;
-    font-weight: 600;
+  font-size: 16px;
+  font-weight: 600;
 }
 .filter-option:after {
-    display: inline-block;
-    margin-left: .255em;
-    vertical-align: .255em;
-    content: "";
-    border-left: .3em solid transparent;
-    border-right: .3em solid transparent;
+  display: inline-block;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-left: 0.3em solid transparent;
+  border-right: 0.3em solid transparent;
 }
 .filter-option.option-closed:after {
-    border-top: .3em solid;
-    border-bottom: 0;
+  border-top: 0.3em solid;
+  border-bottom: 0;
 }
 .filter-option.option-opened:after {
-    border-top: 0;
-    border-bottom: .3em solid;
+  border-top: 0;
+  border-bottom: 0.3em solid;
 }
 .filter-option.selected:before {
-    content: "\25CF";
-    color: #a27107;
+  content: "\25CF";
+  color: #a27107;
 }
 .filter-all-body {
-    max-height: calc((((((((90vh - 74px) - 64px) - 4px) - 32px) - 88px) - 16px) - 16px) - 4px);
-    overflow: scroll;
-    margin-bottom: 2rem;
+  max-height: calc(
+    (((((((90vh - 74px) - 64px) - 4px) - 32px) - 88px) - 16px) - 16px) - 4px
+  );
+  overflow: scroll;
+  margin-bottom: 2rem;
 }
 .filter-all-type {
-    width: 100%;
-    padding: .5rem;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
 }
 .filter-all-type button {
-    margin: 0;
-    border-radius: 0;
+  margin: 0;
+  border-radius: 0;
 }
 .filter-all-type button:first-child {
-    border-top-left-radius: .25rem;
-    border-bottom-left-radius: .25rem;
-    border-right: none;
+  border-top-left-radius: 0.25rem;
+  border-bottom-left-radius: 0.25rem;
+  border-right: none;
 }
 .filter-all-type button:last-child {
-    border-top-right-radius: .25rem;
-    border-bottom-right-radius: .25rem;
-    border-left: none;
+  border-top-right-radius: 0.25rem;
+  border-bottom-right-radius: 0.25rem;
+  border-left: none;
 }
 
 /** Search Page */
 .search-filters-row {
-    position: fixed;
-    top: 75px;
-    background: #fff;
-    z-index: 100;
-    width: 100%;
+  position: fixed;
+  top: 75px;
+  background: #fff;
+  z-index: 100;
+  width: 100%;
 }
 .search-result {
-    width: 100%;
-    padding: 0 .25rem;
-    position: absolute;
-    top: 140px;
+  width: 100%;
+  padding: 0 0.25rem;
+  position: absolute;
+  top: 140px;
 }
 .search-detail-title {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 1.2;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.2;
 }
 .search-detail-result {
-    font-size: 16px;
-    color: rgb(134, 144, 153);
-    font-weight: normal;
-    margin: 0px;
-    padding-bottom: 8px;
+  font-size: 16px;
+  color: rgb(134, 144, 153);
+  font-weight: normal;
+  margin: 0px;
+  padding-bottom: 8px;
 }
 /* Property Style */
 .property-card {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-    margin: .25rem;
-    padding: 0 !important;
-    border-radius: .5rem;
-    overflow: hidden;
-    padding-bottom: .5rem !important;
-    cursor: pointer;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  margin: 0.25rem;
+  padding: 0 !important;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  padding-bottom: 0.5rem !important;
+  cursor: pointer;
 }
 .property-card-image-slider {
-    margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .property-card-image-slider .carousel-inner {
-    height: 160px;
-    overflow: hidden;
-    border-radius: .5rem;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 0.5rem;
 }
 .carousel-item img:hover {
-    transform: scale(1.15);
-    transition: all 0.5s ease;
+  transform: scale(1.15);
+  transition: all 0.5s ease;
 }
 .property-detail {
-    padding: 0 .5rem;
+  padding: 0 0.5rem;
 }
 .property-detail div {
-    font-size: 16px;
-    line-height: 1.5;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.property-detail svg, .property-overview-card svg {
-    width: 20px;
-    height: 20px;
+.property-detail svg,
+.property-overview-card svg {
+  width: 20px;
+  height: 20px;
 }
 .property-detail-price {
-    font-weight: bold;
-    font-size: 20px;
-    line-height: 1.2;
+  font-weight: bold;
+  font-size: 20px;
+  line-height: 1.2;
 }
 
 /* Property Overview */
 .property-overview-card {
-    width: 220px;    
-    position: fixed;
-    z-index: 1030;
-    display: none;
+  width: 220px;
+  position: fixed;
+  z-index: 1030;
+  display: none;
 
-    border-radius: .5rem;
-    background: #fff;
-    box-shadow: 0 4px 8px 0 #281b3f;
-    overflow: hidden;
+  border-radius: 0.5rem;
+  background: #fff;
+  box-shadow: 0 4px 8px 0 #281b3f;
+  overflow: hidden;
 
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 
-    top: 100px;
-    left: 100px;
+  top: 100px;
+  left: 100px;
 }
 .property-overview-image {
-    width: 100%;
-    height: 140px;
-    overflow: hidden;
+  width: 100%;
+  min-height: 140px;
+  max-height: 140px;
+  overflow: hidden;
+}
+.property-overview-image img {
+  height: 100%;
+  min-width: 100%;
 }
 .property-overview-detail {
-    padding: .25rem .5rem;
+  padding: 0.25rem 0.5rem;
 }
 
 /** Map Style */
 .map-region {
-    position: fixed;
-    right: 0;
-    height: calc(100vh - 170px);
+  position: fixed;
+  right: 0;
+  height: calc(100vh - 170px);
 }
 .map-region #map {
-    width: 100%;
-    height: 100%;
-    border-radius: .5rem;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.5rem;
 }
 #ghost-marker {
-    position: fixed;
-    left: -13px;
-    top: -13px;
-    width: 26px;
-    height: 26px;
-    border: 0px;
-    padding: 0px;
-    margin: 0px;
-    max-width: none;
-    z-index: 1030;
-    background: #281b3f;
-    border-radius: 50%;
-    opacity: 0.3;
+  position: fixed;
+  left: -13px;
+  top: -13px;
+  width: 26px;
+  height: 26px;
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+  max-width: none;
+  z-index: 1030;
+  background: #281b3f;
+  border-radius: 50%;
+  opacity: 0.3;
 }
 
 /* Property Detail View */
 .property-detail-view {
-    display: none;
-    z-index: 1100;
-    width: 100vw;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 0;
-    left: 0;
+  display: none;
+  z-index: 1100;
+  width: 100vw;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .property-detail-image-slider {
-    margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }
 .property-detail-image-slider .carousel-inner {
-    height: 500px;
-    overflow: hidden;
-    border-radius: .5rem;
+  height: 500px;
+  overflow: hidden;
+  border-radius: 0.5rem;
 }
 .property-detail-info {
-    padding: 2.5rem;
+  padding: 2.5rem;
 }
 .property-board {
-    margin-left: 30%;
-    margin-top: 50px;
-    margin-right: 5%;
-    background: white;
-    border-radius: .5rem;
-    overflow: hidden;
-    font-family: "Raleway", sans-serif;
+  margin-left: 30%;
+  margin-top: 50px;
+  margin-right: 5%;
+  background: white;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  font-family: "Raleway", sans-serif;
 }
 
 #detail-map {
-    width: 100%;
-    height: 300px;
-    margin-top: .5rem;
-    margin-bottom: 1.5rem;
+  width: 100%;
+  height: 300px;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .property-info {
-    border: none;
-    border-bottom: 2px solid #48484817;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+  border: none;
+  border-bottom: 2px solid #48484817;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .property-description {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-bottom: 2px solid #48484817;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 2px solid #48484817;
 }
 
 .property-amenities {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-bottom: 2px solid #48484817;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 2px solid #48484817;
 }
 
 .property-amenities svg {
-    width: 20px;
-    height: 20px;
+  width: 20px;
+  height: 20px;
 }
 
 .property-contact-detail {
-    padding: .5rem;
-    padding-top: 2.5rem;
+  padding: 0.5rem;
+  padding-top: 2.5rem;
 }
 
 .property-calendar {
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
-    border: none;
-    border-bottom: 2px solid #48484817;
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 2px solid #48484817;
 }
 
 .property-image-board {
-    display: flex;
-    border-radius: .5rem;
-    overflow: hidden;
-    position: relative;
-    justify-content: space-between;
+  display: flex;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  position: relative;
+  justify-content: space-between;
 }
 .property-image-board button {
-    position: absolute;
-    left: .5rem;
-    top: .5rem;
+  position: absolute;
+  left: 0.5rem;
+  top: 0.5rem;
 }
 .property-image-full {
-    width: 100%;
-    height: 30vw;
+  width: 100%;
+  height: 30vw;
 }
 .property-image-big {
-    padding-right: .15rem;
-    width: 75%;
-    height: 30vw;
-    overflow: hidden;
+  padding-right: 0.15rem;
+  width: 75%;
+  height: 30vw;
+  overflow: hidden;
 }
 .property-image-big img {
-    min-height: 100%;
-    min-width: 100%;
+  min-height: 100%;
+  min-width: 100%;
 }
 .property-image-small {
-    padding-left: .15rem;
-    width: 25%;
-    height: 30vw;
-    overflow: hidden;
+  padding-left: 0.15rem;
+  width: 25%;
+  height: 30vw;
+  overflow: hidden;
 }
 .property-image-small img {
-    height: calc(50% - 0.15rem);
+  height: calc(50% - 0.15rem);
 }
 .property-image-small img:first-child {
-    margin-bottom: .15rem;
+  margin-bottom: 0.15rem;
 }
 .property-image-small img:last-child {
-    margin-top: .15rem;
+  margin-top: 0.15rem;
 }
 .property-image-medium {
-    width: 100%;
-    height: 30vw;
-    overflow: hidden;
+  width: 100%;
+  height: 30vw;
+  overflow: hidden;
 }
 .property-image-medium img {
-    height: 100%;
-    width: auto;
+  height: 100%;
+  width: auto;
 }
 
 #property-load {
-    width: 100vw;
-    height: calc(100vh - 150px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100vw;
+  height: calc(100vh - 150px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 #property-load-spinner {
-    width: 3rem;
-    height: 3rem;
+  width: 3rem;
+  height: 3rem;
 }
 #property-detail-body {
-    display: none;
+  display: none;
 }
 
 @media only screen and (max-width: 320px) {
-    .property-detail-image-slider .carousel-inner {
-        height: 190px;
-    }
+  .property-detail-image-slider .carousel-inner {
+    height: 190px;
+  }
 
-    .property-detail-info, .property-contact-detail {
-        padding: 0;
-    }
+  .property-detail-info,
+  .property-contact-detail {
+    padding: 0;
+  }
 
-    .property-image-big img {
-        min-width: unset;
-    }
+  .property-image-big img {
+    min-width: unset;
+  }
 }
 
 @media only screen and (max-width: 768px) and (min-width: 321px) {
-    .property-detail-image-slider .carousel-inner {
-        height: 200px;
-    }
+  .property-detail-image-slider .carousel-inner {
+    height: 200px;
+  }
 
-    .property-detail-info {
-        padding: .5rem;
-    }
+  .property-detail-info {
+    padding: 0.5rem;
+  }
 
-    .property-contact-detail {
-        padding: .25rem;
-        padding-top: .5rem;
-    }
+  .property-contact-detail {
+    padding: 0.25rem;
+    padding-top: 0.5rem;
+  }
 }
 @media only screen and (max-width: 576px) {
-    .property-image-big {
-        width: 100%;
-        height: 50vw;
-        padding: 0;
-    }
-    .property-image-small {
-        display: none;
-    }
-    .property-image-medium {
-        width: 100%;
-        height: 50vw;
-        padding: 0 !important;
-    }
-    .property-image-medium img {
-        width: 100%;
-        height: auto;
-    }
-    .property-image-full {
-        height: 50vw;
-    }
+  .property-image-big {
+    width: 100%;
+    height: 50vw;
+    padding: 0;
+  }
+  .property-image-small {
+    display: none;
+  }
+  .property-image-medium {
+    width: 100%;
+    height: 50vw;
+    padding: 0 !important;
+  }
+  .property-image-medium img {
+    width: 100%;
+    height: auto;
+  }
+  .property-image-full {
+    height: 50vw;
+  }
 }
 
 /* LightBox */
 .row > .column {
-    padding: 0 8px;
-  }
-  
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-  
-  /* Create four equal columns that floats next to eachother */
-  .column {
-    float: left;
-    width: 25%;
-  }
-  
-  /* The Modal (background) */
-  .modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: black;
-  }
-  
-  /* Modal Content */
-  .modal-content {
-    position: relative;
-    background-color: #fefefe;
-    margin: auto;
-    padding: 0;
-    width: 90%;
-    max-width: 1200px;
-  }
-  
-  /* The Close Button */
-  .close {
-    color: white;
-    position: absolute;
-    top: 10px;
-    right: 25px;
-    font-size: 35px;
-    font-weight: bold;
-  }
-  
-  .close:hover,
-  .close:focus {
-    color: #999;
-    text-decoration: none;
-    cursor: pointer;
-  }
-  
-  /* Hide the slides by default */
-  .mySlides {
-    display: none;
-  }
-  
-  /* Next & previous buttons */
-  .prev,
-  .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    width: auto;
-    padding: 16px;
-    margin-top: -50px;
-    color: white;
-    font-weight: bold;
-    font-size: 20px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  
-  /* Position the "next button" to the right */
-  .next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-  }
-  
-  /* On hover, add a black background color with a little bit see-through */
-  .prev:hover,
-  .next:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  
-  /* Number text (1/3 etc) */
-  .numbertext {
-    color: #f2f2f2;
-    font-size: 12px;
-    padding: 8px 12px;
-    position: absolute;
-    top: 0;
-  }
-  
-  /* Caption text */
-  .caption-container {
-    text-align: center;
-    background-color: black;
-    padding: 2px 16px;
-    color: white;
-  }
-  
-  img.demo {
-    opacity: 0.6;
-  }
-  
-  .active,
-  .demo:hover {
-    opacity: 1;
-  }
-  
-  img.hover-shadow {
-    transition: 0.3s;
-  }
-  
-  .hover-shadow:hover {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
+  padding: 0 8px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Create four equal columns that floats next to eachother */
+.column {
+  float: left;
+  width: 25%;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: black;
+}
+
+/* Modal Content */
+.modal-content {
+  position: relative;
+  background-color: #fefefe;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 1200px;
+}
+
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Hide the slides by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Caption text */
+.caption-container {
+  text-align: center;
+  background-color: black;
+  padding: 2px 16px;
+  color: white;
+}
+
+img.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+img.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
