@@ -109,8 +109,6 @@
                 ghostMarkerEl.style.top = -6;
 
                 newMarker.addListener('mouseover', function(event) {
-                    console.log("Street: ", street);
-
                     event.ub.path[1].appendChild(ghostMarkerEl);
                     event.ub.path[1].style.opacity = 1;
                     event.ub.path[1].style.overflow = "unset";
@@ -138,6 +136,7 @@
                         document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
                     document.getElementById('property-overview-card').style.display = 'block';
                 });
+                
                 newMarker.addListener('mouseout', function(event) {
                     const ghostMarker = document.getElementById('ghost-marker');
                     event.ub.path[1].removeChild(ghostMarker);
