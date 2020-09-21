@@ -175,14 +175,22 @@
                 eventClick: function(event, jsEvent) {
                     jsEvent.preventDefault();
                 },
-                viewRender: function(view, element) {
+                // viewRender: function(view, element) {
+                //     if (isAnnual == true) { // switch tab
+                //         renderCalendarPrice();
+                //     } else {
+                //         renderSession();
+                //     }
+
+                // },
+                eventAfterAllRender: function(view, element) {
                     if (isAnnual == true) { // switch tab
                         renderCalendarPrice();
                     } else {
                         renderSession();
                     }
 
-                }
+                },
             });
 
             function seasonalPriceHTML(price = '') {

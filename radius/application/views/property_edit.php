@@ -1654,7 +1654,7 @@ a.fc-day-grid-event.fc-event.fc-start.fc-end.fc-draggable {
         })
         $(".process-model li").click(function() {
             if (!$(this).find("a").hasClass('a-disabled')) {
-                $('.perent_icon li').removeClass('active');
+                $('.perent_icon > li').removeClass('active');
                 $(this).addClass('active');
 
                 $('#discover').removeClass('active');
