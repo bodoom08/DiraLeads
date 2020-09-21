@@ -1428,6 +1428,13 @@
         }
 
         function filter(key, value) {
+            document.getElementById('property-cards').innerHTML = `
+            <div class="w-100 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>`;
+
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
             filters[key] = value;
@@ -1476,6 +1483,13 @@
         }
 
         function onPaginate(page) {
+
+            document.getElementById('property-cards').innerHTML = `
+            <div class="w-100 d-flex justify-content-center">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>`;
             const filterEl = document.getElementById('hid-property-filter');
             let filters = JSON.parse(filterEl.value);
 
@@ -1574,8 +1588,6 @@
         }
 
         function drawPaginator(links, total) {
-            console.log("Links: ", links);
-            console.log("Total: ", total);
             let paginatorDom = `
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center mb-1">
@@ -1595,7 +1607,7 @@
                     </li>
                 `;
             
-            if (links.page_index < links.page_cursors)
+            if (links.page_index < links.page_cursors - 1)
                 paginatorDom += `
                     <li class="page-item">
                         <a href="javascript:onPaginate(${links.page_cursors})" class="page-link">Last</a>
