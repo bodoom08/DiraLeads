@@ -401,9 +401,15 @@
                         <?php endif?>
 
                         <?php for ( $index = 0; $index < $links['page_cursors']; $index ++) {?>
-                            <li class="page-item <?php echo $index == $links['page_index'] ? 'disabled' : ''?>">
-                                <a href="javascript:onPaginate(<?php echo $index + 1?>)" class="page-link"><?php echo $index + 1?></a>
-                            </li>
+                            <?php if ( $index == $links['page_index']) :?>
+                                <li class="page-item disabled">
+                                    <a href="javascript:;" class="page-link"><?php echo $index + 1 ?></a>
+                                </li>
+                            <?php else: ?>
+                                <li class="page-item">
+                                    <a href="javascript:onPaginate(<?php echo $index + 1?>)" class="page-link"><?php echo $index + 1?></a>
+                                </li>
+                            <?php endif?>
                         <?php }?>
 
                         <?php if ($links['page_index'] < $links['page_cursors'] - 1) :?>
