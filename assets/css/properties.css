@@ -232,14 +232,8 @@ nav {
   left: 100px;
 }
 .property-overview-image {
-  width: 100%;
-  min-height: 140px;
   max-height: 140px;
   overflow: hidden;
-}
-.property-overview-image img {
-  height: 100%;
-  min-width: 100%;
 }
 .property-overview-detail {
   padding: 0.25rem 0.5rem;
