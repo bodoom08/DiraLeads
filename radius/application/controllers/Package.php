@@ -11,12 +11,15 @@ class Package extends MOBO_User
             redirect(site_url('/'));
 
         $this->load->model('M_package');
+        $this->load->model('M_users');
     }
 
     public function index()
     {
         // $this->load->view('packages');
-        $this->load->view('packages-custom');
+        $data['users'] = $this->M_users->getAllUserIds();
+        $data['areas'] = $this->M_users->getAllAreas();
+        $this->load->view('packages-custom', $data);
     }
 
     public function json()
@@ -111,6 +114,33 @@ class Package extends MOBO_User
         }
         else
             die(json_encode(['type' => 'error', 'text' => $this->form_validation->error_string()]));
+    }
+
+    public function insert()
+    {
+        echo json_encode($this->M_users->addSubscriber());
+    }
+
+    public function getSubscribers() 
+    {
+        $data['data'] = $this->M_users->getAllSubScribers();
+
+        $data['data'] = array_map(
+            function ($row, $index) {
+                return [
+                    $index + 1,
+                    $row['user_id'],
+                    $row['email_id'],
+                    $row['title'],
+                    $row['date_from'],
+                    $row['date_to'],
+                    $row['bedroom']
+                ];
+            },
+            $data['data'],
+            array_keys($data['data'])
+        );
+        exit(json_encode($data));
     }
 
     // public function del()

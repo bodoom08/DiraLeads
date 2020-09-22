@@ -24,30 +24,29 @@ $this->load->view('common/top', [
                                         <h5>Records</h5>
                                     </div>
                                     <div class="pull-right mb-3">
-                                        <span class="btn btn-primary" onclick='window.location.href="/radius/pricing/custom_pricing"'><i class="fa fa-box"></i>+ Subscribed package</span>
+                                        <!-- <span class="btn btn-primary" onclick='window.location.href="/radius/pricing/custom_pricing"'><i class="fa fa-box"></i>+ Subscribed package</span> -->
+                                        <span class="btn btn-primary" onclick="showAddPackageModal();"><i class="fa fa-box"></i>+ Subscribed package</span>
                                         <span class="btn btn-primary" onclick="table_refresh();"><i class="fa fa-refresh"></i> Refresh</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="table-responsive">
-                            <table id="package-table" class="table small table-sm table-striped table-bordered dt-responsive" width="100%">
-                                <thead>
-                                    <tr>
-                                        <th>Package Name</th>
-                                        <th>User Name</th>
-                                        <th>Details</th>
-                                        <th>Price</th>
-                                        <th>Validity</th>                             
-                                        <th>Description</th>
-                                        <th>No Of Area</th>
-                                        <th>No Of Days</th>
-                                        <th>Status</th>                                      
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
+                                <table id="package-table" class="table small table-sm table-striped table-bordered dt-responsive" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>UserId</th>
+                                            <th>Email</th>
+                                            <th>Area</th>
+                                            <th>Date From</th>                             
+                                            <th>Date To</th>
+                                            <th>Bedroom</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <p class="sub-banner-2 text-center">© Copyright <?php echo date('Y'); ?>. All rights reserved</p>
@@ -133,6 +132,72 @@ $this->load->view('common/top', [
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <?php echo form_open('package/insert', 'id="addForm" class=""')?>
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Subscriber</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="subscriber_id">User Id:</label>
+                        <select class="form-control" id="subscriber_id" name="subscriber" required>
+                            <option value=''>Select User Id</option>
+                            <?php foreach($users as $user) {?>
+                                <option value="<?php echo $user['id'].'|'.$user['email']?>"><?php echo $user['id'].' - '.$user['name']?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                            <div class="form-group">
+                                <label for="area_id">Area:</label>
+                                <select class="form-control" id="area_id" name="area" required>
+                                    <option value=''>Select Area</option>
+                                <?php foreach($areas as $area) {?>
+                                    <option value="<?php echo $area['id']?>"><?php echo $area['title']?></option>
+                                <?php }?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="num_bedrooms">Bedrooms: </label>
+                                <input type="number" min="0" class="form-control" id="num_bedrooms" name="bedroom" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="date_from">Date From:</label>
+                                <input type="date" class="form-control" id="date_from" name="date_from" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="date_to"> Date To:</label>
+                                <input type="date" class="form-control" id="date_to" name="date_to" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" id="submitBtn">Submit</button>
+                </div>
+            <?php echo form_close()?>
+        </div>
+    </div>
+</div>
+
 <?php $this->load->view('common/bottom'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -143,8 +208,8 @@ $this->load->view('common/top', [
         window.DT = $('#package-table').DataTable({
             processing: true,
             serverSide: true,
-            "ordering": false,
-            ajax: "<?php echo site_url('package/json_custom_package'); ?>"
+            ordering: false,
+            ajax: "<?php echo site_url('package/getSubscribers'); ?>"
         });
     });
 
@@ -154,9 +219,9 @@ $this->load->view('common/top', [
             event.preventDefault();
             $('#updateBtn').prop('disabled', 'disabled');
         },
-        success: function(arg) {
+        success: function(res) {
             $('#updateBtn').removeAttr('disabled');
-            toastr[arg.type](arg.text);
+            
             if (arg.type == 'success') {
                 $('#updateForm')[0].reset();
                 $('#editModal').modal('toggle');
@@ -252,5 +317,30 @@ $this->load->view('common/top', [
     });
     $('.numeric_not_zero').keypress(function (e) {
         if (String.fromCharCode(e.keyCode).match(/[^1-9]/g)) return false;
+    });
+</script>
+
+<script>
+    function showAddPackageModal() {
+        $('#addModal').modal('show');
+    }
+
+    $('#addForm').ajaxForm({
+        dataType: 'json',
+        beforeSubmit: function() {
+            event.preventDefault();
+            $('#submitBtn').prop('disabled', 'disabled');
+        },
+        success: function (arg) {
+            console.log("Arg: ", arg);
+            
+            $('#submitBtn').removeAttr('disabled');
+            toastr[arg.type](arg.text);
+            if (arg.type == 'success') {
+                $('#addForm')[0].reset();
+                $('#addModal').modal('toggle');
+                DT.ajax.reload();
+            }
+        }
     });
 </script>

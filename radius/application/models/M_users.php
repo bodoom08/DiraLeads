@@ -403,4 +403,43 @@ class M_users extends CI_Model
     //     }
     //     return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
     // }
+
+    public function getAllUserIds()
+    {
+        return $this->db->select('id, name, email')->get('users')->result_array();
+    }
+
+    public function addSubscriber()
+    {
+        array_walk_recursive($_POST, 'trim');
+        extract($this->input->post());
+
+        if ($subscriber && $area && $date_from && $date_to && $bedroom) {
+            // [0] => users.id , [1] => users.email
+            $subscriber = explode("|", $subscriber);
+            
+            $this->db->insert('subscribers', [
+                "user_id"   => $subscriber[0],
+                "email_id"  => $subscriber[1],
+                "area_id"   => $area,
+                "date_from" => $date_from,
+                "date_to"   => $date_to,
+                "bedroom"   => $bedroom,
+            ]);
+
+            return [
+                'type' => 'success',
+                'text' => 'Successfully Added.'
+            ];
+        }
+        return [
+            'type'  => 'error',
+            'text'  => 'Field is missing'
+        ];
+    }
+
+    public function getAllSubScribers()
+    {
+        return $this->db->from('subscribers')->join('areas', 'subscribers.area_id = areas.id')->get()->result_array();
+    }
 }
