@@ -272,7 +272,7 @@ class M_users extends CI_Model
             //                              true
             //                              )
             //            );
-            user_reg_email($email, 'Diraleads User Verification', 'https://diraleads.tk/verify/email/' . $token);
+            user_reg_email($email, 'Diraleads User Verification', 'https://diraleads.com/verify/email/' . $token);
 
             return ['type' => 'success', 'text' => 'Email sent for verification!'];
         }
@@ -387,7 +387,7 @@ class M_users extends CI_Model
         //                              true
         //                              )
         //            );
-        user_reg_email($user_info->email, 'Diraleads User Verification', 'https://diraleads.tk/verify/email/' . $token);
+        user_reg_email($user_info->email, 'Diraleads User Verification', 'https://diraleads.com/verify/email/' . $token);
 
         return ['type' => 'success', 'text' => 'Email sent for verification!'];
     }
