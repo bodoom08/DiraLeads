@@ -927,11 +927,9 @@ class M_properties extends CI_Model
         $bedroom        = isset($_POST['bed']) ? $_POST['bed'] : 'any';
         $bathroom       = isset($_POST['bath']) ? $_POST['bath'] : 'any';
         $floor          = isset($_POST['floor']) ? $_POST['floor'] : 'any';
-        $sort_by        = isset($_POST['sort']) ? $_POST['sort'] : 'any';
         $location       = isset($_POST['location']) ? $_POST['location'] : [];
         $area           = isset($_POST['area']) ? $_POST['area'] : 'any';
         $amenities      = isset($_POST['amenities']) ? $_POST['amenities'] : [];
-        $area           = isset($_POST['area']) ? $_POST['area'] : 'any';
         $languages      = isset($_POST['lang']) ? $_POST['lang'] : [];
         $bed_range      = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
         $floor_range    = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
@@ -979,6 +977,24 @@ class M_properties extends CI_Model
             $neighbor = strtolower($location[0]);
             $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
         }
+        
+
+        return $query;
+    }
+
+    public function property_count_by_conditions()
+    {
+        $sql_query = 'select properties.id from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query() . ' GROUP BY `properties`.`id`';
+        $query = $this->db->query($sql_query);
+
+        return $query->num_rows();
+    }
+
+    public function fetch_properties($limit, $start) 
+    {
+        $has_pic        = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
+        $sort_by        = isset($_POST['sort']) ? $_POST['sort'] : 'any';
+        $query = '';
         if ($sort_by != "any") {
             switch ($sort_by) {
                 case 'latest':
@@ -1006,27 +1022,15 @@ class M_properties extends CI_Model
             $query .= ' ORDER BY `properties`.`id` DESC';
         }
 
-        return $query;
-    }
-
-    public function property_count_by_conditions()
-    {
-        $sql_query = 'select properties.id from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query();
-        $query = $this->db->query($sql_query);
-
-        return $query->num_rows();
-    }
-
-    public function fetch_properties($limit, $start) 
-    {
-        $has_pic        = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
-
-        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query();
+        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query() . $query;
 
 
         $query .= ' LIMIT ' . $start . ', ' . $limit;
 
         $query = $this->db->query($query);
+        // echo $query;
+        // echo $query->num_rows();
+        // exit;
 
         $properties = array();
         if ($query !== FALSE && $query->num_rows() > 0) {

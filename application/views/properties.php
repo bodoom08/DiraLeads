@@ -1064,7 +1064,7 @@
         function changeFloorMax(event) {
             const min = parseInt(document.getElementById('floor-type-min').value);
             const max = parseInt(event.target.value);
-            
+
             if (!min) document.getElementById('floor-type-min').value = 0;
             else if (min >= max) document.getElementById('floor-type-min').value = max - 1;
 
