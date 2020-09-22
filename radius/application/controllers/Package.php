@@ -118,15 +118,18 @@ class Package extends MOBO_User
 
     public function insert()
     {
-        echo json_encode($this->M_users->addSubscriber());
+        exit(json_encode($this->M_users->addSubscriber()));
     }
 
     public function getSubscribers() 
     {
         $data = $this->M_users->getAllSubScribers();
-
+        
         $data['data'] = array_map(
             function ($row, $index) {
+                $actions = '<a href="javascript:onEditSubscriber('.$row['id'].');" class="btn btn-outline-success">Edit</a>&nbsp;&nbsp;';
+                $actions .= '<a href="javascript:onRemoveSubscriber('.$row['id'].');" class="btn btn-outline-danger">Delete</a>';
+                
                 return [
                     $index + 1,
                     $row['user_id'],
@@ -134,13 +137,51 @@ class Package extends MOBO_User
                     $row['title'],
                     $row['date_from'],
                     $row['date_to'],
-                    $row['bedroom']
+                    $row['bedroom'],
+                    $actions
                 ];
             },
             $data['data'],
             array_keys($data['data'])
         );
         exit(json_encode($data));
+    }
+
+    public function getSubscriberDetail()
+    {
+        if (!isset($_GET['id'])) 
+            exit(json_encode([
+                "type"      => "error",
+                "text"       => "id is missing"
+            ]));
+
+        $subscriber_id = $_GET['id'];
+        exit(json_encode([
+            "type"      => "success",
+            "text"      => $this->M_users->getSubscriberDetail($subscriber_id)
+        ]));
+    }
+
+    public function removeSubscriber()
+    {
+        if (!isset($_GET['id']))
+            exit(json_encode([
+                "type"      => "error",
+                "text"      => "Id is missing"
+            ]));
+
+        $subscriber_id = $_GET['id'];
+        $this->M_users->removeSubscriber($subscriber_id);
+
+        exit(json_encode([
+            "type"  => "success",
+            "text"  => "Successfully removed"
+        ]));
+    }
+
+    public function updateSubscriber()
+    {
+        exit(json_encode($this->M_users->updateSubscriber()));
     }
 
     // public function del()

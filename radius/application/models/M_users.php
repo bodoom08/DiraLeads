@@ -438,6 +438,35 @@ class M_users extends CI_Model
         ];
     }
 
+    public function updateSubscriber() 
+    {
+        array_walk_recursive($_POST, 'trim');
+        extract($this->input->post());
+
+        if ($subscriber_id && $subscriber && $area && $date_from && $date_to && $bedroom) {
+            // [0] => users.id , [1] => users.email
+            $subscriber = explode("|", $subscriber);
+
+            $this->db->where('id', $subscriber_id)->update('subscribers', [
+                "user_id"   => $subscriber[0],
+                "email_id"  => $subscriber[1],
+                "area_id"   => $area,
+                "date_from" => $date_from,
+                "date_to"   => $date_to,
+                "bedroom"   => $bedroom
+            ]);
+
+            return [
+                'type' => 'success',
+                'text' => 'Successfully Updated.'
+            ];
+        }
+        return [
+            'type'  => 'error',
+            'text'  => 'Field is missing'
+        ];
+    }
+
     public function getAllSubScribers()
     {
         extract($this->input->get());
@@ -477,5 +506,15 @@ class M_users extends CI_Model
         $this->db->flush_cache();
         unset($query['select']);
         return $query;
+    }
+
+    public function getSubscriberDetail($id) 
+    {
+        return $this->db->select('a.*, b.title')->from('subscribers a')->join('areas b', 'b.id = a.area_id', 'left')->where('a.id', $id)->get()->row();
+    }
+
+    public function removeSubscriber($id)
+    {
+        return $this->db->where('id', $id)->delete('subscribers');
     }
 }
