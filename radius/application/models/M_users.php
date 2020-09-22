@@ -440,6 +440,42 @@ class M_users extends CI_Model
 
     public function getAllSubScribers()
     {
-        return $this->db->from('subscribers')->join('areas', 'subscribers.area_id = areas.id')->get()->result_array();
+        extract($this->input->get());
+
+        $search = array_map('trim', $search);
+        $search['value'] = strtolower($search['value']);
+
+        $this->db->start_cache();
+
+        $query['select'] = ['a.*', 'b.title'];
+        $having = ['packages'];
+        $this->db->select('a.*, b.title');
+        $this->db->from('subscribers a');
+        $this->db->join('areas b', 'b.id = a.area_id', 'left');
+        $this->db->group_by('a.id');
+
+        $query['recordsTotal'] = $this->db->query('SELECT count(*) as total FROM (' . $this->db->get_compiled_select() . ') as tbl')->row()->total;
+
+        if ($search['value']) {
+            $this->db->group_start();
+            foreach ($query['select'] as $s) {
+                $this->db->or_like('LOWER(' . $s . ')', $search['value']);
+            }
+            $this->db->group_end();
+        }
+
+        $this->db->stop_cache();
+
+        $this->db->order_by('id', 'desc');
+
+        if ($length > 0) {
+            $this->db->limit($length, $start);
+        }
+        $query['data'] = $this->db->get()->result_array();
+        $query['draw'] = $draw;
+        $query['recordsFiltered'] = $this->db->query('SELECT count(*) as total FROM (' . $this->db->get_compiled_select() . ') as tbl')->row()->total;
+        $this->db->flush_cache();
+        unset($query['select']);
+        return $query;
     }
 }

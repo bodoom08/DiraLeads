@@ -123,7 +123,7 @@ class Package extends MOBO_User
 
     public function getSubscribers() 
     {
-        $data['data'] = $this->M_users->getAllSubScribers();
+        $data = $this->M_users->getAllSubScribers();
 
         $data['data'] = array_map(
             function ($row, $index) {
