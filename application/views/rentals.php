@@ -1484,9 +1484,9 @@
                         if (document.getElementById('hid-date-from').value == '')
                             drawRentalCard(properties);
                         else filterRentalsByDate();
-
-                        drawPaginator(res.links, res.total_properties);
                     }
+
+                    drawPaginator(res.links, res.total_properties);
 
                 },
                 fail: function(error) {
@@ -1634,7 +1634,7 @@
 
             document.getElementById('search-paginator').innerHTML = paginatorDom;
             document.getElementById('paginate-status').innerHTML = `
-                <small class="text-muted">${links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
+                <small class="text-muted">${ total == 0 ? 0 : links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
             `;
         }
 

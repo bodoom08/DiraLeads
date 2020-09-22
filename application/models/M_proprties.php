@@ -81,6 +81,7 @@ class M_proprties extends CI_Model
         if (count($properties) == 0) {
             return [];
         }
+
         $attributes =  $this->db
             ->select('a.text,a.icon,b.property_id,b.attribute_id,b.value ')
             ->where('a.id = b.attribute_id')
