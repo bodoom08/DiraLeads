@@ -41,6 +41,7 @@ $this->load->view('common/top', [
                                             <th>Date From</th>                             
                                             <th>Date To</th>
                                             <th>Bedroom</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -56,82 +57,6 @@ $this->load->view('common/top', [
     </div>
 </div>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-
-<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <?php echo form_open('package/update', 'id="updateForm" class=""'); ?>
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    <strong><span>For - </span><span id="for"></span></strong>
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <input type="hidden" name="id">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="name" class="col-form-label">
-                               
-                            </label>                            
-                            <input type="text" class="form-control" id="name" name="name" />
-                        </div>
-                        <div class="form-group">
-                            <label for="price" class="col-form-label">Price</label>
-                            <input type="text" class="form-control numeric" id="price" name="price" />
-                        </div>
-                        <div class="form-group">
-                            <label for="validity" class="col-form-label">Validity Period(days)</label>
-                            <input type="text" class="form-control numeric" id="validity" name="validity" />
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="description" class="col-form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description"></textarea>
-                        </div>
-                        <!-- <div class="form-group">
-                            <strong><span>For - </span><span id="for"></span></strong>
-                        </div> -->
-                        <div class="form-group">
-                            <label for="description" class="col-form-label">No Of Location Select</label>
-                            <input type="text" required class="form-control numeric_not_zero" id="no_of_location_select" name="no_of_location_select" placeholder="No Of Location Select" />
-                        </div>
-                        <div class="form-group">
-                            <label for="Alert Type">Notification Alert type</label>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="phone_alert" name="phone_alert" value="on" >
-                                <label class="custom-control-label" for="phone_alert">Phone</label>
-                            </div>
-
-                            <!-- Default inline 2-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="email_alert" name="email_alert" value="on" >
-                                <label class="custom-control-label" for="email_alert">Email</label>
-                            </div>
-
-                            <!-- Default inline 2-->
-                            <div class="custom-control custom-checkbox custom-control-inline">
-                                <input type="checkbox" class="custom-control-input" id="fax_alert" name="fax_alert" value="on" >
-                                <label class="custom-control-label" for="fax_alert">Fax</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" id="updateBtn" class="btn btn-primary">Update</button>
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
 
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -198,6 +123,73 @@ $this->load->view('common/top', [
     </div>
 </div>
 
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <?php echo form_open('package/updateSubscriber', 'id="updateForm" class=""')?>
+                <input type="hidden" id="hid_subscriber" name="subscriber_id" />
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit a Subscriber</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="edit_subscriber_id">User Id:</label>
+                        <select class="form-control" id="edit_subscriber_id" name="subscriber" required>
+                            <option value=''>Select User Id</option>
+                            <?php foreach($users as $user) {?>
+                                <option value="<?php echo $user['id'].'|'.$user['email']?>"><?php echo $user['id'].' - '.$user['name']?></option>
+                            <?php }?>
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8">
+                            <div class="form-group">
+                                <label for="edit_area_id">Area:</label>
+                                <select class="form-control" id="edit_area_id" name="area" required>
+                                    <option value=''>Select Area</option>
+                                <?php foreach($areas as $area) {?>
+                                    <option value="<?php echo $area['id']?>"><?php echo $area['title']?></option>
+                                <?php }?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-4">
+                            <div class="form-group">
+                                <label for="edit_num_bedrooms">Bedrooms: </label>
+                                <input type="number" min="0" class="form-control" id="edit_num_bedrooms" name="bedroom" required/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="edit_date_from">Date From:</label>
+                                <input type="date" class="form-control" id="edit_date_from" name="date_from" required/>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            <div class="form-group">
+                                <label for="edit_date_to"> Date To:</label>
+                                <input type="date" class="form-control" id="edit_date_to" name="date_to" required/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" id="updateBtn">Update</button>
+                </div>
+            <?php echo form_close()?>
+        </div>
+    </div>
+</div>
+
 <?php $this->load->view('common/bottom'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
@@ -212,101 +204,6 @@ $this->load->view('common/top', [
             ajax: "<?php echo site_url('package/getSubscribers'); ?>"
         });
     });
-
-    $('#updateForm').ajaxForm({
-        dataType: 'json',
-        beforeSubmit: function() {
-            event.preventDefault();
-            $('#updateBtn').prop('disabled', 'disabled');
-        },
-        success: function(res) {
-            $('#updateBtn').removeAttr('disabled');
-            
-            if (arg.type == 'success') {
-                $('#updateForm')[0].reset();
-                $('#editModal').modal('toggle');
-                DT.ajax.reload();
-            }
-        }
-    });
-
-    function changeStatus(package_id) {
-        if (confirm("Are You sure to perform this action?")) {
-            $.ajax({
-                url: "<?php echo site_url('package/changeStatus'); ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    package_id: package_id,
-                    <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
-                },
-                success: function(arg) {
-                    toastr[arg.type](arg.text);
-                    if (arg.type == 'success') {
-                        DT.ajax.reload();
-                    }
-                }
-            });
-        }
-    }
-
-    function edit(id) {
-        if (confirm("Are You sure to perform this action?")) {
-            $('#updateForm')[0].reset();
-            $.ajax({
-                url: "<?php echo site_url('package/edit') ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    id: id,
-                    <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
-                },
-                success: function(arg) {                    
-                    // var values = arg.for.split(",");
-                    // $("#for").find('[value="' + values.join('"], [value="') + '"]').prop("checked", true);
-                    $('input[name="email_alert"], input[name="phone_alert"], input[name="fax_alert"]').prop('checked', false);
-                    $.each(arg, function(i, row) {
-                        var elem = $('#updateForm [name="' + i + '"]');
-                        elem.val(row);
-                        if((i == "email_alert") && row == "true")
-                            $('input[name="email_alert"]').prop('checked', true);
-                            
-
-                        if((i == "phone_alert") && row == "true")
-                            $('input[name="phone_alert"]').prop('checked', true);
-
-                        if((i == "fax_alert") && row == "true")
-                            $('input[name="fax_alert"]').prop('checked', true);
-                            
-                    });
-                    $('#for').html(arg.for.substr(0, 1).toUpperCase() + arg.for.substr(1));
-                    $('#editModal').modal('show');
-                }
-            });
-        } else {
-            $("#editModal .close").click();
-        }
-    }
-
-    function del(id) {
-        if (confirm("Are You sure to perform this action?")) {
-            $.ajax({
-                url: "<?php echo site_url('package/del') ?>",
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    package_id: id,
-                    <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
-                },
-                success: function(arg) {
-                    toastr[arg.type](arg.text);
-                    if (arg.type == 'success') {
-                        DT.ajax.reload();
-                    }
-                }
-            });
-        }
-    }
 
     function table_refresh() {
         DT.ajax.reload();
@@ -332,8 +229,6 @@ $this->load->view('common/top', [
             $('#submitBtn').prop('disabled', 'disabled');
         },
         success: function (arg) {
-            console.log("Arg: ", arg);
-            
             $('#submitBtn').removeAttr('disabled');
             toastr[arg.type](arg.text);
             if (arg.type == 'success') {
@@ -343,4 +238,69 @@ $this->load->view('common/top', [
             }
         }
     });
+
+    $('#updateForm').ajaxForm({
+        dataType: 'json',
+        beforeSubmit: function () {
+            event.preventDefault();
+            $('#updateBtn').prop('disabled', 'disabled');
+        },
+        success: function (res) {
+            $('#updateBtn').removeAttr('disabled');
+            toastr[res.type](res.text);
+            if (res.type == 'success') {
+                $('#updateForm')[0].reset();
+                $('#editModal').modal('toggle');
+                DT.ajax.reload();
+            }
+        }
+    })
+
+    function onEditSubscriber(id) {
+        $.ajax({
+            url: `/radius/package/getSubscriberDetail?id=${id}`,
+            method: 'GET',
+            success: function (res) {
+                const response = JSON.parse(res);
+
+                if (response.type == 'success') {
+                    const subscriber = response.text;
+                    console.log("Subscriber: ", subscriber);
+
+                    document.getElementById('edit_subscriber_id').value = `${subscriber.user_id}|${subscriber.email_id}`;
+                    document.getElementById('edit_area_id').value = subscriber.area_id;
+                    document.getElementById('edit_date_from').value = subscriber.date_from;
+                    document.getElementById('edit_date_to').value = subscriber.date_to;
+                    document.getElementById('edit_num_bedrooms').value = subscriber.bedroom;
+                    document.getElementById('hid_subscriber').value = subscriber.id;
+
+                    $('#editModal').modal('show');
+                } else {
+                    toastr[response.type](response.text);
+                }
+            },
+            fail: function (err) {
+                toastr.error('Something is going wrong');
+                console.log("Error: ", err);
+            }
+        });
+    }
+
+    function onRemoveSubscriber(id) {
+        if (!confirm('Are you sure to remove?')) return;
+
+        $.ajax({
+            url: `/radius/package/removeSubscriber?id=${id}`,
+            method: 'GET',
+            success: function (res) {
+                const response = JSON.parse(res);
+                toastr[response.type](response.text);
+                DT.ajax.reload();
+            },
+            fail: function (err) {
+                toastr.error('Something is going wrong');
+                console.log("Error: ", err);
+            }
+        })
+    }
 </script>
