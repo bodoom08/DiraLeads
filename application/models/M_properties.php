@@ -984,7 +984,11 @@ class M_properties extends CI_Model
 
     public function property_count_by_conditions()
     {
-        $sql_query = 'select properties.id from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query() . ' GROUP BY `properties`.`id`';
+        $has_pic        = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
+        $sql_query = 'select properties.id from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id`';
+        if ($has_pic == 'true')
+            $sql_query .= ' RIGHT JOIN `property_images` ON `properties`.`id` = `property_images`.`property_id`';
+        $sql_query .= ' where `properties`.`status` = "active" ' . $this->generate_query() . ' GROUP BY `properties`.`id`';
         $query = $this->db->query($sql_query);
 
         return $query->num_rows();
@@ -1022,15 +1026,20 @@ class M_properties extends CI_Model
             $query .= ' ORDER BY `properties`.`id` DESC';
         }
 
-        $query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` where `properties`.`status` = "active" ' . $this->generate_query() . $query;
+        $sql_query = 'select properties.id, areas.title, properties.area_id, properties.area_other, properties.street, properties.price, properties.bedrooms, properties.bathrooms, properties.florbas, properties.area_other,properties.manual_booking, properties.blocked_date, properties.days_price, properties.weekend_price, properties.weekly_price, properties.monthly_price, properties.status, properties.coords, properties.area_other,users.language from properties LEFT JOIN `areas` ON `properties`.`area_id` = `areas`.`id` LEFT JOIN `users` ON `properties`.`user_id` = `users`.`id` ';
+        if ($has_pic == 'true')
+            $sql_query .= 'RIGHT JOIN property_images ON `properties`.`id` = `property_images`.`property_id` ';
 
+        $sql_query .= ' where `properties`.`status` = "active" ' . $this->generate_query();
 
-        $query .= ' LIMIT ' . $start . ', ' . $limit;
+        if ($has_pic == 'true')
+            $sql_query .= ' GROUP BY `properties`.`id`';
 
-        $query = $this->db->query($query);
-        // echo $query;
-        // echo $query->num_rows();
-        // exit;
+        $sql_query .=  $query;
+
+        $sql_query .= ' LIMIT ' . $start . ', ' . $limit;
+
+        $query = $this->db->query($sql_query);
 
         $properties = array();
         if ($query !== FALSE && $query->num_rows() > 0) {
