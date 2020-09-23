@@ -2,7 +2,7 @@
 defined('BASEPATH') or exit('No direct script access allowed');
 class M_properties extends CI_Model
 {
-    public function __construct() 
+    public function __construct()
     {
         parent::__construct();
     }
@@ -148,7 +148,7 @@ class M_properties extends CI_Model
                     $property['blocked_date'] = json_decode($property['blocked_date']);
                     $property['manual_booking'] = json_decode($property['manual_booking']);
                 }
-                
+
                 $filteredProperties[] = $property;
             }
         }
@@ -329,8 +329,6 @@ class M_properties extends CI_Model
             ->where('b.user_id', $_SESSION['id'])
             ->get('properties a, favorites b')
             ->result_array();
-
-
 
 
         array_walk($data, function (&$row) use ($attributes, $attributes_icon, $favourites) {
@@ -914,14 +912,14 @@ class M_properties extends CI_Model
         }
     }
 
-    public function property_count() 
+    public function property_count()
     {
         $this->db->where('status', 'active');
         $this->db->from('properties');
         return $this->db->count_all_results();
     }
 
-    function generate_query() 
+    function generate_query()
     {
         $types          = isset($_POST['type']) ? $_POST['type'] : [];
         $bedroom        = isset($_POST['bed']) ? $_POST['bed'] : 'any';
@@ -977,7 +975,7 @@ class M_properties extends CI_Model
             $neighbor = strtolower($location[0]);
             $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
         }
-        
+
 
         return $query;
     }
@@ -994,7 +992,7 @@ class M_properties extends CI_Model
         return $query->num_rows();
     }
 
-    public function fetch_properties($limit, $start) 
+    public function fetch_properties($limit, $start)
     {
         $has_pic        = isset($_POST['has_pic']) ? $_POST['has_pic'] : 'false';
         $sort_by        = isset($_POST['sort']) ? $_POST['sort'] : 'any';
@@ -1095,7 +1093,7 @@ class M_properties extends CI_Model
                     $property['blocked_date'] = json_decode($property['blocked_date']);
                     $property['manual_booking'] = json_decode($property['manual_booking']);
                 }
-                
+
                 $filteredProperties[] = $property;
             }
         }
@@ -1105,5 +1103,4 @@ class M_properties extends CI_Model
             "streets"   => json_encode($streets)
         ];
     }
-
 }

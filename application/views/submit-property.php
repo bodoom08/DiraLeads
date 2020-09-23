@@ -1727,7 +1727,7 @@ $this->load->view('common/front_end_layout/top', [
 
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
-        
+
     }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPhDpAUyER52TsCsLFNOOxT_l5-y7e78A&libraries=places&callback=initMap&language=en" async defer></script>
