@@ -411,7 +411,7 @@
                                 </li>
                             <?php endif?>
                         <?php }?>
-
+ 
                         <?php if ($links['page_index'] < $links['page_cursors'] - 1) :?>
                             <li class="page-item">
                                 <a href="javascript:onPaginate(<?php echo $links['page_cursors']?>)" class="page-link">Last</a>

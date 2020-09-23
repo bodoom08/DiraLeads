@@ -43,4 +43,10 @@ class Property extends MOBO_Controller
 		$result = $this->db->query($query)->result();
 		print_r($result);
 	}
+
+	public function test()
+	{
+		echo $this->M_property->existJob();
+		exit;
+	}
 }
