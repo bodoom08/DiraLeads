@@ -46,7 +46,9 @@ class Property extends MOBO_Controller
 
 	public function test()
 	{
-		echo $this->M_property->existJob();
-		exit;
+		echo $this->M_property->notifyToSubscriber(200, [
+			"area_id" => 1,
+			"bedrooms" => 3
+		]);
 	}
 }
