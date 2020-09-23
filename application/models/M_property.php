@@ -58,14 +58,6 @@ class M_property extends CI_Model
 
     function property_listing()
     {
-        // Just for testing
-        // return [
-        //     'type' => 'success',
-        //     'text' => 'Property listing done successfully!',
-        //     'virtual_number' => "+1 123123123"
-        // ];
-        // return $_POST;
-
         array_walk_recursive($_POST, 'trim');
 
         extract($_POST);
@@ -155,6 +147,9 @@ class M_property extends CI_Model
             return ['type' => 'error', 'text' => 'Error saving data'];
 
         $property_id = $this->db->insert_id();
+
+        $this->notifyToSubscriber($property_id, $property_data);
+
         foreach ($attribute_id as $key => $attribute) {
             $i = array_search($attribute, $attribute_id);
             if (!$value[$i]) {
@@ -319,164 +314,13 @@ class M_property extends CI_Model
         return $data;
     }
 
-    // function update()
-    // {
-    //     array_walk_recursive($_POST, 'trim');
-    //     extract($this->input->post());
-
-
-    //     $available_date = $date;
-    //     $property = 'short term rent';
-    //     if ($property  && $street && $area_id && $property_type && $price && $available_date && $property_desc) {
-    //         if (empty($attribute_id) || empty($value)) {
-    //             return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
-    //         }
-    //         if (strlen($property_desc) < 60) {
-    //             return ['type' => 'error', 'text' => 'Description should have a minimum of 60 letters'];
-    //         }
-    //         // check for available date if property type is short term rent
-    //         if (($property == 'short term rent') && empty($short_term_available_date)) {
-    //             return ['type' => 'error', 'text' => 'Please selct at least one available date for short term rent!'];
-    //         } else if ($property != 'short term rent') {
-    //             $short_term_available_date = '';
-    //         }
-
-    //         if (($property == 'short term rent') && !empty($short_term_available_date)) {
-    //             $arr = explode(',', $short_term_available_date);
-    //             $trimmed_array = array_map('trim', $arr);
-    //             $short_term_available_date = implode(',', $trimmed_array);
-    //         }
-
-    //         // remove the existing files
-    //         $removeFileNameArr = json_decode($removeFileName, true);
-    //         for ($i = 0; $i < sizeof($removeFileNameArr); $i++) {
-    //             $delete_where = [
-    //                 'property_id' => $property_id,
-    //                 'path' => $removeFileNameArr[$i]
-    //             ];
-    //             $this->db->delete('property_images', $delete_where);
-    //         }
-
-
-    //         if ($_FILES) {
-    //             $this->load->library('upload');
-    //             $files = $_FILES;
-    //             $cpt = count($_FILES['userfile']['name']);
-    //             $path = FCPATH . "/tmp_uploads";
-    //             $config = array();
-    //             $config['upload_path'] = $path;
-    //             $config['allowed_types'] = 'jpg|jpeg|png';
-    //             $config['max_size'] = '0';
-    //             $config['overwrite'] = false;
-    //             for ($i = 0; $i < $cpt; $i++) {
-    //                 $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-    //                 $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-    //                 $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-    //                 $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-    //                 $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-
-    //                 $this->upload->initialize($config);
-
-    //                 if (!$this->upload->do_upload()) {
-    //                     $errors = $this->upload->display_errors();
-    //                     return ['type' => 'error', 'text' => $errors];
-    //                 }
-    //             }
-    //         }
-    //         if ($amenities) {
-    //             $amenitie = implode(',', $amenities);
-    //         } else {
-    //             $amenitie = "";
-    //         }
-    //         $property_data = [
-    //             'for' => $property,
-    //             // 'house_number' => $house_no,
-    //             'street' => $street,
-    //             'area_id' => $area_id,
-    //             'type' => $property_type,
-    //             'price' => $price,
-    //             'available_date' => date('Y-m-d', strtotime($available_date)),
-    //             'description' => $property_desc,
-    //             'amenities' => $amenitie,
-    //             'updated_at' => date('Y-m-d H:i:s'),
-    //             // 'contact_type' => $contact_type,
-    //             // 'day_of_the_weak' => $day_arr,
-    //             // 'time_of_day' => $time,
-    //             // 'from_time' => $start_time,
-    //             // 'to_time' => $end_time,                
-    //             'short_term_available_date' => $short_term_available_date
-    //         ];
-    //         if ($this->db->where('id', $property_id)->update('properties', $property_data)) {
-    //             foreach ($attribute_id as $key => $attribute) {
-    //                 $i = array_search($attribute, $attribute_id);
-    //                 if (!$value[$i]) {
-    //                     return ['type' => 'error', 'text' => 'You did not submit any value for property attribute!'];
-    //                 }
-    //                 $attribute_data[] = [
-    //                     'property_id' => $property_id,
-    //                     'attribute_id' => $attribute,
-    //                     'value' => $value[$i],
-    //                     'created_at' => date('Y-m-d H:i:s'),
-    //                     'updated_at' => date('Y-m-d H:i:s')
-    //                 ];
-    //             }
-    //             $this->db->where('property_id', $property_id)->delete('property_attribute_values');
-    //             if ($this->db->insert_batch('property_attribute_values', $attribute_data)) {
-    //                 if ($_FILES) {
-    //                     $this->load->library('upload');
-    //                     // $files = $_FILES;
-    //                     $cpt = count($files['userfile']['name']);
-    //                     $path = FCPATH . "/uploads";
-    //                     $config = array();
-    //                     $config['upload_path'] = $path;
-    //                     $config['allowed_types'] = 'jpg|jpeg|png';
-    //                     $config['max_size'] = '0';
-    //                     $config['overwrite'] = false;
-    //                     for ($i = 0; $i < $cpt; $i++) {
-    //                         $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
-    //                         $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
-    //                         $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
-    //                         $_FILES['userfile']['error'] = $files['userfile']['error'][$i];
-    //                         $_FILES['userfile']['size'] = $files['userfile']['size'][$i];
-
-    //                         $this->upload->initialize($config);
-
-    //                         if (!$this->upload->do_upload()) {
-    //                             $errors = $this->upload->display_errors();
-    //                             return ['type' => 'error', 'text' => $errors];
-    //                         } else {
-    //                             $dataupload = array('upload_data' => $this->upload->data());
-    //                             $image_data[] = array(
-    //                                 'property_id' => $property_id,
-    //                                 'path' => $dataupload['upload_data']['file_name'],
-    //                                 'created_at' => date('Y-m-d H:i:s')
-    //                             );
-    //                         }
-    //                     }
-    //                     if ($this->db->insert_batch('property_images', $image_data)) {
-    //                         return ['type' => 'success', 'text' => 'Property Updated successfully!'];
-    //                     }
-    //                     return ['type' => 'error', 'text' => 'Image upload is not done successfully!'];
-    //                 } else {
-    //                     return ['type' => 'success', 'text' => 'Property Updated successfully!'];
-    //                 }
-    //             }
-    //         }
-    //         return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
-    //     }
-    //     return ['type' => 'error', 'text' => 'Please filled out all mandatory field!'];
-    // }
-
     function update()
     {
-        // return $_POST;
-
         array_walk_recursive($_POST, 'trim');
 
         extract($_POST);
         $available_date = $date;
 
-        // if ($street && $area_id && $property_type && $price && $available_date && $property_desc) {
         if (empty($attribute_id) || empty($value)) {
             return ['type' => 'error', 'text' => 'Atleast one property attribute is mandatory!'];
         }
@@ -653,5 +497,51 @@ class M_property extends CI_Model
             return ['type' => 'success', 'text' => 'Your Property Marked Sold successfully!'];
         }
         return ['type' => 'error', 'text' => 'Error Occured! Please checked it manualy!'];
+    }
+
+    public function notifyToSubscriber($id, $property)
+    {
+        $subscribers = $this->db->where('area_id', $property['area_id'])
+                                ->where('bedrooms', $property['bedrooms'], '>=')
+                                ->get('subscribers');
+        
+        if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
+            $subscribers = $subscribers->result_array();
+            foreach($subscribers as $subscriber) {
+                $this->insertJob($id, $subscriber['id']);
+            }
+        }
+    }
+
+    public function insertJob($property_id, $subscriber_id)
+    {
+        $this->db->insert('rental_call_queue', [
+            "property_id"   => $property_id,
+            "subscriber_id" => $subscriber_id
+        ]);
+    }
+
+    public function getJobs() 
+    {
+        $query = $this->db->get('rental_call_queue');
+        
+        if ($query !== FALSE && $query->num_rows() > 0) 
+            return $query->result_array();
+    
+        return false;
+    }
+
+    public function deleteJob($id)
+    {
+        return $this->db->where('id', $id)->delete('rental_call_queue');
+    }
+
+    public function existJob()
+    {
+        $query = $this->db->get('rental_call_queue');
+
+        if ($query !== FALSE && $query->num_rows() > 0)
+            return true;
+        return false;
     }
 }
