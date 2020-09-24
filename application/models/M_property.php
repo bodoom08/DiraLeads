@@ -148,7 +148,7 @@ class M_property extends CI_Model
 
         $property_id = $this->db->insert_id();
 
-        $this->notifyToSubscriber($property_id, $property_data);
+        // $this->notifyToSubscriber($property_id, $property_data);
 
         foreach ($attribute_id as $key => $attribute) {
             $i = array_search($attribute, $attribute_id);
