@@ -502,12 +502,12 @@ class M_property extends CI_Model
     public function notifyToSubscriber($id, $property)
     {
         $subscribers = $this->db->where('area_id', $property['area_id'])
-                                ->where('bedroom <=', $property['bedrooms'])
-                                ->get('subscribers');
+            ->where('bedroom <=', $property['bedrooms'])
+            ->get('subscribers');
 
         if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
             $subscribers = $subscribers->result_array();
-            foreach($subscribers as $subscriber) {
+            foreach ($subscribers as $subscriber) {
                 $this->insertJob($id, $subscriber['id']);
             }
         }
@@ -519,15 +519,29 @@ class M_property extends CI_Model
             "property_id"   => $property_id,
             "subscriber_id" => $subscriber_id
         ]);
+
+        $subscriber = $this->db->select('country_code, mobile')
+            ->from('users')
+            ->where('id', $subscriber_id)
+            ->get()->row();
+        $number = $subscriber['country_code'] . $subscriber['mobile'];
+
+        \Telnyx\Call::Create([
+            "from" => "+15166361518", // Your Telnyx number
+            "to" => $number,
+            [
+                'url' => base_url() . 'webhook/subscriber_receive',
+            ]
+        ]);
     }
 
-    public function getJobs() 
+    public function getJobs()
     {
         $query = $this->db->get('rental_call_queue');
-        
-        if ($query !== FALSE && $query->num_rows() > 0) 
+
+        if ($query !== FALSE && $query->num_rows() > 0)
             return $query->result_array();
-    
+
         return false;
     }
 

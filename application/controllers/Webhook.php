@@ -46,7 +46,7 @@ class Webhook extends CI_Controller
             //     // echo $data;
             // }
 
-            \Telnyx\Message::Create([
+            \Telnyx\Call::Create([
                 "from" => "+15166361518", // Your Telnyx number
                 "to" => $owner_number,
                 "text" => $text
@@ -184,6 +184,27 @@ class Webhook extends CI_Controller
 
         // $voiceRes->say("this is a caller from DiraLeads");
         $voiceRes->play('https://diraleads.com/assets/audios/Caller%20from%20DiraLeads.mp3');
+
+        return $this->output
+            ->set_content_type('text/xml')
+            ->set_output($voiceRes);
+    }
+
+    public function subscriber_receive() // manage actions when the subscriber receives outbounding calls
+    {
+
+        // $job_id = $this->input->get('job_id');
+        // $job = $this->db->where('id', $job_id)->get('rental_call_queue');
+        // $subscriber = $this->db->select('country_code, mobile')
+        //     ->from('users')
+        //     ->where('id', $job['user_id'])
+        //     ->get()->row();
+        // $number = $subscriber['country_code'] . $subscriber['mobile'];
+
+        $voiceRes = new VoiceResponse();
+
+        $voiceRes->say("New renal is listed for you");
+        // $voiceRes->play('https://diraleads.com/assets/audios/Caller%20from%20DiraLeads.mp3');
 
         return $this->output
             ->set_content_type('text/xml')
