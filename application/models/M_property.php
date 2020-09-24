@@ -502,9 +502,9 @@ class M_property extends CI_Model
     public function notifyToSubscriber($id, $property)
     {
         $subscribers = $this->db->where('area_id', $property['area_id'])
-                                ->where('bedrooms', $property['bedrooms'], '>=')
+                                ->where('bedroom <=', $property['bedrooms'])
                                 ->get('subscribers');
-        
+
         if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
             $subscribers = $subscribers->result_array();
             foreach($subscribers as $subscriber) {
