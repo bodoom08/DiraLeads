@@ -219,7 +219,10 @@ class Properties extends MOBO_Controller
             $this->db->insert('reported_property', $data);
             die(json_encode(['type' => 'success', 'text' => 'Property reported.']));
         } else {
-            die(json_encode(['type' => 'error', 'text' => $this->form_validation->error_string()]));
+            die(json_encode([
+                'type' => 'error', 
+                'text' => $this->form_validation->error_string()
+            ]));
         }
     }
 
