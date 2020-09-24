@@ -43,12 +43,4 @@ class Property extends MOBO_Controller
 		$result = $this->db->query($query)->result();
 		print_r($result);
 	}
-
-	public function test()
-	{
-		echo $this->M_property->notifyToSubscriber(200, [
-			"area_id" => 1,
-			"bedrooms" => 3
-		]);
-	}
 }
