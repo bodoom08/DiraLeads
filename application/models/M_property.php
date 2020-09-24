@@ -174,7 +174,7 @@ class M_property extends CI_Model
                 $config['allowed_types'] = 'jpg|jpeg|png';
                 $config['max_size'] = '0';
                 $config['overwrite'] = false;
-                for ($i = 0; $i < $cpt; $i++) {
+                for ($i = 0; $i < $cpt; $i++) { 
                     $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
                     $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
                     $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];

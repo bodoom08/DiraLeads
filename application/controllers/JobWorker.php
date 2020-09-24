@@ -23,6 +23,9 @@ class JobWorker extends WorkerController
 
     protected function handleListen() 
     {
-        return $this->jobqueue->exists();
+        $flag = $this->jobqueue->exists();
+        if ($flag)
+            return $this->handleWork();
+        return false;
     }
 }
