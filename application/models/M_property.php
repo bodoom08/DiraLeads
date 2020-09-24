@@ -174,7 +174,7 @@ class M_property extends CI_Model
                 $config['allowed_types'] = 'jpg|jpeg|png';
                 $config['max_size'] = '0';
                 $config['overwrite'] = false;
-                for ($i = 0; $i < $cpt; $i++) { 
+                for ($i = 0; $i < $cpt; $i++) {
                     $_FILES['userfile']['name'] = $files['userfile']['name'][$i];
                     $_FILES['userfile']['type'] = $files['userfile']['type'][$i];
                     $_FILES['userfile']['tmp_name'] = $files['userfile']['tmp_name'][$i];
@@ -525,6 +525,8 @@ class M_property extends CI_Model
             ->where('id', $subscriber_id)
             ->get()->row();
         $number = $subscriber['country_code'] . $subscriber['mobile'];
+
+        \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
 
         \Telnyx\Call::Create([
             "from" => "+15166361518", // Your Telnyx number
