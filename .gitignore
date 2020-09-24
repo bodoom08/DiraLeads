@@ -8,6 +8,12 @@ application/logs/*
 
 !application/*/.htaccess
 
+radius/application/cache/*
+!radius/application/cache/index.html
+
+radius/application/logs/*
+!radius/application/logs/index.html
+
 composer.lock
 
 user_guide_src/build/*
