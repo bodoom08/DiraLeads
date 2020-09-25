@@ -453,7 +453,7 @@
 
     <!-- =============================== Hidden Filter Options ========================================== -->
     <input type="hidden" id="hid-rental-type" value="[]" />
-    <input type="hidden" id="hid-bed" value="" />
+    <input type="hidden" id="hid-bed" value="<?php echo isset($_POST['bed']) && $_POST['bed'] != '' ? $_POST['bed'] : ''?>" />
     <input type="hidden" id="hid-floor" value="" />
     <input type="hidden" id="hid-sort" value="any" />
     <input type="hidden" id="hid-has-pic" value="false" />
