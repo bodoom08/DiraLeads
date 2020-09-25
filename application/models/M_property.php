@@ -512,8 +512,8 @@ class M_property extends CI_Model
         foreach ($dates as $date) {
             $checkInDate = $date['checkInDate'];
             $checkOutDate = $date['checkOutDate'];
-            $subscribers = $subscribers->where('date_from >=', $checkInDate)
-                ->where('date_to <=', $checkOutDate);
+            $subscribers = $subscribers->where('date_from <=', $checkInDate)
+                ->where('date_to >=', $checkOutDate);
         }
 
         $subscribers = $subscribers->get('subscribers');
