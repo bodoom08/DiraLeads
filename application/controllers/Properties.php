@@ -247,7 +247,7 @@ class Properties extends MOBO_Controller
 
     public function index()
     {
-        $total_rows = $this->M_properties->property_count();
+        $total_rows = $this->M_properties->property_count_by_conditions();
 
         $page_index = isset($_GET['page']) ? intval($_GET['page']) - 1 : 0;
         $page_cursors = ceil($total_rows / ITEMS_PER_PAGE);
