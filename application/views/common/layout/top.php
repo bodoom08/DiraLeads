@@ -119,7 +119,6 @@ $header_menu = get_menu('main');
                                 <img src="<?php echo site_url('assets/images/login.png'); ?>"> Login / Signup
                             </a>
                         </li>
-
                     <?php } ?>
                 </ul>
                 <?php if (isset($_SESSION['id'])) : ?>
