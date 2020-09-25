@@ -922,16 +922,16 @@ class M_properties extends CI_Model
 
     function generate_query()
     {
-        $types          = isset($_POST['type']) ? $_POST['type'] : [];
-        $bedroom        = isset($_POST['bed']) ? $_POST['bed'] : 'any';
-        $bathroom       = isset($_POST['bath']) ? $_POST['bath'] : 'any';
-        $floor          = isset($_POST['floor']) ? $_POST['floor'] : 'any';
-        $location       = isset($_POST['location']) ? $_POST['location'] : [];
-        $area           = isset($_POST['area']) ? $_POST['area'] : 'any';
-        $amenities      = isset($_POST['amenities']) ? $_POST['amenities'] : [];
-        $languages      = isset($_POST['lang']) ? $_POST['lang'] : [];
-        $bed_range      = isset($_POST['bed_range']) ? $_POST['bed_range'] : NULL;
-        $floor_range    = isset($_POST['floor_range']) ? $_POST['floor_range'] : NULL;
+        $types          = isset($_POST['type']) && $_POST['type'] != '' ? $_POST['type'] : [];
+        $bedroom        = isset($_POST['bed']) && $_POST['bed'] != '' ? $_POST['bed'] : 'any';
+        $bathroom       = isset($_POST['bath']) && $_POST['bath'] != '' ? $_POST['bath'] : 'any';
+        $floor          = isset($_POST['floor']) && $_POST['floor'] != '' ? $_POST['floor'] : 'any';
+        $location       = isset($_POST['location']) && $_POST['location'] != '' ? $_POST['location'] : [];
+        $area           = isset($_POST['area']) && $_POST['area'] != '' ? $_POST['area'] : 'any';
+        $amenities      = isset($_POST['amenities']) && $_POST['amenities'] != '' ? $_POST['amenities'] : [];
+        $languages      = isset($_POST['lang']) && $_POST['lang'] != '' ? $_POST['lang'] : [];
+        $bed_range      = isset($_POST['bed_range']) && $_POST['bed_range'] != '' ? $_POST['bed_range'] : NULL;
+        $floor_range    = isset($_POST['floor_range']) && $_POST['floor_range'] != '' ? $_POST['floor_range'] : NULL;
 
         $query = '';
 
@@ -990,7 +990,10 @@ class M_properties extends CI_Model
         $sql_query .= ' where `properties`.`status` = "active" ' . $this->generate_query() . ' GROUP BY `properties`.`id`';
         $query = $this->db->query($sql_query);
 
-        return $query->num_rows();
+        if ($query != FALSE && $query->num_rows() > 0)
+            return $query->num_rows();
+        
+        return 0;
     }
 
     public function fetch_properties($limit, $start)

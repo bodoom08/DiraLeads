@@ -421,7 +421,15 @@
                 </nav>
             </div>
 
-            <p class="text-center" id="paginate-status"><small class="text-muted"><?php echo $links['page_index'] * 30 + 1?> - <?php echo ($links['page_index'] + 1) * 30?> of <?php echo $total_properties?> Results</small></p>
+            <p class="text-center" id="paginate-status">
+                <small class="text-muted">
+                    <?php if ($total_properties == 0) :?>
+                    0 - 0 of 0 Result
+                    <?php else:?>
+                    <?php echo $links['page_index'] * 30 + 1?> - <?php echo (($links['page_index'] + 1) * 30) > $total_properties ? $total_properties : (($links['page_index'] + 1) * 30) ?> of <?php echo $total_properties?> Results
+                    <?php endif ?>
+                </small>
+            </p>
         </div>
 
         <!-- ============================================== Google Map ======================================= -->
