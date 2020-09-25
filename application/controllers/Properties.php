@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-define('ITEMS_PER_PAGE', 30);
+define('ITEMS_PER_PAGE', 50);
 
 class Properties extends MOBO_Controller
 {

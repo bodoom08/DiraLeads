@@ -426,7 +426,7 @@
                     <?php if ($total_properties == 0) :?>
                     0 - 0 of 0 Result
                     <?php else:?>
-                    <?php echo $links['page_index'] * 30 + 1?> - <?php echo (($links['page_index'] + 1) * 30) > $total_properties ? $total_properties : (($links['page_index'] + 1) * 30) ?> of <?php echo $total_properties?> Results
+                    <?php echo $links['page_index'] * 50 + 1?> - <?php echo (($links['page_index'] + 1) * 50) > $total_properties ? $total_properties : (($links['page_index'] + 1) * 50) ?> of <?php echo $total_properties?> Results
                     <?php endif ?>
                 </small>
             </p>
@@ -1648,7 +1648,7 @@
 
             document.getElementById('search-paginator').innerHTML = paginatorDom;
             document.getElementById('paginate-status').innerHTML = `
-                <small class="text-muted">${ total == 0 ? 0 : links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
+                <small class="text-muted">${ total == 0 ? 0 : links.page_index * 50 + 1} - ${(links.page_index + 1) * 50 > total ? total: (links.page_index + 1) * 50} of ${total} Results</small>
             `;
         }
 
