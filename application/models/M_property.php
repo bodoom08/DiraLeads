@@ -501,9 +501,22 @@ class M_property extends CI_Model
 
     public function notifyToSubscriber($id, $property)
     {
+        $manual_booking_dates = json_decode($property['manual_booking']);
+        $blocked_dates = json_decode($property['blocked_date']);
+
+        $dates = array_merge($manual_booking_dates, $blocked_dates);
+
         $subscribers = $this->db->where('area_id', $property['area_id'])
-            ->where('bedroom <=', $property['bedrooms'])
-            ->get('subscribers');
+            ->where('bedroom <=', $property['bedrooms']);
+
+        foreach ($date as $dates) {
+            $checkInDate = $date['checkInDate'];
+            $checkOutDate = $date['checkOutDate'];
+            $subscribers = $subscribers->where('date_from >=', $checkInDate)
+                                    ->where('date_to <=', $checkOutDate);
+        }
+
+        $subscribers = $subscribers->get('subscribers');
 
         if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
             $subscribers = $subscribers->result_array();
