@@ -509,11 +509,11 @@ class M_property extends CI_Model
         $subscribers = $this->db->where('area_id', $property['area_id'])
             ->where('bedroom <=', $property['bedrooms']);
 
-        foreach ($date as $dates) {
+        foreach ($dates as $date) {
             $checkInDate = $date['checkInDate'];
             $checkOutDate = $date['checkOutDate'];
             $subscribers = $subscribers->where('date_from >=', $checkInDate)
-                                    ->where('date_to <=', $checkOutDate);
+                ->where('date_to <=', $checkOutDate);
         }
 
         $subscribers = $subscribers->get('subscribers');
