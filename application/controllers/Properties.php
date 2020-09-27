@@ -245,15 +245,6 @@ class Properties extends MOBO_Controller
             'page_url'      => base_url('properties')
         ];
 
-        if (isset($_POST['date_from']) && $_POST['date_from'] != '') {
-            $date_from = $_POST['date_from'];
-            $date_to = $_POST['date_to'];
-
-            foreach($data['properties'] as $property) {
-                
-            }
-        }
-
         $this->load->view('rentals', $data);
     }
 }
