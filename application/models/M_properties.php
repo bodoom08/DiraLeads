@@ -1053,8 +1053,16 @@ class M_properties extends CI_Model
 
         $streets = array();
         $filteredProperties = array();
+
+        if (isset($_POST['date_from']) && isset($_POST['date_to']) ) {
+            $date_from = $_POST['date_from'];
+            $date_to = $_POST['date_to'];
+        }
+
         foreach ($properties as $index => $property) {
             if ($property['area_id'] == 0) $property['title'] = $property['area_other'];
+            $manual_booking = json_decode($property['manual_booking']);
+            $blocked_booking = json_decode($property['blocked_date']);
 
             $images = $this->db->select("path")->where("property_id", $property["id"])->from('property_images')->get()->result_array();
             if ($has_pic == 'false' || count($images) > 0) {
@@ -1099,7 +1107,25 @@ class M_properties extends CI_Model
                     $property['manual_booking'] = json_decode($property['manual_booking']);
                 }
 
-                $filteredProperties[] = $property;
+                // if (isset($date_from) && isset($date_to)) {
+                //     $flag = false;
+                //     foreach($manual_booking as $book_date) {
+                //         if ($book_date['checkInDate'] <= $date_from && $bookg_date['checkOutDate'] >= $date_to) {
+                //             $flag = true;
+                //         }
+                //     }
+                    
+                //     foreach($blocked_booking as $book_date) {
+                //         if ($book_date['checkInDate'] <= $date_from && $book_date['checkOutDate'] >= $date_to) {
+                //             $flag = true;
+                //         }
+                //     }
+
+                //     if (!$flag)
+                //         $filteredProperties[] = $property;    
+                // } else {
+                    $filteredProperties[] = $property;
+                // }
             }
         }
 
