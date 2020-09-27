@@ -13,22 +13,6 @@ class Properties extends MOBO_Controller
         $this->load->library('pagination');
     }
 
-    /*
-    public function index()
-    {
-        $data['title'] = 'Rentals';
-        $this->load->view('maintenance', $data);
-    }
-    */
-
-    // public function index()
-    // {
-    //     $data = $this->M_properties->getAllProducts();
-    //     $data['areas'] = $this->M_page->get_areas();
-    //     $this->load->view('properties', $data);
-    //     // $this->load->view('properties');
-    // }
-
     public function rental_detail($id)
     {
         $data = $this->M_properties->getProductDetail($id);
@@ -260,6 +244,15 @@ class Properties extends MOBO_Controller
             'page_index'    => $page_index,
             'page_url'      => base_url('properties')
         ];
+
+        if (isset($_POST['date_from']) && $_POST['date_from'] != '') {
+            $date_from = $_POST['date_from'];
+            $date_to = $_POST['date_to'];
+
+            foreach($data['properties'] as $property) {
+                
+            }
+        }
 
         $this->load->view('rentals', $data);
     }

@@ -194,6 +194,8 @@
                                             <label for="filter_date">Dates</label>
                                             <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
                                         </div>
+                                        <input type="hidden" name="date_from" id="date_from" value="" />
+                                        <input type="hidden" name="date_to" id="date_to" value="" />
                                     </li>
                                     <li>
                                         <div class="form-group">
@@ -286,6 +288,12 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
+                let dateRange = document.getElementById('filter_date').value;
+                if (dateRange != '') {
+                    dateRange = dateRange.split(' - ');
+                    document.getElementById('date_from').value = dateRange[0];
+                    document.getElementById('date_to').value = dateRange[1];
+                }
                 $('#searchRentals').submit();
             });
         });
