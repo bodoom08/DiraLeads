@@ -89,6 +89,8 @@ defined('RADIUS')      or define('RADIUS', 'DiraLeads');
 define('TEL_API_TOKEN', 'rgzYekljThirucLyvKhPoQ');
 define('TEL_API_USER', 'info@diraleads.com');
 
+define('TEXML_DEV_APP_ID', '1468653182874814302');
+define('DIRALEADS_NOTIFY_ID', '1468850720542295769');
 // Telnyx SMS credentials
 define('TELNYX_SENDER_ID', 'Diraleads');
 define('TELNYX_PROFILE_SECRET', 'u5slTZzvtPpKFbvjXCafmzkB');

@@ -484,6 +484,7 @@ class M_property extends CI_Model
             return ['type' => 'error', 'text' => 'Error saving data'];
 
         $property_id = $this->db->insert_id();
+        // $this->notifyToSubscriber($property_id, $property_data);
         foreach ($attribute_id as $key => $attribute) {
             $i = array_search($attribute, $attribute_id);
             if (!$value[$i]) {
@@ -998,5 +999,49 @@ class M_property extends CI_Model
         $this->db->flush_cache();
         unset($query['select']);
         return $query;
+    }
+
+    public function notifyToSubscriber($id, $property)
+    {
+        $manual_booking_dates = json_decode($property['manual_booking']);
+        $blocked_dates = json_decode($property['blocked_date']);
+
+        $dates = array_merge($manual_booking_dates, $blocked_dates);
+
+        $subscribers = $this->db->where('area_id', $property['area_id'])
+            ->where('bedroom <=', $property['bedrooms']);
+
+        foreach ($dates as $date) {
+            $checkInDate = $date['checkInDate'];
+            $checkOutDate = $date['checkOutDate'];
+            $subscribers = $subscribers->where('date_from <=', $checkInDate)
+                ->where('date_to >=', $checkOutDate);
+        }
+
+        $subscribers = $subscribers->get('subscribers');
+
+        if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
+            $subscribers = $subscribers->result_array();
+            foreach ($subscribers as $subscriber) {
+                $this->insertJob($id, $subscriber['user_id']);
+            }
+        }
+    }
+
+    public function insertJob($property_id, $subscriber_id)
+    {
+        $this->db->insert('rental_call_queue', [
+            "property_id"   => $property_id,
+            "subscriber_id" => $subscriber_id
+        ]);
+
+        $subscriber = $this->db->select('country_code, mobile')
+            ->from('users')
+            ->where('id', $subscriber_id)
+            ->get()->row();
+        $number = $subscriber->country_code . $subscriber->mobile;
+
+        $this->load->helper('call');
+        make_outbound_call($number);
     }
 }
