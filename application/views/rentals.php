@@ -27,6 +27,21 @@
         let map;
         let markers = [];
 
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
         function initMap(marker = {
             lat: 40.7128,
             lng: -74.0060
@@ -42,13 +57,13 @@
             autocomplete = new google.maps.places.Autocomplete(searchEl);
             autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            google.maps.event.addListener(autocomplete, 'place_changed', debounce(function() {
                 const place = autocomplete.getPlace();
                 map.setCenter(place.geometry.location);
 
                 document.getElementById('search-detail-title').innerHTML = `Apartments for ${searchEl.value}`;
                 filter('location', searchEl.value.split(', '));
-            });
+            }, 500));
 
             try {
                 try {
