@@ -169,7 +169,6 @@
 
         <div class="search-main">
             <div class="tabbing-sec p-0 border-0">
-                <!-- <?php echo form_open_multipart('properties', 'id="searchRentals" class=""'); ?> -->
                 <form method="post" accept-charset="utf-8" action="properties" id="searchRentals">
                     <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
@@ -194,26 +193,18 @@
                                         <div class="form-group">
                                             <label for="filter_date">Dates</label>
                                             <input type="text" class="form-control dateRangePicker" id="filter_date" name="daterange" readonly>
-
                                         </div>
+                                        <input type="hidden" name="date_from" id="date_from" value="" />
+                                        <input type="hidden" name="date_to" id="date_to" value="" />
                                     </li>
                                     <li>
                                         <div class="form-group">
                                             <label for="bedroom">Bedrooms</label>
                                             <div class="max-min">
-                                                <input type="number" id="bedroom" name="bed" class="form-control" placeholder="Bedrooms">
+                                                <input type="number" min="0" id="bedroom" name="bed" class="form-control" placeholder="Bedrooms">
                                             </div>
                                         </div>
                                     </li>
-                                    <!-- <li>
-                                    <div class="form-group">
-                                        <label for="price_max">Price</label>
-                                        <div class="max-min">
-                                            <input type="number" id="price_max" name="name" class="form-control" placeholder="max">
-                                        </div>
-                                    </div>
-                                </li> -->
-
                                     <li class="d-flex justify-content-center align-items-center p-0">
                                         <a type="submit" class="areaFilter">LOCATE MY DREAM RENTAL</a>
                                     </li>
@@ -297,21 +288,15 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('.areaFilter').on('click', function() {
-                // var site = "<?php echo site_url() ?>";
-                // var areaSelect = $('.areaSelect').find(":selected").val();
-                // var dateRange = $('.dateRangePicker').val().split('-');
-                // var from = dateRange[0];
-                // var to = dateRange[1];
-                // var price_max = $('#price_max').val();
-                // var toDate = moment(to).format("YYYY-DD-MM");
-                // var fromDate = moment(from).format("YYYY-DD-MM");
-                // var bedroom = $('#bedroom').val();
-                // window.location = site + 'properties/lists?for=short%20term%20rent&area=' + areaSelect + '&fromDate=' + fromDate + '&toDate=' + toDate + '&bedroom=' + bedroom + '&price_max=' + price_max
-
+                let dateRange = document.getElementById('filter_date').value;
+                if (dateRange != '') {
+                    dateRange = dateRange.split(' - ');
+                    document.getElementById('date_from').value = dateRange[0];
+                    document.getElementById('date_to').value = dateRange[1];
+                }
                 $('#searchRentals').submit();
-
-            })
-        })
+            });
+        });
 
         // Email Subscribe
         $('#subscribe-email-form').submit(function(e) {
@@ -373,18 +358,6 @@
                 });
             }, 1000);
         });
-    </script>
-
-    <script>
-        function search() {
-            // const areaId = document.getElementById('filter_area').value == '' ? 'any' : document.getElementById('filter_area').value;
-            // const bedroom = document.getElementById('bedroom').value == '' ? 'any' : document.getElementById('bedroom').value;
-            // const price = document.getElementById('price_max').value == '' ? 0 : document.getElementById('price_max').value;
-
-            // document.location.href = `/properties?type=any&bedroom=${bedroom}&bathroom=any&more=any&sort_by=any&price=0|${price}&street=any&location=any&area=${areaId}`;
-
-
-        }
     </script>
 
     <script>

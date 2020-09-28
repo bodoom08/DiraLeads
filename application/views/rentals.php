@@ -27,6 +27,21 @@
         let map;
         let markers = [];
 
+        function debounce(func, wait, immediate) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            };
+        };
+
         function initMap(marker = {
             lat: 40.7128,
             lng: -74.0060
@@ -42,13 +57,13 @@
             autocomplete = new google.maps.places.Autocomplete(searchEl);
             autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
 
-            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+            google.maps.event.addListener(autocomplete, 'place_changed', debounce(function() {
                 const place = autocomplete.getPlace();
                 map.setCenter(place.geometry.location);
 
                 document.getElementById('search-detail-title').innerHTML = `Apartments for ${searchEl.value}`;
                 filter('location', searchEl.value.split(', '));
-            });
+            }, 500));
 
             try {
                 try {
@@ -290,7 +305,7 @@
             </li>
 
             <li class="list-group-item">
-                <a tabindex="0" id="filter-sort" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By">
+                <a tabindex="0" id="filter-sort" class="btn btn-lg btn-white btn-outline-purple filter-option option-closed" role="button" data-toggle="popover" data-placement="bottom" title="Sort By" style="min-width: 130px;">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-sort-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M3 2a.5.5 0 0 1 .5.5v10a.5.5 0 0 1-1 0v-10A.5.5 0 0 1 3 2z" />
                         <path fill-rule="evenodd" d="M5.354 10.146a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L3 11.793l1.646-1.647a.5.5 0 0 1 .708 0zM7 9.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 9a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z" />
@@ -421,7 +436,15 @@
                 </nav>
             </div>
 
-            <p class="text-center" id="paginate-status"><small class="text-muted"><?php echo $links['page_index'] * 30 + 1?> - <?php echo ($links['page_index'] + 1) * 30?> of <?php echo $total_properties?> Results</small></p>
+            <p class="text-center" id="paginate-status">
+                <small class="text-muted">
+                    <?php if ($total_properties == 0) :?>
+                    0 - 0 of 0 Result
+                    <?php else:?>
+                    <?php echo $links['page_index'] * 50 + 1?> - <?php echo (($links['page_index'] + 1) * 50) > $total_properties ? $total_properties : (($links['page_index'] + 1) * 50) ?> of <?php echo $total_properties?> Results
+                    <?php endif ?>
+                </small>
+            </p>
         </div>
 
         <!-- ============================================== Google Map ======================================= -->
@@ -445,7 +468,7 @@
 
     <!-- =============================== Hidden Filter Options ========================================== -->
     <input type="hidden" id="hid-rental-type" value="[]" />
-    <input type="hidden" id="hid-bed" value="" />
+    <input type="hidden" id="hid-bed" value="<?php echo isset($_POST['bed']) && $_POST['bed'] != '' ? $_POST['bed'] : ''?>" />
     <input type="hidden" id="hid-floor" value="" />
     <input type="hidden" id="hid-sort" value="any" />
     <input type="hidden" id="hid-has-pic" value="false" />
@@ -1640,7 +1663,7 @@
 
             document.getElementById('search-paginator').innerHTML = paginatorDom;
             document.getElementById('paginate-status').innerHTML = `
-                <small class="text-muted">${ total == 0 ? 0 : links.page_index * 30 + 1} - ${(links.page_index + 1) * 30 > total ? total: (links.page_index + 1) * 30} of ${total} Results</small>
+                <small class="text-muted">${ total == 0 ? 0 : links.page_index * 50 + 1} - ${(links.page_index + 1) * 50 > total ? total: (links.page_index + 1) * 50} of ${total} Results</small>
             `;
         }
 
