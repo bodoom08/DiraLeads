@@ -121,32 +121,32 @@ class M_property extends CI_Model
     function get_virtual_number()
     {
         //assing virtual number
-        $result = $this->db->select('vn_id')->where('vn_id IS Not NULL', null, false)->get('properties')->result_array();
-        $vn_id_arr = array_column($result, 'vn_id');
+        // $result = $this->db->select('vn_id')->where('vn_id IS Not NULL', null, false)->get('properties')->result_array();
+        // $vn_id_arr = array_column($result, 'vn_id');
 
-        $vn_number = $this->db->select('number')
-            ->where_not_in('id', $vn_id_arr)
-            ->order_by('id', 'ASC')
-            ->get('virtual_numbers')
-            ->row();
+        // $vn_number = $this->db->select('number')
+        //     ->where_not_in('id', $vn_id_arr)
+        //     ->order_by('id', 'ASC')
+        //     ->get('virtual_numbers')
+        //     ->row();
 
-        if (!isset($vn_number)) { // Buy a new Telnyx number
-            // $this->load->library('telnyx');
-            $this->load->helper('telnyx_number');
+        // if (!isset($vn_number)) { // Buy a new Telnyx number
+        // $this->load->library('telnyx');
+        $this->load->helper('telnyx_number');
 
-            do {
-                $numberResult = searchNumbersHelper('us', 'NY');
-            } while (count($numberResult['result']) == 0);
+        do {
+            $numberResult = searchNumbersHelper('us', 'NY');
+        } while (count($numberResult['result']) == 0);
 
 
-            if (count($numberResult['result']) > 0) {
-                $virtualNumber = $numberResult['result'][0]['number_e164'];
-            } else {
-                return ['type' => 'warning', 'text' => 'No virtual number was found, please contact admin!'];
-            }
+        if (count($numberResult['result']) > 0) {
+            $virtualNumber = $numberResult['result'][0]['number_e164'];
         } else {
-            $virtualNumber = $vn_number->number;
+            return ['type' => 'warning', 'text' => 'No virtual number was found, please contact admin!'];
         }
+        // } else {
+        //     $virtualNumber = $vn_number->number;
+        // }
 
         return ['type' => 'success', 'virtual_number' => $virtualNumber];
     }
@@ -535,52 +535,43 @@ class M_property extends CI_Model
                 }
             }
 
-            //assing virtual number
-            // $result = $this->db->select('vn_id')->where('vn_id is Not NULL')->get('properties')->result_array();
-            // $vn_id_arr = array_column($result, 'vn_id');
-
-            // $virtualNumber = $this->db->select('id')
-            //     ->where_not_in('id', $vn_id_arr)
+            // $vn = $this->db->select('*')
+            //     ->where('number', $virtual_number)
             //     ->get('virtual_numbers')
             //     ->row();
 
-            $vn = $this->db->select('*')
-                ->where('number', $virtual_number)
-                ->get('virtual_numbers')
-                ->row();
+            // if (isset($vn)) { // Check if there is non-allocated Telnyx number in the table
+            //     $this->load->helper('did');
+            //     allocate_did($property_id, $vn->id, 'Auto Re-assign', 'DID re-allocation');
+            //     $response['virtual_number'] = $vn->number;
+            // } else { // Buy a new Telnyx number
+            $this->load->helper('telnyx_number');
 
-            if (isset($vn)) { // Check if there is non-allocated Telnyx number in the table
+            $numberOrders = createNumberOrdersHelper($virtual_number);
+
+            if (is_array($numberOrders)) {
+                $this->db->insert('virtual_numbers', [
+                    'number' => $virtual_number,
+                    'details' => json_encode(myNumbersHelper($virtual_number))
+                ]);
+
+                $number_id = $numberOrders['id'];
+
                 $this->load->helper('did');
-                allocate_did($property_id, $vn->id, 'Auto Re-assign', 'DID re-allocation');
-                $response['virtual_number'] = $vn->number;
-            } else { // Buy a new Telnyx number
-                $this->load->helper('telnyx_number');
 
-                $numberOrders = createNumberOrdersHelper($virtual_number);
+                allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
+                $response['virtual_number'] = $virtual_number;
 
-                if (is_array($numberOrders)) {
-                    $this->db->insert('virtual_numbers', [
-                        'number' => $virtual_number,
-                        'details' => json_encode(myNumbersHelper($virtual_number))
-                    ]);
-
-                    $number_id = $numberOrders['id'];
-
-                    $this->load->helper('did');
-
-                    allocate_did($property_id, $this->db->insert_id(), 'Auto Assign', 'Auto DID allocation');
-                    $response['virtual_number'] = $virtual_number;
-
-                    \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
-                    \Telnyx\PhoneNumber::Update($virtual_number, [
-                        "connection_id" => TEXML_APP_ID,
-                    ]);
-                    assign_messaging_profile($virtual_number);
-                    // \Telnyx\PhoneNumber::Update($virtual_number, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
-                } else {
-                    return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
-                }
+                \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
+                \Telnyx\PhoneNumber::Update($virtual_number, [
+                    "connection_id" => TEXML_APP_ID,
+                ]);
+                assign_messaging_profile($virtual_number);
+                // \Telnyx\PhoneNumber::Update($virtual_number, ["messaging_profile_id" => MESSAGE_PROFILE_ID]);
+            } else {
+                return ['type' => 'warning', 'text' => 'Property submitted but can not be listed for number allocation error! Please contact admin'];
             }
+            // }
 
             return [
                 'type' => 'success',
