@@ -521,7 +521,7 @@ class M_property extends CI_Model
         if ($subscribers !== FALSE && $subscribers->num_rows() > 0) {
             $subscribers = $subscribers->result_array();
             foreach ($subscribers as $subscriber) {
-                $this->insertJob($id, $subscriber['id']);
+                $this->insertJob($id, $subscriber['user_id']);
             }
         }
     }
@@ -537,17 +537,10 @@ class M_property extends CI_Model
             ->from('users')
             ->where('id', $subscriber_id)
             ->get()->row();
-        $number = $subscriber['country_code'] . $subscriber['mobile'];
+        $number = $subscriber->country_code . $subscriber->mobile;
 
-        \Telnyx\Telnyx::setApiKey(TELNYX_API_KEY);
-
-        \Telnyx\Call::Create([
-            "from" => "+15166361518", // Your Telnyx number
-            "to" => $number,
-            [
-                'url' => base_url() . 'webhook/subscriber_receive',
-            ]
-        ]);
+        $this->load->helper('call');
+        make_outbound_call($number);
     }
 
     public function getJobs()
