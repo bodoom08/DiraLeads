@@ -1414,7 +1414,7 @@
         }
 
         function setArea() {
-            filter('location', document.getElementById('search-place').value);
+            filter('location', [document.getElementById('search-place').value]);
         }
 
         function setLang(lang) {
