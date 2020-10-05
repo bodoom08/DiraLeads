@@ -973,10 +973,17 @@ class M_properties extends CI_Model
         if ($area != "any") {
             $query .= ' AND `properties`.`area_id` = "' . $area . '"';
         }
-        if (count($location) > 0) {
-            $neighbor = strtolower($location[0]);
-            $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
+
+        if (isset($location)) {
+            if (gettype($location) == 'string' && $location != '')
+                $neighbor = $location;
+            if (gettype($location) == 'array' && count($location) > 0)
+                $neighbor = isset($location[0]) ? strtolower($location[0]) : $location;
+            
+            if (isset($neighbor))
+                $query .= ' AND lower(`areas`.`title`) LIKE "%' . $neighbor . '%"';
         }
+        
 
 
         return $query;
