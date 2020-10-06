@@ -1413,6 +1413,7 @@
         }
 
         function setArea() {
+            document.getElementById('search-detail-title').innerHTML = `Apartments for ${document.getElementById('search-place').value}`;
             filter('location', document.getElementById('search-place').value);
         }
 
