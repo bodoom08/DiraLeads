@@ -124,9 +124,9 @@
                 ghostMarkerEl.style.top = -6;
 
                 newMarker.addListener('mouseover', function(event) {
-                    event.ub.path[1].appendChild(ghostMarkerEl);
-                    event.ub.path[1].style.opacity = 1;
-                    event.ub.path[1].style.overflow = "unset";
+                    event.vb.path[1].appendChild(ghostMarkerEl);
+                    event.vb.path[1].style.opacity = 1;
+                    event.vb.path[1].style.overflow = "unset";
 
                     ghostMarkerEl.href = `/properties/rental_detail/${street.property.id}`;
                     ghostMarkerEl.target = '_blank';
@@ -151,24 +151,24 @@
                     document.getElementById('property-overview-city').innerHTML = `${street.property.street}`;
 
                     let cardLocation = {
-                        left: event.ub.clientX,
-                        top: event.ub.clientY
+                        left: event.vb.clientX,
+                        top: event.vb.clientY
                     }
-                    document.getElementById('property-overview-card').style.top = event.ub.clientY + 30;
-                    document.getElementById('property-overview-card').style.left = event.ub.clientX + 30;
+                    document.getElementById('property-overview-card').style.top = event.vb.clientY + 30;
+                    document.getElementById('property-overview-card').style.left = event.vb.clientX + 30;
 
-                    if (event.ub.clientY + 200 >= $('#map').height() + $('#map').offset().top)
-                        document.getElementById('property-overview-card').style.top = event.ub.clientY - 270;
-                    if (event.ub.clientX + 200 >= $('#map').width() + $('#map').offset().left)
-                        document.getElementById('property-overview-card').style.left = event.ub.clientX - 300;
+                    if (event.vb.clientY + 200 >= $('#map').height() + $('#map').offset().top)
+                        document.getElementById('property-overview-card').style.top = event.vb.clientY - 270;
+                    if (event.vb.clientX + 200 >= $('#map').width() + $('#map').offset().left)
+                        document.getElementById('property-overview-card').style.left = event.vb.clientX - 300;
                     document.getElementById('property-overview-card').style.display = 'block';
                 });
 
                 newMarker.addListener('mouseout', function(event) {
                     const ghostMarker = document.getElementById('ghost-marker');
-                    event.ub.path[1].removeChild(ghostMarker);
-                    event.ub.path[1].style.opacity = 0;
-                    event.ub.path[1].style.overflow = "hidden";
+                    event.vb.path[1].removeChild(ghostMarker);
+                    event.vb.path[1].style.opacity = 0;
+                    event.vb.path[1].style.overflow = "hidden";
                     document.getElementById('property-overview-card').style.display = 'none';
                 });
 
